@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Supplier Assessment in GAMP 5: What to Ask and How to Leverage the Results | QLean Automation</title>
+<meta name="description" content="GAMP 5 and Annex 11 require supplier assessment before validation begins. Here's what the SAQ and SAR must cover, what to look for in a supplier's QMS, and how a good assessment reduces your OQ scope.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@300;400;500;600;700;800;900&family=Source+Sans+3:ital,wght@0,300;0,400;0,500;1,300&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--white:#ffffff;--off:#f7f8f9;--ink:#0d0f12;--ink2:#1e2128;--ink3:#3d4456;--ink4:#9199a8;--rule:#e2e5ea;--rule2:#c8cdd6;--blue:#0057ff;--blue2:#0044cc;--blue-dim:rgba(0,87,255,0.07);--green:#00875a;--green-dim:rgba(0,135,90,0.08);--amber:#d97706;--amber-dim:rgba(217,119,6,0.08);--f-head:'Epilogue',sans-serif;--f-body:'Source Sans 3',sans-serif;--f-mono:'Roboto Mono',monospace;--shadow-sm:0 2px 8px rgba(13,15,18,0.06),0 1px 3px rgba(13,15,18,0.04)}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}body{background:var(--white);color:var(--ink);font-family:var(--f-body);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+nav{position:fixed;top:0;left:0;right:0;z-index:200;height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 6%;background:rgba(255,255,255,0.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--rule)}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;flex-shrink:0}
+.nav-links{display:flex;align-items:center;gap:36px;list-style:none}.nav-links a{font-size:14px;font-weight:400;color:var(--ink3);text-decoration:none;transition:color .2s}.nav-links a:hover{color:var(--ink)}
+.nav-btn{font-family:var(--f-body);font-size:13px;font-weight:500;padding:9px 20px;background:var(--blue);color:white;border:none;border-radius:6px;cursor:pointer;text-decoration:none;white-space:nowrap;flex-shrink:0}.nav-btn:hover{background:var(--blue2)}
+.progress-bar{position:fixed;top:64px;left:0;right:0;height:2px;background:var(--rule);z-index:199}.progress-fill{height:100%;background:var(--blue);width:0%}
+.article-hero{padding:120px 6% 64px;background:var(--white);border-bottom:1px solid var(--rule);position:relative;overflow:hidden}
+.article-hero::before{content:'';position:absolute;top:-80px;right:-80px;width:400px;height:400px;background:radial-gradient(circle,rgba(0,87,255,0.04) 0%,transparent 70%);pointer-events:none}
+.article-hero-inner{max-width:760px;margin:0 auto;position:relative;z-index:1}
+.breadcrumb{display:flex;align-items:center;gap:8px;font-family:var(--f-mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink4);margin-bottom:24px}.breadcrumb a{color:var(--ink4);text-decoration:none}.breadcrumb a:hover{color:var(--blue)}.breadcrumb span{color:var(--rule2)}
+.article-tag{display:inline-flex;align-items:center;gap:6px;font-family:var(--f-mono);font-size:10px;font-weight:500;color:var(--blue);letter-spacing:.1em;text-transform:uppercase;margin-bottom:20px;padding:4px 10px;background:var(--blue-dim);border-radius:4px}
+.article-hero h1{font-family:var(--f-head);font-size:clamp(30px,5vw,52px);font-weight:900;line-height:1.0;letter-spacing:-.04em;color:var(--ink);margin-bottom:20px}.article-hero h1 span{color:var(--blue)}
+.article-intro{font-size:18px;font-weight:400;color:var(--ink2);line-height:1.75;margin-bottom:32px;max-width:640px}
+.article-meta{display:flex;align-items:center;gap:24px;padding-top:24px;border-top:1px solid var(--rule);flex-wrap:wrap}
+.meta-author{display:flex;align-items:center;gap:10px}.author-avatar{width:36px;height:36px;border-radius:50%;background:var(--ink);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.author-name{font-size:13px;font-weight:500;color:var(--ink)}.author-role{font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.04em}
+.meta-divider{width:1px;height:28px;background:var(--rule)}.meta-stat{font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.06em}
+.article-wrap{max-width:1100px;margin:0 auto;padding:64px 6%;display:grid;grid-template-columns:1fr 280px;gap:80px;align-items:start}
+.article-body{min-width:0}
+.article-body h2{font-family:var(--f-head);font-size:26px;font-weight:800;letter-spacing:-.03em;color:var(--ink);margin:56px 0 16px;line-height:1.2}.article-body h2:first-child{margin-top:0}
+.article-body h3{font-family:var(--f-head);font-size:18px;font-weight:700;letter-spacing:-.02em;color:var(--ink);margin:32px 0 12px}
+.article-body p{font-size:16px;font-weight:400;color:var(--ink2);line-height:1.85;margin-bottom:20px}
+.article-body strong{color:var(--ink);font-weight:600}
+.article-body a{color:var(--blue);text-decoration:none;border-bottom:1px solid rgba(0,87,255,.25)}.article-body a:hover{border-color:var(--blue)}
+.callout{padding:20px 24px;border-radius:8px;margin:32px 0;border-left:3px solid}
+.callout.blue{background:var(--blue-dim);border-color:var(--blue)}.callout.amber{background:var(--amber-dim);border-color:var(--amber)}.callout.green{background:var(--green-dim);border-color:var(--green)}
+.callout-label{font-family:var(--f-mono);font-size:9px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px}.callout.blue .callout-label{color:var(--blue)}.callout.amber .callout-label{color:var(--amber)}.callout.green .callout-label{color:var(--green)}
+.callout p{font-size:14px;color:var(--ink2);line-height:1.7;margin:0}.callout strong{color:var(--ink)}
+.article-img{width:100%;border-radius:8px;border:1px solid #1e2535;overflow:hidden;margin:36px 0}
+.article-img figcaption{padding:10px 14px;background:var(--off);font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.04em;border-top:1px solid var(--rule)}
+.checklist{list-style:none;display:flex;flex-direction:column;gap:8px;margin:20px 0 28px}
+.checklist li{display:flex;align-items:flex-start;gap:10px;font-size:15px;color:var(--ink2);line-height:1.6}
+.checklist li::before{content:'';width:16px;height:16px;flex-shrink:0;margin-top:3px;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 14 14' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='7' cy='7' r='6.5' fill='none' stroke='%230057ff' stroke-width='1'/%3E%3Cpath d='M4 7l2 2 4-4' stroke='%230057ff' stroke-width='1.3' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:center;background-size:contain}
+.arrow-list{list-style:none;display:flex;flex-direction:column;gap:8px;margin:16px 0 24px}
+.arrow-list li{display:flex;align-items:flex-start;gap:10px;font-size:15px;color:var(--ink2);line-height:1.6}
+.arrow-list li::before{content:'→';color:var(--blue);flex-shrink:0;font-size:12px;margin-top:3px}
+.req-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:28px 0}
+.req-card{padding:20px;border:1px solid var(--rule);border-radius:8px;background:var(--white);box-shadow:var(--shadow-sm);transition:border-color .2s}.req-card:hover{border-color:var(--blue)}
+.req-code{font-family:var(--f-mono);font-size:9px;color:var(--blue);letter-spacing:.1em;margin-bottom:8px}
+.req-title{font-family:var(--f-head);font-size:14px;font-weight:700;color:var(--ink);margin-bottom:6px}
+.req-body{font-size:13px;color:var(--ink3);line-height:1.6}
+.compare-table{width:100%;border-collapse:collapse;margin:28px 0;font-size:14px}
+.compare-table th{font-family:var(--f-mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink4);padding:10px 16px;border-bottom:2px solid var(--rule);text-align:left;background:var(--off)}
+.compare-table td{padding:12px 16px;border-bottom:1px solid var(--rule);vertical-align:top;color:var(--ink2);line-height:1.6}
+.compare-table tr:last-child td{border-bottom:none}
+.compare-table td:first-child{font-weight:600;color:var(--ink);font-family:var(--f-mono);font-size:12px}
+.mono-block{background:var(--ink);border-radius:8px;padding:20px 24px;margin:24px 0;font-family:var(--f-mono);font-size:12px;color:rgba(255,255,255,.85);line-height:1.8;overflow-x:auto}
+.mono-block .label{color:rgba(255,255,255,.35);font-size:10px;letter-spacing:.1em;margin-bottom:10px;display:block}
+.mono-block .hi{color:#6699ff}.mono-block .val{color:#33cc80}.mono-block .dim{color:rgba(255,255,255,.5)}
+.sidebar{position:sticky;top:88px;display:flex;flex-direction:column;gap:16px}
+.toc-card{border:1px solid var(--rule);border-radius:8px;padding:24px;background:var(--white);box-shadow:var(--shadow-sm)}
+.toc-label{font-family:var(--f-mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);margin-bottom:16px}
+.toc-list{list-style:none;display:flex;flex-direction:column;gap:2px}
+.toc-list a{display:block;font-size:13px;color:var(--ink3);text-decoration:none;padding:6px 10px;border-radius:4px;transition:all .15s;border-left:2px solid transparent}
+.toc-list a:hover,.toc-list a.active{color:var(--blue);background:var(--blue-dim);border-left-color:var(--blue)}
+.sidebar-cta{border:1px solid var(--blue);border-radius:8px;padding:24px;background:var(--blue-dim)}
+.sc-eyebrow{font-family:var(--f-mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);margin-bottom:10px}
+.sc-title{font-family:var(--f-head);font-size:17px;font-weight:800;letter-spacing:-.02em;color:var(--ink);margin-bottom:8px;line-height:1.2}
+.sc-body{font-size:13px;color:var(--ink3);line-height:1.6;margin-bottom:16px}
+.sc-btn{display:block;text-align:center;padding:11px 16px;background:var(--blue);color:white;border-radius:6px;font-family:var(--f-body);font-size:13px;font-weight:500;text-decoration:none}.sc-btn:hover{background:var(--blue2)}
+.sc-note{font-family:var(--f-mono);font-size:9px;color:var(--ink4);text-align:center;margin-top:8px;letter-spacing:.04em}
+.sidebar-share{border:1px solid var(--rule);border-radius:8px;padding:20px 24px;background:var(--white)}
+.share-label{font-family:var(--f-mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);margin-bottom:14px}
+.share-links{display:flex;flex-direction:column;gap:8px}
+.share-link{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--ink3);text-decoration:none;padding:9px 12px;border:1px solid var(--rule);border-radius:6px;transition:border-color .2s,color .2s}.share-link:hover{border-color:var(--blue);color:var(--blue)}
+.related{padding:64px 6%;border-top:1px solid var(--rule);background:var(--off)}
+.related-inner{max-width:1100px;margin:0 auto}
+.related-label{font-family:var(--f-mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);margin-bottom:32px;display:flex;align-items:center;gap:10px}
+.related-label::before{content:'';width:20px;height:1px;background:var(--blue)}
+.related-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.related-card{padding:24px;border:1px solid var(--rule);border-radius:8px;background:var(--white);box-shadow:var(--shadow-sm);transition:border-color .2s,transform .2s;text-decoration:none;display:flex;flex-direction:column;gap:12px}.related-card:hover{border-color:var(--blue);transform:translateY(-4px)}
+.rc-tag{font-family:var(--f-mono);font-size:9px;color:var(--blue);letter-spacing:.08em;text-transform:uppercase;padding:3px 8px;background:var(--blue-dim);border-radius:3px;align-self:flex-start}
+.rc-title{font-family:var(--f-head);font-size:16px;font-weight:700;letter-spacing:-.02em;color:var(--ink);line-height:1.25}
+.rc-desc{font-size:13px;color:var(--ink3);line-height:1.6;flex:1}
+.rc-footer{display:flex;align-items:center;justify-content:space-between;padding-top:12px;border-top:1px solid var(--rule)}
+.rc-read{font-family:var(--f-mono);font-size:10px;color:var(--ink4)}.rc-arrow{font-size:14px;color:var(--blue)}
+footer{padding:56px 6% 32px;border-top:1px solid var(--rule);background:var(--white)}
+.footer-inner{max-width:1160px;margin:0 auto}
+.footer-top{display:flex;justify-content:space-between;align-items:flex-start;gap:40px;flex-wrap:wrap;margin-bottom:48px}
+.footer-brand p{font-size:13px;font-weight:300;color:var(--ink3);margin-top:12px;max-width:260px;line-height:1.6}
+.footer-col h4{font-family:var(--f-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink4);margin-bottom:16px}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+.footer-col a{font-size:13px;color:var(--ink3);text-decoration:none}.footer-col a:hover{color:var(--blue)}
+.footer-bottom{padding-top:24px;border-top:1px solid var(--rule);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.footer-bottom p{font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.04em}
+.compliance-pills{display:flex;gap:6px;flex-wrap:wrap}
+.cp{font-family:var(--f-mono);font-size:9px;padding:3px 8px;border:1px solid var(--rule);border-radius:3px;color:var(--ink4);letter-spacing:.06em}
+@media(max-width:900px){.article-wrap{grid-template-columns:1fr;gap:48px}.sidebar{position:static}.related-grid{grid-template-columns:1fr}.req-grid{grid-template-columns:1fr}nav .nav-links{display:none}}
+@media(max-width:540px){nav{padding:0 4%}.nav-btn{font-size:12px;padding:8px 14px}}
+</style>
+</head>
+<body>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+<nav>
+  <a href="../index.html" class="nav-logo">
+    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" style="flex-shrink:0"><rect width="32" height="32" rx="7" fill="#0d0f12"/><rect x="8" y="7" width="16" height="16" rx="2" stroke="white" stroke-width="2.5" fill="none"/><line x1="20" y1="19" x2="26" y2="25" stroke="#0057FF" stroke-width="3" stroke-linecap="round"/></svg>
+    <span style="font-family:'Epilogue',sans-serif;font-weight:800;font-size:16px;color:#0d0f12;letter-spacing:-.03em;white-space:nowrap">QLean <span style="font-weight:300;color:#5a6172">Automation</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="../index.html#products">Products</a></li>
+    <li><a href="../index.html#framework">Framework</a></li>
+    <li><a href="blog-index.html">Blog</a></li>
+    <li><a href="../index.html#pricing">Pricing</a></li>
+    <li><a href="../index.html#faq">FAQ</a></li>
+  </ul>
+  <a href="../index.html#pricing" class="nav-btn">Get the Framework →</a>
+</nav>
+<header class="article-hero">
+  <div class="article-hero-inner">
+    <div class="breadcrumb"><a href="../index.html">Home</a><span>/</span><a href="blog-index.html">Blog</a><span>/</span>Supplier Assessment</div>
+    <div class="article-tag">🔍 Supplier Assessment</div>
+    <h1>Supplier Assessment<br><span>in GAMP 5:</span><br>What to Ask and How to Use It</h1>
+    <p class="article-intro">Under Annex 11, supplier assessment must happen before the contract is awarded — not after the system is installed. The outcome directly affects your OQ scope. A supplier with a mature QMS lets you leverage their factory testing. A supplier without one means you're testing everything yourself.</p>
+    <div class="article-meta">
+      <div class="meta-author">
+        <div class="author-avatar"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="7" r="3.5" stroke="white" stroke-width="1.5"/><path d="M2.5 16c0-3.59 2.91-6.5 6.5-6.5s6.5 2.91 6.5 6.5" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+        <div><div class="author-name">QLean Automation</div><div class="author-role">ENGINEERS WHO BUILD SYSTEMS, NOT JUST SIGN THEM</div></div>
+      </div>
+      <div class="meta-divider"></div><div class="meta-stat">MAY 2026</div>
+      <div class="meta-divider"></div><div class="meta-stat">7 MIN READ</div>
+      <div class="meta-divider"></div><div class="meta-stat">GAMP 5 · ANNEX 11 · SUPPLIER</div>
+    </div>
+  </div>
+</header>
+<div class="article-wrap">
+  <article class="article-body">
+
+    <h2 id="why-supplier">Why Supplier Assessment Is Part of Validation</h2>
+    <p>In GAMP 5, the supplier of a software system is not just a vendor — they are a contributor to the validation evidence. The regulator's logic is straightforward: if a system integrator or software vendor has a mature quality management system and can demonstrate they test their products rigorously, the pharmaceutical company can leverage that work rather than repeat it entirely. Conversely, a supplier with no documented QMS is a risk that must be compensated for with more extensive in-house testing.</p>
+    <p>This is why EU GMP Annex 11 §3 requires supplier assessment <em>before</em> the contract is awarded — not after the system is installed. An assessment completed retrospectively is a finding.</p>
+
+    <div class="callout blue">
+      <div class="callout-label">Annex 11 vs Part 11 on Suppliers</div>
+      <p>EU GMP Annex 11 §3 explicitly requires supplier assessment and audit as part of the validation process. 21 CFR Part 11 addresses this less directly — it requires validation of the system, and leveraging a supplier's testing evidence is an accepted approach under CSA. See our <a href="eu-gmp-annex-11-vs-21-cfr-part-11.html">Annex 11 vs Part 11 comparison</a> for the full picture.</p>
+    </div>
+
+    <h2 id="saq">The Supplier Assessment Questionnaire (SAQ)</h2>
+    <p>The SAQ is a structured questionnaire sent to the supplier before contract award. It covers: Quality Management System certification (ISO 9001, ISO 13485), software development lifecycle methodology, defect tracking and release management processes, test documentation practices, and post-delivery support arrangements.</p>
+    <p>The SAQ is not an audit — it's a paper assessment. The supplier completes it and provides supporting evidence (ISO certificates, sample procedures). Based on the SAQ response, the pharmaceutical company decides whether a more detailed on-site audit is needed, or whether the paper assessment is sufficient.</p>
+
+    <h2 id="sar">The Supplier Assessment Report (SAR)</h2>
+    <p>The SAR documents the outcome of the supplier assessment. It references the SAQ responses, notes any gaps or concerns identified, and draws a conclusion: the supplier's QMS is adequate to support leveraging their testing evidence, or it is not and additional in-house testing will compensate for the gap.</p>
+    <p>The SAR should be completed and approved before the URS is sent to the supplier for FDS authoring. It informs both the validation scope (what vendor testing evidence will be leveraged) and the contract (what documentation deliverables the supplier must provide).</p>
+
+    <figure class="article-img">
+      <svg viewBox="0 0 720 170" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;background:#0d0f12;border-radius:8px 8px 0 0">
+        <defs><marker id="as" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,0.5 L5,3 L0,5.5" fill="none" stroke="#0057ff" stroke-width="1.2"/></marker></defs>
+        <text x="360" y="20" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(255,255,255,0.2)" letter-spacing="0.12em">SUPPLIER ASSESSMENT PROCESS — SEQUENCE AND OUTPUTS</text>
+        <!-- Step 1 -->
+        <rect x="15" y="36" width="130" height="56" rx="4" fill="rgba(0,87,255,0.1)" stroke="rgba(0,87,255,0.3)" stroke-width="1"/>
+        <text x="80" y="58" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="#6699ff">STEP 1</text>
+        <text x="80" y="72" text-anchor="middle" font-family="Epilogue,sans-serif" font-weight="700" font-size="11" fill="white">Issue SAQ</text>
+        <text x="80" y="85" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7" fill="rgba(255,255,255,0.3)">Pre-contract</text>
+        <line x1="147" y1="64" x2="173" y2="64" stroke="#0057ff" stroke-width="1.5" marker-end="url(#as)"/>
+        <!-- Step 2 -->
+        <rect x="175" y="36" width="130" height="56" rx="4" fill="rgba(0,87,255,0.1)" stroke="rgba(0,87,255,0.3)" stroke-width="1"/>
+        <text x="240" y="58" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="#6699ff">STEP 2</text>
+        <text x="240" y="72" text-anchor="middle" font-family="Epilogue,sans-serif" font-weight="700" font-size="11" fill="white">Review SAQ</text>
+        <text x="240" y="85" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7" fill="rgba(255,255,255,0.3)">+ evidence</text>
+        <line x1="307" y1="64" x2="333" y2="64" stroke="#0057ff" stroke-width="1.5" marker-end="url(#as)"/>
+        <!-- Step 3 -->
+        <rect x="335" y="36" width="130" height="56" rx="4" fill="rgba(217,119,6,0.1)" stroke="rgba(217,119,6,0.4)" stroke-width="1"/>
+        <text x="400" y="55" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(217,119,6,0.8)">STEP 3</text>
+        <text x="400" y="69" text-anchor="middle" font-family="Epilogue,sans-serif" font-weight="700" font-size="11" fill="rgba(255,255,255,0.8)">Audit?</text>
+        <text x="400" y="83" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7" fill="rgba(217,119,6,0.5)">If gaps found</text>
+        <line x1="467" y1="64" x2="493" y2="64" stroke="#0057ff" stroke-width="1.5" marker-end="url(#as)"/>
+        <!-- Step 4 -->
+        <rect x="495" y="36" width="130" height="56" rx="4" fill="rgba(0,135,90,0.12)" stroke="#00875a" stroke-width="1.2"/>
+        <text x="560" y="55" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(0,175,90,0.8)">STEP 4</text>
+        <text x="560" y="69" text-anchor="middle" font-family="Epilogue,sans-serif" font-weight="700" font-size="11" fill="white">Issue SAR</text>
+        <text x="560" y="83" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7" fill="rgba(0,175,90,0.5)">Approved pre-URS</text>
+        <!-- Outcome boxes -->
+        <rect x="175" y="110" width="200" height="40" rx="3" fill="rgba(0,135,90,0.08)" stroke="#00875a" stroke-width="1"/>
+        <text x="275" y="128" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="#00c97a">ADEQUATE QMS</text>
+        <text x="275" y="142" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(0,175,90,0.7)">Leverage vendor test evidence in OQ</text>
+        <rect x="400" y="110" width="200" height="40" rx="3" fill="rgba(217,119,6,0.08)" stroke="rgba(217,119,6,0.4)" stroke-width="1"/>
+        <text x="500" y="128" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(217,119,6,0.8)">GAPS FOUND</text>
+        <text x="500" y="142" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(217,119,6,0.6)">Extended in-house testing required</text>
+      </svg>
+      <figcaption>// THE SAR CONCLUSION DIRECTLY IMPACTS YOUR OQ SCOPE — A STRONG SUPPLIER QMS REDUCES YOUR TESTING BURDEN. DOCUMENT THE LOGIC.</figcaption>
+    </figure>
+
+    <h2 id="what-to-ask">What to Ask in the SAQ</h2>
+    <p>An effective SAQ for a PLC/SCADA system integrator covers:</p>
+    <ul class="checklist">
+      <li>ISO 9001 or equivalent certification — certificate reference and expiry</li>
+      <li>Software development lifecycle methodology — do they follow IEC 62443 or similar?</li>
+      <li>Version control system — how is PLC/SCADA code versioned and released?</li>
+      <li>Testing procedures — what testing is performed before delivery? Is it documented?</li>
+      <li>Defect management — how are bugs tracked, prioritised, and resolved?</li>
+      <li>Factory testing evidence — can they provide factory test records for the delivered system?</li>
+      <li>Post-delivery support — what are the support arrangements for the validated period?</li>
+      <li>Subcontractor management — if subcontractors are used, how are they assessed?</li>
+    </ul>
+
+    <h2 id="leverage">What "Leveraging Supplier Testing" Actually Means</h2>
+    <p>When the SAR concludes that a supplier's QMS is adequate, the pharmaceutical company can leverage the supplier's test evidence in their own OQ. In practice this means: if the supplier has factory test records showing that a specific function was tested and passed, those records can be referenced as supporting evidence in the OQ rather than requiring a full re-execution from scratch.</p>
+    <p>The critical condition is that the factory test records must exist, be retrievable, and specifically cover the functions being claimed. "The supplier is ISO certified" is not the same as "the supplier has documented test records for the batch sequencing logic we're leveraging." The SAR should specify exactly which functions are being leveraged and what evidence exists.</p>
+
+    <div class="callout green">
+      <div class="callout-label">In the QLean Framework</div>
+      <p>The framework includes a Supplier Assessment Questionnaire template (16 structured questions covering QMS, development lifecycle, testing, and support) and a Supplier Assessment Report template with the assessment summary, gap analysis, and conclusion section. The SAR conclusion section explicitly references which OQ functions can leverage supplier evidence and which require independent testing.</p>
+    </div>
+
+  </article>
+  <aside class="sidebar">
+    <div class="toc-card">
+      <div class="toc-label">In This Article</div>
+      <ul class="toc-list">
+        <li><a href="#why-supplier" class="active">Why It's Part of Validation</a></li>
+        <li><a href="#saq">The SAQ</a></li>
+        <li><a href="#sar">The SAR</a></li>
+        <li><a href="#what-to-ask">What to Ask</a></li>
+        <li><a href="#leverage">Leveraging Supplier Testing</a></li>
+      </ul>
+    </div>
+    <div class="sidebar-cta">
+      <div class="sc-eyebrow">QLean Framework</div>
+      <div class="sc-title">29 production-ready GAMP 5 documents</div>
+      <div class="sc-body">Every document referenced in this article — templates, protocols, and registers — ready to adapt for your project.</div>
+      <a href="../index.html#pricing" class="sc-btn">Get the Framework — €249 →</a>
+      <div class="sc-note">// INSTANT DOWNLOAD · COMPANY-WIDE LICENCE</div>
+    </div>
+    <div class="sidebar-share">
+      <div class="share-label">Share This Article</div>
+      <div class="share-links">
+        <a href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fqleanautomation.com%2Fblog%2Fsupplier-assessment-gamp5.html" target="_blank" rel="noopener" class="share-link">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          Share on LinkedIn
+        </a>
+        <a href="https://www.reddit.com/submit?url=https%3A%2F%2Fqleanautomation.com%2Fblog%2Fsupplier-assessment-gamp5.html&title=Supplier+Assessment+in+GAMP+5+What+to+Ask+and+How+to+Leverage+the+Results" target="_blank" rel="noopener" class="share-link">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/></svg>
+          Share on Reddit
+        </a>
+      </div>
+    </div>
+  </aside>
+</div>
+<section class="related">
+  <div class="related-inner">
+    <div class="related-label">More Articles</div>
+    <div class="related-grid">
+      <a href="eu-gmp-annex-11-vs-21-cfr-part-11.html" class="related-card">
+        <div class="rc-tag">⚖️ Regulatory</div>
+        <div class="rc-title">EU GMP Annex 11 vs 21 CFR Part 11</div>
+        <div class="rc-desc">Annex 11 §3 drives the supplier assessment requirement — here's how it compares to Part 11.</div>
+        <div class="rc-footer"><div class="rc-read">8 MIN READ</div><div class="rc-arrow">→</div></div>
+      </a>
+      <a href="validation-plan-what-it-must-contain.html" class="related-card">
+        <div class="rc-tag">📋 Validation Plan</div>
+        <div class="rc-title">The GAMP 5 Validation Plan: What It Must Contain</div>
+        <div class="rc-desc">The SAR conclusion feeds into the Validation Plan's test approach section.</div>
+        <div class="rc-footer"><div class="rc-read">7 MIN READ</div><div class="rc-arrow">→</div></div>
+      </a>
+      <a href="gamp5-risk-assessment-how-to-score.html" class="related-card">
+        <div class="rc-tag">⚠️ Risk</div>
+        <div class="rc-title">GAMP 5 Risk Assessment: How to Score and Justify</div>
+        <div class="rc-desc">SAR gaps increase risk scores — the risk assessment and supplier assessment inform each other.</div>
+        <div class="rc-footer"><div class="rc-read">8 MIN READ</div><div class="rc-arrow">→</div></div>
+      </a>
+    </div>
+  </div>
+</section>
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="../index.html" class="nav-logo">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none" style="flex-shrink:0"><rect width="32" height="32" rx="7" fill="#0d0f12"/><rect x="8" y="7" width="16" height="16" rx="2" stroke="white" stroke-width="2.5" fill="none"/><line x1="20" y1="19" x2="26" y2="25" stroke="#0057FF" stroke-width="3" stroke-linecap="round"/></svg>
+          <span style="font-family:'Epilogue',sans-serif;font-weight:800;font-size:16px;color:#0d0f12;letter-spacing:-.03em;white-space:nowrap">QLean <span style="font-weight:300;color:#5a6172">Automation</span></span>
+        </a>
+        <p>GMP documentation tools for system integrators and automation engineers entering pharmaceutical projects.</p>
+      </div>
+      <div class="footer-col"><h4>Products</h4><ul><li><a href="../index.html#framework">GAMP 5 Framework</a></li><li><a href="../index.html#products">Technical Masterclass</a></li></ul></div>
+      <div class="footer-col"><h4>Blog</h4><ul>
+        <li><a href="blog-index.html">All Articles</a></li>
+        <li><a href="iq-oq-pq-guide.html">IQ OQ PQ Guide</a></li>
+        <li><a href="21-cfr-part-11.html">21 CFR Part 11</a></li>
+        <li><a href="how-to-write-urs-plc-scada.html">How to Write a URS</a></li>
+        <li><a href="eu-gmp-annex-11-vs-21-cfr-part-11.html">Annex 11 vs Part 11</a></li>
+        <li><a href="v-model-pharma-validation.html">The V-Model</a></li>
+        <li><a href="change-control-validated-system.html">Change Control</a></li>
+      </ul></div>
+      <div class="footer-col"><h4>Company</h4><ul><li><a href="https://www.linkedin.com/company/qlean-automation" target="_blank">LinkedIn</a></li><li><a href="mailto:hello@qleanautomation.com">Contact</a></li><li><a href="../terms.html">Terms</a></li></ul></div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 QLEAN AUTOMATION · QLEANAUTOMATION.COM</p>
+      <div class="compliance-pills"><span class="cp">GAMP 5</span><span class="cp">EU ANNEX 11</span><span class="cp">21 CFR PART 11</span></div>
+    </div>
+  </div>
+</footer>
+<script>
+window.addEventListener('scroll',()=>{const d=document.documentElement;document.getElementById('progress').style.width=(d.scrollTop/(d.scrollHeight-d.clientHeight)*100)+'%'});
+const obs=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting){document.querySelectorAll('.toc-list a').forEach(l=>l.classList.remove('active'));const a=document.querySelector('.toc-list a[href="#'+x.target.id+'"]');if(a)a.classList.add('active')}})  ,{rootMargin:'-20% 0px -70% 0px'});
+document.querySelectorAll('[id]').forEach(s=>obs.observe(s));
+</script>
+</body>
+</html>

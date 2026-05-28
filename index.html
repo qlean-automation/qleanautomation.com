@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>QLean Automation | GMP Documentation for Automation Engineers</title>
+<meta name="description" content="GAMP 5 validation frameworks and documentation tools for system integrators entering pharmaceutical projects. Built by engineers, for engineers.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@300;400;500;600;700;800;900&family=Source+Sans+3:ital,wght@0,300;0,400;0,500;1,300&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --white:     #ffffff;
+  --off:       #f7f8f9;
+  --off2:      #f0f2f4;
+  --ink:       #0d0f12;
+  --ink2:      #1e2128;
+  --ink3:      #3d4456;
+  --ink4:      #9199a8;
+  --rule:      #e2e5ea;
+  --rule2:     #c8cdd6;
+  --blue:      #0057ff;
+  --blue2:     #0044cc;
+  --blue-dim:  rgba(0,87,255,0.07);
+  --blue-glow: rgba(0,87,255,0.15);
+  --green:     #00875a;
+  --green-dim: rgba(0,135,90,0.08);
+  --amber:     #d97706;
+  --amber-dim: rgba(217,119,6,0.08);
+  --f-head:    'Epilogue', sans-serif;
+  --f-body:    'Source Sans 3', sans-serif;
+  --f-mono:    'Roboto Mono', monospace;
+  --shadow-sm:  0 2px 8px rgba(13,15,18,0.06), 0 1px 3px rgba(13,15,18,0.04);
+  --shadow-md:  0 4px 16px rgba(13,15,18,0.08), 0 2px 6px rgba(13,15,18,0.05);
+  --shadow-lg:  0 8px 32px rgba(13,15,18,0.10), 0 3px 10px rgba(13,15,18,0.06);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;font-size:16px}
+body{background:var(--white);color:var(--ink);font-family:var(--f-body);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+
+/* ── LOGO SVG ── */
+.ql-logo-svg { display:block; }
+
+/* ── NAV ── */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 6%;background:rgba(255,255,255,0.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--rule);transition:border-color .3s}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;flex-shrink:0}
+.nav-links{display:flex;align-items:center;gap:36px;list-style:none}
+.nav-links a{font-size:14px;font-weight:400;color:var(--ink3);text-decoration:none;transition:color .2s;letter-spacing:.01em}
+.nav-links a:hover{color:var(--ink)}
+.nav-btn{font-family:var(--f-body);font-size:13px;font-weight:500;padding:9px 20px;background:var(--blue);color:white;border:none;border-radius:6px;cursor:pointer;text-decoration:none;letter-spacing:.01em;transition:background .2s,transform .15s;white-space:nowrap;flex-shrink:0}
+.nav-btn:hover{background:var(--blue2);transform:translateY(-1px)}
+
+/* ── HERO ── */
+.hero{min-height:100vh;display:flex;align-items:center;padding:100px 6% 80px;position:relative;overflow:hidden}
+/* Large background engineering word — fills empty space */
+.hero-bg-word{position:absolute;bottom:-40px;left:50%;transform:translateX(-50%);font-family:var(--f-head);font-size:clamp(120px,18vw,220px);font-weight:900;color:transparent;-webkit-text-stroke:1px rgba(0,87,255,0.06);white-space:nowrap;letter-spacing:-.04em;pointer-events:none;user-select:none;z-index:0;line-height:1}
+/* Subtle top-right accent blob */
+.hero::before{content:'';position:absolute;top:-100px;right:-100px;width:500px;height:500px;background:radial-gradient(circle,rgba(0,87,255,0.04) 0%,transparent 70%);pointer-events:none;z-index:0}
+.hero-inner{max-width:900px;margin:0 auto;width:100%;display:flex;flex-direction:column;align-items:center;text-align:center;position:relative;z-index:1}
+.hero-label{display:inline-flex;align-items:center;gap:8px;font-family:var(--f-mono);font-size:16px;font-weight:500;color:var(--blue);letter-spacing:.1em;text-transform:uppercase;margin-bottom:32px}
+.hero-label-dot{width:6px;height:6px;background:var(--blue);border-radius:50%;animation:blink 2.4s ease-in-out infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
+.hero h1{font-family:var(--f-head);font-size:clamp(52px,8vw,96px);font-weight:900;line-height:0.97;letter-spacing:-.04em;color:var(--ink);margin-bottom:28px}
+.hero h1 .muted{color:var(--ink4)}
+.hero h1 .blue{color:var(--blue)}
+.hero-body{font-size:18px;font-weight:400;color:var(--ink2);line-height:1.75;max-width:640px;margin-bottom:44px}
+.hero-body strong{color:var(--ink);font-weight:600}
+.hero-actions{display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;margin-bottom:64px}
+.btn-primary{font-family:var(--f-body);font-size:14px;font-weight:500;padding:13px 28px;background:var(--blue);color:white;border:none;border-radius:6px;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:8px;letter-spacing:.01em;transition:all .2s var(--ease)}
+.btn-primary:hover{background:var(--blue2);transform:translateY(-2px);box-shadow:0 8px 24px var(--blue-glow)}
+.btn-ghost{font-family:var(--f-body);font-size:14px;font-weight:400;padding:13px 24px;background:transparent;color:var(--ink2);border:1px solid var(--rule2);border-radius:6px;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:all .2s}
+.btn-ghost:hover{border-color:var(--ink3);background:var(--off)}
+.hero-metrics{display:flex;justify-content:center;gap:0;width:100%;background:var(--white);border:1px solid var(--rule);border-radius:12px;overflow:hidden;box-shadow:var(--shadow-md)}
+.hm-item{flex:1;padding:24px 20px;text-align:center;border-right:1px solid var(--rule)}
+.hm-item:last-child{border-right:none}
+.hm-num{font-family:var(--f-head);font-size:36px;font-weight:900;letter-spacing:-.04em;color:var(--ink);line-height:1}
+.hm-num sup{font-size:16px;vertical-align:super}
+.hm-label{font-size:12px;color:var(--ink3);margin-top:6px;font-weight:400}
+
+/* ── HERO PANEL ── */
+.hero-panel{background:var(--ink);border-radius:12px;overflow:hidden;box-shadow:0 32px 80px rgba(0,0,0,.18)}
+.panel-bar{background:#1a1d23;padding:12px 16px;display:flex;align-items:center;gap:6px;border-bottom:1px solid rgba(255,255,255,.06)}
+.pb-dot{width:10px;height:10px;border-radius:50%}
+.pb-dot.r{background:#ff5f57}.pb-dot.a{background:#febc2e}.pb-dot.g{background:#28c840}
+.pb-title{font-family:var(--f-mono);font-size:11px;color:rgba(255,255,255,.3);margin-left:8px;letter-spacing:.06em}
+.pb-badge{margin-left:auto;font-family:var(--f-mono);font-size:9px;padding:3px 8px;background:rgba(0,87,255,.2);color:#6699ff;border-radius:3px;letter-spacing:.06em}
+.panel-body{padding:6px 0 12px}
+.doc-line{display:flex;align-items:center;gap:12px;padding:8px 16px;transition:background .15s;cursor:default}
+.doc-line:hover{background:rgba(255,255,255,.03)}
+.dl-code{font-family:var(--f-mono);font-size:10px;font-weight:500;color:#4d88ff;width:38px;flex-shrink:0;letter-spacing:.04em}
+.dl-name{font-size:12px;color:rgba(255,255,255,.75);flex:1;font-weight:300}
+.dl-tag{font-family:var(--f-mono);font-size:9px;padding:2px 6px;border-radius:3px;flex-shrink:0}
+.dl-tag.docx{background:rgba(26,120,255,.15);color:#6699ff}
+.dl-tag.xlsx{background:rgba(0,175,90,.15);color:#33cc80}
+.dl-tag.cat{background:rgba(255,255,255,.05);color:rgba(255,255,255,.3)}
+.panel-div{height:1px;background:rgba(255,255,255,.05);margin:8px 0}
+.panel-footer{padding:10px 16px;display:flex;align-items:center;justify-content:space-between;border-top:1px solid rgba(255,255,255,.05)}
+.pf-status{display:flex;align-items:center;gap:6px;font-family:var(--f-mono);font-size:10px;color:rgba(255,255,255,.25)}
+.pf-dot{width:6px;height:6px;border-radius:50%;background:#28c840;box-shadow:0 0 6px #28c840}
+
+/* ── TICKER ── */
+.ticker{background:var(--ink);padding:14px 0;overflow:hidden}
+.ticker-inner{display:flex;animation:tick 35s linear infinite;white-space:nowrap;width:max-content}
+@keyframes tick{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.ti{font-family:var(--f-mono);font-size:11px;letter-spacing:.08em;color:rgba(255,255,255,.25);padding:0 28px;flex-shrink:0}
+.ti.hi{color:rgba(255,255,255,.7)}
+.ti.sep{color:rgba(0,87,255,.5)}
+
+/* ── SECTION BASE ── */
+.section{padding:100px 6%}
+.section-alt{background:var(--off)}
+.wrap{max-width:1160px;margin:0 auto}
+.eyebrow{display:inline-flex;align-items:center;gap:10px;font-family:var(--f-mono);font-size:16px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--blue);margin-bottom:20px}
+.eyebrow::before{content:'';width:24px;height:1.5px;background:var(--blue);flex-shrink:0}
+.section-h{font-family:var(--f-head);font-size:clamp(30px,4vw,50px);font-weight:800;letter-spacing:-.04em;line-height:1.08;color:var(--ink);margin-bottom:16px}
+.section-h span{color:var(--blue)}
+.section-sub{font-size:17px;font-weight:400;color:var(--ink2);line-height:1.75;max-width:560px}
+
+/* ── SCENARIOS ── */
+.scenario-wrap{display:grid;grid-template-columns:1fr 1fr;gap:2px;margin-top:56px;border:1px solid var(--rule);border-radius:10px;overflow:hidden;box-shadow:var(--shadow-md)}
+.scenario{padding:40px;background:var(--white);transition:background .2s}
+.scenario:hover{background:var(--off)}
+.scenario:first-child{border-right:1px solid var(--rule)}
+.sc-num{font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.1em;margin-bottom:20px}
+.sc-head{font-family:var(--f-head);font-size:20px;font-weight:700;letter-spacing:-.03em;line-height:1.25;color:var(--ink);margin-bottom:14px}
+.sc-body{font-size:15px;font-weight:400;color:var(--ink2);line-height:1.75}
+.sc-body strong{color:var(--ink);font-weight:600}
+
+/* ── PRODUCTS GRID (4 cards) ── */
+.products-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:56px}
+.prod-card{border:1px solid var(--rule);border-radius:10px;padding:28px;position:relative;transition:border-color .2s,transform .2s,box-shadow .2s;background:var(--white);display:flex;flex-direction:column;gap:16px;box-shadow:var(--shadow-sm)}
+.prod-card:hover{transform:translateY(-5px);box-shadow:0 16px 48px rgba(0,87,255,.10),var(--shadow-lg)}
+.prod-card.active{border-color:var(--blue)}
+.prod-card.active:hover{box-shadow:0 16px 48px rgba(0,87,255,.12)}
+.prod-card.coming{opacity:.7}
+.prod-card.coming:hover{transform:none;box-shadow:none;border-color:var(--rule)}
+.prod-num{font-family:var(--f-mono);font-size:9px;color:var(--ink4);letter-spacing:.12em;text-transform:uppercase}
+.prod-icon{width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.prod-icon.blue{background:var(--blue-dim)}
+.prod-icon.green{background:var(--green-dim)}
+.prod-icon.amber{background:var(--amber-dim)}
+.prod-icon.gray{background:var(--off2)}
+.prod-title{font-family:var(--f-head);font-size:16px;font-weight:700;letter-spacing:-.02em;color:var(--ink);line-height:1.2}
+.prod-body{font-size:14px;font-weight:400;color:var(--ink2);line-height:1.65;flex:1}
+.prod-footer{display:flex;align-items:center;justify-content:space-between;padding-top:12px;border-top:1px solid var(--rule)}
+.prod-badge{font-family:var(--f-mono);font-size:9px;padding:3px 8px;border-radius:3px;letter-spacing:.06em;text-transform:uppercase;font-weight:500}
+.prod-badge.live{background:var(--green-dim);color:var(--green)}
+.prod-badge.soon{background:var(--off2);color:var(--ink4)}
+.prod-price{font-family:var(--f-head);font-size:17px;font-weight:800;color:var(--ink);letter-spacing:-.02em}
+.prod-price.free{color:var(--green)}
+.prod-price.tbd{font-size:13px;color:var(--ink4);font-weight:400;font-family:var(--f-body)}
+.prod-link{font-size:12px;color:var(--blue);text-decoration:none;font-weight:500;transition:color .2s}
+.prod-link:hover{color:var(--blue2)}
+
+/* ── PRODUCT DETAIL ── */
+.product-layout{display:grid;grid-template-columns:1.1fr 1fr;gap:64px;align-items:start;margin-top:56px}
+.doc-table{border:1px solid var(--rule);border-radius:8px;overflow:hidden}
+.dt-header{display:grid;grid-template-columns:44px 1fr 56px 64px;gap:0;padding:10px 16px;background:var(--off);border-bottom:1px solid var(--rule)}
+.dt-header span{font-family:var(--f-mono);font-size:9px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--ink4)}
+.dt-row{display:grid;grid-template-columns:44px 1fr 56px 64px;gap:0;padding:10px 16px;border-bottom:1px solid var(--rule);align-items:center;transition:background .15s}
+.dt-row:last-child{border-bottom:none}
+.dt-row:hover{background:var(--off)}
+.dt-code{font-family:var(--f-mono);font-size:10px;font-weight:500;color:var(--blue);letter-spacing:.04em}
+.dt-name{font-size:12px;color:var(--ink2)}
+.dt-type{font-family:var(--f-mono);font-size:9px;padding:2px 6px;border-radius:3px;text-align:center;font-weight:500}
+.dt-type.w{background:rgba(0,87,255,.08);color:var(--blue)}
+.dt-type.x{background:rgba(0,135,90,.08);color:var(--green)}
+.dt-scope{font-family:var(--f-mono);font-size:9px;color:var(--ink4);text-align:right}
+.dt-more{padding:12px 16px;text-align:center;font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.06em;background:var(--off)}
+.pi-block{padding:24px;border:1px solid var(--rule);border-radius:8px;margin-bottom:12px;transition:border-color .2s,box-shadow .2s;box-shadow:var(--shadow-sm)}
+.pi-block:hover{border-color:var(--blue);box-shadow:var(--shadow-md)}
+.pi-title{font-family:var(--f-head);font-size:15px;font-weight:700;letter-spacing:-.02em;color:var(--ink);margin-bottom:8px}
+.pi-body{font-size:14px;font-weight:400;color:var(--ink2);line-height:1.7}
+.pi-body strong{color:var(--ink);font-weight:600}
+.arrow-list{list-style:none;display:flex;flex-direction:column;gap:6px;margin-top:10px}
+.arrow-list li{font-size:13px;color:var(--ink2);display:flex;align-items:flex-start;gap:8px;line-height:1.5}
+.arrow-list li::before{content:'→';color:var(--blue);flex-shrink:0;font-size:11px;margin-top:1px}
+
+/* ── HOW IT WORKS ── */
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:56px;position:relative}
+.steps::after{content:'';position:absolute;top:24px;left:calc(12.5% + 12px);right:calc(12.5% + 12px);height:1px;background:var(--rule)}
+.step{padding:0 20px;text-align:center}
+.step-n{width:48px;height:48px;border-radius:50%;border:1px solid var(--rule);background:var(--white);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;font-family:var(--f-head);font-size:16px;font-weight:800;color:var(--blue);position:relative;z-index:1;transition:all .25s}
+.step:hover .step-n{background:var(--blue);color:white;border-color:var(--blue);box-shadow:0 0 0 6px var(--blue-dim)}
+.step-title{font-family:var(--f-head);font-size:14px;font-weight:700;letter-spacing:-.01em;color:var(--ink);margin-bottom:8px}
+.step-body{font-size:14px;font-weight:400;color:var(--ink2);line-height:1.65}
+
+.counter-row{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-top:24px;border:1px solid var(--rule);border-radius:8px;overflow:hidden}
+.counter-cell{padding:32px 24px;text-align:center;background:var(--white);border-right:1px solid var(--rule)}
+.counter-cell:last-child{border-right:none}
+.counter-n{font-family:var(--f-head);font-size:48px;font-weight:900;letter-spacing:-.05em;color:var(--ink);line-height:1}
+.counter-n span{color:var(--blue)}
+.counter-l{font-size:12px;color:var(--ink4);margin-top:8px;line-height:1.4}
+
+/* ── LEAD MAGNET ── */
+.magnet{background:var(--blue);padding:80px 6%}
+.magnet-inner{max-width:680px;margin:0 auto;text-align:center}
+.magnet .eyebrow{color:rgba(255,255,255,.4);justify-content:center}
+.magnet .eyebrow::before{background:rgba(255,255,255,.25)}
+.magnet-h{font-family:var(--f-head);font-size:clamp(28px,4vw,44px);font-weight:800;letter-spacing:-.04em;line-height:1.1;color:white;margin-bottom:14px}
+.magnet-sub{font-size:16px;font-weight:300;color:rgba(255,255,255,.65);line-height:1.7;margin-bottom:36px}
+.magnet-form{display:flex;gap:8px;max-width:460px;margin:0 auto;flex-wrap:wrap}
+.magnet-input{flex:1;min-width:180px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);border-radius:6px;padding:12px 16px;color:white;font-family:var(--f-body);font-size:14px;outline:none;transition:border-color .2s}
+.magnet-input::placeholder{color:rgba(255,255,255,.35)}
+.magnet-input:focus{border-color:rgba(255,255,255,.6)}
+.magnet-btn{background:white;color:var(--blue);font-family:var(--f-body);font-size:13px;font-weight:600;padding:12px 22px;border-radius:6px;border:none;cursor:pointer;white-space:nowrap;transition:all .2s;flex-shrink:0}
+.magnet-btn:hover{background:var(--off);transform:translateY(-1px)}
+.magnet-note{font-family:var(--f-mono);font-size:10px;color:rgba(255,255,255,.3);margin-top:14px;letter-spacing:.06em}
+
+/* ── PRICING ── */
+.pricing-grid{display:grid;grid-template-columns:1fr 1.08fr 1fr;gap:16px;margin-top:56px;align-items:start}
+.pricing-card{border:1px solid var(--rule);border-radius:8px;padding:32px;background:var(--white);position:relative;transition:border-color .2s,transform .2s,box-shadow .2s;box-shadow:var(--shadow-md)}
+.pricing-card:hover{transform:translateY(-6px);box-shadow:var(--shadow-lg)}
+.pricing-card.featured{border-color:var(--blue);box-shadow:0 0 0 1px var(--blue),0 24px 64px rgba(0,87,255,.1);padding:40px 32px}
+.pricing-card.featured:hover{box-shadow:0 0 0 1px var(--blue),0 32px 80px rgba(0,87,255,.15)}
+.pricing-badge{position:absolute;top:-13px;left:50%;transform:translateX(-50%);background:var(--blue);color:white;font-family:var(--f-mono);font-size:9px;font-weight:500;padding:4px 14px;border-radius:20px;letter-spacing:.1em;text-transform:uppercase;white-space:nowrap}
+.p-tier{font-family:var(--f-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink4);margin-bottom:14px}
+.p-price{font-family:var(--f-head);font-size:54px;font-weight:900;letter-spacing:-.05em;line-height:1;color:var(--ink);margin-bottom:6px}
+.p-price sup{font-size:22px;vertical-align:super;margin-right:1px}
+.p-desc{font-size:14px;font-weight:400;color:var(--ink2);margin-bottom:24px;line-height:1.55}
+.p-rule{height:1px;background:var(--rule);margin-bottom:20px}
+.p-features{list-style:none;display:flex;flex-direction:column;gap:9px;margin-bottom:28px}
+.p-features li{font-size:14px;font-weight:400;color:var(--ink2);display:flex;align-items:flex-start;gap:8px;line-height:1.5}
+.p-features li::before{content:'';width:14px;height:14px;flex-shrink:0;margin-top:2px;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 14 14' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='7' cy='7' r='6.5' fill='none' stroke='%230057ff' stroke-width='1'/%3E%3Cpath d='M4 7l2 2 4-4' stroke='%230057ff' stroke-width='1.3' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:center}
+.p-cta{display:block;width:100%;text-align:center;padding:13px;border-radius:6px;font-family:var(--f-body);font-size:13px;font-weight:500;cursor:pointer;text-decoration:none;transition:all .2s;letter-spacing:.01em}
+.p-cta.primary{background:var(--blue);color:white;border:none}
+.p-cta.primary:hover{background:var(--blue2);transform:translateY(-1px)}
+.p-cta.outline{background:transparent;color:var(--ink2);border:1px solid var(--rule2)}
+.p-cta.outline:hover{border-color:var(--ink3);background:var(--off)}
+.pricing-note{margin-top:24px;padding:20px 24px;background:var(--off);border-radius:8px;border:1px solid var(--rule);font-size:14px;font-weight:400;color:var(--ink2);line-height:1.7}
+.pricing-note strong{color:var(--ink);font-weight:500}
+.pricing-note span{color:var(--blue);font-weight:500}
+
+/* ── FAQ ── */
+.faq-layout{display:grid;grid-template-columns:1.1fr 1fr;gap:56px;margin-top:56px;align-items:start}
+.faq-stack{display:flex;flex-direction:column;gap:2px}
+.faq-item{border:1px solid var(--rule);border-radius:6px;overflow:hidden;transition:border-color .2s,box-shadow .2s;box-shadow:var(--shadow-sm)}
+.faq-item.open{border-color:var(--blue)}
+.faq-q{padding:18px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px;cursor:pointer}
+.faq-q h3{font-family:var(--f-head);font-size:14px;font-weight:600;letter-spacing:-.01em;color:var(--ink);line-height:1.35}
+.faq-icon{width:20px;height:20px;flex-shrink:0;color:var(--ink4);transition:transform .25s,color .2s}
+.faq-item.open .faq-icon{transform:rotate(45deg);color:var(--blue)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .3s ease}
+.faq-item.open .faq-a{max-height:320px}
+.faq-a-body{padding:0 20px 18px;border-top:1px solid var(--rule);font-size:14px;font-weight:400;color:var(--ink2);line-height:1.75}
+.faq-a-body strong{color:var(--ink2);font-weight:500}
+.faq-aside{display:flex;flex-direction:column;gap:12px}
+.faq-aside-block{padding:24px;border-radius:8px;border:1px solid var(--rule);background:var(--white);box-shadow:var(--shadow-sm)}
+.faq-aside-block h3{font-family:var(--f-head);font-size:15px;font-weight:700;letter-spacing:-.02em;margin-bottom:10px}
+.faq-aside-block p{font-size:14px;font-weight:400;color:var(--ink2);line-height:1.7}
+
+/* ── FINAL CTA ── */
+.final{padding:100px 6%;text-align:center;position:relative;overflow:hidden}
+.final::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 50% at 50% 100%,rgba(0,87,255,.05) 0%,transparent 100%);pointer-events:none}
+.final-inner{max-width:600px;margin:0 auto;position:relative;z-index:1}
+.final-h{font-family:var(--f-head);font-size:clamp(36px,5vw,62px);font-weight:900;letter-spacing:-.04em;line-height:1.05;color:var(--ink);margin-bottom:18px}
+.final-h span{color:var(--blue)}
+.final-sub{font-size:17px;font-weight:400;color:var(--ink2);margin-bottom:36px;line-height:1.7}
+.final-note{font-family:var(--f-mono);font-size:10px;color:var(--ink4);margin-top:16px;letter-spacing:.06em}
+
+/* ── FOOTER ── */
+footer{padding:56px 6% 32px;border-top:1px solid var(--rule);background:var(--white)}
+.footer-inner{max-width:1160px;margin:0 auto}
+.footer-top{display:flex;justify-content:space-between;align-items:flex-start;gap:40px;flex-wrap:wrap;margin-bottom:48px}
+.footer-brand p{font-size:13px;font-weight:300;color:var(--ink3);margin-top:12px;max-width:260px;line-height:1.6}
+.footer-col h4{font-family:var(--f-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink4);margin-bottom:16px}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+.footer-col a{font-size:13px;color:var(--ink3);text-decoration:none;transition:color .2s}
+.footer-col a:hover{color:var(--blue)}
+.footer-bottom{padding-top:24px;border-top:1px solid var(--rule);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.footer-bottom p{font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.04em}
+.compliance-pills{display:flex;gap:6px;flex-wrap:wrap}
+.cp{font-family:var(--f-mono);font-size:9px;padding:3px 8px;border:1px solid var(--rule);border-radius:3px;color:var(--ink4);letter-spacing:.06em}
+
+/* ── MAILERLITE OVERRIDES ── */
+.ml-form-wrapper{max-width:700px;margin:0 auto 16px}
+.ml-form-wrapper .ml-embedded .ml-form-embedWrapper{background:transparent !important;border:none !important;padding:0 !important;box-shadow:none !important}
+.ml-form-wrapper .ml-embedded .ml-form-embedBody{background:transparent !important;padding:0 !important}
+.ml-form-wrapper .ml-embedded .ml-form-fieldRow input{background:rgba(255,255,255,0.12) !important;border:1px solid rgba(255,255,255,0.25) !important;border-radius:6px !important;color:white !important;font-family:var(--f-body) !important;font-size:14px !important;padding:12px 16px !important;height:auto !important}
+.ml-form-wrapper .ml-embedded .ml-form-fieldRow input::placeholder{color:rgba(255,255,255,0.4) !important}
+.ml-form-wrapper .ml-embedded .ml-form-fieldRow input:focus{border-color:rgba(255,255,255,0.6) !important;outline:none !important}
+.ml-form-wrapper .ml-embedded .ml-form-embedSubmit button{background:white !important;color:var(--blue) !important;font-family:var(--f-body) !important;font-size:13px !important;font-weight:600 !important;padding:12px 22px !important;border-radius:6px !important;border:none !important;width:100% !important;cursor:pointer !important;transition:all .2s !important}
+.ml-form-wrapper .ml-embedded .ml-form-embedSubmit button:hover{background:var(--off) !important;transform:translateY(-1px) !important}
+.ml-form-wrapper .ml-embedded .ml-form-embedBody .ml-form-fieldRow{margin-bottom:8px !important}
+.ml-form-wrapper .ml-embedded .ml-form-successBody{background:transparent !important;padding:0 !important}
+.ml-form-wrapper .ml-embedded .ml-form-successBody p{color:white !important;font-family:var(--f-body) !important;font-size:15px !important;text-align:center !important}
+.ml-form-wrapper .ml-embedded p,.ml-form-wrapper .ml-embedded h4,.ml-form-wrapper .ml-embedded label{display:none !important}
+/* ── END MAILERLITE OVERRIDES ── */
+.reveal{opacity:0;transform:translateY(32px);transition:opacity .7s cubic-bezier(0.16,1,0.3,1),transform .7s cubic-bezier(0.16,1,0.3,1)}
+.reveal.in{opacity:1;transform:translateY(0)}
+.rd1{transition-delay:.1s}.rd2{transition-delay:.2s}.rd3{transition-delay:.3s}.rd4{transition-delay:.4s}
+
+/* Child stagger — cards inside a revealed grid animate individually */
+.stagger-children > *{opacity:0;transform:translateY(28px);transition:opacity .6s cubic-bezier(0.16,1,0.3,1),transform .6s cubic-bezier(0.16,1,0.3,1)}
+.stagger-children.in > *:nth-child(1){opacity:1;transform:translateY(0);transition-delay:.05s}
+.stagger-children.in > *:nth-child(2){opacity:1;transform:translateY(0);transition-delay:.15s}
+.stagger-children.in > *:nth-child(3){opacity:1;transform:translateY(0);transition-delay:.25s}
+.stagger-children.in > *:nth-child(4){opacity:1;transform:translateY(0);transition-delay:.35s}
+
+/* Hero entrance — each element animates in sequence on load */
+.hero-label{animation:fadeUp .6s cubic-bezier(0.16,1,0.3,1) .1s both}
+.hero h1{animation:fadeUp .8s cubic-bezier(0.16,1,0.3,1) .22s both}
+.hero-body{animation:fadeUp .7s cubic-bezier(0.16,1,0.3,1) .38s both}
+.hero-actions{animation:fadeUp .7s cubic-bezier(0.16,1,0.3,1) .52s both}
+.hero-metrics{animation:fadeUp .7s cubic-bezier(0.16,1,0.3,1) .64s both}
+.hero-bg-word{animation:fadeIn 1.2s cubic-bezier(0.16,1,0.3,1) .05s both}
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+
+/* ── RESPONSIVE ── */
+@media(max-width:960px){
+  .hero-inner{flex-direction:column;text-align:center}
+  .hero-body{max-width:100%}
+  .scenario-wrap{grid-template-columns:1fr}.scenario:first-child{border-right:none;border-bottom:1px solid var(--rule)}
+  .products-grid{grid-template-columns:1fr 1fr}
+  .product-layout{grid-template-columns:1fr}
+  .steps{grid-template-columns:1fr 1fr}.steps::after{display:none}
+  .counter-row{grid-template-columns:1fr}.counter-cell{border-right:none;border-bottom:1px solid var(--rule)}
+  .pricing-grid{grid-template-columns:1fr}
+  .faq-layout{grid-template-columns:1fr}
+  nav .nav-links{display:none}
+}
+@media(max-width:540px){nav{padding:0 4%}.nav-btn{font-size:12px;padding:8px 14px}}
+@media(max-width:540px){.products-grid{grid-template-columns:1fr}}
+@media(max-width:540px){.counter-row{grid-template-columns:1fr !important}.counter-cell{border-right:none !important;border-bottom:1px solid var(--rule)}}
+</style>
+<!-- MailerLite Universal -->
+<script>
+    (function(w,d,e,u,f,l,n){w[f]=w[f]||function(){(w[f].q=w[f].q||[])
+    .push(arguments);},l=d.createElement(e),l.async=1,l.src=u,
+    n=d.getElementsByTagName(e)[0],n.parentNode.insertBefore(l,n);})
+    (window,document,'script','https://assets.mailerlite.com/js/universal.js','ml');
+    ml('account', '2349274');
+</script>
+<!-- End MailerLite Universal -->
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#" class="nav-logo">
+    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0">
+      <rect x="0" y="0" width="32" height="32" rx="7" fill="#0d0f12"/>
+      <rect x="8" y="7" width="16" height="16" rx="2" stroke="white" stroke-width="2.5" fill="none"/>
+      <line x1="20" y1="19" x2="26" y2="25" stroke="#0057FF" stroke-width="3" stroke-linecap="round"/>
+    </svg>
+    <span style="font-family:'Epilogue',sans-serif;font-weight:800;font-size:16px;color:#0d0f12;letter-spacing:-.03em;white-space:nowrap">QLean <span style="font-weight:300;color:#5a6172">Automation</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#products">Products</a></li>
+    <li><a href="#framework">Framework</a></li>
+    <li><a href="blog/blog-index.html">Blog</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+    <li><a href="#faq">FAQ</a></li>
+  </ul>
+  <a href="#pricing" class="nav-btn">Get the Framework →</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg-word">VALIDATION</div>
+  <div class="hero-inner">
+    <div class="hero-label">
+      <span class="hero-label-dot"></span>
+      For automation engineers entering pharma
+    </div>
+    <h1>
+      Your first pharma<br>
+      project <span class="muted">won't</span><br>
+      <span class="blue">look like it.</span>
+    </h1>
+    <p class="hero-body">
+      You're a skilled automation engineer. You know PLC logic, SCADA architecture, and how to commission a system that runs. <strong>GMP documentation is a different discipline</strong> — and most system integrators entering pharma learn it the hard way, under deadline pressure, in front of a client who knows exactly what's missing.
+      <br><br>
+      QLean Automation gives you the framework to deliver like you've done this before — because we built it from the experience of having done it ourselves.
+    </p>
+    <div class="hero-actions">
+      <a href="#pricing" class="btn-primary">Get the GAMP 5 Framework →</a>
+      <a href="#free-download" class="btn-ghost">↓ Free Resources (Matrix + URS Sample)</a>
+    </div>
+    <div class="hero-metrics">
+      <div class="hm-item"><div class="hm-num">25<sup>+</sup></div><div class="hm-label">Production-ready templates</div></div>
+      <div class="hm-item"><div class="hm-num">3–5</div><div class="hm-label">Days saved per project</div></div>
+      <div class="hm-item"><div class="hm-num">100%</div><div class="hm-label">GAMP 5 2nd Ed. 2022</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-inner">
+    <span class="ti hi">GAMP 5 · 2ND EDITION 2022</span><span class="ti sep"> / </span>
+    <span class="ti">EU GMP ANNEX 11</span><span class="ti sep"> / </span>
+    <span class="ti">21 CFR PART 11</span><span class="ti sep"> / </span>
+    <span class="ti hi">IQ · OQ · PQ · FAT · SAT</span><span class="ti sep"> / </span>
+    <span class="ti">ALCOA+</span><span class="ti sep"> / </span>
+    <span class="ti">V-MODEL LIFECYCLE</span><span class="ti sep"> / </span>
+    <span class="ti hi">TRACEABILITY MATRIX</span><span class="ti sep"> / </span>
+    <span class="ti">RISK ASSESSMENT · FMEA</span><span class="ti sep"> / </span>
+    <span class="ti">DEVIATION MANAGEMENT</span><span class="ti sep"> / </span>
+    <span class="ti hi">CHANGE CONTROL</span><span class="ti sep"> / </span>
+    <span class="ti">PLC · SCADA · HMI VALIDATION</span><span class="ti sep"> / </span>
+    <span class="ti hi">GAMP 5 · 2ND EDITION 2022</span><span class="ti sep"> / </span>
+    <span class="ti">EU GMP ANNEX 11</span><span class="ti sep"> / </span>
+    <span class="ti">21 CFR PART 11</span><span class="ti sep"> / </span>
+    <span class="ti hi">IQ · OQ · PQ · FAT · SAT</span><span class="ti sep"> / </span>
+    <span class="ti">ALCOA+</span><span class="ti sep"> / </span>
+    <span class="ti">V-MODEL LIFECYCLE</span><span class="ti sep"> / </span>
+    <span class="ti hi">TRACEABILITY MATRIX</span><span class="ti sep"> / </span>
+    <span class="ti">RISK ASSESSMENT · FMEA</span><span class="ti sep"> / </span>
+    <span class="ti">DEVIATION MANAGEMENT</span><span class="ti sep"> / </span>
+    <span class="ti hi">CHANGE CONTROL</span><span class="ti sep"> / </span>
+    <span class="ti">PLC · SCADA · HMI VALIDATION</span><span class="ti sep"> / </span>
+  </div>
+</div>
+
+<!-- SCENARIOS -->
+<section class="section" id="scenario">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="eyebrow">Does this sound familiar?</div>
+      <h2 class="section-h">Two situations.<br><span>One framework.</span></h2>
+    </div>
+    <div class="scenario-wrap reveal rd1">
+      <div class="scenario">
+        <div class="sc-num">// SCENARIO_01</div>
+        <div class="sc-head">You just landed your first pharma contract.</div>
+        <p class="sc-body">Your firm does solid industrial automation — food & bev, manufacturing, utilities. You know your way around a cabinet. Now a pharma client is asking for a <strong>Validation Plan, FAT protocol, and Traceability Matrix</strong> by end of next month. You've heard of GAMP 5. You're not entirely sure what Category 4 means for your document scope. You don't want your client to realise this is your first time.</p>
+      </div>
+      <div class="scenario">
+        <div class="sc-num">// SCENARIO_02</div>
+        <div class="sc-head">You've been subcontracted. The prime needs your docs in four weeks.</div>
+        <p class="sc-body">A Tier 1 integrator brought you in for the automation work. They're managing the client relationship. You're responsible for a <strong>compliant validation package</strong> that goes straight to the end client's QA team without rework. You've done pharma projects before — but you built the documents from scratch each time. You're not doing that again.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRODUCTS -->
+<section class="section section-alt" id="products">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="eyebrow">What we build</div>
+      <h2 class="section-h">Tools built by engineers.<br><span>For engineers.</span></h2>
+      <p class="section-sub">A growing suite of documentation tools for automation engineers and system integrators working in GMP-regulated pharmaceutical environments.</p>
+    </div>
+    <div class="products-grid stagger-children">
+      <div class="prod-card active">
+        <div class="prod-num">// 01</div>
+        <div class="prod-icon blue">📋</div>
+        <div class="prod-title">GAMP 5 Validation Framework</div>
+        <p class="prod-body">25+ production-ready IQ/OQ/PQ templates for PLC/SCADA systems. Full V-Model lifecycle, embedded guidance notes, pre-linked traceability. Covers every document your pharma client expects.</p>
+        <div class="prod-footer">
+          <span class="prod-badge live">Available</span>
+          <span class="prod-price">€229–249</span>
+        </div>
+      </div>
+      <div class="prod-card active">
+        <div class="prod-num">// 02</div>
+        <div class="prod-icon green">📖</div>
+        <div class="prod-title">Technical Masterclass</div>
+        <p class="prod-body">102-page engineering reference covering GAMP 5 2nd Edition, 21 CFR Part 11, EU Annex 11, and PLC/SCADA architecture for GxP environments. Written for engineers, not auditors.</p>
+        <div class="prod-footer">
+          <span class="prod-badge live">Available</span>
+          <span class="prod-price">€39</span>
+        </div>
+      </div>
+      <div class="prod-card coming">
+        <div class="prod-num">// 03</div>
+        <div class="prod-icon amber">🤖</div>
+        <div class="prod-title">AI Validation Assistant</div>
+        <p class="prod-body">An AI-powered documentation engine that generates GAMP 5-compliant first drafts from your system inputs. Structured within the same regulatory framework as the template library — not a generic AI tool.</p>
+        <div class="prod-footer">
+          <span class="prod-badge soon">Coming soon</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FRAMEWORK DETAIL -->
+<section class="section" id="framework">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="eyebrow">The framework — what's inside</div>
+      <h2 class="section-h">Every document.<br><span>Properly linked.</span></h2>
+      <p class="section-sub">The GAMP 5 V-Model is a dependency chain. URS requirements trace through FDS, SDS, HDS into IQ, OQ, and PQ test cases. The framework catches gaps before your client's QA team does.</p>
+    </div>
+    <div class="product-layout reveal">
+      <div class="doc-table">
+        <div class="dt-header"><span>Code</span><span>Document</span><span>Type</span><span style="text-align:right">Scope</span></div>
+        <div class="dt-row"><span class="dt-code">VP</span><span class="dt-name">Validation Plan</span><span class="dt-type w">docx</span><span class="dt-scope">All</span></div>
+        <div class="dt-row"><span class="dt-code">PQP</span><span class="dt-name">Project Quality Plan</span><span class="dt-type w">docx</span><span class="dt-scope">All</span></div>
+        <div class="dt-row"><span class="dt-code">URS</span><span class="dt-name">User Requirements Spec.</span><span class="dt-type w">docx</span><span class="dt-scope">All</span></div>
+        <div class="dt-row"><span class="dt-code">FDS</span><span class="dt-name">Functional Design Spec.</span><span class="dt-type w">docx</span><span class="dt-scope">Cat 4/5</span></div>
+        <div class="dt-row"><span class="dt-code">SDS</span><span class="dt-name">Software Design Spec.</span><span class="dt-type w">docx</span><span class="dt-scope">Cat 5</span></div>
+        <div class="dt-row"><span class="dt-code">HDS</span><span class="dt-name">Hardware Design Spec.</span><span class="dt-type w">docx</span><span class="dt-scope">Cat 4/5</span></div>
+        <div class="dt-row"><span class="dt-code">CP</span><span class="dt-name">Control Philosophy</span><span class="dt-type w">docx</span><span class="dt-scope">Cat 4/5</span></div>
+        <div class="dt-row"><span class="dt-code">SAQ</span><span class="dt-name">Supplier Assessment Questionnaire</span><span class="dt-type w">docx</span><span class="dt-scope">All</span></div>
+        <div class="dt-row"><span class="dt-code">SAR</span><span class="dt-name">Supplier Assessment Report</span><span class="dt-type w">docx</span><span class="dt-scope">All</span></div>
+        <div class="dt-row"><span class="dt-code">FAT</span><span class="dt-name">Factory Acceptance Test</span><span class="dt-type w">docx</span><span class="dt-scope">All</span></div>
+        <div class="dt-row"><span class="dt-code">SAT</span><span class="dt-name">Site Acceptance Test</span><span class="dt-type w">docx</span><span class="dt-scope">All</span></div>
+        <div class="dt-row"><span class="dt-code">IQ</span><span class="dt-name">Installation Qualification</span><span class="dt-type w">docx</span><span class="dt-scope">All</span></div>
+        <div class="dt-row"><span class="dt-code">OQ</span><span class="dt-name">Operational Qualification</span><span class="dt-type w">docx</span><span class="dt-scope">Cat 3/4/5</span></div>
+        <div class="dt-row"><span class="dt-code">PQ</span><span class="dt-name">Performance Qualification</span><span class="dt-type w">docx</span><span class="dt-scope">Cat 4/5</span></div>
+        <div class="dt-row"><span class="dt-code">VSR</span><span class="dt-name">Validation Summary Report</span><span class="dt-type w">docx</span><span class="dt-scope">All</span></div>
+        <div class="dt-row"><span class="dt-code">TM</span><span class="dt-name">Traceability Matrix</span><span class="dt-type x">xlsx</span><span class="dt-scope">All</span></div>
+        <div class="dt-row"><span class="dt-code">RA</span><span class="dt-name">Risk Assessment (FMEA)</span><span class="dt-type x">xlsx</span><span class="dt-scope">All</span></div>
+        <div class="dt-row"><span class="dt-code">MDL</span><span class="dt-name">Master Deviation Ledger</span><span class="dt-type x">xlsx</span><span class="dt-scope">All</span></div>
+        <div class="dt-row"><span class="dt-code">CCL</span><span class="dt-name">Change Control Log</span><span class="dt-type x">xlsx</span><span class="dt-scope">All</span></div>
+        <div class="dt-row"><span class="dt-code">EL</span><span class="dt-name">Engineering Lists (I/O, Alarms)</span><span class="dt-type x">xlsx</span><span class="dt-scope">All</span></div>
+        <div class="dt-more">+ 6 more · SOPs, Training Record, CCR Form</div>
+      </div>
+      <div>
+        <div class="pi-block reveal rd1">
+          <div class="pi-title">Built for engineers, not auditors</div>
+          <p class="pi-body">Every template includes <strong>embedded guidance notes</strong> — not just blank fields. Each section explains what it needs to contain and why, based on what regulators actually look for. No compliance background needed.</p>
+        </div>
+        <div class="pi-block reveal rd2">
+          <div class="pi-title">GAMP 5 category-aware scope</div>
+          <p class="pi-body">The Validation Plan includes a <strong>Software Categorisation section</strong> that drives your entire document scope. The framework tells you exactly what applies — so you never over-document a Category 3 system or leave a gap on a Category 5.</p>
+          <ul class="arrow-list">
+            <li>Category 3 — Non-configured COTS (standard SCADA / HMI)</li>
+            <li>Category 4 — Configured COTS (most PLC/SCADA projects)</li>
+            <li>Category 5 — Custom bespoke software</li>
+          </ul>
+        </div>
+        <div class="pi-block reveal rd3">
+          <div class="pi-title">Standard formats. Zero lock-in.</div>
+          <p class="pi-body">Every file is <strong>.docx or .xlsx</strong>. No proprietary software, no platform to log into. Works in Word and Excel, versions in your existing document control system, submits in the format your clients already expect.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="section section-alt">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="eyebrow">How it works</div>
+      <h2 class="section-h">From blank page to<br><span>signed validation package.</span></h2>
+    </div>
+    <div class="steps stagger-children">
+      <div class="step">
+        <div class="step-n">1</div>
+        <div class="step-title">Categorise your system</div>
+        <p class="step-body">Use the GAMP 5 Software Categorisation guide to assign Cat 1, 3, 4, or 5. This single decision determines exactly which documents your project requires.</p>
+      </div>
+      <div class="step">
+        <div class="step-n">2</div>
+        <div class="step-title">Load your templates</div>
+        <p class="step-body">Open the relevant .docx and .xlsx files. Pre-populated with real PLC/SCADA examples and embedded guidance in every section.</p>
+      </div>
+      <div class="step">
+        <div class="step-n">3</div>
+        <div class="step-title">Complete traceability</div>
+        <p class="step-body">The Traceability Matrix links URS requirements through FDS to IQ, OQ, and PQ test cases. Gaps highlighted automatically before your client sees them.</p>
+      </div>
+      <div class="step">
+        <div class="step-n">4</div>
+        <div class="step-title">Execute and close</div>
+        <p class="step-body">Run qualification confidently. Deviations go into the MDL, changes through the CCL. The Validation Summary Report closes the package cleanly.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LEAD MAGNET -->
+<section class="magnet" id="free-download">
+  <div class="magnet-inner reveal">
+    <div class="eyebrow">Free resources</div>
+    <h2 class="magnet-h">Two free tools.<br>Before you write a word.</h2>
+    <p class="magnet-sub">Enter your email and we'll send you both resources instantly — no strings, no spam.</p>
+
+    <!-- Resource cards -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;max-width:560px;margin:0 auto 32px;text-align:left">
+      <div style="background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);border-radius:8px;padding:16px">
+        <div style="font-family:var(--f-mono);font-size:9px;color:rgba(255,255,255,0.4);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:8px">Resource 01</div>
+        <div style="font-size:14px;font-weight:600;color:white;margin-bottom:6px">GAMP 5 Document Scope Matrix</div>
+        <div style="font-size:12px;color:rgba(255,255,255,0.55);line-height:1.55">Every GAMP 5 category mapped to required, optional, and not-needed documents. The reference every SI engineer needs before starting a pharma project.</div>
+        <div style="margin-top:10px;font-family:var(--f-mono);font-size:10px;color:rgba(255,255,255,0.3)">PDF · 1 page · Printable</div>
+      </div>
+      <div style="background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);border-radius:8px;padding:16px">
+        <div style="font-family:var(--f-mono);font-size:9px;color:rgba(255,255,255,0.4);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:8px">Resource 02</div>
+        <div style="font-size:14px;font-weight:600;color:white;margin-bottom:6px">URS Template — Sample</div>
+        <div style="font-size:12px;color:rgba(255,255,255,0.55);line-height:1.55">A sample of our production-ready User Requirements Specification template. See the full structure, embedded guidance notes, and real example requirements.</div>
+        <div style="margin-top:10px;font-family:var(--f-mono);font-size:10px;color:rgba(255,255,255,0.3)">DOCX · 20+ pages · GAMP 5 aligned</div>
+      </div>
+    </div>
+
+    <!-- MailerLite form -->
+    <div class="ml-form-wrapper">
+      <div class="ml-embedded" data-form="OIOgnz"></div>
+    </div>
+    <p class="magnet-note">// Free · No spam · Unsubscribe anytime</p>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="section section-alt" id="pricing">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="eyebrow">Pricing</div>
+      <h2 class="section-h">One purchase.<br><span>Every project. Every user.</span></h2>
+      <p class="section-sub">A single licence covers your entire company — no per-seat fees, no per-project fees, no expiry. Buy once, use across every pharma project your team runs.</p>
+    </div>
+    <div class="pricing-grid stagger-children">
+      <div class="pricing-card">
+        <div class="p-tier">Technical Reference</div>
+        <div class="p-price"><sup>€</sup>39</div>
+        <p class="p-desc">The engineering masterclass — for engineers who want to understand the regulatory framework before or alongside the full pack.</p>
+        <div class="p-rule"></div>
+        <ul class="p-features">
+          <li>102-page Architecting Integrity masterclass (PDF)</li>
+          <li>GAMP 5 2nd Edition from first principles</li>
+          <li>PLC/SCADA architecture for GxP environments</li>
+          <li>21 CFR Part 11 and EU Annex 11 deep-dives</li>
+          <li>ISA-88 and ISA-101 pharma standards explained</li>
+        </ul>
+        <a href="https://qleanautomation.lemonsqueezy.com/checkout/buy/553eb385-41ea-4e93-93da-932767af2447" class="p-cta outline">Get the Ebook</a>
+      </div>
+      <div class="pricing-card featured">
+        <div class="pricing-badge">Recommended</div>
+        <div class="p-tier">Full Framework</div>
+        <div class="p-price"><sup>€</sup>249</div>
+        <p class="p-desc">Everything — the complete template library and the masterclass that explains every document you'll produce.</p>
+        <div class="p-rule"></div>
+        <ul class="p-features">
+          <li>All 25+ production-ready .docx and .xlsx templates</li>
+          <li>Traceability Matrix with pre-linked requirement tracing</li>
+          <li>Risk Assessment (FMEA) with GAMP category scoring</li>
+          <li>Master Deviation Ledger + Change Control Log</li>
+          <li>4 SOPs: Operation, Change Mgmt, Admin, Periodic Review</li>
+          <li>Training Record Form + Change Control Request</li>
+          <li>102-page technical masterclass included</li>
+          <li>Company-wide licence — every project, every engineer</li>
+        </ul>
+        <a href="https://qleanautomation.lemonsqueezy.com/checkout/buy/acc1b12e-088a-4a34-8276-b7830ddabe62" class="p-cta primary">Get the Full Framework →</a>
+      </div>
+      <div class="pricing-card">
+        <div class="p-tier">Templates Only</div>
+        <div class="p-price"><sup>€</sup>229</div>
+        <p class="p-desc">The complete template library — for experienced engineers who need the documents without the background theory.</p>
+        <div class="p-rule"></div>
+        <ul class="p-features">
+          <li>All 25+ production-ready .docx and .xlsx templates</li>
+          <li>Traceability Matrix with pre-linked requirement tracing</li>
+          <li>Risk Assessment, MDL, Change Control Log</li>
+          <li>4 SOPs + Training Record + CCR Form</li>
+          <li>Company-wide licence — every project, every engineer</li>
+        </ul>
+        <a href="https://qleanautomation.lemonsqueezy.com/checkout/buy/1fcc4452-a016-4ef3-b7fd-62c9086d504b" class="p-cta outline">Get the Templates</a>
+      </div>
+    </div>
+    <div class="pricing-note reveal">
+      A contractor or SI engineer billing at <strong>€600–900/day</strong> spends 3–5 days building a validation package from scratch. That's <strong>€1,800–4,500 of billable time on documentation alone</strong>, every single project. The Full Framework costs €249 and covers every project from here on. <span>The first project pays it back 8× over.</span>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="section" id="faq">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="eyebrow">FAQ</div>
+      <h2 class="section-h">Real questions from<br><span>real engineers.</span></h2>
+    </div>
+    <div class="faq-layout reveal">
+      <div class="faq-stack">
+        <div class="faq-item open">
+          <div class="faq-q" onclick="faq(this)">
+            <h3>We've never done a pharma project. Is this too advanced?</h3>
+            <svg class="faq-icon" viewBox="0 0 20 20" fill="none"><path d="M10 4v12M4 10h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </div>
+          <div class="faq-a"><div class="faq-a-body">That's exactly who this is built for. Every template includes <strong>embedded guidance notes</strong> explaining what each section needs and why — in engineering language, not compliance jargon. The masterclass (included in the Full Framework) walks through GAMP 5 from first principles. No prior GMP experience needed.</div></div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q" onclick="faq(this)">
+            <h3>Is this aligned with GAMP 5 2nd Edition (2022)?</h3>
+            <svg class="faq-icon" viewBox="0 0 20 20" fill="none"><path d="M10 4v12M4 10h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </div>
+          <div class="faq-a"><div class="faq-a-body">Yes — specifically the <strong>2022 second edition</strong>, not the 2008 original. The key changes are the updated risk-based approach and revised categorisation — Category 2 was retired. The Validation Plan includes a categorisation section that drives which downstream documents you actually need.</div></div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q" onclick="faq(this)">
+            <h3>Will our pharma client's QA team accept these documents?</h3>
+            <svg class="faq-icon" viewBox="0 0 20 20" fill="none"><path d="M10 4v12M4 10h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </div>
+          <div class="faq-a"><div class="faq-a-body">The templates are structurally aligned with <strong>FDA 21 CFR Part 11, EU GMP Annex 11</strong>, and GAMP 5 2nd Edition. They provide the correct document structure, required sections, regulatory language, and traceability architecture. Final approval depends on your engineering content and testing — the framework gives you the right container. You fill it with your engineering work.</div></div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q" onclick="faq(this)">
+            <h3>How many people in our company can use these?</h3>
+            <svg class="faq-icon" viewBox="0 0 20 20" fill="none"><path d="M10 4v12M4 10h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </div>
+          <div class="faq-a"><div class="faq-a-body">One purchase covers your <strong>entire company</strong> — there are no per-seat restrictions. Every engineer in your firm can use the templates across every project. No additional licences required, no expiry date.</div></div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q" onclick="faq(this)">
+            <h3>What format are the files? Do we need special software?</h3>
+            <svg class="faq-icon" viewBox="0 0 20 20" fill="none"><path d="M10 4v12M4 10h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </div>
+          <div class="faq-a"><div class="faq-a-body">Standard <strong>.docx (Word) and .xlsx (Excel)</strong> only. No platform to log into, no proprietary viewer, no subscription. Works in the tools you already use, submits in the format your clients already expect, stores in whatever document control system your firm uses.</div></div>
+        </div>
+      </div>
+      <div class="faq-aside">
+        <div class="faq-aside-block">
+          <h3>Who built this?</h3>
+          <p>QLean Automation was built by automation engineers with 10+ years of hands-on PLC/SCADA validation experience in GMP-regulated pharmaceutical environments.<br><br>We've delivered validation packages as system integrators and had them reviewed by pharma QA teams. We're not compliance consultants. We're engineers who solved a documentation problem and built tools around the solution.</p>
+        </div>
+        <div class="faq-aside-block">
+          <h3>Project-specific questions?</h3>
+          <p>Unsure whether the framework fits your project type — Ignition, Siemens TIA Portal, AVEVA, Rockwell, custom HMI? Get in touch before you buy. We're happy to answer technical questions.</p>
+          <br>
+          <a href="mailto:hello@qleanautomation.com" class="btn-ghost" style="font-size:13px;padding:10px 18px;display:inline-flex">Ask a question →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="final">
+  <div class="final-inner reveal">
+    <div class="eyebrow" style="justify-content:center">Get started today</div>
+    <h2 class="final-h">Your client won't<br>know it's your<br><span>first time.</span></h2>
+    <p class="final-sub">The documentation framework is ready. The regulatory structure is in place. You bring the engineering — we've done the compliance groundwork.</p>
+    <a href="https://qleanautomation.lemonsqueezy.com/checkout/buy/acc1b12e-088a-4a34-8276-b7830ddabe62" class="btn-primary" style="font-size:15px;padding:15px 36px;margin:0 auto">
+      Get the Full Framework — €249 →
+    </a>
+    <p class="final-note">// Instant download · Company-wide licence · Standard .docx + .xlsx · No subscription</p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="#" class="nav-logo">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0">
+            <rect x="0" y="0" width="32" height="32" rx="7" fill="#0d0f12"/>
+            <rect x="8" y="7" width="16" height="16" rx="2" stroke="white" stroke-width="2.5" fill="none"/>
+            <line x1="20" y1="19" x2="26" y2="25" stroke="#0057FF" stroke-width="3" stroke-linecap="round"/>
+          </svg>
+          <span style="font-family:'Epilogue',sans-serif;font-weight:800;font-size:16px;color:#0d0f12;letter-spacing:-.03em;white-space:nowrap">QLean <span style="font-weight:300;color:#5a6172">Automation</span></span>
+        </a>
+        <p>GMP documentation tools for system integrators and automation engineers entering pharmaceutical projects.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Products</h4>
+        <ul>
+          <li><a href="#framework">GAMP 5 Framework</a></li>
+          <li><a href="#products">Technical Masterclass</a></li>
+          <li><a href="#free-download">Free Resources</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Blog</h4>
+        <ul>
+          <li><a href="blog/blog-index.html">All Articles</a></li>
+          <li><a href="blog/iq-oq-pq-guide.html">IQ OQ PQ Guide</a></li>
+          <li><a href="blog/gamp5-categories.html">GAMP 5 Categories</a></li>
+          <li><a href="blog/21-cfr-part-11.html">21 CFR Part 11</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="https://www.linkedin.com/company/qlean-automation" target="_blank">LinkedIn</a></li>
+          <li><a href="mailto:hello@qleanautomation.com">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="terms.html">Terms & Conditions</a></li>
+          <li><a href="privacy.html">Privacy Policy</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 QLean Automation. All rights reserved.</p>
+      <div class="compliance-pills">
+        <span class="cp">GAMP 5 · 2ND ED.</span>
+        <span class="cp">21 CFR PART 11</span>
+        <span class="cp">EU GMP ANNEX 11</span>
+        <span class="cp">ALCOA+</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+const io = new IntersectionObserver(e => {
+  e.forEach(x => {
+    if(x.isIntersecting) {
+      x.target.classList.add('in');
+      io.unobserve(x.target);
+    }
+  });
+}, {threshold: 0.12, rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.reveal, .stagger-children').forEach(el => io.observe(el));
+function faq(el) {
+  const item = el.parentElement;
+  const open = item.classList.contains('open');
+  document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+  if(!open) item.classList.add('open');
+}
+window.addEventListener('scroll', () => {
+  document.getElementById('nav').style.borderBottomColor = scrollY > 20 ? '#d0d5de' : 'var(--rule)';
+}, {passive:true});
+</script>
+</body>
+</html>

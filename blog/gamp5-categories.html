@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GAMP 5 Categories Explained: Cat 1, 3, 4 and 5 for PLC/SCADA Engineers | QLean Automation</title>
+<meta name="description" content="GAMP 5 software categories determine your entire validation document scope. A practical guide for automation engineers — what each category means and how to classify your system correctly.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@300;400;500;600;700;800;900&family=Source+Sans+3:ital,wght@0,300;0,400;0,500;1,300&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--white:#ffffff;--off:#f7f8f9;--off2:#f0f2f4;--ink:#0d0f12;--ink2:#1e2128;--ink3:#3d4456;--ink4:#9199a8;--rule:#e2e5ea;--rule2:#c8cdd6;--blue:#0057ff;--blue2:#0044cc;--blue-dim:rgba(0,87,255,0.07);--blue-glow:rgba(0,87,255,0.15);--green:#00875a;--green-dim:rgba(0,135,90,0.08);--amber:#d97706;--amber-dim:rgba(217,119,6,0.08);--f-head:'Epilogue',sans-serif;--f-body:'Source Sans 3',sans-serif;--f-mono:'Roboto Mono',monospace;--shadow-sm:0 2px 8px rgba(13,15,18,0.06),0 1px 3px rgba(13,15,18,0.04);--shadow-md:0 4px 16px rgba(13,15,18,0.08),0 2px 6px rgba(13,15,18,0.05);--shadow-lg:0 8px 32px rgba(13,15,18,0.10),0 3px 10px rgba(13,15,18,0.06)}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--white);color:var(--ink);font-family:var(--f-body);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+nav{position:fixed;top:0;left:0;right:0;z-index:200;height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 6%;background:rgba(255,255,255,0.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--rule)}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;flex-shrink:0}
+.nav-links{display:flex;align-items:center;gap:36px;list-style:none}
+.nav-links a{font-size:14px;font-weight:400;color:var(--ink3);text-decoration:none;transition:color .2s}
+.nav-links a:hover{color:var(--ink)}
+.nav-btn{font-family:var(--f-body);font-size:13px;font-weight:500;padding:9px 20px;background:var(--blue);color:white;border:none;border-radius:6px;cursor:pointer;text-decoration:none;transition:background .2s;white-space:nowrap;flex-shrink:0}
+.nav-btn:hover{background:var(--blue2)}
+.progress-bar{position:fixed;top:64px;left:0;right:0;height:2px;background:var(--rule);z-index:199}
+.progress-fill{height:100%;background:var(--blue);width:0%;transition:width .1s linear}
+.article-hero{padding:120px 6% 64px;background:var(--white);border-bottom:1px solid var(--rule);position:relative;overflow:hidden}
+.article-hero::before{content:'';position:absolute;top:-80px;right:-80px;width:400px;height:400px;background:radial-gradient(circle,rgba(0,87,255,0.04) 0%,transparent 70%);pointer-events:none}
+.article-hero-inner{max-width:760px;margin:0 auto;position:relative;z-index:1}
+.breadcrumb{display:flex;align-items:center;gap:8px;font-family:var(--f-mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink4);margin-bottom:24px}
+.breadcrumb a{color:var(--ink4);text-decoration:none;transition:color .2s}.breadcrumb a:hover{color:var(--blue)}.breadcrumb span{color:var(--rule2)}
+.article-tag{display:inline-flex;align-items:center;gap:6px;font-family:var(--f-mono);font-size:10px;font-weight:500;color:var(--blue);letter-spacing:.1em;text-transform:uppercase;margin-bottom:20px;padding:4px 10px;background:var(--blue-dim);border-radius:4px}
+.article-hero h1{font-family:var(--f-head);font-size:clamp(30px,5vw,52px);font-weight:900;line-height:1.0;letter-spacing:-.04em;color:var(--ink);margin-bottom:20px}
+.article-hero h1 span{color:var(--blue)}
+.article-intro{font-size:18px;font-weight:400;color:var(--ink2);line-height:1.75;margin-bottom:32px;max-width:640px}
+.article-meta{display:flex;align-items:center;gap:24px;padding-top:24px;border-top:1px solid var(--rule);flex-wrap:wrap}
+.meta-author{display:flex;align-items:center;gap:10px}
+.author-avatar{width:36px;height:36px;border-radius:50%;background:var(--ink);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.author-name{font-size:13px;font-weight:500;color:var(--ink)}.author-role{font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.04em}
+.meta-divider{width:1px;height:28px;background:var(--rule)}.meta-stat{font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.06em}
+.article-wrap{max-width:1100px;margin:0 auto;padding:64px 6%;display:grid;grid-template-columns:1fr 280px;gap:80px;align-items:start}
+.article-body{min-width:0}
+.article-body h2{font-family:var(--f-head);font-size:26px;font-weight:800;letter-spacing:-.03em;color:var(--ink);margin:56px 0 16px;line-height:1.2}
+.article-body h2:first-child{margin-top:0}
+.article-body h3{font-family:var(--f-head);font-size:18px;font-weight:700;letter-spacing:-.02em;color:var(--ink);margin:32px 0 12px}
+.article-body p{font-size:16px;font-weight:400;color:var(--ink2);line-height:1.85;margin-bottom:20px}
+.article-body strong{color:var(--ink);font-weight:600}
+.article-body a{color:var(--blue);text-decoration:none;border-bottom:1px solid rgba(0,87,255,.25);transition:border-color .2s}.article-body a:hover{border-color:var(--blue)}
+.callout{padding:20px 24px;border-radius:8px;margin:32px 0;border-left:3px solid}
+.callout.blue{background:var(--blue-dim);border-color:var(--blue)}.callout.amber{background:var(--amber-dim);border-color:var(--amber)}.callout.green{background:var(--green-dim);border-color:var(--green)}
+.callout-label{font-family:var(--f-mono);font-size:9px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px}
+.callout.blue .callout-label{color:var(--blue)}.callout.amber .callout-label{color:var(--amber)}.callout.green .callout-label{color:var(--green)}
+.callout p{font-size:14px;color:var(--ink2);line-height:1.7;margin:0}.callout strong{color:var(--ink)}
+.article-img{width:100%;border-radius:8px;border:1px solid #1e2535;overflow:hidden;margin:36px 0}
+.article-img figcaption{padding:10px 14px;background:var(--off);font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.04em;border-top:1px solid var(--rule)}
+.checklist{list-style:none;display:flex;flex-direction:column;gap:8px;margin:20px 0 28px}
+.checklist li{display:flex;align-items:flex-start;gap:10px;font-size:15px;color:var(--ink2);line-height:1.6}
+.checklist li::before{content:'';width:16px;height:16px;flex-shrink:0;margin-top:3px;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 14 14' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='7' cy='7' r='6.5' fill='none' stroke='%230057ff' stroke-width='1'/%3E%3Cpath d='M4 7l2 2 4-4' stroke='%230057ff' stroke-width='1.3' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:center;background-size:contain}
+.arrow-list{list-style:none;display:flex;flex-direction:column;gap:8px;margin:16px 0 24px}
+.arrow-list li{display:flex;align-items:flex-start;gap:10px;font-size:15px;color:var(--ink2);line-height:1.6}
+.arrow-list li::before{content:'→';color:var(--blue);flex-shrink:0;font-size:12px;margin-top:3px}
+.article-divider{height:1px;background:var(--rule);margin:48px 0}
+.sidebar{position:sticky;top:88px;display:flex;flex-direction:column;gap:16px}
+.toc-card{border:1px solid var(--rule);border-radius:8px;padding:24px;background:var(--white);box-shadow:0 2px 8px rgba(13,15,18,0.06)}
+.toc-label{font-family:var(--f-mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);margin-bottom:16px}
+.toc-list{list-style:none;display:flex;flex-direction:column;gap:2px}
+.toc-list a{display:block;font-size:13px;color:var(--ink3);text-decoration:none;padding:6px 10px;border-radius:4px;transition:all .15s;border-left:2px solid transparent}
+.toc-list a:hover,.toc-list a.active{color:var(--blue);background:var(--blue-dim);border-left-color:var(--blue)}
+.sidebar-cta{border:1px solid var(--blue);border-radius:8px;padding:24px;background:var(--blue-dim)}
+.sc-eyebrow{font-family:var(--f-mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);margin-bottom:10px}
+.sc-title{font-family:var(--f-head);font-size:17px;font-weight:800;letter-spacing:-.02em;color:var(--ink);margin-bottom:8px;line-height:1.2}
+.sc-body{font-size:13px;color:var(--ink3);line-height:1.6;margin-bottom:16px}
+.sc-btn{display:block;text-align:center;padding:11px 16px;background:var(--blue);color:white;border-radius:6px;font-family:var(--f-body);font-size:13px;font-weight:500;text-decoration:none;transition:background .2s}
+.sc-btn:hover{background:var(--blue2)}
+.sc-note{font-family:var(--f-mono);font-size:9px;color:var(--ink4);text-align:center;margin-top:8px;letter-spacing:.04em}
+.related{padding:64px 6%;border-top:1px solid var(--rule);background:var(--off)}
+.related-inner{max-width:1100px;margin:0 auto}
+.related-label{font-family:var(--f-mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);margin-bottom:32px;display:flex;align-items:center;gap:10px}
+.related-label::before{content:'';width:20px;height:1px;background:var(--blue)}
+.related-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.related-card{padding:24px;border:1px solid var(--rule);border-radius:8px;background:var(--white);box-shadow:0 2px 8px rgba(13,15,18,0.06);transition:border-color .2s,transform .2s;text-decoration:none;display:flex;flex-direction:column;gap:12px}
+.related-card:hover{border-color:var(--blue);transform:translateY(-4px)}
+.rc-tag{font-family:var(--f-mono);font-size:9px;color:var(--blue);letter-spacing:.08em;text-transform:uppercase;padding:3px 8px;background:var(--blue-dim);border-radius:3px;align-self:flex-start}
+.rc-title{font-family:var(--f-head);font-size:16px;font-weight:700;letter-spacing:-.02em;color:var(--ink);line-height:1.25}
+.rc-desc{font-size:13px;color:var(--ink3);line-height:1.6;flex:1}
+.rc-footer{display:flex;align-items:center;justify-content:space-between;padding-top:12px;border-top:1px solid var(--rule)}
+.rc-read{font-family:var(--f-mono);font-size:10px;color:var(--ink4)}.rc-arrow{font-size:14px;color:var(--blue)}
+footer{padding:56px 6% 32px;border-top:1px solid var(--rule);background:var(--white)}
+.footer-inner{max-width:1160px;margin:0 auto}
+.footer-top{display:flex;justify-content:space-between;align-items:flex-start;gap:40px;flex-wrap:wrap;margin-bottom:48px}
+.footer-brand p{font-size:13px;font-weight:300;color:var(--ink3);margin-top:12px;max-width:260px;line-height:1.6}
+.footer-col h4{font-family:var(--f-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink4);margin-bottom:16px}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+.footer-col a{font-size:13px;color:var(--ink3);text-decoration:none;transition:color .2s}.footer-col a:hover{color:var(--blue)}
+.footer-bottom{padding-top:24px;border-top:1px solid var(--rule);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.footer-bottom p{font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.04em}
+.compliance-pills{display:flex;gap:6px;flex-wrap:wrap}
+.cp{font-family:var(--f-mono);font-size:9px;padding:3px 8px;border:1px solid var(--rule);border-radius:3px;color:var(--ink4);letter-spacing:.06em}
+@media(max-width:900px){.article-wrap{grid-template-columns:1fr;gap:48px}.sidebar{position:static}.related-grid{grid-template-columns:1fr}nav .nav-links{display:none}}
+@media(max-width:540px){nav{padding:0 4%}.nav-btn{font-size:12px;padding:8px 14px}}
+
+.sidebar-share{border:1px solid var(--rule);border-radius:8px;padding:20px 24px;background:var(--white)}
+.share-label{font-family:var(--f-mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);margin-bottom:14px}
+.share-links{display:flex;flex-direction:column;gap:8px}
+.share-link{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--ink3);text-decoration:none;padding:9px 12px;border:1px solid var(--rule);border-radius:6px;transition:border-color .2s,color .2s}
+.share-link:hover{border-color:var(--blue);color:var(--blue)}
+</style>
+</head>
+<body>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+<nav>
+  <a href="../index.html" class="nav-logo">
+    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" style="flex-shrink:0"><rect width="32" height="32" rx="7" fill="#0d0f12"/><rect x="8" y="7" width="16" height="16" rx="2" stroke="white" stroke-width="2.5" fill="none"/><line x1="20" y1="19" x2="26" y2="25" stroke="#0057FF" stroke-width="3" stroke-linecap="round"/></svg>
+    <span style="font-family:'Epilogue',sans-serif;font-weight:800;font-size:16px;color:#0d0f12;letter-spacing:-.03em;white-space:nowrap">QLean <span style="font-weight:300;color:#5a6172">Automation</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="../index.html#products">Products</a></li>
+    <li><a href="../index.html#framework">Framework</a></li>
+    <li><a href="blog-index.html">Blog</a></li>
+    <li><a href="../index.html#pricing">Pricing</a></li>
+	<li><a href="../index.html#faq">FAQ</a></li>
+  </ul>
+  <a href="../index.html#pricing" class="nav-btn">Get the Framework →</a>
+</nav>
+
+<header class="article-hero">
+  <div class="article-hero-inner">
+    <div class="breadcrumb"><a href="../index.html">Home</a><span>/</span><a href="blog-index.html">Blog</a><span>/</span>GAMP 5 Categories</div>
+    <div class="article-tag">📐 GAMP 5</div>
+    <h1>GAMP 5 Categories:<br><span>What They Mean</span> and<br>How to Classify Your System</h1>
+    <p class="article-intro">The single decision that determines your entire validation document scope. Get the category wrong and you're either massively over-documenting — or leaving a gap that will surface in a QA review.</p>
+    <div class="article-meta">
+      <div class="meta-author">
+        <div class="author-avatar"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="7" r="3.5" stroke="white" stroke-width="1.5"/><path d="M2.5 16c0-3.59 2.91-6.5 6.5-6.5s6.5 2.91 6.5 6.5" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+        <div><div class="author-name">QLean Automation</div><div class="author-role">ENGINEERS WHO BUILD SYSTEMS, NOT JUST SIGN THEM</div></div>
+      </div>
+      <div class="meta-divider"></div><div class="meta-stat">MAY 2026</div>
+      <div class="meta-divider"></div><div class="meta-stat">7 MIN READ</div>
+      <div class="meta-divider"></div><div class="meta-stat">GAMP 5 · CLASSIFICATION</div>
+    </div>
+  </div>
+</header>
+
+<div class="article-wrap">
+  <article class="article-body">
+
+    <h2 id="why-it-matters">Why Your Category Decision Matters More Than You Think</h2>
+    <p>In GAMP 5, your software category isn't a label — it's a decision that cascades through your entire validation project. The category you assign to your PLC/SCADA system determines which documents you need to produce, how much testing evidence is required, and how much design documentation must be approved before you start writing test cases.</p>
+    <p>Most automation engineers entering pharma either don't know this decision exists, or they guess. Both are expensive mistakes — either you spend weeks producing documents nobody required, or you arrive at a QA review with a scope gap that stops the project.</p>
+
+    <div class="callout blue">
+      <div class="callout-label">The 2022 Change</div>
+      <p>GAMP 5 2nd Edition (2022) retired Category 2. The current categories are <strong>1, 3, 4, and 5</strong>. If you're working from older reference material that mentions Category 2, it's out of date.</p>
+    </div>
+
+    <h2 id="category-map">The Four Categories at a Glance</h2>
+    <p>Each category represents a different type of software and attracts a different level of validation effort. The underlying principle is risk-based: the more configurable or custom the software, the more evidence the regulator requires.</p>
+
+    <!-- SVG: Category decision map -->
+    <figure class="article-img">
+      <svg viewBox="0 0 720 260" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;background:#0d0f12;border-radius:8px 8px 0 0">
+        <defs>
+          <marker id="a1" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,0.5 L5,3 L0,5.5" fill="none" stroke="#0057ff" stroke-width="1.2"/></marker>
+        </defs>
+        <text x="360" y="22" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(255,255,255,0.2)" letter-spacing="0.12em">GAMP 5 SOFTWARE CATEGORIES — 2ND EDITION 2022</text>
+
+        <!-- Cat 1 -->
+        <rect x="20" y="38" width="155" height="190" rx="6" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+        <rect x="20" y="38" width="155" height="28" rx="6" fill="rgba(255,255,255,0.06)"/>
+        <rect x="20" y="52" width="155" height="14" fill="rgba(255,255,255,0.06)"/>
+        <text x="97" y="57" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(255,255,255,0.35)" letter-spacing="0.1em">CATEGORY 1</text>
+        <text x="97" y="86" text-anchor="middle" font-family="Epilogue,sans-serif" font-weight="800" font-size="15" fill="rgba(255,255,255,0.6)">Infrastructure</text>
+        <text x="97" y="104" text-anchor="middle" font-family="Epilogue,sans-serif" font-weight="300" font-size="11" fill="rgba(255,255,255,0.35)">Software</text>
+        <line x1="36" y1="120" x2="159" y2="120" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+        <text x="97" y="140" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(255,255,255,0.3)" letter-spacing="0.04em">OS, network tools,</text>
+        <text x="97" y="154" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(255,255,255,0.3)" letter-spacing="0.04em">office applications</text>
+        <line x1="36" y1="168" x2="159" y2="168" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+        <text x="97" y="186" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(255,255,255,0.25)" letter-spacing="0.04em">VALIDATION EFFORT</text>
+        <text x="97" y="202" text-anchor="middle" font-family="Epilogue,sans-serif" font-weight="700" font-size="11" fill="rgba(255,255,255,0.35)">Minimal</text>
+        <text x="97" y="220" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7.5" fill="rgba(255,255,255,0.2)" letter-spacing="0.04em">No IQ/OQ/PQ required</text>
+
+        <!-- Cat 3 -->
+        <rect x="195" y="38" width="155" height="190" rx="6" fill="rgba(0,87,255,0.06)" stroke="rgba(0,87,255,0.2)" stroke-width="1"/>
+        <rect x="195" y="38" width="155" height="28" rx="6" fill="rgba(0,87,255,0.1)"/>
+        <rect x="195" y="52" width="155" height="14" fill="rgba(0,87,255,0.1)"/>
+        <text x="272" y="57" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(0,135,255,0.6)" letter-spacing="0.1em">CATEGORY 3</text>
+        <text x="272" y="86" text-anchor="middle" font-family="Epilogue,sans-serif" font-weight="800" font-size="15" fill="rgba(255,255,255,0.8)">Non-Configured</text>
+        <text x="272" y="104" text-anchor="middle" font-family="Epilogue,sans-serif" font-weight="300" font-size="11" fill="rgba(255,255,255,0.5)">COTS Software</text>
+        <line x1="211" y1="120" x2="334" y2="120" stroke="rgba(0,87,255,0.15)" stroke-width="1"/>
+        <text x="272" y="140" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(255,255,255,0.45)" letter-spacing="0.04em">Standard SCADA/HMI</text>
+        <text x="272" y="154" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(255,255,255,0.45)" letter-spacing="0.04em">used as-supplied</text>
+        <line x1="211" y1="168" x2="334" y2="168" stroke="rgba(0,87,255,0.15)" stroke-width="1"/>
+        <text x="272" y="186" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(255,255,255,0.25)" letter-spacing="0.04em">VALIDATION EFFORT</text>
+        <text x="272" y="202" text-anchor="middle" font-family="Epilogue,sans-serif" font-weight="700" font-size="11" fill="#6699ff">Reduced</text>
+        <text x="272" y="220" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7.5" fill="rgba(0,135,255,0.4)" letter-spacing="0.04em">IQ + OQ · No PQ</text>
+
+        <!-- Cat 4 — highlighted -->
+        <rect x="370" y="28" width="165" height="210" rx="6" fill="rgba(0,87,255,0.14)" stroke="#0057ff" stroke-width="1.5"/>
+        <rect x="370" y="28" width="165" height="30" rx="6" fill="rgba(0,87,255,0.2)"/>
+        <rect x="370" y="44" width="165" height="14" fill="rgba(0,87,255,0.2)"/>
+        <text x="452" y="48" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="#6699ff" letter-spacing="0.1em">CATEGORY 4</text>
+        <!-- most common badge -->
+        <rect x="390" y="62" width="125" height="16" rx="3" fill="rgba(0,87,255,0.25)"/>
+        <text x="452" y="74" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="#6699ff" letter-spacing="0.08em">MOST COMMON</text>
+        <text x="452" y="98" text-anchor="middle" font-family="Epilogue,sans-serif" font-weight="800" font-size="15" fill="white">Configured</text>
+        <text x="452" y="116" text-anchor="middle" font-family="Epilogue,sans-serif" font-weight="300" font-size="11" fill="rgba(255,255,255,0.6)">COTS Software</text>
+        <line x1="386" y1="130" x2="519" y2="130" stroke="rgba(0,87,255,0.2)" stroke-width="1"/>
+        <text x="452" y="150" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(255,255,255,0.6)" letter-spacing="0.04em">Configured PLC/SCADA,</text>
+        <text x="452" y="164" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(255,255,255,0.6)" letter-spacing="0.04em">configured HMI platform</text>
+        <line x1="386" y1="178" x2="519" y2="178" stroke="rgba(0,87,255,0.2)" stroke-width="1"/>
+        <text x="452" y="196" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(255,255,255,0.25)" letter-spacing="0.04em">VALIDATION EFFORT</text>
+        <text x="452" y="212" text-anchor="middle" font-family="Epilogue,sans-serif" font-weight="700" font-size="11" fill="white">Full lifecycle</text>
+        <text x="452" y="228" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7.5" fill="rgba(0,135,255,0.6)" letter-spacing="0.04em">IQ + OQ + PQ · All docs</text>
+
+        <!-- Cat 5 -->
+        <rect x="555" y="38" width="145" height="190" rx="6" fill="rgba(217,119,6,0.08)" stroke="rgba(217,119,6,0.3)" stroke-width="1"/>
+        <rect x="555" y="38" width="145" height="28" rx="6" fill="rgba(217,119,6,0.12)"/>
+        <rect x="555" y="52" width="145" height="14" fill="rgba(217,119,6,0.12)"/>
+        <text x="627" y="57" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(217,119,6,0.8)" letter-spacing="0.1em">CATEGORY 5</text>
+        <text x="627" y="86" text-anchor="middle" font-family="Epilogue,sans-serif" font-weight="800" font-size="15" fill="rgba(255,255,255,0.8)">Custom /</text>
+        <text x="627" y="104" text-anchor="middle" font-family="Epilogue,sans-serif" font-weight="300" font-size="11" fill="rgba(255,255,255,0.5)">Bespoke Software</text>
+        <line x1="571" y1="120" x2="684" y2="120" stroke="rgba(217,119,6,0.15)" stroke-width="1"/>
+        <text x="627" y="140" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(255,255,255,0.4)" letter-spacing="0.04em">Purpose-built code,</text>
+        <text x="627" y="154" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(255,255,255,0.4)" letter-spacing="0.04em">custom applications</text>
+        <line x1="571" y1="168" x2="684" y2="168" stroke="rgba(217,119,6,0.15)" stroke-width="1"/>
+        <text x="627" y="186" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(255,255,255,0.25)" letter-spacing="0.04em">VALIDATION EFFORT</text>
+        <text x="627" y="202" text-anchor="middle" font-family="Epilogue,sans-serif" font-weight="700" font-size="11" fill="rgba(217,119,6,0.9)">Maximum</text>
+        <text x="627" y="220" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7.5" fill="rgba(217,119,6,0.5)" letter-spacing="0.04em">Full SDLC + all docs</text>
+
+        <!-- effort arrow -->
+        <line x1="36" y1="245" x2="684" y2="245" stroke="rgba(255,255,255,0.08)" stroke-width="1" marker-end="url(#a1)"/>
+        <text x="360" y="258" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(255,255,255,0.15)" letter-spacing="0.1em">INCREASING VALIDATION EFFORT →</text>
+      </svg>
+      <figcaption>// GAMP 5 2ND EDITION CATEGORY OVERVIEW — CATEGORY 4 COVERS THE MAJORITY OF PLC/SCADA PROJECTS IN PHARMA</figcaption>
+    </figure>
+
+    <h2 id="cat1">Category 1 — Infrastructure Software</h2>
+    <p>Category 1 covers software not intended for direct GMP use — operating systems, network utilities, standard office applications, and database engines used purely as underlying infrastructure. These are not validated in the GMP sense; instead, the organisation manages them through IT controls and vendor support processes.</p>
+    <p>For most automation engineers, Category 1 items appear in the background of your project — the Windows Server running your SCADA historian, or the network switches in the control room. They need to be <strong>inventoried in your IQ</strong>, but they don't attract their own qualification protocols.</p>
+
+    <h2 id="cat3">Category 3 — Non-Configured COTS</h2>
+    <p>Category 3 applies to commercial off-the-shelf software used essentially as supplied, with minimal or no configuration. The key question is: <strong>has the software been modified beyond standard parameterisation?</strong> If the answer is no, Category 3 applies.</p>
+    <p>In automation practice, a standard SCADA or HMI platform used purely to display data from a PLC — with no custom scripting, no configured sequences, no application logic — might qualify as Category 3. In practice this is rare for GMP process control; most SCADA implementations involve enough configuration to push into Category 4.</p>
+
+    <div class="callout amber">
+      <div class="callout-label">The Most Common Misclassification</div>
+      <p>Engineers frequently try to classify their configured Ignition or WinCC system as Category 3 to reduce document scope. <strong>If you've created screens, configured tags, written scripts, or built sequences — it's Category 4.</strong> The regulator will ask to see evidence of what was configured and how it was tested. Category 3 won't support that scope.</p>
+    </div>
+
+    <h2 id="cat4">Category 4 — Configured COTS (Most PLC/SCADA Projects)</h2>
+    <p>Category 4 is where the majority of industrial automation projects in pharma sit. It applies to standard commercial platforms that have been <strong>configured for specific GMP use</strong> — PLC programs written in TIA Portal or Studio 5000, SCADA applications built in Ignition or iFIX, HMI applications developed in WinCC or FactoryTalk View.</p>
+    <p>The configuration itself — your ladder logic, your function blocks, your SCADA screens, your alarm setpoints — is what attracts the validation effort. The regulator wants evidence that what you configured was designed correctly, implemented correctly, tested correctly, and performs correctly under real conditions.</p>
+    <p>Category 4 requires the full document lifecycle:</p>
+    <ul class="checklist">
+      <li><a href="how-to-write-urs-plc-scada.html">User Requirements Specification (URS)</a></li>
+      <li>Functional Design Specification (FDS)</li>
+      <li>Hardware Design Specification (HDS)</li>
+      <li>Factory Acceptance Test (FAT)</li>
+      <li>Installation Qualification (IQ)</li>
+      <li>Operational Qualification (OQ)</li>
+      <li>Performance Qualification (PQ)</li>
+      <li>Validation Summary Report (VSR)</li>
+    </ul>
+
+    <h2 id="cat5">Category 5 — Custom / Bespoke Software</h2>
+    <p>Category 5 applies when software has been developed from scratch specifically for the GMP application — purpose-written code, custom applications, or significantly modified COTS where the modifications go beyond configuration. It attracts the maximum validation effort because the regulator cannot rely on the vendor's own testing of a standard product.</p>
+    <p>For most PLC/SCADA engineers, Category 5 means a Software Design Specification (SDS) is required in addition to the FDS, a formal software development lifecycle must be followed and documented, and unit testing evidence at the code level is expected. The scope is significantly larger than Category 4.</p>
+
+    <div class="callout green">
+      <div class="callout-label">Decision Rule of Thumb</div>
+      <p>If you're programming in a standard IEC 61131-3 environment (TIA Portal, RSLogix, Studio 5000) and writing application logic for a specific process — <strong>that's Category 4</strong>. If you're writing Python, C#, or custom application code to run GMP processes — <strong>that's Category 5</strong>.</p>
+    </div>
+
+    <h2 id="classify">How to Classify Your System in Practice</h2>
+    <p>The classification decision should be made at the start of the project — ideally documented in the Validation Plan — and agreed with the client's QA team before any documentation work begins. Changing category mid-project can mean scrapping or restructuring significant amounts of work.</p>
+    <p>The practical classification questions to ask:</p>
+    <ul class="arrow-list">
+      <li>Is this standard commercial software used as-supplied with no modification? → Category 3</li>
+      <li>Is this a standard platform (TIA Portal, Ignition, WinCC) that we have configured for this specific application? → Category 4</li>
+      <li>Have we written custom code outside the standard platform environment? → Category 5</li>
+      <li>Is this infrastructure software (OS, database engine, network tools) with no direct GMP function? → Category 1</li>
+    </ul>
+    <p>Most systems have <strong>multiple components at different categories</strong>. A typical Siemens TIA Portal project might have: Windows Server (Cat 1), WinCC SCADA platform (Cat 3 base), configured WinCC application (Cat 4), and any custom VBScript or C# scripting (Cat 5). Each layer attracts its own validation scope.</p>
+
+    <div class="callout blue">
+      <div class="callout-label">In the QLean Framework</div>
+      <p>The Validation Plan template includes a <strong>Software Categorisation section</strong> that walks through this decision systematically and produces a documented rationale. The Traceability Matrix is pre-structured to map each component category to its required document scope — automatically flagging any gaps.</p>
+    </div>
+
+  </article>
+
+  <aside class="sidebar">
+    <div class="toc-card">
+      <div class="toc-label">In This Article</div>
+      <ul class="toc-list">
+        <li><a href="#why-it-matters" class="active">Why It Matters</a></li>
+        <li><a href="#category-map">The Four Categories</a></li>
+        <li><a href="#cat1">Category 1</a></li>
+        <li><a href="#cat3">Category 3</a></li>
+        <li><a href="#cat4">Category 4</a></li>
+        <li><a href="#cat5">Category 5</a></li>
+        <li><a href="#classify">How to Classify</a></li>
+      </ul>
+    </div>
+    <div class="sidebar-cta">
+      <div class="sc-eyebrow">QLean Framework</div>
+      <div class="sc-title">Category-aware validation templates</div>
+      <div class="sc-body">29 documents covering Cat 3, 4 and 5 scope. The Validation Plan drives your document scope automatically.</div>
+      <a href="../index.html#pricing" class="sc-btn">Get the Framework — €249 →</a>
+      <div class="sc-note">// INSTANT DOWNLOAD · COMPANY-WIDE LICENCE</div>
+    </div>
+      <div class="sidebar-share">
+      <div class="share-label">Share This Article</div>
+      <div class="share-links">
+        <a href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fqleanautomation.com%2Fblog%2Fgamp5-categories.html" target="_blank" rel="noopener" class="share-link">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          Share on LinkedIn
+        </a>
+        <a href="https://www.reddit.com/submit?url=https%3A%2F%2Fqleanautomation.com%2Fblog%2Fgamp5-categories.html&title=GAMP+5+Categories%3A+What+They+Mean+for+Your+PLC%2FSCADA+Project" target="_blank" rel="noopener" class="share-link">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/></svg>
+          Share on Reddit
+        </a>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<section class="related">
+  <div class="related-inner">
+    <div class="related-label">More Articles</div>
+    <div class="related-grid">
+      <a href="how-to-write-urs-plc-scada.html" class="related-card">
+        <div class="rc-tag">📝 URS</div>
+        <div class="rc-title">How to Write a URS for a PLC/SCADA System</div>
+        <div class="rc-desc">Category 4 requires a full document lifecycle starting with a solid URS. Here's the step-by-step guide.</div>
+        <div class="rc-footer"><div class="rc-read">9 MIN READ</div><div class="rc-arrow">→</div></div>
+      </a>
+      <a href="iq-oq-pq-guide.html" class="related-card">
+        <div class="rc-tag">Validation</div>
+        <div class="rc-title">IQ OQ PQ Explained: A Practical Guide for Automation Engineers</div>
+        <div class="rc-desc">What IQ, OQ and PQ actually mean, what each protocol must contain, and what you're expected to produce.</div>
+        <div class="rc-footer"><div class="rc-read">8 MIN READ</div><div class="rc-arrow">→</div></div>
+      </a>
+      <a href="21-cfr-part-11.html" class="related-card">
+        <div class="rc-tag">21 CFR Part 11</div>
+        <div class="rc-title">21 CFR Part 11 for Automation Engineers: What You Actually Need to Implement</div>
+        <div class="rc-desc">Electronic records, audit trails, electronic signatures — what Part 11 actually requires from your SCADA system.</div>
+        <div class="rc-footer"><div class="rc-read">7 MIN READ</div><div class="rc-arrow">→</div></div>
+      </a>
+      <a href="pharma-fat-guide.html" class="related-card">
+        <div class="rc-tag">Factory Acceptance</div>
+        <div class="rc-title">Your First Pharma FAT: What to Expect and How to Prepare</div>
+        <div class="rc-desc">A pharma FAT is unlike any other acceptance test. Here's what the QA witness will be looking for.</div>
+        <div class="rc-footer"><div class="rc-read">5 MIN READ</div><div class="rc-arrow">→</div></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="../index.html" class="nav-logo">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none" style="flex-shrink:0"><rect width="32" height="32" rx="7" fill="#0d0f12"/><rect x="8" y="7" width="16" height="16" rx="2" stroke="white" stroke-width="2.5" fill="none"/><line x1="20" y1="19" x2="26" y2="25" stroke="#0057FF" stroke-width="3" stroke-linecap="round"/></svg>
+          <span style="font-family:'Epilogue',sans-serif;font-weight:800;font-size:16px;color:#0d0f12;letter-spacing:-.03em;white-space:nowrap">QLean <span style="font-weight:300;color:#5a6172">Automation</span></span>
+        </a>
+        <p>GMP documentation tools for system integrators and automation engineers entering pharmaceutical projects.</p>
+      </div>
+      <div class="footer-col"><h4>Products</h4><ul><li><a href="../index.html#framework">GAMP 5 Framework</a></li><li><a href="../index.html#products">Technical Masterclass</a></li><li><a href="../index.html#free-download">Free Resources</a></li></ul></div>
+      <div class="footer-col"><h4>Blog</h4><ul><li><a href="blog-index.html">All Articles</a></li><li><a href="21-cfr-part-11.html">21 CFR Part 11</a></li><li><a href="pharma-fat-guide.html">FAT Guide</a></li><li><a href="how-to-write-urs-plc-scada.html">How to Write a URS</a></li></ul></div>
+      <div class="footer-col"><h4>Company</h4><ul><li><a href="https://www.linkedin.com/company/qlean-automation" target="_blank">LinkedIn</a></li><li><a href="mailto:hello@qleanautomation.com">Contact</a></li><li><a href="../terms.html">Terms</a></li></ul></div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 QLEAN AUTOMATION · QLEANAUTOMATION.COM</p>
+      <div class="compliance-pills"><span class="cp">GAMP 5</span><span class="cp">EU ANNEX 11</span><span class="cp">21 CFR PART 11</span></div>
+    </div>
+  </div>
+</footer>
+<script>
+window.addEventListener('scroll',()=>{const d=document.documentElement;document.getElementById('progress').style.width=(d.scrollTop/(d.scrollHeight-d.clientHeight)*100)+'%'});
+const obs=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting){document.querySelectorAll('.toc-list a').forEach(l=>l.classList.remove('active'));const a=document.querySelector(`.toc-list a[href="#${x.target.id}"]`);if(a)a.classList.add('active')}}),{rootMargin:'-20% 0px -70% 0px'});
+document.querySelectorAll('[id]').forEach(s=>obs.observe(s));
+</script>
+</body>
+</html>

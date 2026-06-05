@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-JJQ1TXZJX7"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-JJQ1TXZJX7');
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Temperature Sensor Calibration for GMP Environments | QLean Automation</title>
+<meta name="description" content="RTDs, thermocouples, and integrated transmitters all calibrate differently in pharma. Here is what GMP requires for each type — intervals, reference standards, self-calibration features, and what an OOT finding means for your batch data.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@300;400;500;600;700;800;900&family=Source+Sans+3:ital,wght@0,300;0,400;0,500;1,300&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--white:#ffffff;--off:#f7f8f9;--ink:#0d0f12;--ink2:#1e2128;--ink3:#3d4456;--ink4:#9199a8;--rule:#e2e5ea;--rule2:#c8cdd6;--blue:#0057ff;--blue2:#0044cc;--blue-dim:rgba(0,87,255,0.07);--green:#00875a;--green-dim:rgba(0,135,90,0.08);--amber:#d97706;--amber-dim:rgba(217,119,6,0.08);--red:#c0392b;--red-dim:rgba(192,57,43,0.08);--f-head:'Epilogue',sans-serif;--f-body:'Source Sans 3',sans-serif;--f-mono:'Roboto Mono',monospace;--shadow-sm:0 2px 8px rgba(13,15,18,0.06),0 1px 3px rgba(13,15,18,0.04)}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}body{background:var(--white);color:var(--ink);font-family:var(--f-body);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+nav{position:fixed;top:0;left:0;right:0;z-index:200;height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 6%;background:rgba(255,255,255,0.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--rule)}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;flex-shrink:0}
+.nav-links{display:flex;align-items:center;gap:36px;list-style:none}.nav-links a{font-size:14px;font-weight:400;color:var(--ink3);text-decoration:none;transition:color .2s}.nav-links a:hover{color:var(--ink)}
+.nav-btn{font-family:var(--f-body);font-size:13px;font-weight:500;padding:9px 20px;background:var(--blue);color:white;border:none;border-radius:6px;cursor:pointer;text-decoration:none;white-space:nowrap;flex-shrink:0}.nav-btn:hover{background:var(--blue2)}
+.progress-bar{position:fixed;top:64px;left:0;right:0;height:2px;background:var(--rule);z-index:199}.progress-fill{height:100%;background:var(--blue);width:0%}
+.article-hero{padding:120px 6% 64px;background:var(--white);border-bottom:1px solid var(--rule);position:relative;overflow:hidden}
+.article-hero::before{content:'';position:absolute;top:-80px;right:-80px;width:400px;height:400px;background:radial-gradient(circle,rgba(0,87,255,0.04) 0%,transparent 70%);pointer-events:none}
+.article-hero-inner{max-width:940px;margin:0 auto;position:relative;z-index:1}
+.breadcrumb{display:flex;align-items:center;gap:8px;font-family:var(--f-mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink4);margin-bottom:24px}.breadcrumb a{color:var(--ink4);text-decoration:none}.breadcrumb a:hover{color:var(--blue)}.breadcrumb span{color:var(--rule2)}
+.article-tag{display:inline-flex;align-items:center;gap:6px;font-family:var(--f-mono);font-size:10px;font-weight:500;color:var(--blue);letter-spacing:.1em;text-transform:uppercase;margin-bottom:20px;padding:4px 10px;background:var(--blue-dim);border-radius:4px}
+.article-hero h1{font-family:var(--f-head);font-size:clamp(30px,5vw,52px);font-weight:900;line-height:1.0;letter-spacing:-.04em;color:var(--ink);margin-bottom:20px}.article-hero h1 span{color:var(--blue)}
+.article-intro{font-size:18px;font-weight:400;color:var(--ink2);line-height:1.75;margin-bottom:32px;max-width:800px}
+.article-meta{display:flex;align-items:center;gap:24px;padding-top:24px;border-top:1px solid var(--rule);flex-wrap:wrap}
+.meta-author{display:flex;align-items:center;gap:10px}.author-avatar{width:36px;height:36px;border-radius:50%;background:var(--ink);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.author-name{font-size:13px;font-weight:500;color:var(--ink)}.author-role{font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.04em}
+.meta-divider{width:1px;height:28px;background:var(--rule)}.meta-stat{font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.06em}
+.article-wrap{max-width:1300px;margin:0 auto;padding:64px 6%;display:grid;grid-template-columns:1fr 300px;gap:60px;align-items:start}
+.article-body{min-width:0}
+.article-body h2{font-family:var(--f-head);font-size:26px;font-weight:800;letter-spacing:-.03em;color:var(--ink);margin:56px 0 16px;line-height:1.2}.article-body h2:first-child{margin-top:0}
+.article-body h3{font-family:var(--f-head);font-size:18px;font-weight:700;letter-spacing:-.02em;color:var(--ink);margin:32px 0 12px}
+.article-body p{font-size:16px;font-weight:400;color:var(--ink2);line-height:1.85;margin-bottom:20px}
+.article-body strong{color:var(--ink);font-weight:600}
+.article-body a{color:var(--blue);text-decoration:none;border-bottom:1px solid rgba(0,87,255,.25)}.article-body a:hover{border-color:var(--blue)}
+.callout{padding:20px 24px;border-radius:8px;margin:32px 0;border-left:3px solid}
+.callout.blue{background:var(--blue-dim);border-color:var(--blue)}.callout.amber{background:var(--amber-dim);border-color:var(--amber)}.callout.green{background:var(--green-dim);border-color:var(--green)}.callout.red{background:var(--red-dim);border-color:var(--red)}
+.callout-label{font-family:var(--f-mono);font-size:9px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px}.callout.blue .callout-label{color:var(--blue)}.callout.amber .callout-label{color:var(--amber)}.callout.green .callout-label{color:var(--green)}.callout.red .callout-label{color:var(--red)}
+.callout p{font-size:14px;color:var(--ink2);line-height:1.7;margin:0}.callout strong{color:var(--ink)}
+.article-img{width:100%;border-radius:8px;border:1px solid #1e2535;overflow:hidden;margin:36px 0}
+.article-img figcaption{padding:10px 14px;background:var(--off);font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.04em;border-top:1px solid var(--rule)}
+.checklist{list-style:none;display:flex;flex-direction:column;gap:8px;margin:20px 0 28px}
+.checklist li{display:flex;align-items:flex-start;gap:10px;font-size:15px;color:var(--ink2);line-height:1.6}
+.checklist li::before{content:'';width:16px;height:16px;flex-shrink:0;margin-top:3px;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 14 14' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='7' cy='7' r='6.5' fill='none' stroke='%230057ff' stroke-width='1'/%3E%3Cpath d='M4 7l2 2 4-4' stroke='%230057ff' stroke-width='1.3' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:center;background-size:contain}
+.arrow-list{list-style:none;display:flex;flex-direction:column;gap:8px;margin:20px 0 28px}
+.arrow-list li{display:flex;align-items:flex-start;gap:10px;font-size:15px;color:var(--ink2);line-height:1.6}
+.arrow-list li::before{content:'\2192';color:var(--blue);flex-shrink:0;font-family:var(--f-mono);font-size:13px;margin-top:2px}
+.table-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:28px 0}
+.compare-table{width:100%;border-collapse:collapse;font-size:14px}
+.compare-table th{font-family:var(--f-mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink4);padding:10px 16px;border-bottom:2px solid var(--rule);text-align:left;background:var(--off)}
+.compare-table td{padding:12px 16px;border-bottom:1px solid var(--rule);vertical-align:top;color:var(--ink2);line-height:1.6}
+.compare-table tr:last-child td{border-bottom:none}
+.compare-table td:first-child{font-weight:600;color:var(--ink);font-family:var(--f-mono);font-size:12px}
+.sidebar{position:sticky;top:88px;display:flex;flex-direction:column;gap:16px}
+.toc-card{border:1px solid var(--rule);border-radius:8px;padding:24px;background:var(--white);box-shadow:var(--shadow-sm)}
+.toc-label{font-family:var(--f-mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);margin-bottom:16px}
+.toc-list{list-style:none;display:flex;flex-direction:column;gap:2px}
+.toc-list a{display:block;font-size:13px;color:var(--ink3);text-decoration:none;padding:6px 10px;border-radius:4px;transition:all .15s;border-left:2px solid transparent}
+.toc-list a:hover,.toc-list a.active{color:var(--blue);background:var(--blue-dim);border-left-color:var(--blue)}
+.sidebar-cta{border:1px solid var(--blue);border-radius:8px;padding:24px;background:var(--blue-dim)}
+.sc-eyebrow{font-family:var(--f-mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);margin-bottom:10px}
+.sc-title{font-family:var(--f-head);font-size:17px;font-weight:800;letter-spacing:-.02em;color:var(--ink);margin-bottom:8px;line-height:1.2}
+.sc-body{font-size:13px;color:var(--ink3);line-height:1.6;margin-bottom:16px}
+.sc-btn{display:block;text-align:center;padding:11px 16px;background:var(--blue);color:white;border-radius:6px;font-family:var(--f-body);font-size:13px;font-weight:500;text-decoration:none}.sc-btn:hover{background:var(--blue2)}
+.sc-note{font-family:var(--f-mono);font-size:9px;color:var(--ink4);text-align:center;margin-top:8px;letter-spacing:.04em}
+.sidebar-share{border:1px solid var(--rule);border-radius:8px;padding:20px 24px;background:var(--white)}
+.share-label{font-family:var(--f-mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);margin-bottom:14px}
+.share-links{display:flex;flex-direction:column;gap:8px}
+.share-link{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--ink3);text-decoration:none;padding:9px 12px;border:1px solid var(--rule);border-radius:6px;transition:border-color .2s,color .2s}.share-link:hover{border-color:var(--blue);color:var(--blue)}
+.related{padding:64px 6%;border-top:1px solid var(--rule);background:var(--off)}
+.related-inner{max-width:1100px;margin:0 auto}
+.related-label{font-family:var(--f-mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);margin-bottom:32px;display:flex;align-items:center;gap:10px}
+.related-label::before{content:'';width:20px;height:1px;background:var(--blue)}
+.related-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.related-card{padding:24px;border:1px solid var(--rule);border-radius:8px;background:var(--white);box-shadow:var(--shadow-sm);transition:border-color .2s,transform .2s;text-decoration:none;display:flex;flex-direction:column;gap:12px}.related-card:hover{border-color:var(--blue);transform:translateY(-4px)}
+.rc-tag{font-family:var(--f-mono);font-size:9px;color:var(--blue);letter-spacing:.08em;text-transform:uppercase;padding:3px 8px;background:var(--blue-dim);border-radius:3px;align-self:flex-start}
+.rc-title{font-family:var(--f-head);font-size:16px;font-weight:700;letter-spacing:-.02em;color:var(--ink);line-height:1.25}
+.rc-desc{font-size:13px;color:var(--ink3);line-height:1.6;flex:1}
+.rc-footer{display:flex;align-items:center;justify-content:space-between;padding-top:12px;border-top:1px solid var(--rule)}
+.rc-read{font-family:var(--f-mono);font-size:10px;color:var(--ink4)}.rc-arrow{font-size:14px;color:var(--blue)}
+footer{padding:56px 6% 32px;border-top:1px solid var(--rule);background:var(--white)}
+.footer-inner{max-width:1160px;margin:0 auto}
+.footer-top{display:flex;justify-content:space-between;align-items:flex-start;gap:40px;flex-wrap:wrap;margin-bottom:48px}
+.footer-brand p{font-size:13px;font-weight:300;color:var(--ink3);margin-top:12px;max-width:260px;line-height:1.6}
+.footer-col h4{font-family:var(--f-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink4);margin-bottom:16px}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+.footer-col a{font-size:13px;color:var(--ink3);text-decoration:none}.footer-col a:hover{color:var(--blue)}
+.footer-bottom{padding-top:24px;border-top:1px solid var(--rule);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.footer-bottom p{font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.04em}
+.compliance-pills{display:flex;gap:6px;flex-wrap:wrap}
+.cp{font-family:var(--f-mono);font-size:9px;padding:3px 8px;border:1px solid var(--rule);border-radius:3px;color:var(--ink4);letter-spacing:.06em}
+@media(max-width:900px){.article-wrap{grid-template-columns:1fr;gap:48px}.sidebar{position:static}.related-grid{grid-template-columns:1fr}.table-scroll{margin:20px 0}}
+@media(max-width:900px){.nav-links{display:none}}
+@media(max-width:540px){nav{padding:0 4%}.nav-btn{font-size:12px;padding:8px 14px}}
+</style>
+</head>
+<body>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+<nav>
+  <a href="../index.html" class="nav-logo">
+    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" style="flex-shrink:0"><rect width="32" height="32" rx="7" fill="#0d0f12"/><rect x="8" y="7" width="16" height="16" rx="2" stroke="white" stroke-width="2.5" fill="none"/><line x1="20" y1="19" x2="26" y2="25" stroke="#0057FF" stroke-width="3" stroke-linecap="round"/></svg>
+    <span style="font-family:'Epilogue',sans-serif;font-weight:800;font-size:16px;color:#0d0f12;letter-spacing:-.03em;white-space:nowrap">QLean <span style="font-weight:300;color:#5a6172">Automation</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="../index.html#products">Products</a></li>
+    <li><a href="../index.html#framework">Framework</a></li>
+    <li><a href="blog-index.html">Knowledge Base</a></li>
+    <li><a href="../index.html#pricing">Pricing</a></li>
+    <li><a href="../about.html">About</a></li>
+    <li><a href="../index.html#faq">FAQ</a></li>
+  </ul>
+  <a href="../index.html#pricing" class="nav-btn">Get the Framework &#8594;</a>
+</nav>
+
+<header class="article-hero">
+  <div class="article-hero-inner">
+    <div class="breadcrumb"><a href="../index.html">Home</a><span>/</span><a href="blog-index.html">Knowledge Base</a><span>/</span>Temperature Sensor Calibration for GMP</div>
+    <div class="article-tag">&#128207; Instrumentation &amp; Calibration</div>
+    <h1>Temperature Sensor<br><span>Calibration for GMP</span><br>Environments</h1>
+    <p class="article-intro">Temperature is the most commonly measured process variable in pharmaceutical manufacturing — and one of the most consequential. A poorly calibrated temperature sensor does not just produce inaccurate data; it produces inaccurate GMP records that may have been used to make batch release decisions. Here is what GMP requires for temperature sensor calibration, how different sensor types behave differently over time, and what an out-of-tolerance finding actually means for your historical data.</p>
+    <div class="article-meta">
+      <div class="meta-author">
+        <div class="author-avatar"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="7" r="3.5" stroke="white" stroke-width="1.5"/><path d="M2.5 16c0-3.59 2.91-6.5 6.5-6.5s6.5 2.91 6.5 6.5" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+        <div><div class="author-name">QLean Automation</div><div class="author-role">ENGINEERS WHO BUILD SYSTEMS, NOT JUST SIGN THEM</div></div>
+      </div>
+      <div class="meta-divider"></div><div class="meta-stat">7 MIN READ</div>
+      <div class="meta-divider"></div><div class="meta-stat">TEMPERATURE &#183; RTD &#183; CALIBRATION &#183; GMP</div>
+    </div>
+  </div>
+</header>
+
+<div class="article-wrap">
+  <article class="article-body">
+
+    <h2 id="why-temperature-calibration-is-different">Why Temperature Calibration Is Different in Pharma</h2>
+    <p>In a standard industrial installation, a temperature sensor that drifts 1°C over twelve months is a minor maintenance issue. In a GMP environment, that same drift is potentially a data integrity event. If the sensor was monitoring a WFI distribution loop where the process specification requires ≥70°C throughout, a 1°C drift may mean that readings recorded as 70.5°C were actually 71.5°C — or 69.5°C, which would be below specification. Every batch decision made during that drift period is potentially affected.</p>
+    <p>This is why temperature sensor calibration in pharma is not just about maintaining measurement accuracy. It is about maintaining the integrity of the GMP record — and therefore the validity of every process decision that record supported. The <a href="21-cfr-part-11-temperature-monitoring.html">21 CFR Part 11 requirements for temperature monitoring systems</a> explicitly link data accuracy to calibration status: a record produced by an out-of-calibration sensor is not a reliable electronic record.</p>
+
+    <div class="callout amber">
+      <div class="callout-label">The Data Gap Problem</div>
+      <p>When a temperature sensor is found out of tolerance, the OOT finding does not just affect today's reading. It creates a suspect data window stretching back to the last passed calibration — potentially months of historical records. <strong>The shorter your calibration interval and the tighter your OOT tolerance band, the smaller this window becomes.</strong> Interval selection is risk management, not just scheduling.</p>
+    </div>
+
+    <h2 id="sensor-types-and-gmp-implications">Sensor Types and Their GMP Calibration Implications</h2>
+    <p>Temperature sensors used in pharmaceutical automation are not all created equal. RTDs, thermocouples, and integrated transmitters have different drift characteristics, different calibration approaches, and different failure modes that matter for GMP applications.</p>
+
+    <div class="table-scroll">
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th>Sensor Type</th>
+            <th>Typical GMP Application</th>
+            <th>Drift Characteristic</th>
+            <th>Calibration Approach</th>
+            <th>Typical GMP Interval</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Pt100 RTD (4-wire)</td>
+            <td>WFI / PW distribution, autoclaves, freezer monitoring</td>
+            <td>Stable — predictable gradual drift; vulnerable to mechanical shock and vibration</td>
+            <td>Comparison calibration in temperature bath against reference Pt100; 3–5 point calibration across process range</td>
+            <td>3–6 months (critical); 6–12 months (important)</td>
+          </tr>
+          <tr>
+            <td>Pt1000 RTD</td>
+            <td>Cleanroom EMS, cold storage, incubators</td>
+            <td>Similar to Pt100; higher resistance reduces lead resistance error</td>
+            <td>Same as Pt100; reference bath comparison</td>
+            <td>6–12 months</td>
+          </tr>
+          <tr>
+            <td>Thermocouple (Type K, J, T)</td>
+            <td>Sterilisation, depyrogenation tunnels, high-temp processes</td>
+            <td>Prone to drift at high temperatures; oxidation and contamination accelerate drift; less stable than RTD below 500°C</td>
+            <td>Comparison calibration; dry-block calibrator or furnace for high-temperature ranges</td>
+            <td>3–6 months; more frequent for high-temp applications</td>
+          </tr>
+          <tr>
+            <td>Integrated transmitter (e.g. iTHERM TM371)</td>
+            <td>WFI distribution, process vessels</td>
+            <td>Combines sensor and transmitter drift; self-calibration verification models available</td>
+            <td>End-to-end calibration of complete loop (sensor + transmitter together); verify at I/O input against reference</td>
+            <td>3–6 months; self-cal models may extend under risk assessment</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2 id="calibrating-the-loop-not-just-the-sensor">Calibrating the Loop, Not Just the Sensor</h2>
+    <p>A common mistake on pharma projects is calibrating the sensor element in isolation and treating the transmitter as a separate, non-calibrated component. In a GMP context, what matters is the accuracy of the value that reaches the SCADA historian and the GMP record. That value is the output of the complete measurement loop — sensor element, transmitter electronics, analogue signal, and I/O conversion.</p>
+    <p>If the Pt100 element is within ±0.1°C but the transmitter introduces a +0.5°C offset, the SCADA record is wrong by 0.5°C regardless of the sensor accuracy. <strong>Loop calibration — verifying the end-to-end signal from sensor tip to SCADA displayed value — is the correct approach for GMP temperature measurement.</strong></p>
+
+    <figure class="article-img">
+      <svg viewBox="0 0 720 200" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;background:#0d0f12;border-radius:8px 8px 0 0">
+        <text x="360" y="18" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(255,255,255,0.2)" letter-spacing="0.12em">TEMPERATURE LOOP CALIBRATION — END-TO-END VERIFICATION</text>
+
+        <!-- Sensor -->
+        <rect x="20" y="50" width="110" height="80" rx="5" fill="rgba(0,87,255,0.10)" stroke="rgba(0,87,255,0.4)" stroke-width="1.5"/>
+        <text x="75" y="82" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(100,160,255,0.8)" letter-spacing="0.06em">SENSOR</text>
+        <text x="75" y="96" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(180,200,230,0.7)">Pt100 / TC</text>
+        <text x="75" y="110" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(100,160,255,0.5)">In process</text>
+        <text x="75" y="122" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(100,160,255,0.5)">or cal bath</text>
+
+        <!-- Arrow -->
+        <line x1="130" y1="90" x2="155" y2="90" stroke="rgba(0,87,255,0.5)" stroke-width="1.5"/>
+        <polygon points="152,86 161,90 152,94" fill="rgba(0,87,255,0.6)"/>
+
+        <!-- Transmitter -->
+        <rect x="161" y="50" width="130" height="80" rx="5" fill="rgba(0,87,255,0.08)" stroke="rgba(0,87,255,0.3)" stroke-width="1.5"/>
+        <text x="226" y="82" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(100,160,255,0.7)" letter-spacing="0.06em">TRANSMITTER</text>
+        <text x="226" y="96" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(180,200,230,0.65)">Signal conditioning</text>
+        <text x="226" y="110" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(100,160,255,0.4)">4–20 mA / HART</text>
+        <text x="226" y="122" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(100,160,255,0.4)">output</text>
+
+        <!-- Arrow -->
+        <line x1="291" y1="90" x2="316" y2="90" stroke="rgba(0,87,255,0.5)" stroke-width="1.5"/>
+        <polygon points="313,86 322,90 313,94" fill="rgba(0,87,255,0.6)"/>
+
+        <!-- I/O Module -->
+        <rect x="322" y="50" width="130" height="80" rx="5" fill="rgba(0,87,255,0.07)" stroke="rgba(0,87,255,0.25)" stroke-width="1.5"/>
+        <text x="387" y="82" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(100,160,255,0.6)" letter-spacing="0.06em">PLC I/O MODULE</text>
+        <text x="387" y="96" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(180,200,230,0.6)">Analogue input</text>
+        <text x="387" y="110" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(100,160,255,0.4)">mA &#8594; engineering</text>
+        <text x="387" y="122" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(100,160,255,0.4)">units conversion</text>
+
+        <!-- Arrow -->
+        <line x1="452" y1="90" x2="477" y2="90" stroke="rgba(0,87,255,0.5)" stroke-width="1.5"/>
+        <polygon points="474,86 483,90 474,94" fill="rgba(0,87,255,0.6)"/>
+
+        <!-- SCADA -->
+        <rect x="483" y="50" width="130" height="80" rx="5" fill="rgba(0,87,255,0.12)" stroke="rgba(0,87,255,0.45)" stroke-width="1.5"/>
+        <text x="548" y="82" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(100,160,255,0.9)" letter-spacing="0.06em">SCADA / HISTORIAN</text>
+        <text x="548" y="96" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(200,215,240,0.8)">Displayed value</text>
+        <text x="548" y="110" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(100,160,255,0.6)">GMP record</text>
+        <text x="548" y="122" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(100,160,255,0.6)">This is what matters</text>
+
+        <!-- Bracket below showing loop calibration scope -->
+        <line x1="20" y1="148" x2="613" y2="148" stroke="rgba(0,87,255,0.3)" stroke-width="1"/>
+        <line x1="20" y1="142" x2="20" y2="154" stroke="rgba(0,87,255,0.3)" stroke-width="1"/>
+        <line x1="613" y1="142" x2="613" y2="154" stroke="rgba(0,87,255,0.3)" stroke-width="1"/>
+        <text x="316" y="170" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(0,87,255,0.7)" letter-spacing="0.08em">LOOP CALIBRATION SCOPE — VERIFY END-TO-END ACCURACY</text>
+        <text x="316" y="184" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(100,160,255,0.5)">Reference thermometer in same environment &#8594; compare to SCADA displayed value &#8594; record difference</text>
+      </svg>
+      <figcaption>TEMPERATURE LOOP CALIBRATION — THE GMP RECORD IS THE SCADA VALUE, SO THE LOOP MUST BE VERIFIED END-TO-END, NOT JUST AT THE SENSOR</figcaption>
+    </figure>
+
+    <p>For an integrated transmitter like the E+H iTHERM TM371, loop calibration means placing a calibrated reference thermometer in the same process environment (or a controlled temperature bath at the same temperature) and comparing the SCADA displayed value against the reference. The difference is the loop error. If the loop error exceeds the specified tolerance, the loop fails calibration regardless of which element in the chain is responsible.</p>
+
+    <h2 id="self-calibration-features">Self-Calibration Features — What They Mean for GMP</h2>
+    <p>Some modern temperature transmitters include automatic self-calibration or self-verification features. The E+H TrustSens TM371 is a well-known example — it uses a Callendar-Van Dusen reference integrated into the transmitter to periodically verify the Pt100 sensor element against a fixed physical reference point, and flags if the sensor has drifted beyond a threshold.</p>
+    <p>These features are useful, but they require careful handling in a GMP context:</p>
+
+    <ul class="arrow-list">
+      <li><strong>Self-calibration is not a substitute for traceable calibration.</strong> The internal reference is not independently traceable to a national metrology standard. It confirms the sensor has not drifted beyond a threshold, but it does not replace the requirement for an external calibration with a traceable reference standard.</li>
+      <li><strong>Self-calibration events must be logged.</strong> If the transmitter automatically adjusts itself, that adjustment is a change to the measurement baseline — it must appear in the audit trail. If your SCADA does not capture these events, you have an unrecorded change to a GMP measurement.</li>
+      <li><strong>Self-calibration can justify extended intervals under risk assessment.</strong> If the self-calibration feature provides documented evidence that the sensor has remained within tolerance between external calibrations, that evidence can support a risk-based justification for extending the external calibration interval. Document the reasoning in the Control Philosophy.</li>
+      <li><strong>IQ verification of self-calibration:</strong> The IQ protocol should include a step confirming that the self-calibration function is enabled and that the self-calibration log is accessible in the SCADA or historian. This is noted in the HDS — "self-calibration verification function — document in IQ."</li>
+    </ul>
+
+    <h2 id="calibration-points-and-tolerance">Calibration Points and Tolerance Bands</h2>
+    <p>A temperature sensor calibration is not a single point check. GMP applications require multi-point calibration across the process operating range — typically three to five points — to characterise the sensor's linearity as well as its offset at any one temperature.</p>
+
+    <p>For a WFI distribution system operating between 70°C and 85°C, a typical calibration would include points at approximately 70°C, 75°C, 80°C, and 85°C — spanning the full process range. If the system also has low-temperature states (e.g. a cool-down phase), the calibration range extends to cover those conditions.</p>
+
+    <p>The tolerance band must be defined in the Control Philosophy before calibration begins. Typical GMP tolerance bands for temperature in pharmaceutical water systems:</p>
+
+    <ul class="checklist">
+      <li><strong>Critical primary quality (WFI conductivity-related temperature):</strong> ±0.5°C or tighter — the process specification is typically tight enough that a wider tolerance renders the measurement useless for quality decisions</li>
+      <li><strong>Critical process control (distribution loop temperature):</strong> ±1.0°C — adequate for maintaining loop temperature within the specified range</li>
+      <li><strong>Important monitoring (ambient, storage):</strong> ±1.0°C to ±2.0°C — depends on the storage specification tolerance</li>
+      <li><strong>Safety functions (F-CPU safety trip):</strong> tolerance specified by the SIL assessment — typically ±1.0°C or tighter, with the calibration interval defined by the SIL maintenance plan</li>
+    </ul>
+
+    <h2 id="oot-and-batch-data">OOT Findings and What They Mean for Batch Data</h2>
+    <p>When a temperature sensor is found out of tolerance, the immediate question is not "how do we fix the sensor?" — it is "what did this sensor tell us over the period it was out of tolerance, and were any of those readings used for a GMP decision?"</p>
+    <p>This is the suspect data window assessment. For a temperature sensor monitoring a WFI distribution loop that is supposed to be ≥70°C, finding that the sensor was reading 1.2°C low means that readings recorded as 70.0°C were actually 71.2°C — which is fine. But readings recorded as 70.0°C that were actually 68.8°C would represent a potential process specification exceedance that was not detected or investigated at the time. That is a significant GMP finding.</p>
+    <p>The direction of the drift matters enormously. An OOT finding where the sensor reads high (making a cold temperature appear warmer than it was) has very different implications than an OOT finding where the sensor reads low. Your impact assessment must consider the specific drift direction and magnitude, not just the fact that an OOT occurred.</p>
+
+    <div class="callout red">
+      <div class="callout-label">High-Risk Scenario</div>
+      <p>A temperature sensor monitoring a cold storage unit (specification: 2–8°C) is found reading 1.5°C low. Readings recorded as 3.0°C were actually 4.5°C — still within spec. But readings recorded as 2.5°C were actually 4.0°C — within spec. And readings recorded as 2.0°C were actually 3.5°C — also within spec. In this direction, the drift actually made temperatures appear colder than they were, which could mask exceedances at the warm end. A sensor found reading 1.5°C <em>high</em> in the same application — making temperatures appear warmer than they were — could mask cold-side exceedances. <strong>Always assess both the magnitude and direction of drift against the specific process specification.</strong></p>
+    </div>
+
+    <h2 id="calibration-before-iq">Calibration Before IQ — The Practical Sequence</h2>
+    <p>For a new installation, the practical calibration sequence before IQ is straightforward. The instruments are calibrated at the supplier's works (for factory-calibrated models) or on site by the calibration lab before IQ execution. The calibration certificates are collected, verified against the GMP requirements covered in the <a href="calibration-management-pharma-iq.html">calibration management article</a>, and filed in the IQ evidence package.</p>
+
+    <p>For E+H iTHERM TM371 transmitters as specified in the QLean Framework template system, the calibration sequence at IQ is:</p>
+
+    <ul class="arrow-list">
+      <li>Confirm the factory calibration certificate is present, current, and covers the process operating range</li>
+      <li>Verify the certificate serial number matches the nameplate serial number of the installed transmitter</li>
+      <li>Confirm the self-calibration function is enabled and the last self-calibration result is within tolerance — record the result in the IQ protocol</li>
+      <li>Record the certificate reference, calibration date, and next due date in the IQ instrument register (Section 7 of IQ-SYS-001 in the framework)</li>
+      <li>Confirm the next due date provides adequate margin beyond the projected IQ completion date — typically at least 60 days of margin to account for schedule overruns</li>
+    </ul>
+
+    <div class="callout green">
+      <div class="callout-label">In the QLean Framework</div>
+      <p>The HDS (HDS-SYS-001) Section 4.2 specifies E+H iTHERM TrustSens TM371 transmitters for WFI distribution temperature measurement, with a 3-month calibration interval and explicit note to document the self-calibration verification function in IQ. The IQ protocol (IQ-SYS-001) Section 7 includes pre-populated rows for TT-001 through TT-004 (storage tank, distribution supply, mid-loop, and return) with calibration certificate verification columns. The Control Philosophy (CP-SYS-001) Section 8.1 defines the Critical Process Control classification and 3-month interval for these instruments. <strong>All three documents are consistent and cross-referenced — your calibration evidence strategy for temperature instruments is already built into the framework architecture.</strong></p>
+    </div>
+
+    <h2 id="oq-temperature-accuracy-test">OQ Temperature Accuracy Verification</h2>
+    <p>IQ verifies that the calibration certificate is present and valid. OQ goes one step further — it verifies that the complete measurement loop is accurate under operating conditions. The OQ temperature accuracy test places a calibrated reference thermometer in the same process environment as the installed sensor and compares the SCADA-displayed value against the reference reading at steady-state process conditions.</p>
+    <p>This is an end-to-end loop accuracy test. It catches errors that calibration of the isolated sensor element would not — signal cable resistance errors, analogue input module scaling errors, SCADA engineering unit conversion errors. If the loop accuracy test fails OQ but the sensor certificate is valid, the problem is downstream of the sensor. Common causes include incorrect transmitter scaling (4 mA ≠ 0°C for the actual range configured), mA-to-engineering-unit conversion errors in the PLC I/O module configuration, or analogue input modules that have drifted and were not independently calibrated.</p>
+    <p>For more on how temperature monitoring system validation connects to <a href="21-cfr-part-11-temperature-monitoring.html">21 CFR Part 11 requirements</a> for environmental monitoring and cold storage applications, the Part 11 temperature monitoring article covers the data integrity and audit trail requirements in detail.</p>
+
+  </article>
+
+  <aside class="sidebar">
+    <div class="toc-card">
+      <div class="toc-label">On This Page</div>
+      <ul class="toc-list">
+        <li><a href="#why-temperature-calibration-is-different">Why It's Different in Pharma</a></li>
+        <li><a href="#sensor-types-and-gmp-implications">Sensor Types</a></li>
+        <li><a href="#calibrating-the-loop-not-just-the-sensor">Loop vs Sensor Calibration</a></li>
+        <li><a href="#self-calibration-features">Self-Calibration Features</a></li>
+        <li><a href="#calibration-points-and-tolerance">Points and Tolerance</a></li>
+        <li><a href="#oot-and-batch-data">OOT and Batch Data</a></li>
+        <li><a href="#calibration-before-iq">Calibration Before IQ</a></li>
+        <li><a href="#oq-temperature-accuracy-test">OQ Accuracy Test</a></li>
+      </ul>
+    </div>
+
+    <div class="sidebar-cta">
+      <div class="sc-eyebrow">QLean Framework</div>
+      <div class="sc-title">29 production-ready GAMP 5 documents</div>
+      <p class="sc-body">HDS with temperature instrument specification and calibration intervals, IQ protocol with pre-built calibration verification table, and Control Philosophy with OOT procedure — all consistent and cross-referenced.</p>
+      <a href="../index.html#pricing" class="sc-btn">Get the Framework &#8594;</a>
+      <div class="sc-note">COMPANY-WIDE LICENCE &#183; NO PER-SEAT FEES</div>
+    </div>
+
+    <div class="sidebar-share">
+      <div class="share-label">Share This Article</div>
+      <div class="share-links">
+        <a href="https://www.linkedin.com/sharing/share-offsite/?url=https://qleanautomation.com/blog/temperature-sensor-calibration-gmp.html" target="_blank" rel="noopener" class="share-link">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          Share on LinkedIn
+        </a>
+        <a href="https://reddit.com/submit?url=https://qleanautomation.com/blog/temperature-sensor-calibration-gmp.html&title=Temperature%20Sensor%20Calibration%20for%20GMP%20Environments" target="_blank" rel="noopener" class="share-link">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/></svg>
+          Share on Reddit
+        </a>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<section class="related">
+  <div class="related-inner">
+    <div class="related-label">Continue Reading</div>
+    <div class="related-grid">
+      <a href="21-cfr-part-11-temperature-monitoring.html" class="related-card">
+        <span class="rc-tag">&#128209; 21 CFR Part 11</span>
+        <div class="rc-title">21 CFR Part 11 for Temperature Monitoring Systems</div>
+        <div class="rc-desc">How Part 11 applies to data loggers and EMS platforms — audit trail requirements, data accuracy obligations, and the link between calibration and record validity.</div>
+        <div class="rc-footer"><span class="rc-read">8 MIN READ</span><span class="rc-arrow">&#8594;</span></div>
+      </a>
+      <a href="calibration-management-pharma-iq.html" class="related-card">
+        <span class="rc-tag">&#128207; Instrumentation</span>
+        <div class="rc-title">Calibration Management for Pharma Automation</div>
+        <div class="rc-desc">Certificate traceability requirements, calibration intervals, the OOT response procedure, and how calibration status is tracked across the validated system lifecycle.</div>
+        <div class="rc-footer"><span class="rc-read">7 MIN READ</span><span class="rc-arrow">&#8594;</span></div>
+      </a>
+      <a href="calibration-intervals-oot-procedures.html" class="related-card">
+        <span class="rc-tag">&#128207; Instrumentation</span>
+        <div class="rc-title">Calibration Intervals and Out-of-Tolerance Procedures</div>
+        <div class="rc-desc">How to set risk-based calibration intervals, use drift data to review them over time, and manage the full OOT response when a temperature sensor fails.</div>
+        <div class="rc-footer"><span class="rc-read">7 MIN READ</span><span class="rc-arrow">&#8594;</span></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="../index.html" class="nav-logo" style="text-decoration:none">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="7" fill="#0d0f12"/><rect x="8" y="7" width="16" height="16" rx="2" stroke="white" stroke-width="2.5" fill="none"/><line x1="20" y1="19" x2="26" y2="25" stroke="#0057FF" stroke-width="3" stroke-linecap="round"/></svg>
+          <span style="font-family:'Epilogue',sans-serif;font-weight:800;font-size:16px;color:#0d0f12;letter-spacing:-.03em">QLean <span style="font-weight:300;color:#5a6172">Automation</span></span>
+        </a>
+        <p>GMP validation documentation tools for automation engineers and system integrators.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Products</h4>
+        <ul>
+          <li><a href="../index.html#products">GAMP 5 Framework Pack</a></li>
+          <li><a href="../index.html#products">Technical Ebook</a></li>
+          <li><a href="../index.html#pricing">Pricing</a></li>
+          <li><a href="../index.html#faq">FAQ</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Knowledge Base</h4>
+        <ul>
+          <li><a href="blog-index.html">All Articles</a></li>
+          <li><a href="cluster-instrumentation.html">Instrumentation &amp; Calibration</a></li>
+          <li><a href="calibration-management-pharma-iq.html">Calibration Management</a></li>
+          <li><a href="21-cfr-part-11-temperature-monitoring.html">Part 11 Temperature Monitoring</a></li>
+          <li><a href="field-instrumentation-iq-documentation.html">Field Instrumentation IQ</a></li>
+          <li><a href="calibration-intervals-oot-procedures.html">Calibration Intervals</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="../index.html#framework">Framework</a></li>
+          <li><a href="../terms.html">Terms of Service</a></li>
+          <li><a href="../privacy.html">Privacy Policy</a></li>
+          <li><a href="mailto:hello@qleanautomation.com">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 QLean Automation. All rights reserved.</p>
+      <div class="compliance-pills">
+        <span class="cp">GAMP 5</span>
+        <span class="cp">EU GMP ANNEX 11</span>
+        <span class="cp">21 CFR PART 11</span>
+        <span class="cp">ISO/IEC 17025</span>
+        <span class="cp">GXP</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+window.addEventListener('scroll',function(){
+  var s=document.getElementById('progress');
+  var h=document.documentElement;
+  var p=(h.scrollTop||document.body.scrollTop)/(h.scrollHeight-h.clientHeight)*100;
+  s.style.width=p+'%';
+});
+var tl=document.querySelectorAll('.toc-list a');
+window.addEventListener('scroll',function(){
+  var headings=document.querySelectorAll('.article-body h2[id]');
+  var scrollY=window.scrollY+120;
+  var current='';
+  headings.forEach(function(h){if(h.offsetTop<=scrollY)current=h.id;});
+  tl.forEach(function(a){
+    a.classList.remove('active');
+    if(a.getAttribute('href')==='#'+current)a.classList.add('active');
+  });
+});
+</script>
+</body>
+</html>

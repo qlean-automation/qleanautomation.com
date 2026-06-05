@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-JJQ1TXZJX7"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-JJQ1TXZJX7');
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>How to Validate a New Field Instrument After Installation | QLean Automation</title>
+<meta name="description" content="Adding a new instrument to a validated pharma system is a change control event, not a routine commissioning task. Here is the complete sequence — change control, design update, IQ, partial OQ, and validation register update — so the system stays in its validated state.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@300;400;500;600;700;800;900&family=Source+Sans+3:ital,wght@0,300;0,400;0,500;1,300&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--white:#ffffff;--off:#f7f8f9;--ink:#0d0f12;--ink2:#1e2128;--ink3:#3d4456;--ink4:#9199a8;--rule:#e2e5ea;--rule2:#c8cdd6;--blue:#0057ff;--blue2:#0044cc;--blue-dim:rgba(0,87,255,0.07);--green:#00875a;--green-dim:rgba(0,135,90,0.08);--amber:#d97706;--amber-dim:rgba(217,119,6,0.08);--red:#c0392b;--red-dim:rgba(192,57,43,0.08);--f-head:'Epilogue',sans-serif;--f-body:'Source Sans 3',sans-serif;--f-mono:'Roboto Mono',monospace;--shadow-sm:0 2px 8px rgba(13,15,18,0.06),0 1px 3px rgba(13,15,18,0.04)}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}body{background:var(--white);color:var(--ink);font-family:var(--f-body);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+nav{position:fixed;top:0;left:0;right:0;z-index:200;height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 6%;background:rgba(255,255,255,0.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--rule)}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;flex-shrink:0}
+.nav-links{display:flex;align-items:center;gap:36px;list-style:none}.nav-links a{font-size:14px;font-weight:400;color:var(--ink3);text-decoration:none;transition:color .2s}.nav-links a:hover{color:var(--ink)}
+.nav-btn{font-family:var(--f-body);font-size:13px;font-weight:500;padding:9px 20px;background:var(--blue);color:white;border:none;border-radius:6px;cursor:pointer;text-decoration:none;white-space:nowrap;flex-shrink:0}.nav-btn:hover{background:var(--blue2)}
+.progress-bar{position:fixed;top:64px;left:0;right:0;height:2px;background:var(--rule);z-index:199}.progress-fill{height:100%;background:var(--blue);width:0%}
+.article-hero{padding:120px 6% 64px;background:var(--white);border-bottom:1px solid var(--rule);position:relative;overflow:hidden}
+.article-hero::before{content:'';position:absolute;top:-80px;right:-80px;width:400px;height:400px;background:radial-gradient(circle,rgba(0,87,255,0.04) 0%,transparent 70%);pointer-events:none}
+.article-hero-inner{max-width:940px;margin:0 auto;position:relative;z-index:1}
+.breadcrumb{display:flex;align-items:center;gap:8px;font-family:var(--f-mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink4);margin-bottom:24px}.breadcrumb a{color:var(--ink4);text-decoration:none}.breadcrumb a:hover{color:var(--blue)}.breadcrumb span{color:var(--rule2)}
+.article-tag{display:inline-flex;align-items:center;gap:6px;font-family:var(--f-mono);font-size:10px;font-weight:500;color:var(--blue);letter-spacing:.1em;text-transform:uppercase;margin-bottom:20px;padding:4px 10px;background:var(--blue-dim);border-radius:4px}
+.article-hero h1{font-family:var(--f-head);font-size:clamp(30px,5vw,52px);font-weight:900;line-height:1.0;letter-spacing:-.04em;color:var(--ink);margin-bottom:20px}.article-hero h1 span{color:var(--blue)}
+.article-intro{font-size:18px;font-weight:400;color:var(--ink2);line-height:1.75;margin-bottom:32px;max-width:800px}
+.article-meta{display:flex;align-items:center;gap:24px;padding-top:24px;border-top:1px solid var(--rule);flex-wrap:wrap}
+.meta-author{display:flex;align-items:center;gap:10px}.author-avatar{width:36px;height:36px;border-radius:50%;background:var(--ink);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.author-name{font-size:13px;font-weight:500;color:var(--ink)}.author-role{font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.04em}
+.meta-divider{width:1px;height:28px;background:var(--rule)}.meta-stat{font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.06em}
+.article-wrap{max-width:1300px;margin:0 auto;padding:64px 6%;display:grid;grid-template-columns:1fr 300px;gap:60px;align-items:start}
+.article-body{min-width:0}
+.article-body h2{font-family:var(--f-head);font-size:26px;font-weight:800;letter-spacing:-.03em;color:var(--ink);margin:56px 0 16px;line-height:1.2}.article-body h2:first-child{margin-top:0}
+.article-body h3{font-family:var(--f-head);font-size:18px;font-weight:700;letter-spacing:-.02em;color:var(--ink);margin:32px 0 12px}
+.article-body p{font-size:16px;font-weight:400;color:var(--ink2);line-height:1.85;margin-bottom:20px}
+.article-body strong{color:var(--ink);font-weight:600}
+.article-body a{color:var(--blue);text-decoration:none;border-bottom:1px solid rgba(0,87,255,.25)}.article-body a:hover{border-color:var(--blue)}
+.callout{padding:20px 24px;border-radius:8px;margin:32px 0;border-left:3px solid}
+.callout.blue{background:var(--blue-dim);border-color:var(--blue)}.callout.amber{background:var(--amber-dim);border-color:var(--amber)}.callout.green{background:var(--green-dim);border-color:var(--green)}.callout.red{background:var(--red-dim);border-color:var(--red)}
+.callout-label{font-family:var(--f-mono);font-size:9px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px}.callout.blue .callout-label{color:var(--blue)}.callout.amber .callout-label{color:var(--amber)}.callout.green .callout-label{color:var(--green)}.callout.red .callout-label{color:var(--red)}
+.callout p{font-size:14px;color:var(--ink2);line-height:1.7;margin:0}.callout strong{color:var(--ink)}
+.article-img{width:100%;border-radius:8px;border:1px solid #1e2535;overflow:hidden;margin:36px 0}
+.article-img figcaption{padding:10px 14px;background:var(--off);font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.04em;border-top:1px solid var(--rule)}
+.checklist{list-style:none;display:flex;flex-direction:column;gap:8px;margin:20px 0 28px}
+.checklist li{display:flex;align-items:flex-start;gap:10px;font-size:15px;color:var(--ink2);line-height:1.6}
+.checklist li::before{content:'';width:16px;height:16px;flex-shrink:0;margin-top:3px;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 14 14' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='7' cy='7' r='6.5' fill='none' stroke='%230057ff' stroke-width='1'/%3E%3Cpath d='M4 7l2 2 4-4' stroke='%230057ff' stroke-width='1.3' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:center;background-size:contain}
+.arrow-list{list-style:none;display:flex;flex-direction:column;gap:8px;margin:20px 0 28px}
+.arrow-list li{display:flex;align-items:flex-start;gap:10px;font-size:15px;color:var(--ink2);line-height:1.6}
+.arrow-list li::before{content:'\2192';color:var(--blue);flex-shrink:0;font-family:var(--f-mono);font-size:13px;margin-top:2px}
+.table-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:28px 0}
+.compare-table{width:100%;border-collapse:collapse;font-size:14px}
+.compare-table th{font-family:var(--f-mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink4);padding:10px 16px;border-bottom:2px solid var(--rule);text-align:left;background:var(--off)}
+.compare-table td{padding:12px 16px;border-bottom:1px solid var(--rule);vertical-align:top;color:var(--ink2);line-height:1.6}
+.compare-table tr:last-child td{border-bottom:none}
+.compare-table td:first-child{font-weight:600;color:var(--ink);font-family:var(--f-mono);font-size:12px}
+.sidebar{position:sticky;top:88px;display:flex;flex-direction:column;gap:16px}
+.toc-card{border:1px solid var(--rule);border-radius:8px;padding:24px;background:var(--white);box-shadow:var(--shadow-sm)}
+.toc-label{font-family:var(--f-mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);margin-bottom:16px}
+.toc-list{list-style:none;display:flex;flex-direction:column;gap:2px}
+.toc-list a{display:block;font-size:13px;color:var(--ink3);text-decoration:none;padding:6px 10px;border-radius:4px;transition:all .15s;border-left:2px solid transparent}
+.toc-list a:hover,.toc-list a.active{color:var(--blue);background:var(--blue-dim);border-left-color:var(--blue)}
+.sidebar-cta{border:1px solid var(--blue);border-radius:8px;padding:24px;background:var(--blue-dim)}
+.sc-eyebrow{font-family:var(--f-mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);margin-bottom:10px}
+.sc-title{font-family:var(--f-head);font-size:17px;font-weight:800;letter-spacing:-.02em;color:var(--ink);margin-bottom:8px;line-height:1.2}
+.sc-body{font-size:13px;color:var(--ink3);line-height:1.6;margin-bottom:16px}
+.sc-btn{display:block;text-align:center;padding:11px 16px;background:var(--blue);color:white;border-radius:6px;font-family:var(--f-body);font-size:13px;font-weight:500;text-decoration:none}.sc-btn:hover{background:var(--blue2)}
+.sc-note{font-family:var(--f-mono);font-size:9px;color:var(--ink4);text-align:center;margin-top:8px;letter-spacing:.04em}
+.sidebar-share{border:1px solid var(--rule);border-radius:8px;padding:20px 24px;background:var(--white)}
+.share-label{font-family:var(--f-mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);margin-bottom:14px}
+.share-links{display:flex;flex-direction:column;gap:8px}
+.share-link{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--ink3);text-decoration:none;padding:9px 12px;border:1px solid var(--rule);border-radius:6px;transition:border-color .2s,color .2s}.share-link:hover{border-color:var(--blue);color:var(--blue)}
+.related{padding:64px 6%;border-top:1px solid var(--rule);background:var(--off)}
+.related-inner{max-width:1100px;margin:0 auto}
+.related-label{font-family:var(--f-mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);margin-bottom:32px;display:flex;align-items:center;gap:10px}
+.related-label::before{content:'';width:20px;height:1px;background:var(--blue)}
+.related-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.related-card{padding:24px;border:1px solid var(--rule);border-radius:8px;background:var(--white);box-shadow:var(--shadow-sm);transition:border-color .2s,transform .2s;text-decoration:none;display:flex;flex-direction:column;gap:12px}.related-card:hover{border-color:var(--blue);transform:translateY(-4px)}
+.rc-tag{font-family:var(--f-mono);font-size:9px;color:var(--blue);letter-spacing:.08em;text-transform:uppercase;padding:3px 8px;background:var(--blue-dim);border-radius:3px;align-self:flex-start}
+.rc-title{font-family:var(--f-head);font-size:16px;font-weight:700;letter-spacing:-.02em;color:var(--ink);line-height:1.25}
+.rc-desc{font-size:13px;color:var(--ink3);line-height:1.6;flex:1}
+.rc-footer{display:flex;align-items:center;justify-content:space-between;padding-top:12px;border-top:1px solid var(--rule)}
+.rc-read{font-family:var(--f-mono);font-size:10px;color:var(--ink4)}.rc-arrow{font-size:14px;color:var(--blue)}
+footer{padding:56px 6% 32px;border-top:1px solid var(--rule);background:var(--white)}
+.footer-inner{max-width:1160px;margin:0 auto}
+.footer-top{display:flex;justify-content:space-between;align-items:flex-start;gap:40px;flex-wrap:wrap;margin-bottom:48px}
+.footer-brand p{font-size:13px;font-weight:300;color:var(--ink3);margin-top:12px;max-width:260px;line-height:1.6}
+.footer-col h4{font-family:var(--f-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink4);margin-bottom:16px}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+.footer-col a{font-size:13px;color:var(--ink3);text-decoration:none}.footer-col a:hover{color:var(--blue)}
+.footer-bottom{padding-top:24px;border-top:1px solid var(--rule);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.footer-bottom p{font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.04em}
+.compliance-pills{display:flex;gap:6px;flex-wrap:wrap}
+.cp{font-family:var(--f-mono);font-size:9px;padding:3px 8px;border:1px solid var(--rule);border-radius:3px;color:var(--ink4);letter-spacing:.06em}
+@media(max-width:900px){.article-wrap{grid-template-columns:1fr;gap:48px}.sidebar{position:static}.related-grid{grid-template-columns:1fr}.table-scroll{margin:20px 0}}
+@media(max-width:900px){.nav-links{display:none}}
+@media(max-width:540px){nav{padding:0 4%}.nav-btn{font-size:12px;padding:8px 14px}}
+</style>
+</head>
+<body>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+<nav>
+  <a href="../index.html" class="nav-logo">
+    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" style="flex-shrink:0"><rect width="32" height="32" rx="7" fill="#0d0f12"/><rect x="8" y="7" width="16" height="16" rx="2" stroke="white" stroke-width="2.5" fill="none"/><line x1="20" y1="19" x2="26" y2="25" stroke="#0057FF" stroke-width="3" stroke-linecap="round"/></svg>
+    <span style="font-family:'Epilogue',sans-serif;font-weight:800;font-size:16px;color:#0d0f12;letter-spacing:-.03em;white-space:nowrap">QLean <span style="font-weight:300;color:#5a6172">Automation</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="../index.html#products">Products</a></li>
+    <li><a href="../index.html#framework">Framework</a></li>
+    <li><a href="blog-index.html">Knowledge Base</a></li>
+    <li><a href="../index.html#pricing">Pricing</a></li>
+    <li><a href="../about.html">About</a></li>
+    <li><a href="../index.html#faq">FAQ</a></li>
+  </ul>
+  <a href="../index.html#pricing" class="nav-btn">Get the Framework &#8594;</a>
+</nav>
+
+<header class="article-hero">
+  <div class="article-hero-inner">
+    <div class="breadcrumb"><a href="../index.html">Home</a><span>/</span><a href="blog-index.html">Knowledge Base</a><span>/</span>How to Validate a New Field Instrument After Installation</div>
+    <div class="article-tag">&#128207; Instrumentation &amp; Calibration</div>
+    <h1>How to Validate a New<br><span>Field Instrument</span><br>After Installation</h1>
+    <p class="article-intro">Adding a new instrument to a validated pharma system is not a commissioning task. It is a change to a validated system — which means change control, design document update, a partial IQ, and partial OQ before the instrument can be used for any GMP purpose. Engineers who treat it as routine wiring work create documentation gaps that show up in audits and invalidate the data the new instrument produced. Here is the complete sequence, done correctly.</p>
+    <div class="article-meta">
+      <div class="meta-author">
+        <div class="author-avatar"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="7" r="3.5" stroke="white" stroke-width="1.5"/><path d="M2.5 16c0-3.59 2.91-6.5 6.5-6.5s6.5 2.91 6.5 6.5" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+        <div><div class="author-name">QLean Automation</div><div class="author-role">ENGINEERS WHO BUILD SYSTEMS, NOT JUST SIGN THEM</div></div>
+      </div>
+      <div class="meta-divider"></div><div class="meta-stat">7 MIN READ</div>
+      <div class="meta-divider"></div><div class="meta-stat">NEW INSTRUMENT &#183; CHANGE CONTROL &#183; PARTIAL IQ/OQ</div>
+    </div>
+  </div>
+</header>
+
+<div class="article-wrap">
+  <article class="article-body">
+
+    <h2 id="why-its-a-change">Why Adding an Instrument Is a Change Control Event</h2>
+    <p>Once a pharma automation system is validated, its state is defined by a set of controlled documents — the Hardware Design Specification, the Engineering Lists, the Traceability Matrix, the Validation Summary Report, and the IQ/OQ/PQ protocols that closed out the original qualification. Every instrument that is part of the validated system is listed in these documents. An instrument that is not in these documents does not exist as far as the validated system is concerned.</p>
+    <p>When you add a new instrument — even a simple thermocouple that takes a single I/O point — you are adding something to the validated system that was not validated. The instrument register is now inaccurate. The IQ record does not include a calibration certificate for the new instrument. If the instrument feeds any alarm, interlock, or GMP record, that function is operating based on an unvalidated measurement. You have broken the validated state.</p>
+    <p>The mechanism for adding a new component to a validated system is change control — not because regulators are bureaucratic, but because change control ensures the addition is reviewed, the documents are updated, the new instrument is properly qualified, and the validated state is formally restored. See the article on <a href="change-control-validated-system.html">change control for validated systems</a> for the full change control process.</p>
+
+    <div class="callout amber">
+      <div class="callout-label">The "Like for Like" Misconception</div>
+      <p>Engineers sometimes argue that adding the same model of instrument already in the system is a "like for like" addition that does not require full validation. This is incorrect. Even if the instrument model is identical, the new instrument has a different serial number, was not in the original IQ, and its specific unit has not been verified. <strong>Every new physical instrument requires its own calibration certificate verification and IQ documentation entry</strong> — regardless of whether the same model already exists elsewhere in the system.</p>
+    </div>
+
+    <h2 id="the-complete-sequence">The Complete Sequence — Eight Steps</h2>
+    <p>The process for validating a new field instrument on an already-validated pharma system follows this sequence. Each step produces specific documented evidence that collectively restores the validated state for the new addition.</p>
+
+    <figure class="article-img">
+      <svg viewBox="0 0 720 200" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;background:#0d0f12;border-radius:8px 8px 0 0">
+        <text x="360" y="18" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(255,255,255,0.2)" letter-spacing="0.12em">NEW INSTRUMENT VALIDATION SEQUENCE ON A VALIDATED SYSTEM</text>
+
+        <!-- Steps -->
+        <!-- Step 1 -->
+        <rect x="20" y="34" width="76" height="48" rx="4" fill="rgba(0,87,255,0.12)" stroke="rgba(0,87,255,0.5)" stroke-width="1.5"/>
+        <text x="58" y="54" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7" fill="rgba(100,160,255,0.9)" letter-spacing="0.05em">STEP 1</text>
+        <text x="58" y="66" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="9" fill="rgba(200,215,240,0.8)">Raise</text>
+        <text x="58" y="77" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="9" fill="rgba(200,215,240,0.8)">CCR</text>
+
+        <polygon points="96,58 105,58 100,64" fill="rgba(0,87,255,0.5)" transform="rotate(-90,100,58)"/>
+        <line x1="96" y1="58" x2="106" y2="58" stroke="rgba(0,87,255,0.4)" stroke-width="1"/>
+
+        <!-- Step 2 -->
+        <rect x="107" y="34" width="76" height="48" rx="4" fill="rgba(0,87,255,0.10)" stroke="rgba(0,87,255,0.4)" stroke-width="1.5"/>
+        <text x="145" y="54" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7" fill="rgba(100,160,255,0.8)" letter-spacing="0.05em">STEP 2</text>
+        <text x="145" y="66" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="9" fill="rgba(200,215,240,0.75)">Update</text>
+        <text x="145" y="77" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="9" fill="rgba(200,215,240,0.75)">HDS / EL</text>
+
+        <line x1="183" y1="58" x2="193" y2="58" stroke="rgba(0,87,255,0.4)" stroke-width="1"/>
+        <polygon points="183,58 192,58 187,64" fill="rgba(0,87,255,0.5)" transform="rotate(-90,187,58)"/>
+
+        <!-- Step 3 -->
+        <rect x="194" y="34" width="76" height="48" rx="4" fill="rgba(0,87,255,0.08)" stroke="rgba(0,87,255,0.35)" stroke-width="1.5"/>
+        <text x="232" y="54" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7" fill="rgba(100,160,255,0.7)" letter-spacing="0.05em">STEP 3</text>
+        <text x="232" y="66" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="9" fill="rgba(200,215,240,0.7)">Obtain</text>
+        <text x="232" y="77" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="9" fill="rgba(200,215,240,0.7)">Cal. Cert.</text>
+
+        <line x1="270" y1="58" x2="280" y2="58" stroke="rgba(0,87,255,0.4)" stroke-width="1"/>
+        <polygon points="270,58 279,58 274,64" fill="rgba(0,87,255,0.5)" transform="rotate(-90,274,58)"/>
+
+        <!-- Step 4 -->
+        <rect x="281" y="34" width="76" height="48" rx="4" fill="rgba(0,87,255,0.08)" stroke="rgba(0,87,255,0.35)" stroke-width="1.5"/>
+        <text x="319" y="54" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7" fill="rgba(100,160,255,0.7)" letter-spacing="0.05em">STEP 4</text>
+        <text x="319" y="66" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="9" fill="rgba(200,215,240,0.7)">Install &amp;</text>
+        <text x="319" y="77" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="9" fill="rgba(200,215,240,0.7)">Configure</text>
+
+        <line x1="357" y1="58" x2="367" y2="58" stroke="rgba(0,87,255,0.4)" stroke-width="1"/>
+        <polygon points="357,58 366,58 361,64" fill="rgba(0,87,255,0.5)" transform="rotate(-90,361,58)"/>
+
+        <!-- Step 5 -->
+        <rect x="368" y="34" width="76" height="48" rx="4" fill="rgba(0,87,255,0.10)" stroke="rgba(0,87,255,0.4)" stroke-width="1.5"/>
+        <text x="406" y="54" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7" fill="rgba(100,160,255,0.8)" letter-spacing="0.05em">STEP 5</text>
+        <text x="406" y="66" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="9" fill="rgba(200,215,240,0.75)">Partial</text>
+        <text x="406" y="77" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="9" fill="rgba(200,215,240,0.75)">IQ</text>
+
+        <line x1="444" y1="58" x2="454" y2="58" stroke="rgba(0,87,255,0.4)" stroke-width="1"/>
+        <polygon points="444,58 453,58 448,64" fill="rgba(0,87,255,0.5)" transform="rotate(-90,448,58)"/>
+
+        <!-- Step 6 -->
+        <rect x="455" y="34" width="76" height="48" rx="4" fill="rgba(0,87,255,0.10)" stroke="rgba(0,87,255,0.4)" stroke-width="1.5"/>
+        <text x="493" y="54" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7" fill="rgba(100,160,255,0.8)" letter-spacing="0.05em">STEP 6</text>
+        <text x="493" y="66" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="9" fill="rgba(200,215,240,0.75)">Partial</text>
+        <text x="493" y="77" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="9" fill="rgba(200,215,240,0.75)">OQ</text>
+
+        <line x1="531" y1="58" x2="541" y2="58" stroke="rgba(0,87,255,0.4)" stroke-width="1"/>
+        <polygon points="531,58 540,58 535,64" fill="rgba(0,87,255,0.5)" transform="rotate(-90,535,58)"/>
+
+        <!-- Step 7 -->
+        <rect x="542" y="34" width="76" height="48" rx="4" fill="rgba(0,87,255,0.12)" stroke="rgba(0,87,255,0.5)" stroke-width="1.5"/>
+        <text x="580" y="54" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7" fill="rgba(100,160,255,0.9)" letter-spacing="0.05em">STEP 7</text>
+        <text x="580" y="66" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="9" fill="rgba(200,215,240,0.8)">Update</text>
+        <text x="580" y="77" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="9" fill="rgba(200,215,240,0.8)">TM / VSR</text>
+
+        <line x1="618" y1="58" x2="628" y2="58" stroke="rgba(0,87,255,0.4)" stroke-width="1"/>
+        <polygon points="618,58 627,58 622,64" fill="rgba(0,87,255,0.5)" transform="rotate(-90,622,58)"/>
+
+        <!-- Step 8 -->
+        <rect x="629" y="34" width="76" height="48" rx="4" fill="rgba(0,175,90,0.15)" stroke="rgba(0,175,90,0.5)" stroke-width="1.5"/>
+        <text x="667" y="54" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7" fill="rgba(0,200,100,0.9)" letter-spacing="0.05em">STEP 8</text>
+        <text x="667" y="66" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="9" fill="rgba(200,240,215,0.8)">Close</text>
+        <text x="667" y="77" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="9" fill="rgba(200,240,215,0.8)">CCR</text>
+
+        <!-- Bottom note -->
+        <rect x="20" y="100" width="680" height="80" rx="4" fill="rgba(255,255,255,0.02)" stroke="rgba(0,87,255,0.15)" stroke-width="1"/>
+        <text x="360" y="118" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(100,160,255,0.6)" letter-spacing="0.06em">INSTRUMENT IN GMP SERVICE ONLY AFTER STEP 8 IS COMPLETE</text>
+        <text x="360" y="134" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(160,180,210,0.65)">Any data produced before CCR closure is not covered by the validated state</text>
+        <text x="360" y="150" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(160,180,210,0.65)">Do NOT use the instrument for GMP decisions until the partial IQ and OQ are signed off</text>
+        <text x="360" y="166" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(160,180,210,0.65)">Temporary use before qualification requires formal QA risk acceptance and documentation</text>
+      </svg>
+      <figcaption>NEW INSTRUMENT VALIDATION SEQUENCE — ALL EIGHT STEPS MUST BE COMPLETE BEFORE THE INSTRUMENT ENTERS GMP SERVICE</figcaption>
+    </figure>
+
+    <h2 id="step1-ccr">Step 1 — Raise the Change Control Request</h2>
+    <p>The process starts with a Change Control Request (CCR) raised in the site change management system. The CCR captures what is being added, why it is being added, the GMP risk classification of the new instrument, what design documents need to be updated, and what qualification activities are required before the instrument can enter GMP service.</p>
+    <p>The impact assessment in the CCR must address:</p>
+    <ul class="checklist">
+      <li>Does the new instrument add a new I/O point, or is it replacing an existing one?</li>
+      <li>Does the new instrument feed a new SCADA tag, or is it substituting an existing measurement?</li>
+      <li>Does the addition require any PLC logic changes (new alarm blocks, new interlock inputs)?</li>
+      <li>Does the addition affect any existing validated functions — for example, does adding a second conductivity sensor change how the conductivity alarm logic works?</li>
+      <li>What qualification activities are required — partial IQ only, or partial IQ and partial OQ?</li>
+    </ul>
+    <p>The CCR must be approved by QA before any physical work begins. Installing first and raising change control afterward is a data integrity violation that invalidates the qualification evidence — the IQ walk-down must happen after the installation and after the design documents have been updated to reflect the as-designed state of the new addition.</p>
+
+    <h2 id="step2-design-update">Step 2 — Update the Design Documents</h2>
+    <p>Before the instrument can be installed, the design documents must be updated to reflect the planned addition. This is the "design" phase of the mini-V-model for the change. The documents that typically require update for a new field instrument are:</p>
+    <ul class="arrow-list">
+      <li><strong>Hardware Design Specification (HDS):</strong> add the instrument to the field instrumentation section (equivalent to HDS Section 4), with manufacturer, model, measurement range, calibration interval, and GMP classification. If the instrument requires a new process connection, update the installation drawings reference.</li>
+      <li><strong>Engineering Lists (EL):</strong> add a new row to the Instrument List tab with all instrument data. If a new I/O point is required, add it to the I/O List tab with the PLC address and signal type. If the instrument is GMP-critical and historian-tagged, add it to the Historian Tag List.</li>
+      <li><strong>P&ID drawings:</strong> add the instrument symbol to the relevant P&ID sheet and assign the tag number. Issue the P&ID at a new revision — "Revised for addition of [tag]."</li>
+      <li><strong>Traceability Matrix (TM):</strong> if the instrument satisfies or contributes to a URS requirement not previously addressed, add the traceability link. If the instrument is adding a new measurement function not in the original URS, assess whether the URS needs supplementing.</li>
+    </ul>
+    <p>All updated documents must go through their normal review and approval process before IQ can be executed against them. A partial IQ that verifies the instrument against a draft (unapproved) HDS is not valid evidence.</p>
+
+    <h2 id="step3-calibration">Step 3 — Obtain the Calibration Certificate</h2>
+    <p>Before installation, obtain the calibration certificate for the specific instrument (identified by serial number) that will be installed. Verify the certificate meets the GMP requirements for traceability and currency as described in the <a href="calibration-management-pharma-iq.html">calibration management article</a>. File the certificate — it will be the primary evidence for the partial IQ calibration verification step.</p>
+    <p>If the instrument has not yet been calibrated (some manufacturers ship instruments uncalibrated and expect the customer to perform the initial calibration), arrange calibration by an accredited laboratory before installation. Do not assume factory accuracy is sufficient — the GMP requirement is a traceable calibration certificate, not just an accuracy specification.</p>
+
+    <h2 id="step4-installation">Step 4 — Install and Configure</h2>
+    <p>Install the instrument in accordance with the updated HDS and the manufacturer's installation guidelines. Pay particular attention to the installation requirements that affect measurement accuracy — straight pipe run for flow meters, mounting position for level transmitters, orientation for pressure transmitters. These are IQ verification items; they must be correct before IQ begins.</p>
+    <p>Configure the instrument (transmitter scaling, output range, HART address if applicable) to match the HDS specification. Configure the PLC I/O channel with the correct engineering unit scaling. Add the SCADA tag and historian tag if required. Verify that the SCADA displays the correct engineering units and that the tag name matches the naming convention defined in the original SDS.</p>
+
+    <h2 id="step5-partial-iq">Step 5 — Execute a Partial IQ</h2>
+    <p>The partial IQ is a targeted qualification document covering only the new instrument. It follows the same structure as the original IQ protocol — it just has a much narrower scope. The partial IQ must cover:</p>
+    <ul class="checklist">
+      <li><strong>Nameplate verification:</strong> tag number, manufacturer, model, serial number verified against updated HDS</li>
+      <li><strong>Installation inspection:</strong> physical location, process connection, orientation, cable entry, labelling — verified against HDS installation requirements and P&ID</li>
+      <li><strong>Calibration certificate verification:</strong> certificate reference, calibration date, next due date, traceability statement — all verified and recorded</li>
+      <li><strong>I/O channel continuity:</strong> cable traced from instrument to panel terminal to PLC I/O module; I/O address verified against updated Engineering Lists I/O List</li>
+      <li><strong>Loop accuracy check (optional at IQ, required at OQ):</strong> some teams include a basic live signal check at IQ — applying a known physical stimulus and verifying the SCADA display responds correctly. This is technically an OQ activity, but including it at the IQ stage for new instruments on live systems is pragmatic.</li>
+    </ul>
+    <p>The partial IQ must reference the CCR number, the updated HDS revision, and the calibration certificate. It is approved by the validation lead and QA before the instrument can be considered qualified at the IQ level.</p>
+
+    <h2 id="step6-partial-oq">Step 6 — Execute a Partial OQ (If Required)</h2>
+    <p>Whether a partial OQ is required depends on the GMP role of the new instrument. For an instrument that feeds a new alarm function not previously in the validated system, a partial OQ is required to verify that the alarm triggers at the correct threshold. For an instrument that is purely an additional measurement with no new alarm, interlock, or automatic control function, the partial IQ may be sufficient for GMP purposes — document this assessment in the CCR impact assessment and get QA agreement.</p>
+    <p>The partial OQ test cases cover only the new functions introduced by the new instrument:</p>
+    <ul class="arrow-list">
+      <li>Signal accuracy test: inject a known reference signal (or apply a known physical stimulus) and verify the SCADA displayed value is within the specified tolerance</li>
+      <li>Alarm test: if the instrument feeds an alarm, verify the alarm triggers at the correct threshold and is recorded in the audit trail with the correct tag, value, and timestamp</li>
+      <li>Historian recording test: verify the tag is recording at the correct scan rate and deadband, and that the historian retains the data with the correct retention policy</li>
+      <li>Interlock test: if the instrument feeds a safety interlock, verify the interlock triggers at the correct threshold and cannot be bypassed without a valid supervisor electronic signature</li>
+    </ul>
+
+    <h2 id="step7-traceability-update">Step 7 — Update the Traceability Matrix and Validation Register</h2>
+    <p>Once the partial IQ and OQ are signed off, the Traceability Matrix must be updated to include the new test cases and their links to any URS requirements they address. The Engineering Lists Calibration Register tab must be updated with the new instrument's certificate reference and next due date. If the site maintains a validation register or equipment register, add the new instrument with its qualification status and calibration schedule.</p>
+    <p>The Validation Summary Report does not need to be reissued for minor additions — instead, the CCR and its attached partial IQ/OQ records serve as the addendum to the original VSR. However, the site's change management procedure may require a VSR addendum or a periodic review finding to formally acknowledge the addition. Follow the site's procedure.</p>
+
+    <h2 id="step8-close-ccr">Step 8 — Close the Change Control Record</h2>
+    <p>The CCR is closed once all actions are complete: design documents updated and approved, partial IQ signed off, partial OQ signed off (if required), Engineering Lists calibration register updated, Traceability Matrix updated. QA reviews the complete package and closes the CCR. Only at this point is the instrument considered part of the validated system and eligible for use in GMP records and decisions.</p>
+
+    <div class="callout green">
+      <div class="callout-label">In the QLean Framework</div>
+      <p>The Change Control Request (CCR-SYS-001) template includes a field for the scope of qualification activities required (partial IQ, partial OQ, or full requalification), and the Change Control Log (CCL-SYS-001) tracks all changes across the system lifetime. The IQ protocol (IQ-SYS-001) Section 7 calibration table and the Engineering Lists Calibration Register tab are designed to accept new rows for additional instruments added after initial validation — the structure is already there to accommodate post-validation additions cleanly.</p>
+    </div>
+
+  </article>
+
+  <aside class="sidebar">
+    <div class="toc-card">
+      <div class="toc-label">On This Page</div>
+      <ul class="toc-list">
+        <li><a href="#why-its-a-change">Why It's a Change Event</a></li>
+        <li><a href="#the-complete-sequence">The 8-Step Sequence</a></li>
+        <li><a href="#step1-ccr">Step 1 — Raise CCR</a></li>
+        <li><a href="#step2-design-update">Step 2 — Update Design Docs</a></li>
+        <li><a href="#step3-calibration">Step 3 — Calibration Cert</a></li>
+        <li><a href="#step4-installation">Step 4 — Install &amp; Configure</a></li>
+        <li><a href="#step5-partial-iq">Step 5 — Partial IQ</a></li>
+        <li><a href="#step6-partial-oq">Step 6 — Partial OQ</a></li>
+        <li><a href="#step7-traceability-update">Step 7 — Update TM</a></li>
+        <li><a href="#step8-close-ccr">Step 8 — Close CCR</a></li>
+      </ul>
+    </div>
+
+    <div class="sidebar-cta">
+      <div class="sc-eyebrow">QLean Framework</div>
+      <div class="sc-title">29 production-ready GAMP 5 documents</div>
+      <p class="sc-body">CCR template, Change Control Log, IQ protocol with expandable calibration table, and Engineering Lists with Calibration Register — all structured to handle post-validation instrument additions cleanly.</p>
+      <a href="../index.html#pricing" class="sc-btn">Get the Framework &#8594;</a>
+      <div class="sc-note">COMPANY-WIDE LICENCE &#183; NO PER-SEAT FEES</div>
+    </div>
+
+    <div class="sidebar-share">
+      <div class="share-label">Share This Article</div>
+      <div class="share-links">
+        <a href="https://www.linkedin.com/sharing/share-offsite/?url=https://qleanautomation.com/blog/validate-new-field-instrument.html" target="_blank" rel="noopener" class="share-link">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          Share on LinkedIn
+        </a>
+        <a href="https://reddit.com/submit?url=https://qleanautomation.com/blog/validate-new-field-instrument.html&title=How%20to%20Validate%20a%20New%20Field%20Instrument%20After%20Installation" target="_blank" rel="noopener" class="share-link">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/></svg>
+          Share on Reddit
+        </a>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<section class="related">
+  <div class="related-inner">
+    <div class="related-label">Continue Reading</div>
+    <div class="related-grid">
+      <a href="field-instrumentation-iq-documentation.html" class="related-card">
+        <span class="rc-tag">&#128207; Instrumentation</span>
+        <div class="rc-title">How to Document Field Instrumentation for a Pharma IQ</div>
+        <div class="rc-desc">The four-step IQ verification sequence that the partial IQ for a new instrument must follow — nameplate, installation, calibration certificate, and I/O continuity.</div>
+        <div class="rc-footer"><span class="rc-read">7 MIN READ</span><span class="rc-arrow">&#8594;</span></div>
+      </a>
+      <a href="change-control-validated-system.html" class="related-card">
+        <span class="rc-tag">&#9881;&#65039; GAMP 5</span>
+        <div class="rc-title">Change Control for Validated Systems</div>
+        <div class="rc-desc">The full change control process that must be completed before and after adding any new component — including field instruments — to an already-validated pharma system.</div>
+        <div class="rc-footer"><span class="rc-read">8 MIN READ</span><span class="rc-arrow">&#8594;</span></div>
+      </a>
+      <a href="iq-oq-pq-guide.html" class="related-card">
+        <span class="rc-tag">&#9989; GAMP 5</span>
+        <div class="rc-title">IQ OQ PQ Explained: A Practical Guide</div>
+        <div class="rc-desc">How IQ, OQ, and PQ work together — and how the partial IQ and partial OQ for a new instrument fit into the broader qualification lifecycle.</div>
+        <div class="rc-footer"><span class="rc-read">7 MIN READ</span><span class="rc-arrow">&#8594;</span></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="../index.html" class="nav-logo" style="text-decoration:none">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="7" fill="#0d0f12"/><rect x="8" y="7" width="16" height="16" rx="2" stroke="white" stroke-width="2.5" fill="none"/><line x1="20" y1="19" x2="26" y2="25" stroke="#0057FF" stroke-width="3" stroke-linecap="round"/></svg>
+          <span style="font-family:'Epilogue',sans-serif;font-weight:800;font-size:16px;color:#0d0f12;letter-spacing:-.03em">QLean <span style="font-weight:300;color:#5a6172">Automation</span></span>
+        </a>
+        <p>GMP validation documentation tools for automation engineers and system integrators.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Products</h4>
+        <ul>
+          <li><a href="../index.html#products">GAMP 5 Framework Pack</a></li>
+          <li><a href="../index.html#products">Technical Ebook</a></li>
+          <li><a href="../index.html#pricing">Pricing</a></li>
+          <li><a href="../index.html#faq">FAQ</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Knowledge Base</h4>
+        <ul>
+          <li><a href="blog-index.html">All Articles</a></li>
+          <li><a href="cluster-instrumentation.html">Instrumentation &amp; Calibration</a></li>
+          <li><a href="field-instrumentation-iq-documentation.html">Field Instrumentation IQ</a></li>
+          <li><a href="change-control-validated-system.html">Change Control</a></li>
+          <li><a href="calibration-management-pharma-iq.html">Calibration Management</a></li>
+          <li><a href="iq-oq-pq-guide.html">IQ OQ PQ Guide</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="../index.html#framework">Framework</a></li>
+          <li><a href="../terms.html">Terms of Service</a></li>
+          <li><a href="../privacy.html">Privacy Policy</a></li>
+          <li><a href="mailto:hello@qleanautomation.com">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 QLean Automation. All rights reserved.</p>
+      <div class="compliance-pills">
+        <span class="cp">GAMP 5</span>
+        <span class="cp">EU GMP ANNEX 11</span>
+        <span class="cp">21 CFR PART 11</span>
+        <span class="cp">ISO/IEC 17025</span>
+        <span class="cp">GXP</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+window.addEventListener('scroll',function(){
+  var s=document.getElementById('progress');
+  var h=document.documentElement;
+  var p=(h.scrollTop||document.body.scrollTop)/(h.scrollHeight-h.clientHeight)*100;
+  s.style.width=p+'%';
+});
+var tl=document.querySelectorAll('.toc-list a');
+window.addEventListener('scroll',function(){
+  var headings=document.querySelectorAll('.article-body h2[id]');
+  var scrollY=window.scrollY+120;
+  var current='';
+  headings.forEach(function(h){if(h.offsetTop<=scrollY)current=h.id;});
+  tl.forEach(function(a){
+    a.classList.remove('active');
+    if(a.getAttribute('href')==='#'+current)a.classList.add('active');
+  });
+});
+</script>
+</body>
+</html>

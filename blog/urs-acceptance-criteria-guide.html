@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-JJQ1TXZJX7"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-JJQ1TXZJX7');
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Writing Testable Acceptance Criteria for a PLC/SCADA URS | QLean Automation</title>
+<meta name="description" content="How to write PLC/SCADA URS requirements that pass a QA review and generate unambiguous OQ test cases. The five requirement types, the testability rules, and 12 real before/after examples.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@300;400;500;600;700;800;900&family=Source+Sans+3:ital,wght@0,300;0,400;0,500;1,300&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --white:#ffffff;--off:#f7f8f9;--off2:#f0f2f4;--ink:#0d0f12;--ink2:#1e2128;--ink3:#3d4456;--ink4:#9199a8;
+  --rule:#e2e5ea;--rule2:#c8cdd6;--blue:#0057ff;--blue2:#0044cc;--blue-dim:rgba(0,87,255,0.07);
+  --blue-glow:rgba(0,87,255,0.15);--green:#00875a;--green-dim:rgba(0,135,90,0.08);
+  --amber:#d97706;--amber-dim:rgba(217,119,6,0.08);--red:#dc2626;--red-dim:rgba(220,38,38,0.07);
+  --f-head:'Epilogue',sans-serif;--f-body:'Source Sans 3',sans-serif;--f-mono:'Roboto Mono',monospace;
+  --shadow-sm:0 2px 8px rgba(13,15,18,0.06),0 1px 3px rgba(13,15,18,0.04);
+  --shadow-lg:0 8px 32px rgba(13,15,18,0.10),0 3px 10px rgba(13,15,18,0.06);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;font-size:16px}
+body{background:var(--white);color:var(--ink);font-family:var(--f-body);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+nav{position:fixed;top:0;left:0;right:0;z-index:200;height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 6%;background:rgba(255,255,255,0.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--rule)}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+.nav-links{display:flex;align-items:center;gap:36px;list-style:none}
+.nav-links a{font-size:14px;font-weight:400;color:var(--ink3);text-decoration:none;transition:color .2s}
+.nav-links a:hover{color:var(--ink)}
+.nav-btn{font-family:var(--f-body);font-size:13px;font-weight:500;padding:9px 20px;background:var(--blue);color:white;border:none;border-radius:6px;cursor:pointer;text-decoration:none;transition:background .2s,transform .15s;white-space:nowrap;flex-shrink:0}
+.nav-btn:hover{background:var(--blue2);transform:translateY(-1px)}
+.article-hero{padding:120px 6% 64px;background:var(--white);border-bottom:1px solid var(--rule);position:relative;overflow:hidden}
+.article-hero::before{content:'';position:absolute;top:-80px;right:-80px;width:400px;height:400px;background:radial-gradient(circle,rgba(0,87,255,0.04) 0%,transparent 70%);pointer-events:none}
+.article-hero-inner{max-width:940px;margin:0 auto;position:relative;z-index:1}
+.breadcrumb{display:flex;align-items:center;gap:8px;font-family:var(--f-mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink4);margin-bottom:24px}
+.breadcrumb a{color:var(--ink4);text-decoration:none;transition:color .2s}
+.breadcrumb a:hover{color:var(--blue)}
+.breadcrumb span{color:var(--rule2)}
+.article-tag{display:inline-flex;align-items:center;gap:6px;font-family:var(--f-mono);font-size:10px;font-weight:500;color:var(--blue);letter-spacing:.1em;text-transform:uppercase;margin-bottom:20px;padding:4px 10px;background:var(--blue-dim);border-radius:4px}
+.article-hero h1{font-family:var(--f-head);font-size:clamp(32px,5vw,54px);font-weight:900;line-height:1.0;letter-spacing:-.04em;color:var(--ink);margin-bottom:20px}
+.article-hero h1 span{color:var(--blue)}
+.article-intro{font-size:18px;font-weight:400;color:var(--ink2);line-height:1.75;margin-bottom:32px;max-width:800px}
+.article-meta{display:flex;align-items:center;gap:24px;padding-top:24px;border-top:1px solid var(--rule);flex-wrap:wrap}
+.meta-author{display:flex;align-items:center;gap:10px}
+.author-avatar{width:36px;height:36px;border-radius:50%;background:var(--ink);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.author-name{font-size:13px;font-weight:500;color:var(--ink)}
+.author-role{font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.04em}
+.meta-divider{width:1px;height:28px;background:var(--rule)}
+.meta-stat{font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.06em}
+.article-wrap{max-width:1300px;margin:0 auto;padding:64px 6%;display:grid;grid-template-columns:1fr 300px;gap:60px;align-items:start}
+.article-body{min-width:0}
+.article-body h2{font-family:var(--f-head);font-size:26px;font-weight:800;letter-spacing:-.03em;color:var(--ink);margin:56px 0 16px;line-height:1.2}
+.article-body h2:first-child{margin-top:0}
+.article-body h3{font-family:var(--f-head);font-size:18px;font-weight:700;letter-spacing:-.02em;color:var(--ink);margin:32px 0 12px}
+.article-body p{font-size:16px;font-weight:400;color:var(--ink2);line-height:1.85;margin-bottom:20px}
+.article-body strong{color:var(--ink);font-weight:600}
+.article-body a{color:var(--blue);text-decoration:none;border-bottom:1px solid rgba(0,87,255,.25);transition:border-color .2s}
+.article-body a:hover{border-color:var(--blue)}
+/* callouts */
+.callout{padding:20px 24px;border-radius:8px;margin:32px 0;border-left:3px solid}
+.callout.blue{background:var(--blue-dim);border-color:var(--blue)}
+.callout.amber{background:var(--amber-dim);border-color:var(--amber)}
+.callout.green{background:var(--green-dim);border-color:var(--green)}
+.callout.red{background:var(--red-dim);border-color:var(--red)}
+.callout-label{font-family:var(--f-mono);font-size:9px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px}
+.callout.blue .callout-label{color:var(--blue)}
+.callout.amber .callout-label{color:var(--amber)}
+.callout.green .callout-label{color:var(--green)}
+.callout.red .callout-label{color:var(--red)}
+.callout p{font-size:14px;color:var(--ink2);line-height:1.7;margin:0}
+.callout strong{color:var(--ink)}
+/* req type cards */
+.req-type-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:28px 0}
+.req-card{padding:20px 22px;border:1px solid var(--rule);border-radius:8px;background:var(--white);box-shadow:var(--shadow-sm)}
+.req-card-label{font-family:var(--f-mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);margin-bottom:6px}
+.req-card-title{font-family:var(--f-head);font-size:15px;font-weight:800;letter-spacing:-.02em;color:var(--ink);margin-bottom:8px}
+.req-card-example{font-size:12px;color:var(--ink3);line-height:1.6;padding:10px 12px;background:var(--off);border-radius:5px;border-left:2px solid var(--blue);margin-top:8px;font-style:italic}
+/* before/after pairs */
+.ba-list{display:flex;flex-direction:column;gap:16px;margin:24px 0}
+.ba-item{border:1px solid var(--rule);border-radius:8px;overflow:hidden}
+.ba-header{padding:10px 16px;background:var(--off);font-family:var(--f-mono);font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink4);border-bottom:1px solid var(--rule)}
+.ba-row{display:grid;grid-template-columns:1fr 1fr;gap:0}
+.ba-col{padding:14px 16px}
+.ba-col.bad{background:#fef2f2;border-right:1px solid var(--rule)}
+.ba-col.good{background:#f0fdf4}
+.ba-col-label{font-family:var(--f-mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px}
+.ba-col.bad .ba-col-label{color:var(--red)}
+.ba-col.good .ba-col-label{color:var(--green)}
+.ba-col p{font-size:13px;line-height:1.6;margin:0}
+.ba-col.bad p{color:#7f1d1d}
+.ba-col.good p{color:#14532d}
+.ba-why{padding:10px 16px;background:var(--off);border-top:1px solid var(--rule);font-size:12px;color:var(--ink3);line-height:1.55}
+.ba-why strong{color:var(--ink)}
+/* anatomy block */
+.req-anatomy{background:var(--ink);border-radius:8px;padding:24px;margin:28px 0}
+.req-anatomy-title{font-family:var(--f-mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:16px}
+.req-full{font-size:15px;color:white;line-height:1.8;font-family:var(--f-mono)}
+.req-full .hl-id{color:#6699ff}
+.req-full .hl-action{color:#fbbf24}
+.req-full .hl-measure{color:#34d399}
+.req-full .hl-condition{color:#f87171}
+.req-anatomy-legend{display:flex;flex-wrap:wrap;gap:12px;margin-top:16px}
+.legend-item{display:flex;align-items:center;gap:6px;font-family:var(--f-mono);font-size:9px;color:rgba(255,255,255,0.5);letter-spacing:.04em}
+.legend-dot{width:10px;height:10px;border-radius:2px;flex-shrink:0}
+/* 4 rules checklist */
+.rules-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:28px 0}
+.rule-card{padding:18px 20px;border:1px solid var(--rule);border-radius:8px;background:var(--white)}
+.rule-num{font-family:var(--f-mono);font-size:28px;font-weight:500;color:var(--blue);line-height:1;margin-bottom:8px}
+.rule-title{font-family:var(--f-head);font-size:14px;font-weight:800;color:var(--ink);margin-bottom:6px}
+.rule-test{font-size:12px;color:var(--ink3);line-height:1.6;padding:8px 10px;background:var(--off);border-radius:4px;margin-top:8px;font-style:italic}
+/* SVG figure */
+.article-img{width:100%;border-radius:8px;border:1px solid var(--rule);overflow:hidden;margin:36px 0}
+.svg-fig{border:1px solid #1e2535}
+.svg-fig figcaption{padding:10px 14px;background:#0d0f12;font-family:var(--f-mono);font-size:10px;color:rgba(255,255,255,0.25);letter-spacing:.06em;border-top:1px solid #1e2535;border-radius:0 0 8px 8px}
+/* table scroll */
+.table-scroll{width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;margin:28px 0;border:1px solid var(--rule);border-radius:8px}
+.std-table{width:100%;border-collapse:collapse;font-size:13px;min-width:520px}
+.std-table th{font-family:var(--f-mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink4);padding:10px 14px;border-bottom:2px solid var(--rule);text-align:left;background:var(--off)}
+.std-table td{padding:11px 14px;border-bottom:1px solid var(--rule);color:var(--ink2);vertical-align:top;line-height:1.55}
+.std-table tr:last-child td{border-bottom:none}
+.std-table td:first-child{font-family:var(--f-mono);font-size:11px;font-weight:500;color:var(--blue);white-space:nowrap}
+/* sidebar */
+.sidebar{position:sticky;top:88px;display:flex;flex-direction:column;gap:16px}
+.toc-card{border:1px solid var(--rule);border-radius:8px;padding:24px;background:var(--white);box-shadow:var(--shadow-sm)}
+.toc-label{font-family:var(--f-mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);margin-bottom:16px}
+.toc-list{list-style:none;display:flex;flex-direction:column;gap:2px}
+.toc-list a{display:block;font-size:13px;color:var(--ink3);text-decoration:none;padding:6px 10px;border-radius:4px;transition:all .15s;border-left:2px solid transparent}
+.toc-list a:hover,.toc-list a.active{color:var(--blue);background:var(--blue-dim);border-left-color:var(--blue)}
+.sidebar-cta{border:1px solid var(--blue);border-radius:8px;padding:24px;background:var(--blue-dim)}
+.sc-eyebrow{font-family:var(--f-mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);margin-bottom:10px}
+.sc-title{font-family:var(--f-head);font-size:17px;font-weight:800;letter-spacing:-.02em;color:var(--ink);margin-bottom:8px;line-height:1.2}
+.sc-body{font-size:13px;color:var(--ink3);line-height:1.6;margin-bottom:16px}
+.sc-btn{display:block;text-align:center;padding:11px 16px;background:var(--blue);color:white;border-radius:6px;font-family:var(--f-body);font-size:13px;font-weight:500;text-decoration:none;transition:background .2s,transform .15s}
+.sc-btn:hover{background:var(--blue2);transform:translateY(-1px)}
+.sc-note{font-family:var(--f-mono);font-size:9px;color:var(--ink4);text-align:center;margin-top:8px;letter-spacing:.04em}
+.sidebar-share{border:1px solid var(--rule);border-radius:8px;padding:20px 24px;background:var(--white)}
+.share-label{font-family:var(--f-mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);margin-bottom:12px}
+.share-links{display:flex;flex-direction:column;gap:6px}
+.share-link{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--ink3);text-decoration:none;padding:8px 10px;border-radius:4px;border:1px solid var(--rule);transition:all .15s}
+.share-link:hover{border-color:var(--blue);color:var(--blue);background:var(--blue-dim)}
+/* related */
+.related{padding:64px 6%;border-top:1px solid var(--rule);background:var(--off)}
+.related-inner{max-width:1100px;margin:0 auto}
+.related-label{font-family:var(--f-mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);margin-bottom:32px;display:flex;align-items:center;gap:10px}
+.related-label::before{content:'';width:20px;height:1px;background:var(--blue)}
+.related-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.related-card{padding:24px;border:1px solid var(--rule);border-radius:8px;background:var(--white);box-shadow:var(--shadow-sm);transition:border-color .2s,transform .2s,box-shadow .2s;text-decoration:none;display:flex;flex-direction:column;gap:12px}
+.related-card:hover{border-color:var(--blue);transform:translateY(-4px);box-shadow:var(--shadow-lg)}
+.rc-tag{font-family:var(--f-mono);font-size:9px;color:var(--blue);letter-spacing:.08em;text-transform:uppercase;padding:3px 8px;background:var(--blue-dim);border-radius:3px;align-self:flex-start}
+.rc-title{font-family:var(--f-head);font-size:16px;font-weight:700;letter-spacing:-.02em;color:var(--ink);line-height:1.25}
+.rc-desc{font-size:13px;color:var(--ink3);line-height:1.6;flex:1}
+.rc-footer{display:flex;align-items:center;justify-content:space-between;padding-top:12px;border-top:1px solid var(--rule)}
+.rc-read{font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.04em}
+.rc-arrow{font-size:14px;color:var(--blue)}
+/* footer */
+footer{padding:56px 6% 32px;border-top:1px solid var(--rule);background:var(--white)}
+.footer-inner{max-width:1160px;margin:0 auto}
+.footer-top{display:flex;justify-content:space-between;align-items:flex-start;gap:40px;flex-wrap:wrap;margin-bottom:48px}
+.footer-brand p{font-size:13px;font-weight:300;color:var(--ink3);margin-top:12px;max-width:260px;line-height:1.6}
+.footer-col h4{font-family:var(--f-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink4);margin-bottom:16px}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+.footer-col a{font-size:13px;color:var(--ink3);text-decoration:none;transition:color .2s}
+.footer-col a:hover{color:var(--blue)}
+.footer-bottom{padding-top:24px;border-top:1px solid var(--rule);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.footer-bottom p{font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.04em}
+.compliance-pills{display:flex;gap:6px;flex-wrap:wrap}
+.cp{font-family:var(--f-mono);font-size:9px;padding:3px 8px;border:1px solid var(--rule);border-radius:3px;color:var(--ink4);letter-spacing:.06em}
+.progress-bar{position:fixed;top:64px;left:0;right:0;height:2px;background:var(--rule);z-index:199}
+.progress-fill{height:100%;background:var(--blue);width:0%;transition:width .1s linear}
+@media(max-width:900px){
+  .article-wrap{grid-template-columns:1fr;gap:48px}.sidebar{position:static}
+  .req-type-grid{grid-template-columns:1fr}.rules-grid{grid-template-columns:1fr}
+  .ba-row{grid-template-columns:1fr}.ba-col.bad{border-right:none;border-bottom:1px solid var(--rule)}
+  .related-grid{grid-template-columns:1fr}.nav-links{display:none}
+}
+@media(max-width:540px){nav{padding:0 4%}.nav-btn{font-size:12px;padding:8px 14px}}
+</style>
+</head>
+<body>
+
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+
+<nav>
+  <a href="../index.html" class="nav-logo">
+    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" style="flex-shrink:0">
+      <rect width="32" height="32" rx="7" fill="#0d0f12"/>
+      <rect x="8" y="7" width="16" height="16" rx="2" stroke="white" stroke-width="2.5" fill="none"/>
+      <line x1="20" y1="19" x2="26" y2="25" stroke="#0057FF" stroke-width="3" stroke-linecap="round"/>
+    </svg>
+    <span style="font-family:'Epilogue',sans-serif;font-weight:800;font-size:16px;color:#0d0f12;letter-spacing:-.03em;white-space:nowrap">QLean <span style="font-weight:300;color:#5a6172">Automation</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="../index.html#products">Products</a></li>
+    <li><a href="../index.html#framework">Framework</a></li>
+    <li><a href="blog-index.html">Knowledge Base</a></li>
+    <li><a href="../index.html#pricing">Pricing</a></li>
+    <li><a href="../about.html">About</a></li>
+    <li><a href="../index.html#faq">FAQ</a></li>
+  </ul>
+  <a href="../index.html#pricing" class="nav-btn">Get the Framework →</a>
+</nav>
+
+<header class="article-hero">
+  <div class="article-hero-inner">
+    <div class="breadcrumb">
+      <a href="../index.html">Home</a><span>/</span>
+      <a href="blog-index.html">Knowledge Base</a><span>/</span>
+      URS Acceptance Criteria
+    </div>
+    <div class="article-tag">📝 URS</div>
+    <h1>Writing <span>Testable Acceptance</span><br>Criteria for a<br>PLC/SCADA URS</h1>
+    <p class="article-intro">The most common URS problem isn't missing requirements — it's requirements you can't test. Vague, unmeasurable, or solution-prescribing requirements don't just fail QA review, they make your OQ test cases impossible to write. Here is how to fix them.</p>
+    <div class="article-meta">
+      <div class="meta-author">
+        <div class="author-avatar">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="7" r="3.5" stroke="white" stroke-width="1.5"/><path d="M2.5 16c0-3.59 2.91-6.5 6.5-6.5s6.5 2.91 6.5 6.5" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </div>
+        <div>
+          <div class="author-name">QLean Automation</div>
+          <div class="author-role">ENGINEERS WHO BUILD SYSTEMS, NOT JUST SIGN THEM</div>
+        </div>
+      </div>
+      <div class="meta-divider"></div>
+      <div class="meta-stat">7 MIN READ</div>
+      <div class="meta-divider"></div>
+      <div class="meta-stat">URS · ACCEPTANCE CRITERIA</div>
+    </div>
+  </div>
+</header>
+
+<div class="article-wrap">
+  <article class="article-body">
+
+    <h2 id="why-it-matters">Why Acceptance Criteria Are the Hard Part</h2>
+    <p>Most engineers can list what a system needs to do. The URS challenge is expressing those needs in a form that is simultaneously <strong>user-perspective</strong> (not implementation detail), <strong>measurable</strong> (contains a specific verifiable value), <strong>testable</strong> (an OQ test case can be written directly from it), and <strong>unambiguous</strong> (two different engineers reading it produce the same test case).</p>
+    <p>When a URS fails QA review, it is almost always because requirements are vague ("the system shall respond quickly"), solution-prescriptive ("the system shall use a Siemens S7-1500"), or untestable ("the system shall be GMP compliant"). These are not minor stylistic issues — a vague requirement produces a vague test case, and a vague test case cannot produce a defensible PASS result. The whole evidence chain unravels.</p>
+    <p>The QLean URS template (URS-SYS-001) is built around five requirement types and four testability rules. This article explains both in practical terms — with real before/after examples drawn directly from the template.</p>
+
+    <div class="callout blue">
+      <div class="callout-label">The Testability Test</div>
+      <p>Before finalising any URS requirement, ask: <strong>"Can I write a specific test step with a binary pass/fail criterion directly from this requirement, without making any assumptions?"</strong> If the answer is no, the requirement needs rewriting before the URS is approved. The OQ cannot rescue a vague URS.</p>
+    </div>
+
+    <h2 id="five-types">The Five Requirement Types</h2>
+    <p>Every requirement in a PLC/SCADA URS falls into one of five types. Each type has a different focus and a different primary verification phase. Knowing which type you're writing shapes how you phrase it.</p>
+
+    <div class="req-type-grid">
+      <div class="req-card">
+        <div class="req-card-label">Type 01</div>
+        <div class="req-card-title">Functional</div>
+        <p style="font-size:13px;color:var(--ink3);line-height:1.6;margin-bottom:8px">Specific behaviours the system must perform. Uses clear action verbs, measurable outcomes, and defined conditions. The largest section of any PLC/SCADA URS.</p>
+        <div class="req-card-example">"System shall automatically divert out-of-specification water to drain when conductivity exceeds 5.0 µS/cm. Divert status shall be displayed on the HMI main overview screen."</div>
+      </div>
+      <div class="req-card">
+        <div class="req-card-label">Type 02</div>
+        <div class="req-card-title">Performance</div>
+        <p style="font-size:13px;color:var(--ink3);line-height:1.6;margin-bottom:8px">How well the system performs its functions. Quantitative measures, time constraints, capacity limits. Every performance requirement must contain a number.</p>
+        <div class="req-card-example">"System shall respond to operator commands within 2 seconds 99% of the time during production hours (06:00–22:00, Mon–Sat)."</div>
+      </div>
+      <div class="req-card">
+        <div class="req-card-label">Type 03</div>
+        <div class="req-card-title">Regulatory / Compliance</div>
+        <p style="font-size:13px;color:var(--ink3);line-height:1.6;margin-bottom:8px">Legal and regulatory obligations. Must cite the specific regulation and clause — not just "GMP compliant." The specific clause is the acceptance criterion.</p>
+        <div class="req-card-example">"Audit trail shall record user ID, date/time, parameter name, old value, new value, and reason for change per 21 CFR 11.10(e) and EU GMP Annex 11 Clause 9."</div>
+      </div>
+      <div class="req-card">
+        <div class="req-card-label">Type 04</div>
+        <div class="req-card-title">Interface</div>
+        <p style="font-size:13px;color:var(--ink3);line-height:1.6;margin-bottom:8px">How the system interacts with other systems or users. Must specify data format, protocol, direction, and GMP criticality of the data being exchanged.</p>
+        <div class="req-card-example">"System shall provide an OPC-UA interface to LIMS for real-time water quality data exchange at 1-minute intervals. Lost connection shall generate a High alarm within 3 minutes."</div>
+      </div>
+      <div class="req-card">
+        <div class="req-card-label">Type 05</div>
+        <div class="req-card-title">Data / Integrity</div>
+        <p style="font-size:13px;color:var(--ink3);line-height:1.6;margin-bottom:8px">How data is managed, stored, and protected. Covers retention periods, backup frequency, access restrictions, and all ALCOA+ principles. Highest inspector scrutiny.</p>
+        <div class="req-card-example">"GMP records shall be retained for a minimum of 7 years in read-only format, protected from modification or deletion by any means including Administrator access."</div>
+      </div>
+    </div>
+
+    <h2 id="four-rules">The Four Testability Rules</h2>
+    <p>A requirement passes all four of these checks before it belongs in an approved URS. In QA reviews and FDA 483 inspections, failures trace back to requirements that violated at least one of them.</p>
+
+    <div class="rules-grid">
+      <div class="rule-card">
+        <div class="rule-num">01</div>
+        <div class="rule-title">It contains a measurable value</div>
+        <p style="font-size:13px;color:var(--ink3);line-height:1.6">No vague qualifiers: "adequate", "sufficient", "fast", "appropriate", "user-friendly". Every requirement must contain a specific, verifiable quantity — a number, a unit, a count, a time period, a percentage.</p>
+        <div class="rule-test">Test: could two engineers independently write the same acceptance criterion from this requirement? If not, it needs a number.</div>
+      </div>
+      <div class="rule-card">
+        <div class="rule-num">02</div>
+        <div class="rule-title">It describes WHAT, not HOW</div>
+        <p style="font-size:13px;color:var(--ink3);line-height:1.6">The URS is the user perspective. Implementation belongs in the FDS, HDS, and SDS. A requirement specifying a product, platform, or architecture is a design constraint — not a user requirement. It freezes the design before engineering has started.</p>
+        <div class="rule-test">Test: does this requirement specify which PLC, SCADA, network protocol, or algorithm to use? If yes, move it to the FDS.</div>
+      </div>
+      <div class="rule-card">
+        <div class="rule-num">03</div>
+        <div class="rule-title">It has a single verifiable outcome</div>
+        <p style="font-size:13px;color:var(--ink3);line-height:1.6">A requirement with "and" often contains two requirements. Each becomes one test case. Compound requirements ("the system shall do X and also Y and notify Z") produce ambiguous pass/fail determinations.</p>
+        <div class="rule-test">Test: does this requirement need one test case or two? If two, split it into two requirements with separate IDs.</div>
+      </div>
+      <div class="rule-card">
+        <div class="rule-num">04</div>
+        <div class="rule-title">It specifies the regulatory clause</div>
+        <p style="font-size:13px;color:var(--ink3);line-height:1.6">For any regulatory or compliance requirement, cite the exact clause — not just "Part 11 compliant" or "Annex 11 compliant." The specific clause is the acceptance criterion an inspector will check against. A general compliance statement cannot be verified.</p>
+        <div class="rule-test">Test: if an inspector asked "how does this requirement satisfy Part 11?" could you point to the specific clause? If not, add it.</div>
+      </div>
+    </div>
+
+    <h2 id="anatomy">Anatomy of a Well-Written Requirement</h2>
+    <p>Every well-written URS requirement contains four elements. Here is URS-GEN-014 from the QLean template dissected:</p>
+
+    <div class="req-anatomy">
+      <div class="req-anatomy-title">URS Requirement Anatomy — URS-GEN-014</div>
+      <div class="req-full">
+        <span class="hl-id">URS-GEN-014</span> | System time shall be synchronised to a
+        <span class="hl-condition">validated NTP server</span> and maintained within
+        <span class="hl-measure">±30 seconds</span>. Any time synchronisation failure or manual time change shall
+        <span class="hl-action">generate an alarm and audit trail entry</span>.
+      </div>
+      <div class="req-anatomy-legend">
+        <div class="legend-item"><div class="legend-dot" style="background:#6699ff"></div>Unique ID (traceable to TM and OQ)</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#fbbf24"></div>Action verb — what the system SHALL do</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#34d399"></div>Measurable value — the acceptance criterion</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#f87171"></div>Condition — when or under what circumstances</div>
+      </div>
+    </div>
+
+    <p>This requirement generates a single, unambiguous OQ test case: configure NTP, verify sync is within ±30 seconds, then disconnect NTP and verify that an alarm is generated and an audit trail entry is created. The test writer needs to make zero assumptions.</p>
+
+    <!-- SVG: URS to OQ traceability -->
+    <figure class="article-img svg-fig">
+      <svg viewBox="0 0 720 200" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;background:#0d0f12;border-radius:8px 8px 0 0">
+        <defs>
+          <marker id="arr28" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+            <path d="M0,0.5 L5,3 L0,5.5" fill="none" stroke="#0057ff" stroke-width="1.2"/>
+          </marker>
+        </defs>
+        <text x="36" y="26" font-family="Epilogue,sans-serif" font-weight="700" font-size="10" fill="rgba(255,255,255,0.35)" letter-spacing="0.1em">REQUIREMENT TRACEABILITY — FROM URS TO OQ PASS</text>
+
+        <!-- URS Requirement -->
+        <rect x="20" y="46" width="150" height="110" rx="6" fill="rgba(0,87,255,0.12)" stroke="#0057ff" stroke-width="1"/>
+        <text x="30" y="64" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(0,87,255,0.7)" letter-spacing="0.06em">URS-GEN-014</text>
+        <foreignObject x="28" y="70" width="134" height="80">
+          <div xmlns="http://www.w3.org/1999/xhtml" style="font-family:Roboto Mono,monospace;font-size:9px;color:rgba(255,255,255,0.6);line-height:1.5">System time shall be synchronised within ±30 seconds to NTP. Failure shall generate alarm + audit entry.</div>
+        </foreignObject>
+        <text x="95" y="165" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7" fill="rgba(255,255,255,0.2)" letter-spacing="0.06em">URS · HIGH PRIORITY</text>
+
+        <!-- Arrow 1 -->
+        <line x1="170" y1="101" x2="208" y2="101" stroke="#0057ff" stroke-width="1.5" marker-end="url(#arr28)"/>
+        <text x="189" y="95" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7" fill="rgba(255,255,255,0.3)">FDS</text>
+
+        <!-- FDS entry -->
+        <rect x="208" y="62" width="150" height="78" rx="6" fill="rgba(0,87,255,0.08)" stroke="rgba(0,87,255,0.4)" stroke-width="1"/>
+        <text x="218" y="78" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(0,87,255,0.5)" letter-spacing="0.06em">FDS-GEN-009</text>
+        <foreignObject x="216" y="84" width="134" height="50">
+          <div xmlns="http://www.w3.org/1999/xhtml" style="font-family:Roboto Mono,monospace;font-size:9px;color:rgba(255,255,255,0.5);line-height:1.5">NTP client configured in SCADA. Alarm tag: SYS_NTP_FAULT. Audit event: EV-SYS-014.</div>
+        </foreignObject>
+        <text x="283" y="150" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7" fill="rgba(255,255,255,0.2)" letter-spacing="0.06em">DESIGN · IMPLEMENTS URS</text>
+
+        <!-- Arrow 2 -->
+        <line x1="358" y1="101" x2="396" y2="101" stroke="#0057ff" stroke-width="1.5" marker-end="url(#arr28)"/>
+        <text x="377" y="95" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7" fill="rgba(255,255,255,0.3)">OQ</text>
+
+        <!-- OQ Test Case -->
+        <rect x="396" y="46" width="150" height="110" rx="6" fill="rgba(0,87,255,0.08)" stroke="rgba(0,87,255,0.35)" stroke-width="1"/>
+        <text x="406" y="64" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(0,87,255,0.5)" letter-spacing="0.06em">TC-OQ-GEN-014</text>
+        <foreignObject x="404" y="70" width="134" height="70">
+          <div xmlns="http://www.w3.org/1999/xhtml" style="font-family:Roboto Mono,monospace;font-size:9px;color:rgba(255,255,255,0.5);line-height:1.5">1. Verify SCADA shows NTP sync time ≤±30s. 2. Disconnect NTP. 3. Verify SYS_NTP_FAULT alarm fires. 4. Verify audit entry created.</div>
+        </foreignObject>
+        <text x="471" y="165" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7" fill="rgba(255,255,255,0.2)" letter-spacing="0.06em">TEST CASE · 4 STEPS</text>
+
+        <!-- Arrow 3 -->
+        <line x1="546" y1="101" x2="584" y2="101" stroke="#00875a" stroke-width="1.5" marker-end="url(#arr28)"/>
+        <text x="565" y="95" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7" fill="rgba(255,255,255,0.3)">TM</text>
+
+        <!-- TM Result -->
+        <rect x="584" y="70" width="118" height="62" rx="6" fill="rgba(0,135,90,0.15)" stroke="#00875a" stroke-width="1.5"/>
+        <text x="643" y="90" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(255,255,255,0.4)" letter-spacing="0.06em">TM ROW</text>
+        <text x="643" y="108" text-anchor="middle" font-family="Epilogue,sans-serif" font-weight="800" font-size="13" fill="#00c97a">PASSED</text>
+        <text x="643" y="124" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7" fill="rgba(0,200,122,0.5)" letter-spacing="0.04em">URS-GEN-014 VERIFIED</text>
+
+        <text x="36" y="188" font-family="Roboto Mono,monospace" font-size="7.5" fill="rgba(255,255,255,0.18)" letter-spacing="0.04em">A TESTABLE URS REQUIREMENT GENERATES A COMPLETE OQ TEST CASE WITH NO ASSUMPTIONS. A VAGUE ONE GENERATES AN AMBIGUOUS TEST THAT CANNOT PRODUCE A DEFENSIBLE PASS.</text>
+      </svg>
+      <figcaption>// URS-GEN-014 TRACEABILITY — ONE REQUIREMENT → ONE FDS FUNCTION → ONE OQ TEST CASE → ONE TM ROW: PASSED. THIS IS THE GOLDEN THREAD. EVERY URS REQUIREMENT MUST SUPPORT THIS CHAIN.</figcaption>
+    </figure>
+
+    <h2 id="before-after">Before and After: 6 Real Rewrites</h2>
+    <p>These are the most common weak requirement patterns in PLC/SCADA URS documents. Each one is taken from real QA review findings and rewritten to be testable.</p>
+
+    <div class="ba-list">
+
+      <div class="ba-item">
+        <div class="ba-header">Pattern 1 — Vague Qualifier</div>
+        <div class="ba-row">
+          <div class="ba-col bad"><div class="ba-col-label">❌ Weak</div><p>The system shall respond adequately to operator commands during production.</p></div>
+          <div class="ba-col good"><div class="ba-col-label">✓ Testable</div><p>System shall respond to operator commands within 2 seconds, measured from command submission to visual confirmation on HMI, for 99% of commands during scheduled production hours (06:00–22:00).</p></div>
+        </div>
+        <div class="ba-why"><strong>Why:</strong> "Adequately" cannot be tested. The rewrite contains three measurable values: 2 seconds, 99%, and 06:00–22:00. The OQ test step can be written directly.</div>
+      </div>
+
+      <div class="ba-item">
+        <div class="ba-header">Pattern 2 — Solution Prescriptive</div>
+        <div class="ba-row">
+          <div class="ba-col bad"><div class="ba-col-label">❌ Weak</div><p>The system shall use a Siemens S7-1500 PLC for all control functions.</p></div>
+          <div class="ba-col good"><div class="ba-col-label">✓ Testable</div><p>Critical control functions (closed-loop temperature and conductivity control, safety interlocks, alarm generation) shall continue to operate correctly during loss of SCADA server communication.</p></div>
+        </div>
+        <div class="ba-why"><strong>Why:</strong> Specifying a PLC brand is an HDS decision, not a user requirement. The URS should state what the system must do autonomously — the HDS decides which hardware achieves it.</div>
+      </div>
+
+      <div class="ba-item">
+        <div class="ba-header">Pattern 3 — Generic Compliance Statement</div>
+        <div class="ba-row">
+          <div class="ba-col bad"><div class="ba-col-label">❌ Weak</div><p>The system must be 21 CFR Part 11 compliant.</p></div>
+          <div class="ba-col good"><div class="ba-col-label">✓ Testable</div><p>Audit trail shall record user ID, date/time (UTC), parameter name, old value, new value, and reason for change for all GMP-critical parameter modifications. The audit trail shall be computer-generated and not modifiable by any user including Administrator, per 21 CFR 11.10(e).</p></div>
+        </div>
+        <div class="ba-why"><strong>Why:</strong> "Part 11 compliant" is not testable — Part 11 contains 20+ specific requirements. Each one needs its own URS requirement with the specific clause cited. The inspector will check each one individually.</div>
+      </div>
+
+      <div class="ba-item">
+        <div class="ba-header">Pattern 4 — Compound Requirement</div>
+        <div class="ba-row">
+          <div class="ba-col bad"><div class="ba-col-label">❌ Weak</div><p>The system shall implement user access control with role-based permissions and shall generate an audit trail entry for all login attempts and shall lock accounts after 3 failed attempts.</p></div>
+          <div class="ba-col good"><div class="ba-col-label">✓ Testable</div><p><strong>URS-GEN-005:</strong> System shall implement RBAC with minimum four roles: Read-Only, Operator, Supervisor, Administrator.<br><strong>URS-GEN-009:</strong> Audit trail shall record all login attempts (successful and failed) with user ID, timestamp, and outcome.<br><strong>URS-GEN-010:</strong> Accounts shall lock automatically after 3 consecutive failed login attempts. Administrator alert generated on lockout.</p></div>
+        </div>
+        <div class="ba-why"><strong>Why:</strong> Three separate testable conditions need three separate requirements with separate IDs. Each generates one OQ test case. The compound version produces one ambiguous test case that cannot be cleanly passed or failed.</div>
+      </div>
+
+      <div class="ba-item">
+        <div class="ba-header">Pattern 5 — Missing Units</div>
+        <div class="ba-row">
+          <div class="ba-col bad"><div class="ba-col-label">❌ Weak</div><p>The system shall record conductivity data frequently and retain it for a long time.</p></div>
+          <div class="ba-col good"><div class="ba-col-label">✓ Testable</div><p>System shall record all GMP-critical process parameters (conductivity, TOC, temperature, flow) at 1-minute intervals. Historical data shall be retained for a minimum of 7 years in a read-only, tamper-evident format.</p></div>
+        </div>
+        <div class="ba-why"><strong>Why:</strong> "Frequently" and "a long time" mean nothing in an OQ test. "1-minute intervals" and "7 years" can be verified. One generates a test step; the other generates a comment in a test report.</div>
+      </div>
+
+      <div class="ba-item">
+        <div class="ba-header">Pattern 6 — Untestable Aspiration</div>
+        <div class="ba-row">
+          <div class="ba-col bad"><div class="ba-col-label">❌ Weak</div><p>The system shall never lose GMP data under any circumstances.</p></div>
+          <div class="ba-col good"><div class="ba-col-label">✓ Testable</div><p>System shall prevent data gaps during scheduled backup operations, network outages lasting up to 4 hours, and system restarts. Any detected data gap exceeding 2 consecutive missed scan intervals shall generate a High alarm within 3 minutes.</p></div>
+        </div>
+        <div class="ba-why"><strong>Why:</strong> "Never under any circumstances" is an aspiration, not a requirement — and it is impossible to test. The rewrite defines specific failure scenarios, bounds them (4 hours, 2 intervals), and states a measurable detection criterion (3 minutes).</div>
+      </div>
+
+    </div>
+
+    <h2 id="id-and-traceability">The ID Format and Traceability</h2>
+    <p>Every requirement must have a unique, stable identifier that flows through the <a href="traceability-matrix-guide.html">Traceability Matrix</a>, the FDS, and the OQ protocol. The QLean URS uses the format <strong>URS-[SECTION]-[NNN]</strong>:</p>
+
+    <div class="table-scroll">
+    <table class="std-table">
+      <thead>
+        <tr>
+          <th>Prefix</th>
+          <th>Section</th>
+          <th>Examples</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>URS-GEN-</td>
+          <td>General — availability, access control, data integrity, audit trail</td>
+          <td>URS-GEN-001 through URS-GEN-020</td>
+        </tr>
+        <tr>
+          <td>URS-FUN-</td>
+          <td>Functional — process control, sequences, alarms, interlocks</td>
+          <td>URS-FUN-001 through URS-FUN-030</td>
+        </tr>
+        <tr>
+          <td>URS-HMI-</td>
+          <td>HMI — screen layout, navigation, colour standards, interaction</td>
+          <td>URS-HMI-001 through URS-HMI-010</td>
+        </tr>
+        <tr>
+          <td>URS-DAT-</td>
+          <td>Data — historian configuration, retention, reporting, export</td>
+          <td>URS-DAT-001 through URS-DAT-010</td>
+        </tr>
+        <tr>
+          <td>URS-NET-</td>
+          <td>Network / Infrastructure — connectivity, redundancy, cybersecurity</td>
+          <td>URS-NET-001 through URS-NET-010</td>
+        </tr>
+        <tr>
+          <td>URS-INT-</td>
+          <td>Interface — LIMS, ERP, DCS, third-party system connections</td>
+          <td>URS-INT-001 through URS-INT-005</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+
+    <p>The ID must remain stable after URS approval. If a requirement is added, it gets the next available number in the section — existing IDs are never renumbered. If a requirement is deleted, its ID is marked as "DELETED — not to be reused" in the URS. This preserves the integrity of any TM or OQ protocols that may have already referenced it.</p>
+
+    <div class="callout amber">
+      <div class="callout-label">Priority Assignment</div>
+      <p>Every requirement must be assigned a priority: <strong>High</strong> (must be implemented and verified — no risk acceptance), <strong>Medium</strong> (implemented and verified, or risk-accepted by QA), <strong>Low</strong> (best practice — implementation desirable but risk-acceptable). A URS with no priority assignments forces the risk assessment to classify everything from scratch. Set priority in the URS — it flows directly into the risk assessment and testing strategy.</p>
+    </div>
+
+    <div class="callout green">
+      <div class="callout-label">In the QLean Framework</div>
+      <p>URS-SYS-001 contains over 60 pre-written, testable requirements spanning six requirement areas — General, Functional, HMI, Data, Network, and Interface — with unique IDs, priorities, verification phases, and regulatory references already populated. The requirement authoring guidance boxes (which are deleted before approval) explain exactly what testable language looks like for each section. You adapt the pre-written requirements to your specific system rather than writing from blank.</p>
+    </div>
+
+  </article>
+
+  <aside class="sidebar">
+    <div class="toc-card">
+      <div class="toc-label">In This Article</div>
+      <ul class="toc-list">
+        <li><a href="#why-it-matters" class="active">Why It's the Hard Part</a></li>
+        <li><a href="#five-types">The Five Requirement Types</a></li>
+        <li><a href="#four-rules">The Four Testability Rules</a></li>
+        <li><a href="#anatomy">Anatomy of a Requirement</a></li>
+        <li><a href="#before-after">6 Real Rewrites</a></li>
+        <li><a href="#id-and-traceability">ID Format and Traceability</a></li>
+      </ul>
+    </div>
+    <div class="sidebar-cta">
+      <div class="sc-eyebrow">QLean Framework</div>
+      <div class="sc-title">URS-SYS-001 — 60+ pre-written requirements</div>
+      <div class="sc-body">All six sections pre-populated with testable, GMP-compliant requirements. Unique IDs, priorities, and regulatory references already in place.</div>
+      <a href="../index.html#pricing" class="sc-btn">Get the Framework — €249 →</a>
+      <div class="sc-note">// INSTANT DOWNLOAD · COMPANY-WIDE LICENCE</div>
+    </div>
+    <div class="sidebar-share">
+      <div class="share-label">Share This Article</div>
+      <div class="share-links">
+        <a href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fqleanautomation.com%2Fblog%2Furs-acceptance-criteria-guide.html" target="_blank" rel="noopener" class="share-link">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          Share on LinkedIn
+        </a>
+        <a href="https://www.reddit.com/submit?url=https%3A%2F%2Fqleanautomation.com%2Fblog%2Furs-acceptance-criteria-guide.html&title=Writing+Testable+Acceptance+Criteria+for+a+PLC%2FSCADA+URS" target="_blank" rel="noopener" class="share-link">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/></svg>
+          Share on Reddit
+        </a>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<section class="related">
+  <div class="related-inner">
+    <div class="related-label">More Articles</div>
+    <div class="related-grid">
+      <a href="how-to-write-urs-plc-scada.html" class="related-card">
+        <div class="rc-tag">📝 URS</div>
+        <div class="rc-title">How to Write a URS for a PLC/SCADA System</div>
+        <div class="rc-desc">The structure, sections, and content of a complete URS — from scope statement through regulatory requirements to process-specific functional requirements.</div>
+        <div class="rc-footer"><div class="rc-read">8 MIN READ</div><div class="rc-arrow">→</div></div>
+      </a>
+      <a href="traceability-matrix-guide.html" class="related-card">
+        <div class="rc-tag">📊 Traceability</div>
+        <div class="rc-title">The Traceability Matrix</div>
+        <div class="rc-desc">How every URS requirement ID flows through the FDS, the test case, the executed result, and finally into a PASSED row in the TM before VSR approval.</div>
+        <div class="rc-footer"><div class="rc-read">7 MIN READ</div><div class="rc-arrow">→</div></div>
+      </a>
+      <a href="urs-vs-fds-pharma-difference.html" class="related-card">
+        <div class="rc-tag">🔀 URS vs FDS</div>
+        <div class="rc-title">URS vs FDS: What's the Difference</div>
+        <div class="rc-desc">When a requirement becomes a design specification — and why getting this boundary wrong is the most common cause of a bloated URS and a thin FDS.</div>
+        <div class="rc-footer"><div class="rc-read">6 MIN READ</div><div class="rc-arrow">→</div></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="../index.html" class="nav-logo">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none" style="flex-shrink:0">
+            <rect width="32" height="32" rx="7" fill="#0d0f12"/>
+            <rect x="8" y="7" width="16" height="16" rx="2" stroke="white" stroke-width="2.5" fill="none"/>
+            <line x1="20" y1="19" x2="26" y2="25" stroke="#0057FF" stroke-width="3" stroke-linecap="round"/>
+          </svg>
+          <span style="font-family:'Epilogue',sans-serif;font-weight:800;font-size:16px;color:#0d0f12;letter-spacing:-.03em">QLean <span style="font-weight:300;color:#5a6172">Automation</span></span>
+        </a>
+        <p>GMP documentation tools for system integrators and automation engineers entering pharmaceutical projects.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Products</h4>
+        <ul>
+          <li><a href="../index.html#framework">GAMP 5 Framework</a></li>
+          <li><a href="../index.html#products">Technical Masterclass</a></li>
+          <li><a href="../index.html#free-download">Free Resources</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Knowledge Base</h4>
+        <ul>
+          <li><a href="blog-index.html">All Articles</a></li>
+          <li><a href="how-to-write-urs-plc-scada.html">How to Write a URS</a></li>
+          <li><a href="urs-vs-fds-pharma-difference.html">URS vs FDS</a></li>
+          <li><a href="traceability-matrix-guide.html">Traceability Matrix</a></li>
+          <li><a href="functional-design-specification-guide.html">FDS Guide</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="https://www.linkedin.com/company/qlean-automation" target="_blank">LinkedIn</a></li>
+          <li><a href="mailto:hello@qleanautomation.com">Contact</a></li>
+          <li><a href="../terms.html">Terms</a></li>
+          <li><a href="../privacy.html">Privacy</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 QLEAN AUTOMATION · QLEANAUTOMATION.COM</p>
+      <div class="compliance-pills">
+        <span class="cp">GAMP 5</span><span class="cp">EU ANNEX 11</span><span class="cp">21 CFR PART 11</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  window.addEventListener('scroll',()=>{
+    const doc=document.documentElement;
+    document.getElementById('progress').style.width=(doc.scrollTop/(doc.scrollHeight-doc.clientHeight)*100)+'%';
+  });
+  const sections=document.querySelectorAll('[id]');
+  const tocLinks=document.querySelectorAll('.toc-list a');
+  const observer=new IntersectionObserver((entries)=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting){
+        tocLinks.forEach(l=>l.classList.remove('active'));
+        const a=document.querySelector(`.toc-list a[href="#${entry.target.id}"]`);
+        if(a)a.classList.add('active');
+      }
+    });
+  },{rootMargin:'-20% 0px -70% 0px'});
+  sections.forEach(s=>observer.observe(s));
+</script>
+</body>
+</html>

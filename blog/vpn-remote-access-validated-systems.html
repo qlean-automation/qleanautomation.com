@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-JJQ1TXZJX7"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-JJQ1TXZJX7');
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VPN and Remote Access for Validated Systems | QLean Automation</title>
+<meta name="description" content="Remote access to a validated pharma system is permitted — but it requires specific controls that must be documented in the HDS, verified at IQ, and tested in the OQ. Here is exactly what those controls are and how to implement them compliantly.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@300;400;500;600;700;800;900&family=Source+Sans+3:ital,wght@0,300;0,400;0,500;1,300&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--white:#ffffff;--off:#f7f8f9;--ink:#0d0f12;--ink2:#1e2128;--ink3:#3d4456;--ink4:#9199a8;--rule:#e2e5ea;--rule2:#c8cdd6;--blue:#0057ff;--blue2:#0044cc;--blue-dim:rgba(0,87,255,0.07);--green:#00875a;--green-dim:rgba(0,135,90,0.08);--amber:#d97706;--amber-dim:rgba(217,119,6,0.08);--red:#c0392b;--red-dim:rgba(192,57,43,0.08);--f-head:'Epilogue',sans-serif;--f-body:'Source Sans 3',sans-serif;--f-mono:'Roboto Mono',monospace;--shadow-sm:0 2px 8px rgba(13,15,18,0.06),0 1px 3px rgba(13,15,18,0.04)}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}body{background:var(--white);color:var(--ink);font-family:var(--f-body);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+nav{position:fixed;top:0;left:0;right:0;z-index:200;height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 6%;background:rgba(255,255,255,0.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--rule)}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;flex-shrink:0}
+.nav-links{display:flex;align-items:center;gap:36px;list-style:none}.nav-links a{font-size:14px;font-weight:400;color:var(--ink3);text-decoration:none;transition:color .2s}.nav-links a:hover{color:var(--ink)}
+.nav-btn{font-family:var(--f-body);font-size:13px;font-weight:500;padding:9px 20px;background:var(--blue);color:white;border:none;border-radius:6px;cursor:pointer;text-decoration:none;white-space:nowrap;flex-shrink:0}.nav-btn:hover{background:var(--blue2)}
+.progress-bar{position:fixed;top:64px;left:0;right:0;height:2px;background:var(--rule);z-index:199}.progress-fill{height:100%;background:var(--blue);width:0%}
+.article-hero{padding:120px 6% 64px;background:var(--white);border-bottom:1px solid var(--rule);position:relative;overflow:hidden}
+.article-hero::before{content:'';position:absolute;top:-80px;right:-80px;width:400px;height:400px;background:radial-gradient(circle,rgba(0,87,255,0.04) 0%,transparent 70%);pointer-events:none}
+.article-hero-inner{max-width:940px;margin:0 auto;position:relative;z-index:1}
+.breadcrumb{display:flex;align-items:center;gap:8px;font-family:var(--f-mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink4);margin-bottom:24px}.breadcrumb a{color:var(--ink4);text-decoration:none}.breadcrumb a:hover{color:var(--blue)}.breadcrumb span{color:var(--rule2)}
+.article-tag{display:inline-flex;align-items:center;gap:6px;font-family:var(--f-mono);font-size:10px;font-weight:500;color:var(--blue);letter-spacing:.1em;text-transform:uppercase;margin-bottom:20px;padding:4px 10px;background:var(--blue-dim);border-radius:4px}
+.article-hero h1{font-family:var(--f-head);font-size:clamp(30px,5vw,52px);font-weight:900;line-height:1.0;letter-spacing:-.04em;color:var(--ink);margin-bottom:20px}.article-hero h1 span{color:var(--blue)}
+.article-intro{font-size:18px;font-weight:400;color:var(--ink2);line-height:1.75;margin-bottom:32px;max-width:800px}
+.article-meta{display:flex;align-items:center;gap:24px;padding-top:24px;border-top:1px solid var(--rule);flex-wrap:wrap}
+.meta-author{display:flex;align-items:center;gap:10px}.author-avatar{width:36px;height:36px;border-radius:50%;background:var(--ink);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.author-name{font-size:13px;font-weight:500;color:var(--ink)}.author-role{font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.04em}
+.meta-divider{width:1px;height:28px;background:var(--rule)}.meta-stat{font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.06em}
+.article-wrap{max-width:1300px;margin:0 auto;padding:64px 6%;display:grid;grid-template-columns:1fr 300px;gap:60px;align-items:start}
+.article-body{min-width:0}
+.article-body h2{font-family:var(--f-head);font-size:26px;font-weight:800;letter-spacing:-.03em;color:var(--ink);margin:56px 0 16px;line-height:1.2}.article-body h2:first-child{margin-top:0}
+.article-body h3{font-family:var(--f-head);font-size:18px;font-weight:700;letter-spacing:-.02em;color:var(--ink);margin:32px 0 12px}
+.article-body p{font-size:16px;font-weight:400;color:var(--ink2);line-height:1.85;margin-bottom:20px}
+.article-body strong{color:var(--ink);font-weight:600}
+.article-body a{color:var(--blue);text-decoration:none;border-bottom:1px solid rgba(0,87,255,.25)}.article-body a:hover{border-color:var(--blue)}
+.callout{padding:20px 24px;border-radius:8px;margin:32px 0;border-left:3px solid}
+.callout.blue{background:var(--blue-dim);border-color:var(--blue)}.callout.amber{background:var(--amber-dim);border-color:var(--amber)}.callout.green{background:var(--green-dim);border-color:var(--green)}.callout.red{background:var(--red-dim);border-color:var(--red)}
+.callout-label{font-family:var(--f-mono);font-size:9px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px}.callout.blue .callout-label{color:var(--blue)}.callout.amber .callout-label{color:var(--amber)}.callout.green .callout-label{color:var(--green)}.callout.red .callout-label{color:var(--red)}
+.callout p{font-size:14px;color:var(--ink2);line-height:1.7;margin:0}.callout strong{color:var(--ink)}
+.article-img{width:100%;border-radius:8px;border:1px solid #1e2535;overflow:hidden;margin:36px 0}
+.article-img figcaption{padding:10px 14px;background:var(--off);font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.04em;border-top:1px solid var(--rule)}
+.checklist{list-style:none;display:flex;flex-direction:column;gap:8px;margin:20px 0 28px}
+.checklist li{display:flex;align-items:flex-start;gap:10px;font-size:15px;color:var(--ink2);line-height:1.6}
+.checklist li::before{content:'';width:16px;height:16px;flex-shrink:0;margin-top:3px;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 14 14' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='7' cy='7' r='6.5' fill='none' stroke='%230057ff' stroke-width='1'/%3E%3Cpath d='M4 7l2 2 4-4' stroke='%230057ff' stroke-width='1.3' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:center;background-size:contain}
+.table-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:28px 0}
+.compare-table{width:100%;border-collapse:collapse;font-size:14px}
+.compare-table th{font-family:var(--f-mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink4);padding:10px 16px;border-bottom:2px solid var(--rule);text-align:left;background:var(--off)}
+.compare-table td{padding:12px 16px;border-bottom:1px solid var(--rule);vertical-align:top;color:var(--ink2);line-height:1.6}
+.compare-table tr:last-child td{border-bottom:none}
+.compare-table td:first-child{font-weight:600;color:var(--ink);font-family:var(--f-mono);font-size:12px}
+.sidebar{position:sticky;top:88px;display:flex;flex-direction:column;gap:16px}
+.toc-card{border:1px solid var(--rule);border-radius:8px;padding:24px;background:var(--white);box-shadow:var(--shadow-sm)}
+.toc-label{font-family:var(--f-mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);margin-bottom:16px}
+.toc-list{list-style:none;display:flex;flex-direction:column;gap:2px}
+.toc-list a{display:block;font-size:13px;color:var(--ink3);text-decoration:none;padding:6px 10px;border-radius:4px;transition:all .15s;border-left:2px solid transparent}
+.toc-list a:hover,.toc-list a.active{color:var(--blue);background:var(--blue-dim);border-left-color:var(--blue)}
+.sidebar-cta{border:1px solid var(--blue);border-radius:8px;padding:24px;background:var(--blue-dim)}
+.sc-eyebrow{font-family:var(--f-mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);margin-bottom:10px}
+.sc-title{font-family:var(--f-head);font-size:17px;font-weight:800;letter-spacing:-.02em;color:var(--ink);margin-bottom:8px;line-height:1.2}
+.sc-body{font-size:13px;color:var(--ink3);line-height:1.6;margin-bottom:16px}
+.sc-btn{display:block;text-align:center;padding:11px 16px;background:var(--blue);color:white;border-radius:6px;font-family:var(--f-body);font-size:13px;font-weight:500;text-decoration:none}.sc-btn:hover{background:var(--blue2)}
+.sc-note{font-family:var(--f-mono);font-size:9px;color:var(--ink4);text-align:center;margin-top:8px;letter-spacing:.04em}
+.sidebar-share{border:1px solid var(--rule);border-radius:8px;padding:20px 24px;background:var(--white)}
+.share-label{font-family:var(--f-mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);margin-bottom:14px}
+.share-links{display:flex;flex-direction:column;gap:8px}
+.share-link{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--ink3);text-decoration:none;padding:9px 12px;border:1px solid var(--rule);border-radius:6px;transition:border-color .2s,color .2s}.share-link:hover{border-color:var(--blue);color:var(--blue)}
+.related{padding:64px 6%;border-top:1px solid var(--rule);background:var(--off)}
+.related-inner{max-width:1100px;margin:0 auto}
+.related-label{font-family:var(--f-mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);margin-bottom:32px;display:flex;align-items:center;gap:10px}
+.related-label::before{content:'';width:20px;height:1px;background:var(--blue)}
+.related-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.related-card{padding:24px;border:1px solid var(--rule);border-radius:8px;background:var(--white);box-shadow:var(--shadow-sm);transition:border-color .2s,transform .2s;text-decoration:none;display:flex;flex-direction:column;gap:12px}.related-card:hover{border-color:var(--blue);transform:translateY(-4px)}
+.rc-tag{font-family:var(--f-mono);font-size:9px;color:var(--blue);letter-spacing:.08em;text-transform:uppercase;padding:3px 8px;background:var(--blue-dim);border-radius:3px;align-self:flex-start}
+.rc-title{font-family:var(--f-head);font-size:16px;font-weight:700;letter-spacing:-.02em;color:var(--ink);line-height:1.25}
+.rc-desc{font-size:13px;color:var(--ink3);line-height:1.6;flex:1}
+.rc-footer{display:flex;align-items:center;justify-content:space-between;padding-top:12px;border-top:1px solid var(--rule)}
+.rc-read{font-family:var(--f-mono);font-size:10px;color:var(--ink4)}.rc-arrow{font-size:14px;color:var(--blue)}
+footer{padding:56px 6% 32px;border-top:1px solid var(--rule);background:var(--white)}
+.footer-inner{max-width:1160px;margin:0 auto}
+.footer-top{display:flex;justify-content:space-between;align-items:flex-start;gap:40px;flex-wrap:wrap;margin-bottom:48px}
+.footer-brand p{font-size:13px;font-weight:300;color:var(--ink3);margin-top:12px;max-width:260px;line-height:1.6}
+.footer-col h4{font-family:var(--f-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink4);margin-bottom:16px}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+.footer-col a{font-size:13px;color:var(--ink3);text-decoration:none}.footer-col a:hover{color:var(--blue)}
+.footer-bottom{padding-top:24px;border-top:1px solid var(--rule);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.footer-bottom p{font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.04em}
+.compliance-pills{display:flex;gap:6px;flex-wrap:wrap}
+.cp{font-family:var(--f-mono);font-size:9px;padding:3px 8px;border:1px solid var(--rule);border-radius:3px;color:var(--ink4);letter-spacing:.06em}
+@media(max-width:900px){.article-wrap{grid-template-columns:1fr;gap:48px}.sidebar{position:static}.related-grid{grid-template-columns:1fr}.table-scroll{margin:20px 0}}
+@media(max-width:900px){.nav-links{display:none}}
+@media(max-width:540px){nav{padding:0 4%}.nav-btn{font-size:12px;padding:8px 14px}}
+</style>
+</head>
+<body>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+<nav>
+  <a href="../index.html" class="nav-logo">
+    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" style="flex-shrink:0"><rect width="32" height="32" rx="7" fill="#0d0f12"/><rect x="8" y="7" width="16" height="16" rx="2" stroke="white" stroke-width="2.5" fill="none"/><line x1="20" y1="19" x2="26" y2="25" stroke="#0057FF" stroke-width="3" stroke-linecap="round"/></svg>
+    <span style="font-family:'Epilogue',sans-serif;font-weight:800;font-size:16px;color:#0d0f12;letter-spacing:-.03em;white-space:nowrap">QLean <span style="font-weight:300;color:#5a6172">Automation</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="../index.html#products">Products</a></li>
+    <li><a href="../index.html#framework">Framework</a></li>
+    <li><a href="blog-index.html">Knowledge Base</a></li>
+    <li><a href="../index.html#pricing">Pricing</a></li>
+    <li><a href="../about.html">About</a></li>
+    <li><a href="../index.html#faq">FAQ</a></li>
+  </ul>
+  <a href="../index.html#pricing" class="nav-btn">Get the Framework &#8594;</a>
+</nav>
+
+<header class="article-hero">
+  <div class="article-hero-inner">
+    <div class="breadcrumb"><a href="../index.html">Home</a><span>/</span><a href="blog-index.html">Knowledge Base</a><span>/</span>VPN and Remote Access for Validated Systems</div>
+    <div class="article-tag">&#128225; Network &amp; Infrastructure</div>
+    <h1>VPN and Remote Access<br><span>for Validated Systems</span><br>What Compliance Actually Requires</h1>
+    <p class="article-intro">Remote access to a validated pharma SCADA or PLC system is not prohibited — it is a normal operational requirement on most projects. What changes in a GMP context is that every remote session must be authenticated, authorised, logged, and auditable. The VPN architecture, the jump host, the session log, and the access control policy all need to be documented in the HDS and verified at IQ. Here is the complete picture.</p>
+    <div class="article-meta">
+      <div class="meta-author">
+        <div class="author-avatar"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="7" r="3.5" stroke="white" stroke-width="1.5"/><path d="M2.5 16c0-3.59 2.91-6.5 6.5-6.5s6.5 2.91 6.5 6.5" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+        <div><div class="author-name">QLean Automation</div><div class="author-role">ENGINEERS WHO BUILD SYSTEMS, NOT JUST SIGN THEM</div></div>
+      </div>
+      <div class="meta-divider"></div><div class="meta-stat">7 MIN READ</div>
+      <div class="meta-divider"></div><div class="meta-stat">VPN &#183; REMOTE ACCESS &#183; ANNEX 11 &#183; PART 11</div>
+    </div>
+  </div>
+</header>
+
+<div class="article-wrap">
+  <article class="article-body">
+
+    <h2 id="the-compliance-basis">The Compliance Basis for Remote Access Controls</h2>
+    <p>Annex 11 §12 requires that computerised systems are protected from unauthorised access. §12.4 specifically addresses remote access, requiring that appropriate controls are in place for systems accessed externally. 21 CFR Part 11 connects through the <a href="21-cfr-part-11-open-vs-closed-systems.html">open vs closed system classification</a> — a system accessible via remote connection over infrastructure your organisation does not fully control may require the additional transmission security controls of §11.30.</p>
+    <p>The practical requirements that flow from these provisions are: every remote session must use a secure, encrypted connection (VPN or equivalent); every session must authenticate the user uniquely — no shared credentials, no generic "remote" accounts; every session must be logged with enough detail to reconstruct who did what from where and when; and the authorisation to open a remote session must be controlled by the system owner, not the remote user. These are not optional refinements — they are the minimum controls an Annex 11 inspector will expect to see documented and verified.</p>
+
+    <div class="callout blue">
+      <div class="callout-label">The Audit Trail Obligation</div>
+      <p>A remote session during which a configuration change is made to a validated system is a <strong>GMP event</strong>. The audit trail must record it with the same fidelity as an on-site change: user identity, timestamp, what changed, old value, new value. The fact that the change was made remotely rather than locally makes no difference to the audit trail requirement — and the audit trail must be stored on the OT system, not on the remote device. A change that appears only in a third-party remote access tool's session log, not in the validated system's own audit trail, does not satisfy Annex 11 §9.</p>
+    </div>
+
+    <h2 id="architecture-jump-host-required">The Architecture — Why a Jump Host Is Required</h2>
+    <p>The standard compliant architecture for remote access to a pharma OT system routes all remote sessions through a jump host (also called a bastion server or privileged access workstation) located in the DMZ. No direct VPN tunnel from the internet to the OT network is permitted — the path is always: remote user &#8594; VPN concentrator in DMZ &#8594; jump host in DMZ &#8594; target system in OT zone. The jump host is the single authorised gateway, and every session through it is logged.</p>
+    <p>The reason a direct VPN-to-OT-network tunnel is not acceptable is zone boundary integrity. A direct tunnel bypasses the inner firewall and places the remote device logically inside the OT zone. The jump host architecture preserves the zone boundary — the remote device connects only to the DMZ, and from the DMZ a separate authenticated session is initiated into the OT zone. This means two authentication events per remote session (VPN authentication plus jump host authentication), and two log entries.</p>
+
+    <figure class="article-img">
+      <svg viewBox="0 0 720 260" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;background:#0d0f12;border-radius:8px 8px 0 0">
+        <text x="360" y="18" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(255,255,255,0.2)" letter-spacing="0.12em">COMPLIANT REMOTE ACCESS ARCHITECTURE — PHARMA OT</text>
+        <defs><marker id="arrvpn" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="rgba(0,87,255,0.6)"/></marker></defs>
+
+        <!-- Remote Engineer -->
+        <rect x="12" y="80" width="100" height="100" rx="4" fill="rgba(100,100,100,0.06)" stroke="rgba(150,150,150,0.2)" stroke-width="1"/>
+        <text x="62" y="115" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(200,200,200,0.4)" letter-spacing="0.06em">REMOTE</text>
+        <text x="62" y="130" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(200,200,200,0.4)" letter-spacing="0.06em">ENGINEER</text>
+        <text x="62" y="150" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="9" fill="rgba(150,150,150,0.4)">Internet / Corp VPN</text>
+
+        <!-- Step 1: VPN Auth -->
+        <line x1="112" y1="130" x2="175" y2="130" stroke="rgba(0,87,255,0.5)" stroke-width="1.5" marker-end="url(#arrvpn)"/>
+        <text x="143" y="122" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7" fill="rgba(0,87,255,0.5)">1. VPN+MFA</text>
+
+        <!-- Outer Firewall -->
+        <rect x="176" y="100" width="44" height="60" rx="3" fill="rgba(0,87,255,0.12)" stroke="rgba(0,87,255,0.4)" stroke-width="1.5"/>
+        <text x="198" y="134" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7" fill="rgba(100,160,255,0.8)" writing-mode="tb" transform="rotate(-90,198,132)">FW-EXT</text>
+
+        <!-- DMZ -->
+        <rect x="232" y="60" width="198" height="140" rx="4" fill="rgba(0,87,255,0.05)" stroke="rgba(0,87,255,0.25)" stroke-width="1.5"/>
+        <text x="331" y="78" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(0,87,255,0.45)" letter-spacing="0.1em">DMZ ZONE</text>
+
+        <!-- VPN Concentrator -->
+        <rect x="248" y="88" width="76" height="36" rx="3" fill="rgba(0,87,255,0.1)" stroke="rgba(0,87,255,0.3)" stroke-width="1"/>
+        <text x="286" y="104" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(100,160,255,0.8)">VPN</text>
+        <text x="286" y="117" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(100,160,255,0.8)">CONCENTRATOR</text>
+
+        <!-- Jump Host -->
+        <rect x="344" y="88" width="76" height="36" rx="3" fill="rgba(0,87,255,0.1)" stroke="rgba(0,87,255,0.3)" stroke-width="1"/>
+        <text x="382" y="104" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(100,160,255,0.8)">JUMP HOST</text>
+        <text x="382" y="117" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(100,160,255,0.6)">Session logger</text>
+
+        <!-- Session log note -->
+        <rect x="248" y="148" width="172" height="40" rx="3" fill="rgba(0,87,255,0.06)" stroke="rgba(0,87,255,0.2)" stroke-width="1"/>
+        <text x="334" y="164" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7" fill="rgba(0,87,255,0.5)">SESSION LOG — EVERY SESSION</text>
+        <text x="334" y="178" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="9" fill="rgba(100,160,255,0.5)">User &#183; Start/end &#183; Source IP &#183; Actions</text>
+
+        <!-- Arrow VPN to jump -->
+        <line x1="220" y1="130" x2="232" y2="130" stroke="rgba(0,87,255,0.4)" stroke-width="1.2" marker-end="url(#arrvpn)"/>
+        <line x1="324" y1="106" x2="344" y2="106" stroke="rgba(0,87,255,0.4)" stroke-width="1.2" marker-end="url(#arrvpn)"/>
+        <text x="334" y="98" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7" fill="rgba(0,87,255,0.4)">2. Auth</text>
+
+        <!-- Inner Firewall -->
+        <rect x="442" y="100" width="44" height="60" rx="3" fill="rgba(0,87,255,0.12)" stroke="rgba(0,87,255,0.4)" stroke-width="1.5"/>
+        <text x="464" y="134" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7" fill="rgba(100,160,255,0.8)" writing-mode="tb" transform="rotate(-90,464,132)">FW-OT</text>
+
+        <!-- OT Zone -->
+        <rect x="498" y="60" width="210" height="140" rx="4" fill="rgba(0,180,100,0.05)" stroke="rgba(0,180,100,0.25)" stroke-width="1.5"/>
+        <text x="603" y="78" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(0,200,120,0.4)" letter-spacing="0.1em">OT ZONE</text>
+
+        <!-- Eng Workstation -->
+        <rect x="514" y="88" width="80" height="36" rx="3" fill="rgba(0,180,100,0.08)" stroke="rgba(0,180,100,0.25)" stroke-width="1"/>
+        <text x="554" y="104" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(0,200,120,0.7)">ENG WS</text>
+        <text x="554" y="117" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="9" fill="rgba(0,200,120,0.5)">PLC downloads</text>
+
+        <!-- SCADA -->
+        <rect x="614" y="88" width="80" height="36" rx="3" fill="rgba(0,180,100,0.08)" stroke="rgba(0,180,100,0.25)" stroke-width="1"/>
+        <text x="654" y="104" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(0,200,120,0.7)">SCADA</text>
+        <text x="654" y="117" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="9" fill="rgba(0,200,120,0.5)">Read-only view</text>
+
+        <!-- Arrows -->
+        <line x1="420" y1="106" x2="442" y2="106" stroke="rgba(0,87,255,0.4)" stroke-width="1.2" marker-end="url(#arrvpn)"/>
+        <text x="431" y="98" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7" fill="rgba(0,87,255,0.4)">3. RDP</text>
+        <line x1="486" y1="106" x2="498" y2="106" stroke="rgba(0,87,255,0.4)" stroke-width="1.2" marker-end="url(#arrvpn)"/>
+
+        <!-- NO DIRECT label -->
+        <text x="360" y="238" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(192,57,43,0.5)" letter-spacing="0.1em">&#10008; NO DIRECT VPN TUNNEL TO OT ZONE — ALWAYS VIA JUMP HOST IN DMZ</text>
+      </svg>
+      <figcaption>COMPLIANT REMOTE ACCESS — THREE HOPS &#183; VPN&#43;MFA to DMZ &#8594; authenticated jump host session &#8594; RDP/tool to OT target. Every step logged. No direct internet-to-OT-zone path.</figcaption>
+    </figure>
+
+    <h2 id="mfa-requirement">MFA — When It Is Required and What Counts</h2>
+    <p>Multi-factor authentication (MFA) is the standard for all remote access to OT systems in pharma. Annex 11 §12 does not prescribe MFA by name, but the access control requirement combined with the principle that remote access represents a higher risk than local access makes MFA the de facto minimum standard for any post-2022 pharma OT project. An Annex 11 inspection finding that a remote access VPN uses only password authentication, with no second factor, is foreseeable.</p>
+    <p>What counts as a second factor: a time-based one-time password (TOTP) authenticator app (Google Authenticator, Microsoft Authenticator); a hardware token (RSA SecurID, YubiKey); a certificate stored on a managed corporate device. What does not count: a second static password; a security question; an SMS code to an unregistered device. The HDS must specify which MFA method is implemented, and the IQ must verify it is active and enforced — typically by attempting to authenticate with only a password and confirming the session is rejected.</p>
+
+    <h2 id="session-logging-requirements">Session Logging — What the Log Must Capture</h2>
+    <p>The remote access session log is a GMP record. It must be retained for the same period as other GMP records from the validated system — typically 7 years or the product lifecycle, whichever is longer — and it must be protected from modification. The log entries must include:</p>
+
+    <ul class="checklist">
+      <li>User identity (unique user ID, not a shared account or generic remote access account)</li>
+      <li>Source IP address of the remote device</li>
+      <li>Session start timestamp — NTP-synchronised, matching the OT system time</li>
+      <li>Session end timestamp — or last activity timestamp if session was force-terminated</li>
+      <li>Authentication outcome (success or failure) — failed attempts must also be logged</li>
+      <li>Target system accessed via the jump host (which OT device the user connected to)</li>
+      <li>For sessions involving configuration changes: what was changed, verified in the validated system's own audit trail</li>
+    </ul>
+
+    <p>The session log location matters. If the log only exists on the jump host server and the jump host is outside the validated system boundary, the log may not have the same protection as the validated system's audit trail. The preferred approach is for the jump host to forward session events to the SCADA or historian audit trail in addition to its own local log, so that remote access activity is visible within the validated system's GMP record set.</p>
+
+    <h2 id="authorisation-control">Authorisation Control — Who Opens the Session</h2>
+    <p>The authorisation to initiate a remote session must be controlled by the site — not by the remote user. This means the VPN or jump host must be configured so that a remote user cannot self-service their own access. The typical implementation is time-limited access: the site administrator enables access for a specific user for a specific time window (e.g., 2 hours on Tuesday afternoon for a software update), and access is automatically revoked at the end of the window regardless of whether the session is still active.</p>
+    <p>For third-party vendor access — the most common source of remote access in OT environments — this means the vendor cannot access the system whenever they choose. Access requires a formal request, site approval, and time-limited enablement. This is a procedural control that must be documented in SOP-ADMIN-SYS-001 (System Administration SOP) and verified at OQ by demonstrating that vendor access cannot be initiated without site authorisation.</p>
+
+    <div class="callout amber">
+      <div class="callout-label">The Third-Party Vendor Access Problem</div>
+      <p>The most common remote access compliance gap is a standing, always-on VPN credential given to the system integrator or automation vendor for ongoing support. From a GMP perspective, this means an external organisation has persistent, uncontrolled access to a validated system — any change they make may not be captured in the site's change control process, and the site may not know a session occurred until they review logs retrospectively. <strong>Vendor remote access must be time-limited, request-based, site-approved, and session-logged.</strong> The vendor must work within the same access control framework as site personnel, not outside it.</p>
+    </div>
+
+    <h2 id="oq-test-cases-for-remote-access">OQ Test Cases for Remote Access</h2>
+    <p>Remote access controls are primarily verified in the OQ, after the IQ has confirmed the infrastructure is installed as designed. The <a href="remote-access-pharma-scada.html">remote access implementation article</a> covers the SCADA-specific configuration — the OQ test cases for VPN and jump host controls focus on the access control and logging behaviour.</p>
+
+    <div class="table-scroll">
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th>Test Ref</th>
+            <th>Test Description</th>
+            <th>Expected Result</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>RA-OQ-001</td>
+            <td>Attempt VPN connection with username and password only (no MFA). Use a remote device not enrolled in MFA.</td>
+            <td>Connection refused. Authentication failure logged in VPN log with timestamp and source IP.</td>
+          </tr>
+          <tr>
+            <td>RA-OQ-002</td>
+            <td>Attempt VPN connection with valid credentials plus MFA token. Confirm session established.</td>
+            <td>Session established. Session start logged: user ID, source IP, timestamp.</td>
+          </tr>
+          <tr>
+            <td>RA-OQ-003</td>
+            <td>Attempt RDP connection directly to OT SCADA server (bypassing jump host) from DMZ address. VPN-connected remote device.</td>
+            <td>Connection refused by inner firewall. No direct OT access from remote device without jump host.</td>
+          </tr>
+          <tr>
+            <td>RA-OQ-004</td>
+            <td>Establish full remote session via VPN &#8594; jump host &#8594; engineering workstation. Make a non-GMP configuration change. Disconnect.</td>
+            <td>Session end logged with timestamp. Configuration change appears in validated system audit trail with remote user identity and timestamp.</td>
+          </tr>
+          <tr>
+            <td>RA-OQ-005</td>
+            <td>Attempt to establish remote session after the time-limited access window has expired for the test user account.</td>
+            <td>VPN authentication rejected. Access denied event logged.</td>
+          </tr>
+          <tr>
+            <td>RA-OQ-006</td>
+            <td>Verify session log retention: confirm session logs from prior test steps are present, read-only, and cannot be deleted without elevated administrative credentials.</td>
+            <td>All session log entries present. Log file or database is read-only for standard accounts. Delete attempt rejected.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout green">
+      <div class="callout-label">In the QLean Framework</div>
+      <p>SOP-ADMIN-SYS-001 (System Administration SOP) includes the remote access authorisation procedure: request form, site approval workflow, time-limited enablement, and post-session log review. HDS-SYS-001 Section 7 documents the VPN and jump host architecture. The OQ protocol includes the remote access test section with test cases referencing the URS cybersecurity requirements. FDS-SYS-001 includes FUNC-CYB-002 (remote access control function), which specifies VPN&#43;MFA, time-limited sessions, session logging, and audit trail integration — providing the functional requirement that the OQ test cases verify.</p>
+    </div>
+
+  </article>
+
+  <aside class="sidebar">
+    <div class="toc-card">
+      <div class="toc-label">In This Article</div>
+      <ul class="toc-list">
+        <li><a href="#the-compliance-basis">Compliance Basis</a></li>
+        <li><a href="#architecture-jump-host-required">Architecture — Jump Host Required</a></li>
+        <li><a href="#mfa-requirement">MFA — What Counts</a></li>
+        <li><a href="#session-logging-requirements">Session Logging Requirements</a></li>
+        <li><a href="#authorisation-control">Authorisation Control</a></li>
+        <li><a href="#oq-test-cases-for-remote-access">OQ Test Cases</a></li>
+      </ul>
+    </div>
+
+    <div class="sidebar-cta">
+      <div class="sc-eyebrow">QLean Framework</div>
+      <div class="sc-title">29 production-ready GAMP 5 documents</div>
+      <div class="sc-body">Remote access controls documented across HDS (architecture), FDS (functional requirements), SOP-ADMIN (authorisation procedure), and OQ (test cases) — all aligned and cross-referenced.</div>
+      <a href="../index.html#pricing" class="sc-btn">Get the Framework &#8594;</a>
+      <div class="sc-note">SINGLE LICENCE &#183; IMMEDIATE DOWNLOAD</div>
+    </div>
+
+    <div class="sidebar-share">
+      <div class="share-label">Share This Article</div>
+      <div class="share-links">
+        <a href="https://www.linkedin.com/sharing/share-offsite/?url=https://qleanautomation.com/blog/vpn-remote-access-validated-systems.html" target="_blank" rel="noopener" class="share-link">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          Share on LinkedIn
+        </a>
+        <a href="https://reddit.com/submit?url=https://qleanautomation.com/blog/vpn-remote-access-validated-systems.html&title=VPN%20and%20Remote%20Access%20for%20Validated%20Pharma%20Systems" target="_blank" rel="noopener" class="share-link">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/></svg>
+          Share on Reddit
+        </a>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<section class="related">
+  <div class="related-inner">
+    <div class="related-label">Continue Reading</div>
+    <div class="related-grid">
+      <a href="remote-access-pharma-scada.html" class="related-card">
+        <span class="rc-tag">&#128187; SCADA</span>
+        <div class="rc-title">Remote Access to Pharma SCADA — How to Implement It Compliantly</div>
+        <div class="rc-desc">SCADA-specific configuration for remote access — user roles, session timeouts, audit trail integration, and the OQ test cases that verify it.</div>
+        <div class="rc-footer"><span class="rc-read">7 MIN READ</span><span class="rc-arrow">&#8594;</span></div>
+      </a>
+      <a href="21-cfr-part-11-open-vs-closed-systems.html" class="related-card">
+        <span class="rc-tag">&#9878;&#65039; 21 CFR Part 11</span>
+        <div class="rc-title">21 CFR Part 11 Open vs Closed Systems Explained</div>
+        <div class="rc-desc">How remote access affects your open vs closed system classification and what §11.30 transmission security requires when the boundary is crossed.</div>
+        <div class="rc-footer"><span class="rc-read">7 MIN READ</span><span class="rc-arrow">&#8594;</span></div>
+      </a>
+      <a href="network-segmentation-pharma-scada.html" class="related-card">
+        <span class="rc-tag">&#128225; Network</span>
+        <div class="rc-title">Network Segmentation for Pharma SCADA — DMZ and Firewalls</div>
+        <div class="rc-desc">The DMZ architecture that the remote access jump host lives in — and the firewall rules that enforce the zone boundary between remote users and the OT network.</div>
+        <div class="rc-footer"><span class="rc-read">8 MIN READ</span><span class="rc-arrow">&#8594;</span></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="../index.html" class="nav-logo" style="text-decoration:none">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="7" fill="#0d0f12"/><rect x="8" y="7" width="16" height="16" rx="2" stroke="white" stroke-width="2.5" fill="none"/><line x1="20" y1="19" x2="26" y2="25" stroke="#0057FF" stroke-width="3" stroke-linecap="round"/></svg>
+          <span style="font-family:'Epilogue',sans-serif;font-weight:800;font-size:16px;color:#0d0f12;letter-spacing:-.03em">QLean <span style="font-weight:300;color:#5a6172">Automation</span></span>
+        </a>
+        <p>GMP validation documentation tools for automation engineers and system integrators.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Products</h4>
+        <ul>
+          <li><a href="../index.html#products">GAMP 5 Framework Pack</a></li>
+          <li><a href="../index.html#products">Technical Ebook</a></li>
+          <li><a href="../index.html#pricing">Pricing</a></li>
+          <li><a href="../index.html#faq">FAQ</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Knowledge Base</h4>
+        <ul>
+          <li><a href="blog-index.html">All Articles</a></li>
+          <li><a href="cluster-network.html">Network &amp; Infrastructure</a></li>
+          <li><a href="remote-access-pharma-scada.html">Remote Access SCADA</a></li>
+          <li><a href="network-segmentation-pharma-scada.html">Network Segmentation</a></li>
+          <li><a href="cybersecurity-pharma-ot-iec62443.html">Cybersecurity OT</a></li>
+          <li><a href="21-cfr-part-11-open-vs-closed-systems.html">Open vs Closed Systems</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="../index.html#framework">Framework</a></li>
+          <li><a href="../terms.html">Terms of Service</a></li>
+          <li><a href="../privacy.html">Privacy Policy</a></li>
+          <li><a href="mailto:hello@qleanautomation.com">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 QLean Automation. All rights reserved.</p>
+      <div class="compliance-pills">
+        <span class="cp">GAMP 5</span>
+        <span class="cp">EU GMP ANNEX 11</span>
+        <span class="cp">21 CFR PART 11</span>
+        <span class="cp">IEC 62443</span>
+        <span class="cp">ICH Q9(R1)</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+window.addEventListener('scroll',function(){
+  var s=document.getElementById('progress');
+  var h=document.documentElement;
+  var p=(h.scrollTop||document.body.scrollTop)/(h.scrollHeight-h.clientHeight)*100;
+  s.style.width=p+'%';
+});
+var tl=document.querySelectorAll('.toc-list a');
+window.addEventListener('scroll',function(){
+  var headings=document.querySelectorAll('.article-body h2[id]');
+  var scrollY=window.scrollY+120;
+  var current='';
+  headings.forEach(function(h){if(h.offsetTop<=scrollY)current=h.id;});
+  tl.forEach(function(a){
+    a.classList.remove('active');
+    if(a.getAttribute('href')==='#'+current)a.classList.add('active');
+  });
+});
+</script>
+</body>
+</html>

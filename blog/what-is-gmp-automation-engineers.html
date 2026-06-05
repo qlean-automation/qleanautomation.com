@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-JJQ1TXZJX7"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-JJQ1TXZJX7');
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>What is GMP? A Practical Introduction for Automation Engineers | QLean Automation</title>
+<meta name="description" content="GMP explained for automation engineers — what it means, why it exists, how it shapes every document you produce on a pharmaceutical project. No regulatory jargon.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@300;400;500;600;700;800;900&family=Source+Sans+3:ital,wght@0,300;0,400;0,500;1,300&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --white:     #ffffff;
+  --off:       #f7f8f9;
+  --off2:      #f0f2f4;
+  --ink:       #0d0f12;
+  --ink2:      #1e2128;
+  --ink3:      #3d4456;
+  --ink4:      #9199a8;
+  --rule:      #e2e5ea;
+  --rule2:     #c8cdd6;
+  --blue:      #0057ff;
+  --blue2:     #0044cc;
+  --blue-dim:  rgba(0,87,255,0.07);
+  --blue-glow: rgba(0,87,255,0.15);
+  --green:     #00875a;
+  --green-dim: rgba(0,135,90,0.08);
+  --amber:     #d97706;
+  --amber-dim: rgba(217,119,6,0.08);
+  --f-head:    'Epilogue', sans-serif;
+  --f-body:    'Source Sans 3', sans-serif;
+  --f-mono:    'Roboto Mono', monospace;
+  --shadow-sm:  0 2px 8px rgba(13,15,18,0.06), 0 1px 3px rgba(13,15,18,0.04);
+  --shadow-md:  0 4px 16px rgba(13,15,18,0.08), 0 2px 6px rgba(13,15,18,0.05);
+  --shadow-lg:  0 8px 32px rgba(13,15,18,0.10), 0 3px 10px rgba(13,15,18,0.06);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;font-size:16px}
+body{background:var(--white);color:var(--ink);font-family:var(--f-body);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+
+/* ── NAV ── */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 6%;background:rgba(255,255,255,0.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--rule)}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+.nav-links{display:flex;align-items:center;gap:36px;list-style:none}
+.nav-links a{font-size:14px;font-weight:400;color:var(--ink3);text-decoration:none;transition:color .2s}
+.nav-links a:hover{color:var(--ink)}
+.nav-btn{font-family:var(--f-body);font-size:13px;font-weight:500;padding:9px 20px;background:var(--blue);color:white;border:none;border-radius:6px;cursor:pointer;text-decoration:none;transition:background .2s,transform .15s;white-space:nowrap;flex-shrink:0}
+.nav-btn:hover{background:var(--blue2);transform:translateY(-1px)}
+
+/* ── ARTICLE HERO ── */
+.article-hero{padding:120px 6% 64px;background:var(--white);border-bottom:1px solid var(--rule);position:relative;overflow:hidden}
+.article-hero::before{content:'';position:absolute;top:-80px;right:-80px;width:400px;height:400px;background:radial-gradient(circle,rgba(0,87,255,0.04) 0%,transparent 70%);pointer-events:none}
+.article-hero-inner{max-width:940px;margin:0 auto;position:relative;z-index:1}
+.breadcrumb{display:flex;align-items:center;gap:8px;font-family:var(--f-mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink4);margin-bottom:24px}
+.breadcrumb a{color:var(--ink4);text-decoration:none;transition:color .2s}
+.breadcrumb a:hover{color:var(--blue)}
+.breadcrumb span{color:var(--rule2)}
+.article-tag{display:inline-flex;align-items:center;gap:6px;font-family:var(--f-mono);font-size:10px;font-weight:500;color:var(--blue);letter-spacing:.1em;text-transform:uppercase;margin-bottom:20px;padding:4px 10px;background:var(--blue-dim);border-radius:4px}
+.article-hero h1{font-family:var(--f-head);font-size:clamp(32px,5vw,54px);font-weight:900;line-height:1.0;letter-spacing:-.04em;color:var(--ink);margin-bottom:20px}
+.article-hero h1 span{color:var(--blue)}
+.article-intro{font-size:18px;font-weight:400;color:var(--ink2);line-height:1.75;margin-bottom:32px;max-width:800px}
+.article-meta{display:flex;align-items:center;gap:24px;padding-top:24px;border-top:1px solid var(--rule);flex-wrap:wrap}
+.meta-author{display:flex;align-items:center;gap:10px}
+.author-avatar{width:36px;height:36px;border-radius:50%;background:var(--ink);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.author-name{font-size:13px;font-weight:500;color:var(--ink)}
+.author-role{font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.04em}
+.meta-divider{width:1px;height:28px;background:var(--rule)}
+.meta-stat{font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.06em}
+
+/* ── ARTICLE LAYOUT ── */
+.article-wrap{max-width:1300px;margin:0 auto;padding:64px 6%;display:grid;grid-template-columns:1fr 300px;gap:60px;align-items:start}
+.article-body{min-width:0}
+
+/* ── ARTICLE CONTENT TYPOGRAPHY ── */
+.article-body h2{font-family:var(--f-head);font-size:26px;font-weight:800;letter-spacing:-.03em;color:var(--ink);margin:56px 0 16px;line-height:1.2}
+.article-body h2:first-child{margin-top:0}
+.article-body h3{font-family:var(--f-head);font-size:18px;font-weight:700;letter-spacing:-.02em;color:var(--ink);margin:32px 0 12px}
+.article-body p{font-size:16px;font-weight:400;color:var(--ink2);line-height:1.85;margin-bottom:20px}
+.article-body strong{color:var(--ink);font-weight:600}
+.article-body a{color:var(--blue);text-decoration:none;border-bottom:1px solid rgba(0,87,255,.25);transition:border-color .2s}
+.article-body a:hover{border-color:var(--blue)}
+
+/* ── CALLOUT BOXES ── */
+.callout{padding:20px 24px;border-radius:8px;margin:32px 0;border-left:3px solid}
+.callout.blue{background:var(--blue-dim);border-color:var(--blue)}
+.callout.amber{background:var(--amber-dim);border-color:var(--amber)}
+.callout.green{background:var(--green-dim);border-color:var(--green)}
+.callout-label{font-family:var(--f-mono);font-size:9px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px}
+.callout.blue .callout-label{color:var(--blue)}
+.callout.amber .callout-label{color:var(--amber)}
+.callout.green .callout-label{color:var(--green)}
+.callout p{font-size:14px;color:var(--ink2);line-height:1.7;margin:0}
+.callout strong{color:var(--ink)}
+
+/* ── PHASE CARDS ── */
+.phase-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin:32px 0}
+.phase-card{padding:24px;border:1px solid var(--rule);border-radius:8px;background:var(--white);box-shadow:var(--shadow-sm);transition:border-color .2s,transform .2s}
+.phase-card:hover{border-color:var(--blue);transform:translateY(-3px)}
+.phase-label{font-family:var(--f-mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);margin-bottom:10px}
+.phase-title{font-family:var(--f-head);font-size:18px;font-weight:800;color:var(--blue);letter-spacing:-.02em;margin-bottom:6px}
+.phase-name{font-family:var(--f-head);font-size:13px;font-weight:600;color:var(--ink);margin-bottom:10px}
+.phase-desc{font-size:13px;color:var(--ink3);line-height:1.6}
+
+/* ── SVG FIGURE ── */
+.article-img{width:100%;border-radius:8px;border:1px solid var(--rule);overflow:hidden;margin:36px 0}
+.article-img figcaption{padding:10px 14px;background:var(--off);font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.04em;border-top:1px solid var(--rule)}
+.svg-fig{border:1px solid #1e2535}
+.svg-fig figcaption{padding:10px 14px;background:#0d0f12;font-family:var(--f-mono);font-size:10px;color:rgba(255,255,255,0.25);letter-spacing:.06em;border-top:1px solid #1e2535;border-radius:0 0 8px 8px}
+
+/* ── CHECKLIST ── */
+.checklist{list-style:none;display:flex;flex-direction:column;gap:8px;margin:20px 0 28px}
+.checklist li{display:flex;align-items:flex-start;gap:10px;font-size:15px;color:var(--ink2);line-height:1.6}
+.checklist li::before{content:'';width:16px;height:16px;flex-shrink:0;margin-top:3px;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 14 14' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='7' cy='7' r='6.5' fill='none' stroke='%230057ff' stroke-width='1'/%3E%3Cpath d='M4 7l2 2 4-4' stroke='%230057ff' stroke-width='1.3' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:center;background-size:contain}
+
+/* ── ARROW LIST ── */
+.arrow-list{list-style:none;display:flex;flex-direction:column;gap:8px;margin:16px 0 24px}
+.arrow-list li{display:flex;align-items:flex-start;gap:10px;font-size:15px;color:var(--ink2);line-height:1.6}
+.arrow-list li::before{content:'→';color:var(--blue);flex-shrink:0;font-size:12px;margin-top:3px}
+
+/* ── TWO-COL TABLE ── */
+.two-col-table{width:100%;border-collapse:collapse;margin:28px 0;font-size:14px}
+.two-col-table th{font-family:var(--f-mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink4);padding:10px 14px;border-bottom:2px solid var(--rule);text-align:left;background:var(--off)}
+.two-col-table td{padding:12px 14px;border-bottom:1px solid var(--rule);color:var(--ink2);vertical-align:top;line-height:1.6}
+.two-col-table tr:last-child td{border-bottom:none}
+.two-col-table td:first-child{font-family:var(--f-mono);font-size:12px;font-weight:500;color:var(--ink);white-space:nowrap}
+.table-scroll{width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;margin:28px 0;border:1px solid var(--rule);border-radius:8px}
+.table-scroll .two-col-table{margin:0;border:none;min-width:480px}
+
+/* ── DIVIDER ── */
+.article-divider{height:1px;background:var(--rule);margin:48px 0}
+
+/* ── SIDEBAR ── */
+.sidebar{position:sticky;top:88px;display:flex;flex-direction:column;gap:16px}
+.toc-card{border:1px solid var(--rule);border-radius:8px;padding:24px;background:var(--white);box-shadow:var(--shadow-sm)}
+.toc-label{font-family:var(--f-mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);margin-bottom:16px}
+.toc-list{list-style:none;display:flex;flex-direction:column;gap:2px}
+.toc-list a{display:block;font-size:13px;color:var(--ink3);text-decoration:none;padding:6px 10px;border-radius:4px;transition:all .15s;border-left:2px solid transparent}
+.toc-list a:hover,.toc-list a.active{color:var(--blue);background:var(--blue-dim);border-left-color:var(--blue)}
+.sidebar-cta{border:1px solid var(--blue);border-radius:8px;padding:24px;background:var(--blue-dim)}
+.sc-eyebrow{font-family:var(--f-mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);margin-bottom:10px}
+.sc-title{font-family:var(--f-head);font-size:17px;font-weight:800;letter-spacing:-.02em;color:var(--ink);margin-bottom:8px;line-height:1.2}
+.sc-body{font-size:13px;color:var(--ink3);line-height:1.6;margin-bottom:16px}
+.sc-btn{display:block;text-align:center;padding:11px 16px;background:var(--blue);color:white;border-radius:6px;font-family:var(--f-body);font-size:13px;font-weight:500;text-decoration:none;transition:background .2s,transform .15s}
+.sc-btn:hover{background:var(--blue2);transform:translateY(-1px)}
+.sc-note{font-family:var(--f-mono);font-size:9px;color:var(--ink4);text-align:center;margin-top:8px;letter-spacing:.04em}
+.sidebar-share{border:1px solid var(--rule);border-radius:8px;padding:20px 24px;background:var(--white)}
+.share-label{font-family:var(--f-mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);margin-bottom:12px}
+.share-links{display:flex;flex-direction:column;gap:6px}
+.share-link{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--ink3);text-decoration:none;padding:8px 10px;border-radius:4px;border:1px solid var(--rule);transition:all .15s}
+.share-link:hover{border-color:var(--blue);color:var(--blue);background:var(--blue-dim)}
+
+/* ── RELATED POSTS ── */
+.related{padding:64px 6%;border-top:1px solid var(--rule);background:var(--off)}
+.related-inner{max-width:1100px;margin:0 auto}
+.related-label{font-family:var(--f-mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);margin-bottom:32px;display:flex;align-items:center;gap:10px}
+.related-label::before{content:'';width:20px;height:1px;background:var(--blue)}
+.related-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.related-card{padding:24px;border:1px solid var(--rule);border-radius:8px;background:var(--white);box-shadow:var(--shadow-sm);transition:border-color .2s,transform .2s,box-shadow .2s;text-decoration:none;display:flex;flex-direction:column;gap:12px}
+.related-card:hover{border-color:var(--blue);transform:translateY(-4px);box-shadow:var(--shadow-lg)}
+.rc-tag{font-family:var(--f-mono);font-size:9px;color:var(--blue);letter-spacing:.08em;text-transform:uppercase;padding:3px 8px;background:var(--blue-dim);border-radius:3px;align-self:flex-start}
+.rc-title{font-family:var(--f-head);font-size:16px;font-weight:700;letter-spacing:-.02em;color:var(--ink);line-height:1.25}
+.rc-desc{font-size:13px;color:var(--ink3);line-height:1.6;flex:1}
+.rc-footer{display:flex;align-items:center;justify-content:space-between;padding-top:12px;border-top:1px solid var(--rule)}
+.rc-read{font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.04em}
+.rc-arrow{font-size:14px;color:var(--blue)}
+
+/* ── FOOTER ── */
+footer{padding:56px 6% 32px;border-top:1px solid var(--rule);background:var(--white)}
+.footer-inner{max-width:1160px;margin:0 auto}
+.footer-top{display:flex;justify-content:space-between;align-items:flex-start;gap:40px;flex-wrap:wrap;margin-bottom:48px}
+.footer-brand p{font-size:13px;font-weight:300;color:var(--ink3);margin-top:12px;max-width:260px;line-height:1.6}
+.footer-col h4{font-family:var(--f-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink4);margin-bottom:16px}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+.footer-col a{font-size:13px;color:var(--ink3);text-decoration:none;transition:color .2s}
+.footer-col a:hover{color:var(--blue)}
+.footer-bottom{padding-top:24px;border-top:1px solid var(--rule);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.footer-bottom p{font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.04em}
+.compliance-pills{display:flex;gap:6px;flex-wrap:wrap}
+.cp{font-family:var(--f-mono);font-size:9px;padding:3px 8px;border:1px solid var(--rule);border-radius:3px;color:var(--ink4);letter-spacing:.06em}
+
+/* ── PROGRESS BAR ── */
+.progress-bar{position:fixed;top:64px;left:0;right:0;height:2px;background:var(--rule);z-index:199}
+.progress-fill{height:100%;background:var(--blue);width:0%;transition:width .1s linear}
+
+/* ── RESPONSIVE ── */
+@media(max-width:900px){
+  .article-wrap{grid-template-columns:1fr;gap:48px}
+  .sidebar{position:static}
+  .phase-grid{grid-template-columns:1fr}
+  .related-grid{grid-template-columns:1fr}
+  nav .nav-links{display:none}
+}
+@media(max-width:540px){
+  nav{padding:0 4%}
+  .nav-btn{font-size:12px;padding:8px 14px}
+}
+</style>
+</head>
+<body>
+
+<!-- PROGRESS BAR -->
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+
+<!-- NAV -->
+<nav>
+  <a href="../index.html" class="nav-logo">
+    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0">
+      <rect x="0" y="0" width="32" height="32" rx="7" fill="#0d0f12"/>
+      <rect x="8" y="7" width="16" height="16" rx="2" stroke="white" stroke-width="2.5" fill="none"/>
+      <line x1="20" y1="19" x2="26" y2="25" stroke="#0057FF" stroke-width="3" stroke-linecap="round"/>
+    </svg>
+    <span style="font-family:'Epilogue',sans-serif;font-weight:800;font-size:16px;color:#0d0f12;letter-spacing:-.03em;white-space:nowrap">QLean <span style="font-weight:300;color:#5a6172">Automation</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="../index.html#products">Products</a></li>
+    <li><a href="../index.html#framework">Framework</a></li>
+    <li><a href="blog-index.html">Knowledge Base</a></li>
+    <li><a href="../index.html#pricing">Pricing</a></li>
+    <li><a href="../about.html">About</a></li>
+    <li><a href="../index.html#faq">FAQ</a></li>
+  </ul>
+  <a href="../index.html#pricing" class="nav-btn">Get the Framework →</a>
+</nav>
+
+<!-- ARTICLE HERO -->
+<header class="article-hero">
+  <div class="article-hero-inner">
+    <div class="breadcrumb">
+      <a href="../index.html">Home</a>
+      <span>/</span>
+      <a href="blog-index.html">Knowledge Base</a>
+      <span>/</span>
+      What is GMP?
+    </div>
+    <div class="article-tag">🏭 GMP Fundamentals</div>
+    <h1>What is GMP?<br><span>A Practical Introduction</span> for<br>Automation Engineers</h1>
+    <p class="article-intro">You've landed a pharmaceutical project. Suddenly every document needs a signature, every change needs approval, and QA is asking questions no one asked before. Here's what GMP actually is — and why it shapes every decision you'll make on this project.</p>
+    <div class="article-meta">
+      <div class="meta-author">
+        <div class="author-avatar">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="7" r="3.5" stroke="white" stroke-width="1.5"/><path d="M2.5 16c0-3.59 2.91-6.5 6.5-6.5s6.5 2.91 6.5 6.5" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </div>
+        <div>
+          <div class="author-name">QLean Automation</div>
+          <div class="author-role">ENGINEERS WHO BUILD SYSTEMS, NOT JUST SIGN THEM</div>
+        </div>
+      </div>
+      <div class="meta-divider"></div>
+      <div class="meta-stat">6 MIN READ</div>
+      <div class="meta-divider"></div>
+      <div class="meta-stat">GAMP 5 · GMP FUNDAMENTALS</div>
+    </div>
+  </div>
+</header>
+
+<!-- ARTICLE BODY -->
+<div class="article-wrap">
+
+  <!-- MAIN CONTENT -->
+  <article class="article-body">
+
+    <h2 id="what-is-gmp">What GMP Actually Is</h2>
+    <p><strong>Good Manufacturing Practice</strong> is a set of legally enforceable minimum standards for the manufacturing, testing, and quality control of medicines. In simple terms: GMP defines what a pharmaceutical company must do to consistently produce a product that is safe, effective, and of the required quality.</p>
+    <p>Every country with a pharmaceutical industry has a GMP framework. The FDA's is written into US federal law under 21 CFR Parts 210 and 211. The EU's is codified in EU GMP — a series of guidelines published by the European Commission, of which <strong>Annex 11</strong> specifically covers computerised systems. Japan, Canada, Australia, and most other regulated markets have equivalent frameworks, many of them harmonised through the ICH (International Council for Harmonisation).</p>
+    <p>As an automation engineer, the framework that applies to you depends on which market your client is supplying. If they sell medicines in Europe, Annex 11 applies. If they sell in the US, 21 CFR Part 11 applies. Many global manufacturers have to satisfy both simultaneously — which is why so much pharma validation documentation is written to meet the stricter of the two requirements.</p>
+
+    <div class="callout blue">
+      <div class="callout-label">Why This Matters to You</div>
+      <p>GMP doesn't regulate automation engineers directly. It regulates the <strong>pharmaceutical company</strong>. But the pharmaceutical company is your client, and they cannot meet GMP requirements without the documentation you produce. Your validation deliverables are their compliance evidence.</p>
+    </div>
+
+    <h2 id="why-gmp-exists">Why GMP Exists — The Short History</h2>
+    <p>GMP exists because people died. The modern framework traces back to catastrophic drug quality failures in the mid-twentieth century. The 1937 Sulfanilamide disaster — in which over a hundred people died from a medicine dissolved in a toxic solvent that had never been tested — prompted the US Federal Food, Drug, and Cosmetic Act of 1938. The thalidomide crisis of the late 1950s and early 1960s, which caused severe birth defects in thousands of children, drove further regulatory tightening on both sides of the Atlantic.</p>
+    <p>These events established a core principle that underpins everything you will do on a pharma project: <strong>the consequences of a manufacturing error are not a product recall and a refund — they are patient harm or death.</strong> GMP is the regulatory framework built to make such errors systematically less likely.</p>
+    <p>Understanding this is the most important context shift you need to make when moving from industrial to pharmaceutical automation. On a standard industrial project, a software bug causes downtime or product waste. On a pharma project, a software bug that corrupts a batch record, bypasses an interlock, or corrupts a dosing calculation can harm a patient who will never know your name. GMP is the framework that prevents that from happening at scale.</p>
+
+    <!-- SVG DIAGRAM: Regulatory Framework Overview -->
+    <figure class="article-img svg-fig">
+      <svg viewBox="0 0 720 260" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;background:#0d0f12;border-radius:8px 8px 0 0">
+        <defs>
+          <marker id="arr" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+            <path d="M0,0.5 L5,3 L0,5.5" fill="none" stroke="#0057ff" stroke-width="1.2"/>
+          </marker>
+        </defs>
+
+        <!-- Title -->
+        <text x="36" y="34" font-family="Epilogue,sans-serif" font-weight="700" font-size="11" fill="rgba(255,255,255,0.4)" letter-spacing="0.1em" text-transform="uppercase">GMP REGULATORY LANDSCAPE</text>
+
+        <!-- EU Column -->
+        <rect x="36" y="52" width="180" height="36" rx="5" fill="rgba(0,87,255,0.18)" stroke="#0057ff" stroke-width="1"/>
+        <text x="126" y="65" text-anchor="middle" font-family="Epilogue,sans-serif" font-weight="700" font-size="11" fill="#6699ff">EU GMP</text>
+        <text x="126" y="80" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(255,255,255,0.4)" letter-spacing="0.06em">EUROPEAN COMMISSION</text>
+
+        <!-- Annex 11 -->
+        <rect x="56" y="110" width="140" height="30" rx="4" fill="rgba(255,255,255,0.05)" stroke="rgba(0,87,255,0.5)" stroke-width="1"/>
+        <text x="126" y="121" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(255,255,255,0.7)">EU GMP Annex 11</text>
+        <text x="126" y="133" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7" fill="rgba(255,255,255,0.3)" letter-spacing="0.05em">COMPUTERISED SYSTEMS</text>
+        <line x1="126" y1="88" x2="126" y2="110" stroke="#0057ff" stroke-width="1" stroke-dasharray="4,3" marker-end="url(#arr)"/>
+
+        <!-- US Column -->
+        <rect x="270" y="52" width="180" height="36" rx="5" fill="rgba(0,87,255,0.18)" stroke="#0057ff" stroke-width="1"/>
+        <text x="360" y="65" text-anchor="middle" font-family="Epilogue,sans-serif" font-weight="700" font-size="11" fill="#6699ff">US FDA</text>
+        <text x="360" y="80" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(255,255,255,0.4)" letter-spacing="0.06em">21 CFR PARTS 210/211</text>
+
+        <!-- 21 CFR Part 11 -->
+        <rect x="290" y="110" width="140" height="30" rx="4" fill="rgba(255,255,255,0.05)" stroke="rgba(0,87,255,0.5)" stroke-width="1"/>
+        <text x="360" y="121" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(255,255,255,0.7)">21 CFR Part 11</text>
+        <text x="360" y="133" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7" fill="rgba(255,255,255,0.3)" letter-spacing="0.05em">ELECTRONIC RECORDS &amp; SIGS</text>
+        <line x1="360" y1="88" x2="360" y2="110" stroke="#0057ff" stroke-width="1" stroke-dasharray="4,3" marker-end="url(#arr)"/>
+
+        <!-- GAMP 5 Column -->
+        <rect x="504" y="52" width="180" height="36" rx="5" fill="rgba(0,87,255,0.18)" stroke="#0057ff" stroke-width="1"/>
+        <text x="594" y="65" text-anchor="middle" font-family="Epilogue,sans-serif" font-weight="700" font-size="11" fill="#6699ff">GAMP 5</text>
+        <text x="594" y="80" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(255,255,255,0.4)" letter-spacing="0.06em">ISPE GUIDANCE (NON-LAW)</text>
+
+        <!-- GAMP applies -->
+        <rect x="524" y="110" width="140" height="30" rx="4" fill="rgba(255,255,255,0.05)" stroke="rgba(0,87,255,0.5)" stroke-width="1"/>
+        <text x="594" y="121" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(255,255,255,0.7)">Validation Methodology</text>
+        <text x="594" y="133" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7" fill="rgba(255,255,255,0.3)" letter-spacing="0.05em">CATEGORY · V-MODEL · RISK</text>
+        <line x1="594" y1="88" x2="594" y2="110" stroke="#0057ff" stroke-width="1" stroke-dasharray="4,3" marker-end="url(#arr)"/>
+
+        <!-- Bottom: YOUR SYSTEM box -->
+        <rect x="200" y="170" width="320" height="50" rx="6" fill="rgba(0,135,90,0.15)" stroke="#00875a" stroke-width="1.5"/>
+        <text x="360" y="191" text-anchor="middle" font-family="Epilogue,sans-serif" font-weight="700" font-size="12" fill="rgba(255,255,255,0.85)">YOUR PLC / SCADA SYSTEM</text>
+        <text x="360" y="207" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(255,255,255,0.35)" letter-spacing="0.06em">MUST SATISFY ALL APPLICABLE FRAMEWORKS</text>
+
+        <!-- Arrows down to YOUR SYSTEM -->
+        <line x1="126" y1="140" x2="240" y2="170" stroke="rgba(0,87,255,0.4)" stroke-width="1" stroke-dasharray="4,3" marker-end="url(#arr)"/>
+        <line x1="360" y1="140" x2="360" y2="170" stroke="rgba(0,87,255,0.4)" stroke-width="1" stroke-dasharray="4,3" marker-end="url(#arr)"/>
+        <line x1="594" y1="140" x2="480" y2="170" stroke="rgba(0,87,255,0.4)" stroke-width="1" stroke-dasharray="4,3" marker-end="url(#arr)"/>
+
+        <!-- ICH note -->
+        <text x="360" y="242" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(255,255,255,0.2)" letter-spacing="0.06em">ICH Q9(R1) — RISK MANAGEMENT HARMONISED ACROSS MARKETS</text>
+      </svg>
+      <figcaption>// GMP REGULATORY LANDSCAPE — GAMP 5 IS GUIDANCE, NOT LAW. EU GMP ANNEX 11 AND 21 CFR PART 11 ARE ENFORCEABLE REQUIREMENTS.</figcaption>
+    </figure>
+
+    <h2 id="gmp-for-systems">What GMP Means for Computerised Systems</h2>
+    <p>GMP was written before modern automation existed. The original regulations talk about manufacturing records, equipment calibration, and laboratory testing. As the industry adopted computers, a question arose: how does GMP apply when the record is an electronic file, the signature is a click, and the equipment is controlled by software?</p>
+    <p>The answer came in two forms. In the EU, Annex 11 to EU GMP was developed specifically to address computerised systems. In the US, 21 CFR Part 11 was published in 1997 to govern electronic records and electronic signatures. Both establish the same fundamental principle: <strong>an electronic system used in GMP activities must be validated</strong> — meaning you must produce documented evidence that it does what it is supposed to do, consistently and reliably.</p>
+    <p>This is why your PLC and SCADA system needs an IQ, OQ, and PQ protocol. It is why your software version needs to be under configuration control. It is why your audit trail cannot be disabled. These are not arbitrary bureaucratic requirements — they are the mechanism by which a regulator can trust that the system controlling a medicine's manufacture is fit for purpose.</p>
+
+    <h3>GMP vs non-GMP automation: what actually changes</h3>
+    <p>The engineering is largely the same. The difference is the evidence trail. In GMP automation, you are required to prove — in writing, with signatures — that:</p>
+
+    <ul class="checklist">
+      <li>The system was designed to meet defined requirements (URS → FDS → SDS → HDS)</li>
+      <li>The system was built as designed (IQ verifies installation against design documents)</li>
+      <li>The system functions correctly across its full operating range (OQ tests every function)</li>
+      <li>The system performs reliably under actual production conditions (PQ)</li>
+      <li>Any deviations from expected behaviour are formally raised, assessed, and closed</li>
+      <li>Any subsequent changes are assessed, approved, and re-validated where necessary</li>
+    </ul>
+
+    <p>None of this changes what the system does. All of it changes how much work surrounds it — and what happens if you can't produce the paperwork.</p>
+
+    <h2 id="gmp-direct-impact">How GMP Directly Impacts Your Work</h2>
+    <p>Let's make this concrete. Here are the practical ways GMP touches your day-to-day work as an automation engineer on a pharma project.</p>
+
+    <div class="phase-grid">
+      <div class="phase-card">
+        <div class="phase-label">Impact 01</div>
+        <div class="phase-title">Documents</div>
+        <div class="phase-name">Everything needs a paper trail</div>
+        <div class="phase-desc">Design decisions, test results, deviations, changes — all documented in controlled, approved documents. You cannot rely on verbal agreements or email threads.</div>
+      </div>
+      <div class="phase-card">
+        <div class="phase-label">Impact 02</div>
+        <div class="phase-title">Change</div>
+        <div class="phase-name">No informal modifications</div>
+        <div class="phase-desc">After a system goes live, every modification — including software updates — goes through a formal change control process with a documented impact assessment.</div>
+      </div>
+      <div class="phase-card">
+        <div class="phase-label">Impact 03</div>
+        <div class="phase-title">Software</div>
+        <div class="phase-name">Code is a regulated artefact</div>
+        <div class="phase-desc">Your PLC program and SCADA configuration must be version-controlled, backed up, and restored to a known state. Code in a pharma system is not just engineering — it is GMP evidence.</div>
+      </div>
+    </div>
+
+    <div class="table-scroll"><table class="two-col-table">
+      <thead>
+        <tr>
+          <th>Standard Project</th>
+          <th>GMP Pharma Project</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Requirements in an email chain</td>
+          <td>URS: a controlled document, approved and signed</td>
+        </tr>
+        <tr>
+          <td>Design decisions discussed verbally</td>
+          <td>FDS / HDS / SDS: formal design specifications with sign-off</td>
+        </tr>
+        <tr>
+          <td>Testing done informally, results in a spreadsheet</td>
+          <td>IQ / OQ protocols: pre-approved, each test case signed by executor and reviewer</td>
+        </tr>
+        <tr>
+          <td>Software fix pushed live, colleagues informed</td>
+          <td>Change Control Request raised, impact assessment written, re-test executed, QA approved</td>
+        </tr>
+        <tr>
+          <td>Audit trail: optional / nice to have</td>
+          <td>Audit trail: mandatory, tamper-evident, retained per data retention policy</td>
+        </tr>
+        <tr>
+          <td>Backup: IT's problem</td>
+          <td>Backup &amp; Recovery Procedure: validated, tested, documented in IQ</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2 id="gamp5-role">Where GAMP 5 Fits In</h2>
+    <p>GMP regulations tell you <em>what</em> must be achieved — a validated system, documented evidence, controlled changes. They don't tell you exactly <em>how</em> to achieve it. That's where GAMP 5 comes in.</p>
+    <p>GAMP 5 — <em>Good Automated Manufacturing Practice</em>, published by the International Society for Pharmaceutical Engineering (ISPE) — is industry guidance, not law. It describes a practical methodology for validating computerised systems in a GMP environment. It introduces the <a href="gamp5-categories.html">software category framework</a> (Categories 1–5), the risk-based approach, and the <a href="v-model-pharma-validation.html">V-model lifecycle</a> that maps every design document to a qualification test.</p>
+    <p>Regulators routinely reference GAMP 5 as an acceptable approach to compliance. FDA investigators and EU GMP auditors both expect to see a validation methodology that is consistent with GAMP 5 principles — even if the words "GAMP 5" never appear in your documentation.</p>
+
+    <div class="callout amber">
+      <div class="callout-label">Important Distinction</div>
+      <p>GAMP 5 is guidance — it represents industry consensus on best practice. EU GMP Annex 11 and 21 CFR Part 11 are <strong>law</strong>. Failing to follow GAMP 5 is not a regulatory violation. Failing to meet the validated state requirements of Annex 11 or Part 11 is. In practice, following GAMP 5 is the most reliable route to satisfying both.</p>
+    </div>
+
+    <h2 id="validation-plan">The Document That Governs Everything</h2>
+    <p>On a GMP project, the first document you should look for — and if it doesn't exist, help create — is the <strong>Validation Plan</strong>. The VP is the governing document for the entire project. It defines the validation scope, the GAMP 5 category, the V-model lifecycle that will be followed, all the deliverable documents, and who is responsible for each.</p>
+    <p>Nothing in GMP validation happens ad hoc. The <a href="validation-plan-what-it-must-contain.html">Validation Plan</a> defines the game before it starts. If the system scope changes, the VP must be updated and re-approved. If additional testing is required, the VP defines how it fits into the framework.</p>
+    <p>Understanding the VP is the fastest way to orient yourself on a new pharma project. It tells you what documents exist, what each one does, who owns it, and what the exit criteria are for each phase.</p>
+
+    <h2 id="what-this-means">What This Means for You as an Engineer</h2>
+    <p>You don't need to be a regulatory expert. You need to understand the purpose of the framework so that your engineering decisions are compatible with it.</p>
+    <p>The most important mental shift: in a GMP project, the document is the product. A perfectly engineered system with poor or missing documentation will fail a regulatory inspection. A competently engineered system with excellent documentation — including properly raised deviations, thorough test cases, and a clear audit trail — will pass.</p>
+    <p>That's not a criticism of engineering. It's a recognition that the regulator cannot inspect your engineering brain. They inspect your documentation. Your job is to produce documentation that faithfully represents what you built and how you tested it.</p>
+    <p>The QLean Automation framework gives you the document set that a well-run GMP validation project requires — structured to satisfy both Annex 11 and Part 11 requirements, built around the GAMP 5 V-model lifecycle.</p>
+
+    <div class="callout green">
+      <div class="callout-label">Start Here</div>
+      <p>If you're new to pharma projects, the best reading sequence is: this article → <a href="v-model-pharma-validation.html">the V-model</a> → <a href="gamp5-categories.html">GAMP 5 categories</a> → <a href="validation-plan-what-it-must-contain.html">the Validation Plan</a>. Those four articles give you the conceptual framework that makes every other GMP document make sense.</p>
+    </div>
+
+  </article>
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+
+    <div class="toc-card">
+      <div class="toc-label">In This Article</div>
+      <ul class="toc-list">
+        <li><a href="#what-is-gmp" class="active">What GMP Actually Is</a></li>
+        <li><a href="#why-gmp-exists">Why GMP Exists</a></li>
+        <li><a href="#gmp-for-systems">GMP for Computerised Systems</a></li>
+        <li><a href="#gmp-direct-impact">How GMP Impacts Your Work</a></li>
+        <li><a href="#gamp5-role">Where GAMP 5 Fits In</a></li>
+        <li><a href="#validation-plan">The Validation Plan</a></li>
+        <li><a href="#what-this-means">What This Means for You</a></li>
+      </ul>
+    </div>
+
+    <div class="sidebar-cta">
+      <div class="sc-eyebrow">QLean Framework</div>
+      <div class="sc-title">29 production-ready GAMP 5 documents</div>
+      <div class="sc-body">Every document referenced in this article — templates, protocols, and registers — ready to adapt for your project.</div>
+      <a href="../index.html#pricing" class="sc-btn">Get the Framework — €249 →</a>
+      <div class="sc-note">// INSTANT DOWNLOAD · COMPANY-WIDE LICENCE</div>
+    </div>
+
+    <div class="sidebar-share">
+      <div class="share-label">Share This Article</div>
+      <div class="share-links">
+        <a href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fqleanautomation.com%2Fblog%2Fwhat-is-gmp-automation-engineers.html" target="_blank" rel="noopener" class="share-link">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          Share on LinkedIn
+        </a>
+        <a href="https://www.reddit.com/submit?url=https%3A%2F%2Fqleanautomation.com%2Fblog%2Fwhat-is-gmp-automation-engineers.html&title=What+is+GMP%3F+A+Practical+Introduction+for+Automation+Engineers" target="_blank" rel="noopener" class="share-link">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/></svg>
+          Share on Reddit
+        </a>
+      </div>
+    </div>
+
+  </aside>
+
+</div>
+
+<!-- RELATED POSTS -->
+<section class="related">
+  <div class="related-inner">
+    <div class="related-label">More Articles</div>
+    <div class="related-grid">
+      <a href="v-model-pharma-validation.html" class="related-card">
+        <div class="rc-tag">🔺 V-Model</div>
+        <div class="rc-title">The V-Model in Pharma Validation</div>
+        <div class="rc-desc">How every design document maps to a qualification test — and why the V-model is the structure that makes a GMP project auditable.</div>
+        <div class="rc-footer"><div class="rc-read">7 MIN READ</div><div class="rc-arrow">→</div></div>
+      </a>
+      <a href="gamp5-categories.html" class="related-card">
+        <div class="rc-tag">📦 GAMP 5</div>
+        <div class="rc-title">GAMP 5 Software Categories: What They Mean for Your System</div>
+        <div class="rc-desc">The category classification shapes your entire validation scope. Here's how to get it right from the start.</div>
+        <div class="rc-footer"><div class="rc-read">6 MIN READ</div><div class="rc-arrow">→</div></div>
+      </a>
+      <a href="validation-plan-what-it-must-contain.html" class="related-card">
+        <div class="rc-tag">📋 Validation Plan</div>
+        <div class="rc-title">The Validation Plan: What It Must Contain</div>
+        <div class="rc-desc">The governing document for every GMP validation project. Before any test is executed, the plan must be written and approved.</div>
+        <div class="rc-footer"><div class="rc-read">7 MIN READ</div><div class="rc-arrow">→</div></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="../index.html" class="nav-logo">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0">
+            <rect x="0" y="0" width="32" height="32" rx="7" fill="#0d0f12"/>
+            <rect x="8" y="7" width="16" height="16" rx="2" stroke="white" stroke-width="2.5" fill="none"/>
+            <line x1="20" y1="19" x2="26" y2="25" stroke="#0057FF" stroke-width="3" stroke-linecap="round"/>
+          </svg>
+          <span style="font-family:'Epilogue',sans-serif;font-weight:800;font-size:16px;color:#0d0f12;letter-spacing:-.03em">QLean <span style="font-weight:300;color:#5a6172">Automation</span></span>
+        </a>
+        <p>GMP documentation tools for system integrators and automation engineers entering pharmaceutical projects.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Products</h4>
+        <ul>
+          <li><a href="../index.html#framework">GAMP 5 Framework</a></li>
+          <li><a href="../index.html#products">Technical Masterclass</a></li>
+          <li><a href="../index.html#free-download">Free Resources</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Knowledge Base</h4>
+        <ul>
+          <li><a href="blog-index.html">All Articles</a></li>
+          <li><a href="gamp5-categories.html">GAMP 5 Categories</a></li>
+          <li><a href="v-model-pharma-validation.html">The V-Model</a></li>
+          <li><a href="validation-plan-what-it-must-contain.html">The Validation Plan</a></li>
+          <li><a href="iq-oq-pq-guide.html">IQ OQ PQ Guide</a></li>
+          <li><a href="21-cfr-part-11.html">21 CFR Part 11</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="https://www.linkedin.com/company/qlean-automation" target="_blank">LinkedIn</a></li>
+          <li><a href="mailto:hello@qleanautomation.com">Contact</a></li>
+          <li><a href="../terms.html">Terms</a></li>
+          <li><a href="../privacy.html">Privacy</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 QLEAN AUTOMATION · QLEANAUTOMATION.COM</p>
+      <div class="compliance-pills">
+        <span class="cp">GAMP 5</span>
+        <span class="cp">EU ANNEX 11</span>
+        <span class="cp">21 CFR PART 11</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Reading progress bar
+  window.addEventListener('scroll', () => {
+    const doc = document.documentElement;
+    const scrolled = doc.scrollTop;
+    const total = doc.scrollHeight - doc.clientHeight;
+    document.getElementById('progress').style.width = (scrolled / total * 100) + '%';
+  });
+
+  // TOC active state
+  const sections = document.querySelectorAll('[id]');
+  const tocLinks = document.querySelectorAll('.toc-list a');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        tocLinks.forEach(l => l.classList.remove('active'));
+        const active = document.querySelector(`.toc-list a[href="#${entry.target.id}"]`);
+        if (active) active.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+  sections.forEach(s => observer.observe(s));
+</script>
+</body>
+</html>

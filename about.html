@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-JJQ1TXZJX7"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-JJQ1TXZJX7');
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About QLean Automation | Built by Field Engineers, For Field Engineers</title>
+<meta name="description" content="QLean Automation was founded by control systems engineers with over a decade of hands-on experience in GMP pharmaceutical environments. Learn about our open toolkit philosophy and free knowledge base.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@300;400;500;600;700;800;900&family=Source+Sans+3:ital,wght@0,300;0,400;0,500;1,300&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --white:     #ffffff;
+  --off:       #f7f8f9;
+  --off2:      #f0f2f4;
+  --ink:       #0d0f12;
+  --ink2:      #1e2128;
+  --ink3:      #3d4456;
+  --ink4:      #9199a8;
+  --rule:      #e2e5ea;
+  --rule2:     #c8cdd6;
+  --blue:      #0057ff;
+  --blue2:     #0044cc;
+  --blue-dim:  rgba(0,87,255,0.07);
+  --blue-glow: rgba(0,87,255,0.15);
+  --green:     #00875a;
+  --green-dim: rgba(0,135,90,0.08);
+  --amber:     #d97706;
+  --amber-dim: rgba(217,119,6,0.08);
+  --f-head:    'Epilogue', sans-serif;
+  --f-body:    'Source Sans 3', sans-serif;
+  --f-mono:    'Roboto Mono', monospace;
+  --shadow-sm:  0 2px 8px rgba(13,15,18,0.06), 0 1px 3px rgba(13,15,18,0.04);
+  --shadow-md:  0 4px 16px rgba(13,15,18,0.08), 0 2px 6px rgba(13,15,18,0.05);
+  --shadow-lg:  0 8px 32px rgba(13,15,18,0.10), 0 3px 10px rgba(13,15,18,0.06);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;font-size:16px}
+body{background:var(--white);color:var(--ink);font-family:var(--f-body);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+
+/* ── NAV ── */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 6%;background:rgba(255,255,255,0.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--rule);transition:border-color .3s}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;flex-shrink:0}
+.nav-links{display:flex;align-items:center;gap:28px;list-style:none}
+.nav-links a{font-size:14px;font-weight:400;color:var(--ink3);text-decoration:none;transition:color .2s;letter-spacing:.01em}
+.nav-links a:hover,.nav-links a.active{color:var(--ink)}
+.nav-links a.active{font-weight:500}
+.nav-right{display:flex;align-items:center;gap:12px}
+.nav-btn{font-family:var(--f-body);font-size:13px;font-weight:500;padding:9px 20px;background:var(--blue);color:white;border:none;border-radius:6px;cursor:pointer;text-decoration:none;letter-spacing:.01em;transition:background .2s,transform .15s;white-space:nowrap;flex-shrink:0}
+.nav-btn:hover{background:var(--blue2);transform:translateY(-1px)}
+.menu-toggle{display:none;background:none;border:none;cursor:pointer;padding:6px;color:var(--ink);z-index:210;flex-shrink:0}
+.menu-toggle svg{width:22px;height:22px;display:block}
+.menu-toggle .icon-close{display:none}
+.menu-toggle.open .icon-hamburger{display:none}
+.menu-toggle.open .icon-close{display:block}
+
+/* ── PAGE HERO ── */
+.page-hero{padding:140px 6% 80px;background:var(--off);border-bottom:1px solid var(--rule);position:relative;overflow:hidden;text-align:center}
+.page-hero::before{content:'';position:absolute;top:-80px;right:-80px;width:400px;height:400px;background:radial-gradient(circle,rgba(0,87,255,0.05) 0%,transparent 70%);pointer-events:none}
+.page-hero-inner{max-width:760px;margin:0 auto;position:relative;z-index:1}
+.page-hero .breadcrumb{justify-content:center}
+.breadcrumb{display:flex;align-items:center;gap:8px;font-family:var(--f-mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink4);margin-bottom:24px}
+.breadcrumb a{color:var(--ink4);text-decoration:none;transition:color .2s}
+.breadcrumb a:hover{color:var(--blue)}
+.breadcrumb-sep{color:var(--rule2)}
+.page-tag{display:inline-flex;align-items:center;gap:8px;font-family:var(--f-mono);font-size:16px;font-weight:500;color:var(--blue);letter-spacing:.1em;text-transform:uppercase;margin-bottom:20px}
+.page-tag::before{content:'';width:20px;height:1.5px;background:var(--blue);flex-shrink:0}
+.page-hero h1{font-family:var(--f-head);font-size:clamp(36px,6vw,68px);font-weight:900;line-height:1.0;letter-spacing:-.04em;color:var(--ink);margin-bottom:20px}
+.page-hero h1 span{color:var(--blue)}
+.page-hero-intro{font-size:18px;font-weight:400;color:var(--ink2);line-height:1.75;max-width:580px;margin:0 auto}
+
+/* ── SECTION BASE ── */
+.section{padding:88px 6%}
+.section-alt{background:var(--off)}
+.wrap{max-width:1100px;margin:0 auto}
+.wrap-narrow{max-width:760px;margin:0 auto}
+.eyebrow{display:inline-flex;align-items:center;gap:10px;font-family:var(--f-mono);font-size:16px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--blue);margin-bottom:20px}
+.eyebrow::before{content:'';width:20px;height:1.5px;background:var(--blue);flex-shrink:0}
+.section-h{font-family:var(--f-head);font-size:clamp(28px,4vw,46px);font-weight:800;letter-spacing:-.04em;line-height:1.08;color:var(--ink);margin-bottom:16px}
+.section-h span{color:var(--blue)}
+.section-sub{font-size:17px;font-weight:400;color:var(--ink2);line-height:1.75;max-width:560px}
+
+/* ── STATS BAR ── */
+.stats-bar{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border:1px solid var(--rule);border-radius:10px;overflow:hidden;box-shadow:var(--shadow-md);margin-top:56px}
+.stat-cell{padding:32px 24px;text-align:center;background:var(--white);border-right:1px solid var(--rule)}
+.stat-cell:last-child{border-right:none}
+.stat-n{font-family:var(--f-head);font-size:42px;font-weight:900;letter-spacing:-.05em;color:var(--ink);line-height:1}
+.stat-n span{color:var(--blue)}
+.stat-l{font-size:13px;color:var(--ink3);margin-top:8px;line-height:1.4}
+
+/* ── STORY SECTION ── */
+.story-grid{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start;margin-top:56px}
+.story-body p{font-size:16px;color:var(--ink2);line-height:1.85;margin-bottom:20px}
+.story-body p:last-child{margin-bottom:0}
+.story-body strong{color:var(--ink);font-weight:600}
+.story-aside{display:flex;flex-direction:column;gap:12px}
+.quote-block{background:var(--ink);border-radius:10px;padding:32px;position:relative;overflow:hidden}
+.quote-block::before{content:'"';position:absolute;top:-10px;left:20px;font-family:var(--f-head);font-size:120px;font-weight:900;color:rgba(0,87,255,0.15);line-height:1;pointer-events:none}
+.quote-text{font-size:16px;font-weight:400;color:rgba(255,255,255,0.75);line-height:1.75;font-style:italic;position:relative;z-index:1}
+.quote-attr{font-family:var(--f-mono);font-size:10px;color:rgba(255,255,255,0.3);letter-spacing:.08em;text-transform:uppercase;margin-top:16px}
+
+/* ── PILLARS ── */
+.pillars-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:56px}
+.pillar-card{border:1px solid var(--rule);border-radius:10px;padding:32px;background:var(--white);transition:border-color .2s,transform .2s,box-shadow .2s;box-shadow:var(--shadow-sm)}
+.pillar-card:hover{border-color:var(--blue);transform:translateY(-4px);box-shadow:var(--shadow-lg)}
+.pillar-num{font-family:var(--f-mono);font-size:9px;color:var(--ink4);letter-spacing:.12em;text-transform:uppercase;margin-bottom:20px}
+.pillar-icon{width:48px;height:48px;border-radius:10px;background:var(--blue-dim);display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:16px}
+.pillar-title{font-family:var(--f-head);font-size:18px;font-weight:700;letter-spacing:-.02em;color:var(--ink);margin-bottom:10px;line-height:1.2}
+.pillar-body{font-size:14px;color:var(--ink2);line-height:1.7}
+
+/* ── KNOWLEDGE BASE STRIP ── */
+.kb-strip{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:40px}
+.kb-card{padding:24px;border:1px solid var(--rule);border-radius:8px;background:var(--white);box-shadow:var(--shadow-sm);transition:border-color .2s,box-shadow .2s}
+.kb-card:hover{border-color:var(--blue);box-shadow:var(--shadow-md)}
+.kb-tag{font-family:var(--f-mono);font-size:9px;text-transform:uppercase;letter-spacing:.1em;color:var(--blue);margin-bottom:10px}
+.kb-title{font-family:var(--f-head);font-size:15px;font-weight:700;letter-spacing:-.02em;color:var(--ink);margin-bottom:6px;line-height:1.3}
+.kb-title a{color:inherit;text-decoration:none}
+.kb-title a:hover{color:var(--blue)}
+.kb-body{font-size:13px;color:var(--ink3);line-height:1.65}
+
+/* ── COMMITMENT / CTA ── */
+.commitment{background:var(--ink);padding:80px 6%}
+.commitment-inner{max-width:700px;margin:0 auto;text-align:center}
+.commitment .eyebrow{color:rgba(255,255,255,.35);justify-content:center}
+.commitment .eyebrow::before{background:rgba(255,255,255,.2)}
+.commitment-h{font-family:var(--f-head);font-size:clamp(28px,4vw,46px);font-weight:800;letter-spacing:-.04em;line-height:1.1;color:white;margin-bottom:16px}
+.commitment-h span{color:#4d88ff}
+.commitment-body{font-size:16px;font-weight:300;color:rgba(255,255,255,.6);line-height:1.75;margin-bottom:36px;max-width:560px;margin-left:auto;margin-right:auto}
+.commitment-actions{display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn-primary-inv{font-family:var(--f-body);font-size:14px;font-weight:500;padding:13px 28px;background:var(--blue);color:white;border:none;border-radius:6px;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:8px;letter-spacing:.01em;transition:all .2s}
+.btn-primary-inv:hover{background:var(--blue2);transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,87,255,0.4)}
+.btn-ghost-inv{font-family:var(--f-body);font-size:14px;font-weight:400;padding:13px 24px;background:transparent;color:rgba(255,255,255,.7);border:1px solid rgba(255,255,255,.2);border-radius:6px;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:all .2s}
+.btn-ghost-inv:hover{border-color:rgba(255,255,255,.5);color:white}
+
+/* ── BUTTONS ── */
+.btn-ghost{font-family:var(--f-body);font-size:14px;font-weight:400;padding:13px 24px;background:transparent;color:var(--ink2);border:1px solid var(--rule2);border-radius:6px;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:all .2s}
+.btn-ghost:hover{border-color:var(--ink3);background:var(--off)}
+
+/* ── FOOTER ── */
+footer{padding:56px 6% 32px;border-top:1px solid var(--rule);background:var(--white)}
+.footer-inner{max-width:1160px;margin:0 auto}
+.footer-top{display:flex;justify-content:space-between;align-items:flex-start;gap:40px;flex-wrap:wrap;margin-bottom:48px}
+.footer-brand p{font-size:13px;font-weight:300;color:var(--ink3);margin-top:12px;max-width:260px;line-height:1.6}
+.footer-col h4{font-family:var(--f-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink4);margin-bottom:16px}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+.footer-col a{font-size:13px;color:var(--ink3);text-decoration:none;transition:color .2s}
+.footer-col a:hover{color:var(--blue)}
+.footer-bottom{padding-top:24px;border-top:1px solid var(--rule);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.footer-bottom p{font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.04em}
+.compliance-pills{display:flex;gap:6px;flex-wrap:wrap}
+.cp{font-family:var(--f-mono);font-size:9px;padding:3px 8px;border:1px solid var(--rule);border-radius:3px;color:var(--ink4);letter-spacing:.06em}
+
+/* Animations */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .7s cubic-bezier(0.16,1,0.3,1),transform .7s cubic-bezier(0.16,1,0.3,1)}
+.reveal.in{opacity:1;transform:translateY(0)}
+.rd1{transition-delay:.1s}.rd2{transition-delay:.2s}.rd3{transition-delay:.3s}
+.stagger-children > *{opacity:0;transform:translateY(24px);transition:opacity .6s cubic-bezier(0.16,1,0.3,1),transform .6s cubic-bezier(0.16,1,0.3,1)}
+.stagger-children.in > *:nth-child(1){opacity:1;transform:translateY(0);transition-delay:.05s}
+.stagger-children.in > *:nth-child(2){opacity:1;transform:translateY(0);transition-delay:.15s}
+.stagger-children.in > *:nth-child(3){opacity:1;transform:translateY(0);transition-delay:.25s}
+.stagger-children.in > *:nth-child(4){opacity:1;transform:translateY(0);transition-delay:.35s}
+.page-tag{animation:fadeUp .6s cubic-bezier(0.16,1,0.3,1) .1s both}
+.page-hero h1{animation:fadeUp .8s cubic-bezier(0.16,1,0.3,1) .22s both}
+.page-hero-intro{animation:fadeUp .7s cubic-bezier(0.16,1,0.3,1) .38s both}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+
+/* ── RESPONSIVE ── */
+@media(max-width:960px){
+  .stats-bar{grid-template-columns:repeat(2,1fr)}.stat-cell:nth-child(2){border-right:none}.stat-cell:nth-child(3){border-top:1px solid var(--rule)}
+  .story-grid{grid-template-columns:1fr}
+  .pillars-grid{grid-template-columns:1fr}
+  .kb-strip{grid-template-columns:1fr}
+  .nav-btn{display:none}
+  .menu-toggle{display:flex}
+  nav .nav-links{display:none;position:absolute;top:64px;left:0;right:0;background:white;flex-direction:column;align-items:stretch;gap:0;border-bottom:1px solid var(--rule);box-shadow:var(--shadow-md);padding:8px 0 16px;z-index:199}
+  nav .nav-links.open{display:flex}
+  nav .nav-links li{width:100%}
+  nav .nav-links a{display:block;padding:13px 6%;font-size:15px;color:var(--ink2);border-bottom:1px solid var(--off2)}
+  nav .nav-links li:last-child a{border-bottom:none}
+  .nav-mobile-cta{display:block !important;margin:12px 6% 0;padding:13px;background:var(--blue);color:white !important;text-align:center;border-radius:6px;font-weight:500;font-size:14px;text-decoration:none;border-bottom:none !important;transition:background .2s}
+  .nav-mobile-cta:hover{background:var(--blue2) !important}
+}
+@media(max-width:540px){nav{padding:0 4%};.page-hero{padding-top:110px}}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="index.html" class="nav-logo">
+    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0">
+      <rect x="0" y="0" width="32" height="32" rx="7" fill="#0d0f12"/>
+      <rect x="8" y="7" width="16" height="16" rx="2" stroke="white" stroke-width="2.5" fill="none"/>
+      <line x1="20" y1="19" x2="26" y2="25" stroke="#0057FF" stroke-width="3" stroke-linecap="round"/>
+    </svg>
+    <span style="font-family:'Epilogue',sans-serif;font-weight:800;font-size:16px;color:#0d0f12;letter-spacing:-.03em;white-space:nowrap">QLean <span style="font-weight:300;color:#5a6172">Automation</span></span>
+  </a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="index.html#products">Products</a></li>
+    <li><a href="index.html#framework">Framework</a></li>
+    <li><a href="blog/blog-index.html">Knowledge Base</a></li>
+    <li><a href="index.html#pricing">Pricing</a></li>
+    <li><a href="about.html" class="active">About</a></li>
+    <li><a href="index.html#faq">FAQ</a></li>
+    <li><a href="index.html#pricing" class="nav-mobile-cta" style="display:none">Get the Framework →</a></li>
+  </ul>
+  <div class="nav-right">
+    <a href="index.html#pricing" class="nav-btn">Get the Framework →</a>
+    <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+      <svg class="icon-hamburger" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
+      <svg class="icon-close" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+    </button>
+  </div>
+</nav>
+
+<!-- PAGE HERO -->
+<header class="page-hero">
+  <div class="page-hero-inner">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="index.html">Home</a>
+      <span class="breadcrumb-sep">›</span>
+      <span>About</span>
+    </nav>
+    <div class="page-tag">About QLean Automation</div>
+    <h1>Precision engineering<br>for <span>pharmaceutical</span><br>compliance.</h1>
+    <p class="page-hero-intro">We bridge the gap between industrial automation and the documentation demands of GMP-regulated facilities. Built by engineers who have actually been on the other side of a QA audit.</p>
+  </div>
+</header>
+
+<!-- STORY -->
+<section class="section">
+  <div class="wrap">
+    <div class="story-grid">
+      <div class="story-body reveal">
+        <div class="eyebrow">Our Story</div>
+        <h2 class="section-h">Engineers who got<br><span>tired of starting over.</span></h2>
+        <p>QLean Automation was founded to solve a problem we lived ourselves. After a decade working in control systems engineering across GMP-regulated pharmaceutical environments, we recognised a pattern: engineers rebuilding the same validation documents from scratch on every engagement, under deadline pressure, without a reliable reference for what "good" actually looked like from a QA perspective.</p>
+        <p>We have navigated the full GAMP 5 lifecycle from URS through IQ/OQ/PQ to Validation Summary Report, and we understand both sides of the equation — what the automation system needs to do, and what the documentation needs to demonstrate. That dual understanding is the foundation for everything we publish.</p>
+        <p>We built QLean because the tools we wished had existed when we started simply didn't. The framework is not assembled from regulatory text. It is structured around how qualification actually plays out in the field — the sections that get challenged, the gaps that cause rework, and the formats that QA teams can work with efficiently.</p>
+      </div>
+      <div class="reveal rd1">
+        <div class="quote-block">
+          <p class="quote-text">The documents that pass QA aren't the ones written by compliance experts. They're the ones written by engineers who understood both what the system does and what the regulation requires — and built the bridge between them.</p>
+          <p class="quote-attr">// QLean Automation · Founding Principle</p>
+        </div>
+        <div style="margin-top:12px;padding:24px;border:1px solid var(--rule);border-radius:8px;background:var(--off)">
+          <div class="eyebrow" style="margin-bottom:12px">What sets us apart</div>
+          <ul style="list-style:none;display:flex;flex-direction:column;gap:10px">
+            <li style="display:flex;align-items:flex-start;gap:10px;font-size:14px;color:var(--ink2);line-height:1.6">
+              <span style="color:var(--blue);flex-shrink:0;font-size:12px;margin-top:2px">→</span>
+              Templates structured around how QA panels actually evaluate documentation — not assembled from regulatory clauses alone
+            </li>
+            <li style="display:flex;align-items:flex-start;gap:10px;font-size:14px;color:var(--ink2);line-height:1.6">
+              <span style="color:var(--blue);flex-shrink:0;font-size:12px;margin-top:2px">→</span>
+              Full GAMP 5 2nd Edition (2022) alignment — not the outdated 2008 framework still circulating online
+            </li>
+            <li style="display:flex;align-items:flex-start;gap:10px;font-size:14px;color:var(--ink2);line-height:1.6">
+              <span style="color:var(--blue);flex-shrink:0;font-size:12px;margin-top:2px">→</span>
+              100+ free technical articles sharing the knowledge that usually stays locked inside consulting firms
+            </li>
+            <li style="display:flex;align-items:flex-start;gap:10px;font-size:14px;color:var(--ink2);line-height:1.6">
+              <span style="color:var(--blue);flex-shrink:0;font-size:12px;margin-top:2px">→</span>
+              Standard editable file formats — no platform, no subscription, no lock-in
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- THREE PILLARS -->
+<section class="section section-alt">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="eyebrow">Our Principles</div>
+      <h2 class="section-h">Three commitments we<br><span>don't compromise on.</span></h2>
+    </div>
+    <div class="pillars-grid stagger-children">
+
+      <div class="pillar-card">
+        <div class="pillar-num">// Principle 01</div>
+        <div class="pillar-icon">🔓</div>
+        <div class="pillar-title">The Open Toolkit Philosophy</div>
+        <p class="pillar-body">We do not believe in recurring licences, proprietary file formats, or platform dependencies. Every document we sell is a standard editable file that you own outright — adaptable to any project, storable in any document control system, usable by every engineer in your firm, forever. One purchase. No expiry. No strings.</p>
+        <div style="margin-top:16px;padding-top:16px;border-top:1px solid var(--rule)">
+          <div style="font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.06em">Standard .docx + .xlsx · Company-wide licence · No subscription</div>
+        </div>
+      </div>
+
+      <div class="pillar-card">
+        <div class="pillar-num">// Principle 02</div>
+        <div class="pillar-icon">📚</div>
+        <div class="pillar-title">Free Knowledge for the Automation Community</div>
+        <p class="pillar-body">Our 100+ article knowledge base is permanently free and ungated. No email required, no premium tier, no teaser content. We publish detailed, technical engineering guides on GAMP 5, 21 CFR Part 11, data integrity, PLC/SCADA validation, and instrumentation — because a better-informed engineering community produces better-validated systems. Full stop.</p>
+        <div style="margin-top:16px;padding-top:16px;border-top:1px solid var(--rule)">
+          <div style="font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.06em">100+ articles · No paywall · Always free</div>
+        </div>
+      </div>
+
+      <div class="pillar-card">
+        <div class="pillar-num">// Principle 03</div>
+        <div class="pillar-icon">⚙️</div>
+        <div class="pillar-title">Grounded in Field Knowledge</div>
+        <p class="pillar-body">Every template and article is structured around how validation actually runs in the field — the sections QA teams scrutinise most closely, the gaps that consistently cause rework, and the document formats that hold up under audit. Nothing here was assembled purely from regulatory text. It is written by engineers who understand what the system does and what the documentation needs to demonstrate.</p>
+        <div style="margin-top:16px;padding-top:16px;border-top:1px solid var(--rule)">
+          <div style="font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.06em">10+ years GMP engineering experience · GAMP 5 2nd Ed.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- KNOWLEDGE BASE PREVIEW -->
+<section class="section">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="eyebrow">Knowledge Base</div>
+      <h2 class="section-h">100+ free articles.<br><span>No paywall. No login.</span></h2>
+      <p class="section-sub">Technical guides written for engineers entering pharmaceutical automation — not compliance summaries aimed at managers.</p>
+    </div>
+    <div class="kb-strip reveal rd1">
+      <div class="kb-card">
+        <div class="kb-tag">GAMP 5</div>
+        <div class="kb-title"><a href="blog/gamp5-categories.html">GAMP 5 Software Categories: How to Classify Your System Correctly</a></div>
+        <p class="kb-body">Category assignment drives your entire document scope. A practical guide to making the right call on Category 3, 4, and 5 systems.</p>
+      </div>
+      <div class="kb-card">
+        <div class="kb-tag">Data Integrity</div>
+        <div class="kb-title"><a href="blog/21-cfr-part-11.html">21 CFR Part 11: Audit Trails and Electronic Records for SCADA Systems</a></div>
+        <p class="kb-body">What Part 11 actually requires from your SCADA historian, audit trail configuration, and what inspectors check first.</p>
+      </div>
+      <div class="kb-card">
+        <div class="kb-tag">Qualification</div>
+        <div class="kb-title"><a href="blog/iq-oq-pq-guide.html">IQ, OQ, PQ: A Practical Guide for PLC and SCADA Engineers</a></div>
+        <p class="kb-body">How each phase differs, how to write test cases that pass QA review, and the gaps that most commonly cause rework.</p>
+      </div>
+      <div class="kb-card">
+        <div class="kb-tag">Validation Lifecycle</div>
+        <div class="kb-title"><a href="blog/v-model-pharma-validation.html">The V-Model in Pharmaceutical Validation: A Systems Engineer's View</a></div>
+        <p class="kb-body">Why the V-Model exists, how it maps design documents to qualification tests, and what it means for your traceability architecture.</p>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:32px" class="reveal">
+      <a href="blog/blog-index.html" class="btn-ghost" style="font-size:13px;padding:10px 22px">Browse all 100+ articles →</a>
+    </div>
+  </div>
+</section>
+
+<!-- COMMITMENT CTA -->
+<section class="commitment">
+  <div class="commitment-inner reveal">
+    <div class="eyebrow">Our Commitment</div>
+    <h2 class="commitment-h">Pass audits.<br>Reduce lead times.<br><span>Own your documentation.</span></h2>
+    <p class="commitment-body">Our mission is to give automation engineering teams the toolkit to deliver compliant validation packages with confidence — without rebuilding the same documents from scratch on every project, without recurring licence costs, and without needing a compliance consultant to explain what to write.</p>
+    <div class="commitment-actions">
+      <a href="index.html#pricing" class="btn-primary-inv">Get the GAMP 5 Framework →</a>
+      <a href="blog/blog-index.html" class="btn-ghost-inv">Browse Knowledge Base</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="index.html" class="nav-logo">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0">
+            <rect x="0" y="0" width="32" height="32" rx="7" fill="#0d0f12"/>
+            <rect x="8" y="7" width="16" height="16" rx="2" stroke="white" stroke-width="2.5" fill="none"/>
+            <line x1="20" y1="19" x2="26" y2="25" stroke="#0057FF" stroke-width="3" stroke-linecap="round"/>
+          </svg>
+          <span style="font-family:'Epilogue',sans-serif;font-weight:800;font-size:16px;color:#0d0f12;letter-spacing:-.03em;white-space:nowrap">QLean <span style="font-weight:300;color:#5a6172">Automation</span></span>
+        </a>
+        <p>GMP documentation tools for system integrators and automation engineers entering pharmaceutical projects.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Products</h4>
+        <ul>
+          <li><a href="index.html#framework">GAMP 5 Framework</a></li>
+          <li><a href="index.html#products">Technical Masterclass</a></li>
+          <li><a href="index.html#free-download">Free Resources</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Knowledge Base</h4>
+        <ul>
+          <li><a href="blog/blog-index.html">All Articles</a></li>
+          <li><a href="blog/iq-oq-pq-guide.html">IQ OQ PQ Guide</a></li>
+          <li><a href="blog/gamp5-categories.html">GAMP 5 Categories</a></li>
+          <li><a href="blog/21-cfr-part-11.html">21 CFR Part 11</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="https://www.linkedin.com/company/qlean-automation" target="_blank">LinkedIn</a></li>
+          <li><a href="mailto:hello@qleanautomation.com">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="terms.html">Terms & Conditions</a></li>
+          <li><a href="privacy.html">Privacy Policy</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 QLean Automation. All rights reserved.</p>
+      <div class="compliance-pills">
+        <span class="cp">GAMP 5 · 2ND ED.</span>
+        <span class="cp">21 CFR PART 11</span>
+        <span class="cp">EU GMP ANNEX 11</span>
+        <span class="cp">ALCOA+</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Mobile menu toggle
+const menuToggle = document.getElementById('menuToggle');
+const navLinks = document.getElementById('navLinks');
+if(menuToggle && navLinks){
+  menuToggle.addEventListener('click', () => {
+    const isOpen = navLinks.classList.toggle('open');
+    menuToggle.classList.toggle('open', isOpen);
+  });
+  document.querySelectorAll('#navLinks a').forEach(link => {
+    link.addEventListener('click', () => {
+      navLinks.classList.remove('open');
+      menuToggle.classList.remove('open');
+    });
+  });
+}
+// Scroll reveal
+const io = new IntersectionObserver(e => {
+  e.forEach(x => {
+    if(x.isIntersecting){x.target.classList.add('in');io.unobserve(x.target);}
+  });
+},{threshold:0.12,rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.reveal,.stagger-children').forEach(el=>io.observe(el));
+window.addEventListener('scroll',()=>{
+  document.getElementById('nav').style.borderBottomColor=scrollY>20?'#d0d5de':'var(--rule)';
+},{passive:true});
+</script>
+</body>
+</html>

@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-JJQ1TXZJX7"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-JJQ1TXZJX7');
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Batch Sequencing on a PLC — ISA-88 in Practice | QLean Automation</title>
+<meta name="description" content="ISA-88 gives batch automation a physical model, a procedural model, and a recipe model. On a pharma PLC, these three models are what connect the process description in the URS to the validated sequence that runs in production. Here's how to implement them correctly.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@300;400;500;600;700;800;900&family=Source+Sans+3:ital,wght@0,300;0,400;0,500;1,300&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--white:#ffffff;--off:#f7f8f9;--ink:#0d0f12;--ink2:#1e2128;--ink3:#3d4456;--ink4:#9199a8;--rule:#e2e5ea;--rule2:#c8cdd6;--blue:#0057ff;--blue2:#0044cc;--blue-dim:rgba(0,87,255,0.07);--green:#00875a;--green-dim:rgba(0,135,90,0.08);--amber:#d97706;--amber-dim:rgba(217,119,6,0.08);--f-head:'Epilogue',sans-serif;--f-body:'Source Sans 3',sans-serif;--f-mono:'Roboto Mono',monospace;--shadow-sm:0 2px 8px rgba(13,15,18,0.06),0 1px 3px rgba(13,15,18,0.04)}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}body{background:var(--white);color:var(--ink);font-family:var(--f-body);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+nav{position:fixed;top:0;left:0;right:0;z-index:200;height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 6%;background:rgba(255,255,255,0.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--rule)}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;flex-shrink:0}
+.nav-links{display:flex;align-items:center;gap:36px;list-style:none}.nav-links a{font-size:14px;font-weight:400;color:var(--ink3);text-decoration:none;transition:color .2s}.nav-links a:hover{color:var(--ink)}
+.nav-btn{font-family:var(--f-body);font-size:13px;font-weight:500;padding:9px 20px;background:var(--blue);color:white;border:none;border-radius:6px;cursor:pointer;text-decoration:none;white-space:nowrap;flex-shrink:0}.nav-btn:hover{background:var(--blue2)}
+.progress-bar{position:fixed;top:64px;left:0;right:0;height:2px;background:var(--rule);z-index:199}.progress-fill{height:100%;background:var(--blue);width:0%}
+.article-hero{padding:120px 6% 64px;background:var(--white);border-bottom:1px solid var(--rule);position:relative;overflow:hidden}
+.article-hero::before{content:'';position:absolute;top:-80px;right:-80px;width:400px;height:400px;background:radial-gradient(circle,rgba(0,87,255,0.04) 0%,transparent 70%);pointer-events:none}
+.article-hero-inner{max-width:940px;margin:0 auto;position:relative;z-index:1}
+.breadcrumb{display:flex;align-items:center;gap:8px;font-family:var(--f-mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink4);margin-bottom:24px}.breadcrumb a{color:var(--ink4);text-decoration:none}.breadcrumb a:hover{color:var(--blue)}.breadcrumb span{color:var(--rule2)}
+.article-tag{display:inline-flex;align-items:center;gap:6px;font-family:var(--f-mono);font-size:10px;font-weight:500;color:var(--blue);letter-spacing:.1em;text-transform:uppercase;margin-bottom:20px;padding:4px 10px;background:var(--blue-dim);border-radius:4px}
+.article-hero h1{font-family:var(--f-head);font-size:clamp(30px,5vw,52px);font-weight:900;line-height:1.0;letter-spacing:-.04em;color:var(--ink);margin-bottom:20px}.article-hero h1 span{color:var(--blue)}
+.article-intro{font-size:18px;font-weight:400;color:var(--ink2);line-height:1.75;margin-bottom:32px;max-width:800px}
+.article-meta{display:flex;align-items:center;gap:24px;padding-top:24px;border-top:1px solid var(--rule);flex-wrap:wrap}
+.meta-author{display:flex;align-items:center;gap:10px}.author-avatar{width:36px;height:36px;border-radius:50%;background:var(--ink);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.author-name{font-size:13px;font-weight:500;color:var(--ink)}.author-role{font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.04em}
+.meta-divider{width:1px;height:28px;background:var(--rule)}.meta-stat{font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.06em}
+.article-wrap{max-width:1300px;margin:0 auto;padding:64px 6%;display:grid;grid-template-columns:1fr 300px;gap:60px;align-items:start}
+.article-body{min-width:0}
+.article-body h2{font-family:var(--f-head);font-size:26px;font-weight:800;letter-spacing:-.03em;color:var(--ink);margin:56px 0 16px;line-height:1.2}.article-body h2:first-child{margin-top:0}
+.article-body h3{font-family:var(--f-head);font-size:18px;font-weight:700;letter-spacing:-.02em;color:var(--ink);margin:32px 0 12px}
+.article-body p{font-size:16px;font-weight:400;color:var(--ink2);line-height:1.85;margin-bottom:20px}
+.article-body strong{color:var(--ink);font-weight:600}
+.article-body a{color:var(--blue);text-decoration:none;border-bottom:1px solid rgba(0,87,255,.25)}.article-body a:hover{border-color:var(--blue)}
+.callout{padding:20px 24px;border-radius:8px;margin:32px 0;border-left:3px solid}
+.callout.blue{background:var(--blue-dim);border-color:var(--blue)}.callout.amber{background:var(--amber-dim);border-color:var(--amber)}.callout.green{background:var(--green-dim);border-color:var(--green)}
+.callout-label{font-family:var(--f-mono);font-size:9px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px}.callout.blue .callout-label{color:var(--blue)}.callout.amber .callout-label{color:var(--amber)}.callout.green .callout-label{color:var(--green)}
+.callout p{font-size:14px;color:var(--ink2);line-height:1.7;margin:0}.callout strong{color:var(--ink)}
+.article-img{width:100%;border-radius:8px;border:1px solid #1e2535;overflow:hidden;margin:36px 0}
+.article-img figcaption{padding:10px 14px;background:var(--off);font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.04em;border-top:1px solid var(--rule)}
+.arrow-list{list-style:none;display:flex;flex-direction:column;gap:8px;margin:16px 0 24px}
+.arrow-list li{display:flex;align-items:flex-start;gap:10px;font-size:15px;color:var(--ink2);line-height:1.6}
+.arrow-list li::before{content:'\2192';color:var(--blue);flex-shrink:0;font-size:12px;margin-top:3px}
+.checklist{list-style:none;display:flex;flex-direction:column;gap:8px;margin:20px 0 28px}
+.checklist li{display:flex;align-items:flex-start;gap:10px;font-size:15px;color:var(--ink2);line-height:1.6}
+.checklist li::before{content:'';width:16px;height:16px;flex-shrink:0;margin-top:3px;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 14 14' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='7' cy='7' r='6.5' fill='none' stroke='%230057ff' stroke-width='1'/%3E%3Cpath d='M4 7l2 2 4-4' stroke='%230057ff' stroke-width='1.3' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:center;background-size:contain}
+.mono-block{background:var(--ink);border-radius:8px;padding:20px 24px;margin:24px 0;font-family:var(--f-mono);font-size:12px;color:rgba(255,255,255,.85);line-height:1.8;overflow-x:auto}
+.mono-block .label{color:rgba(255,255,255,.35);font-size:10px;letter-spacing:.1em;margin-bottom:10px;display:block}
+.mono-block .hi{color:#6699ff}.mono-block .val{color:#33cc80}.mono-block .dim{color:rgba(255,255,255,.5)}.mono-block .warn{color:rgba(217,119,6,0.9)}
+.table-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:28px 0}
+.compare-table{width:100%;border-collapse:collapse;font-size:14px}
+.compare-table th{font-family:var(--f-mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink4);padding:10px 16px;border-bottom:2px solid var(--rule);text-align:left;background:var(--off)}
+.compare-table td{padding:12px 16px;border-bottom:1px solid var(--rule);vertical-align:top;color:var(--ink2);line-height:1.6}
+.compare-table tr:last-child td{border-bottom:none}
+.compare-table td:first-child{font-weight:600;color:var(--ink);font-family:var(--f-mono);font-size:12px}
+.sidebar{position:sticky;top:88px;display:flex;flex-direction:column;gap:16px}
+.toc-card{border:1px solid var(--rule);border-radius:8px;padding:24px;background:var(--white);box-shadow:var(--shadow-sm)}
+.toc-label{font-family:var(--f-mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);margin-bottom:16px}
+.toc-list{list-style:none;display:flex;flex-direction:column;gap:2px}
+.toc-list a{display:block;font-size:13px;color:var(--ink3);text-decoration:none;padding:6px 10px;border-radius:4px;transition:all .15s;border-left:2px solid transparent}
+.toc-list a:hover,.toc-list a.active{color:var(--blue);background:var(--blue-dim);border-left-color:var(--blue)}
+.sidebar-cta{border:1px solid var(--blue);border-radius:8px;padding:24px;background:var(--blue-dim)}
+.sc-eyebrow{font-family:var(--f-mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);margin-bottom:10px}
+.sc-title{font-family:var(--f-head);font-size:17px;font-weight:800;letter-spacing:-.02em;color:var(--ink);margin-bottom:8px;line-height:1.2}
+.sc-body{font-size:13px;color:var(--ink3);line-height:1.6;margin-bottom:16px}
+.sc-btn{display:block;text-align:center;padding:11px 16px;background:var(--blue);color:white;border-radius:6px;font-family:var(--f-body);font-size:13px;font-weight:500;text-decoration:none}.sc-btn:hover{background:var(--blue2)}
+.sc-note{font-family:var(--f-mono);font-size:9px;color:var(--ink4);text-align:center;margin-top:8px;letter-spacing:.04em}
+.sidebar-share{border:1px solid var(--rule);border-radius:8px;padding:20px 24px;background:var(--white)}
+.share-label{font-family:var(--f-mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);margin-bottom:14px}
+.share-links{display:flex;flex-direction:column;gap:8px}
+.share-link{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--ink3);text-decoration:none;padding:9px 12px;border:1px solid var(--rule);border-radius:6px;transition:border-color .2s,color .2s}.share-link:hover{border-color:var(--blue);color:var(--blue)}
+.related{padding:64px 6%;border-top:1px solid var(--rule);background:var(--off)}
+.related-inner{max-width:1100px;margin:0 auto}
+.related-label{font-family:var(--f-mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);margin-bottom:32px;display:flex;align-items:center;gap:10px}
+.related-label::before{content:'';width:20px;height:1px;background:var(--blue)}
+.related-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.related-card{padding:24px;border:1px solid var(--rule);border-radius:8px;background:var(--white);box-shadow:var(--shadow-sm);transition:border-color .2s,transform .2s;text-decoration:none;display:flex;flex-direction:column;gap:12px}.related-card:hover{border-color:var(--blue);transform:translateY(-4px)}
+.rc-tag{font-family:var(--f-mono);font-size:9px;color:var(--blue);letter-spacing:.08em;text-transform:uppercase;padding:3px 8px;background:var(--blue-dim);border-radius:3px;align-self:flex-start}
+.rc-title{font-family:var(--f-head);font-size:16px;font-weight:700;letter-spacing:-.02em;color:var(--ink);line-height:1.25}
+.rc-desc{font-size:13px;color:var(--ink3);line-height:1.6;flex:1}
+.rc-footer{display:flex;align-items:center;justify-content:space-between;padding-top:12px;border-top:1px solid var(--rule)}
+.rc-read{font-family:var(--f-mono);font-size:10px;color:var(--ink4)}.rc-arrow{font-size:14px;color:var(--blue)}
+footer{padding:56px 6% 32px;border-top:1px solid var(--rule);background:var(--white)}
+.footer-inner{max-width:1160px;margin:0 auto}
+.footer-top{display:flex;justify-content:space-between;align-items:flex-start;gap:40px;flex-wrap:wrap;margin-bottom:48px}
+.footer-brand p{font-size:13px;font-weight:300;color:var(--ink3);margin-top:12px;max-width:260px;line-height:1.6}
+.footer-col h4{font-family:var(--f-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink4);margin-bottom:16px}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+.footer-col a{font-size:13px;color:var(--ink3);text-decoration:none}.footer-col a:hover{color:var(--blue)}
+.footer-bottom{padding-top:24px;border-top:1px solid var(--rule);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.footer-bottom p{font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.04em}
+.compliance-pills{display:flex;gap:6px;flex-wrap:wrap}
+.cp{font-family:var(--f-mono);font-size:9px;padding:3px 8px;border:1px solid var(--rule);border-radius:3px;color:var(--ink4);letter-spacing:.06em}
+@media(max-width:900px){.article-wrap{grid-template-columns:1fr;gap:48px}.sidebar{position:static}.related-grid{grid-template-columns:1fr}.table-scroll{margin:20px 0}}
+@media(max-width:900px){.nav-links{display:none}}
+@media(max-width:540px){nav{padding:0 4%}.nav-btn{font-size:12px;padding:8px 14px}}
+</style>
+</head>
+<body>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+<nav>
+  <a href="../index.html" class="nav-logo">
+    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" style="flex-shrink:0"><rect width="32" height="32" rx="7" fill="#0d0f12"/><rect x="8" y="7" width="16" height="16" rx="2" stroke="white" stroke-width="2.5" fill="none"/><line x1="20" y1="19" x2="26" y2="25" stroke="#0057FF" stroke-width="3" stroke-linecap="round"/></svg>
+    <span style="font-family:'Epilogue',sans-serif;font-weight:800;font-size:16px;color:#0d0f12;letter-spacing:-.03em;white-space:nowrap">QLean <span style="font-weight:300;color:#5a6172">Automation</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="../index.html#products">Products</a></li>
+    <li><a href="../index.html#framework">Framework</a></li>
+    <li><a href="blog-index.html">Knowledge Base</a></li>
+    <li><a href="../index.html#pricing">Pricing</a></li>
+    <li><a href="../about.html">About</a></li>
+    <li><a href="../index.html#faq">FAQ</a></li>
+  </ul>
+  <a href="../index.html#pricing" class="nav-btn">Get the Framework →</a>
+</nav>
+
+<header class="article-hero">
+  <div class="article-hero-inner">
+    <div class="breadcrumb"><a href="../index.html">Home</a><span>/</span><a href="blog-index.html">Knowledge Base</a><span>/</span>ISA-88 Batch Sequencing</div>
+    <div class="article-tag">⚙️ PLC Engineering</div>
+    <h1>Batch Sequencing on a PLC<br><span>— ISA-88 in Practice</span></h1>
+    <p class="article-intro">ISA-88 gives batch automation a shared language: a physical model for describing equipment, a procedural model for describing sequences, and a recipe model for separating process instructions from equipment capability. On a pharma PLC, these three models are what connect the process description in the URS to the validated sequence that runs in production. Here's how to implement them in a way that survives the code review, FAT, and OQ.</p>
+    <div class="article-meta">
+      <div class="meta-author">
+        <div class="author-avatar"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="7" r="3.5" stroke="white" stroke-width="1.5"/><path d="M2.5 16c0-3.59 2.91-6.5 6.5-6.5s6.5 2.91 6.5 6.5" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+        <div><div class="author-name">QLean Automation</div><div class="author-role">ENGINEERS WHO BUILD SYSTEMS, NOT JUST SIGN THEM</div></div>
+      </div>
+      <div class="meta-divider"></div><div class="meta-stat">10 MIN READ</div>
+      <div class="meta-divider"></div><div class="meta-stat">ISA-88 · BATCH · GAMP 5</div>
+    </div>
+  </div>
+</header>
+
+<div class="article-wrap">
+  <article class="article-body">
+
+    <h2 id="why-isa88">Why ISA-88 Matters for Pharma Validation</h2>
+    <p>ISA-88 (IEC 61512) is a batch control standard originally written for the chemical and food industries. It became the de facto standard for pharmaceutical batch automation because it solves a specific problem that regulators care about: how do you separate what the process requires (the recipe) from what the equipment does (the control programme), so that a recipe change can be assessed independently from an equipment change?</p>
+    <p>Without this separation, every recipe variation — a different active ingredient concentration, a different hold time, a different addition sequence — is a potential software change on a validated system. With ISA-88, the recipe is a data set. The equipment control programme is validated once. Recipe changes are managed through a separate recipe management procedure, not change control on the PLC code. This is one of the most significant risk reduction benefits ISA-88 provides on a pharma project.</p>
+    <p>GAMP 5 does not mandate ISA-88, but the validation framework maps naturally onto it. The URS process description maps to the ISA-88 procedural model. The FDS equipment design maps to the ISA-88 physical model. The recipe management requirement maps to ISA-88 recipe structure. Validating a batch system that does not follow ISA-88 structure is significantly harder — the traceability chain from URS to code becomes tangled.</p>
+
+    <div class="callout blue">
+      <div class="callout-label">The Core Benefit</div>
+      <p>ISA-88 keeps recipe data out of the validated PLC programme. A recipe change — hold time from 30 minutes to 45 minutes, addition volume from 10L to 12L — is a <strong>data change, not a code change</strong>. It does not trigger a PLC software change control. It triggers a recipe change control, which has a lower validation burden. That distinction is the structural reason to implement ISA-88 on any pharma batch project.</p>
+    </div>
+
+    <h2 id="three-models">The Three Models — Physical, Procedural, Recipe</h2>
+    <p>ISA-88 describes a batch system using three models that operate at different levels of abstraction. Understanding what belongs in each model — and what does not — is the foundation of a correct implementation.</p>
+
+    <figure class="article-img">
+      <svg viewBox="0 0 720 270" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;background:#0d0f12;border-radius:8px 8px 0 0">
+        <defs>
+          <marker id="arr35" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
+            <path d="M0,0 L6,3 L0,6 Z" fill="rgba(0,87,255,0.5)"/>
+          </marker>
+        </defs>
+        <text x="360" y="18" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(255,255,255,0.2)" letter-spacing="0.12em">ISA-88 THREE MODELS — PHARMA PLC MAPPING</text>
+
+        <!-- Physical Model -->
+        <rect x="12" y="28" width="218" height="224" rx="4" fill="rgba(0,87,255,0.06)" stroke="rgba(0,87,255,0.25)" stroke-width="1.5"/>
+        <text x="121" y="48" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="#6699ff" letter-spacing="0.08em">PHYSICAL MODEL</text>
+        <text x="121" y="64" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(255,255,255,0.35)">What equipment exists</text>
+        <rect x="24" y="74" width="194" height="22" rx="3" fill="rgba(0,87,255,0.12)"/>
+        <text x="121" y="90" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(0,160,255,0.8)">Enterprise / Site</text>
+        <rect x="32" y="102" width="178" height="22" rx="3" fill="rgba(0,87,255,0.10)"/>
+        <text x="121" y="118" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(0,160,255,0.7)">Area</text>
+        <rect x="40" y="130" width="162" height="22" rx="3" fill="rgba(0,87,255,0.12)" stroke="rgba(0,87,255,0.3)" stroke-width="1"/>
+        <text x="121" y="146" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(0,160,255,0.9)">Process Cell (Reactor R01)</text>
+        <rect x="48" y="158" width="146" height="22" rx="3" fill="rgba(0,87,255,0.15)" stroke="rgba(0,87,255,0.35)" stroke-width="1"/>
+        <text x="121" y="174" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="#aabbff">Unit (Vessel + Agitator + HX)</text>
+        <rect x="56" y="186" width="130" height="22" rx="3" fill="rgba(0,87,255,0.18)" stroke="rgba(0,87,255,0.4)" stroke-width="1"/>
+        <text x="121" y="202" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="#aabbff">Equipment Module (TIC-101)</text>
+        <rect x="64" y="214" width="114" height="22" rx="3" fill="rgba(0,87,255,0.22)" stroke="rgba(0,87,255,0.5)" stroke-width="1"/>
+        <text x="121" y="230" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="#ccd8ff">Control Module (TT-101)</text>
+        <text x="121" y="248" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(255,255,255,0.3)">Maps to: HDS/FDS equipment</text>
+
+        <!-- Procedural Model -->
+        <rect x="250" y="28" width="218" height="224" rx="4" fill="rgba(0,135,90,0.06)" stroke="rgba(0,135,90,0.25)" stroke-width="1.5"/>
+        <text x="359" y="48" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(0,201,122,0.8)" letter-spacing="0.08em">PROCEDURAL MODEL</text>
+        <text x="359" y="64" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(255,255,255,0.35)">What the process does</text>
+        <rect x="262" y="74" width="194" height="22" rx="3" fill="rgba(0,135,90,0.12)"/>
+        <text x="359" y="90" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(0,201,122,0.7)">Procedure (Full Batch)</text>
+        <rect x="270" y="102" width="178" height="22" rx="3" fill="rgba(0,135,90,0.12)"/>
+        <text x="359" y="118" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(0,201,122,0.75)">Unit Procedure (Reaction Phase)</text>
+        <rect x="278" y="130" width="162" height="22" rx="3" fill="rgba(0,135,90,0.15)" stroke="rgba(0,135,90,0.3)" stroke-width="1"/>
+        <text x="359" y="146" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(0,201,122,0.9)">Operation (Heat to Setpoint)</text>
+        <rect x="286" y="158" width="146" height="22" rx="3" fill="rgba(0,135,90,0.18)" stroke="rgba(0,135,90,0.4)" stroke-width="1"/>
+        <text x="359" y="174" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="#00c97a">Phase (Ramp / Hold / Cool)</text>
+        <text x="359" y="205" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10.5" fill="rgba(255,255,255,0.4)">Phase = SFC in the PLC</text>
+        <text x="359" y="221" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10.5" fill="rgba(255,255,255,0.4)">Operation = FB calling phases</text>
+        <text x="359" y="248" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(255,255,255,0.3)">Maps to: FDS sequence description</text>
+
+        <!-- Recipe Model -->
+        <rect x="488" y="28" width="220" height="224" rx="4" fill="rgba(217,119,6,0.06)" stroke="rgba(217,119,6,0.25)" stroke-width="1.5"/>
+        <text x="598" y="48" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(240,160,40,0.8)" letter-spacing="0.08em">RECIPE MODEL</text>
+        <text x="598" y="64" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(255,255,255,0.35)">What the product requires</text>
+        <rect x="500" y="74" width="196" height="22" rx="3" fill="rgba(217,119,6,0.1)"/>
+        <text x="598" y="90" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(240,160,40,0.7)">General Recipe</text>
+        <text x="598" y="107" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(255,255,255,0.35)">(product-level, site-agnostic)</text>
+        <rect x="500" y="118" width="196" height="22" rx="3" fill="rgba(217,119,6,0.12)"/>
+        <text x="598" y="134" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(240,160,40,0.8)">Site Recipe</text>
+        <text x="598" y="151" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(255,255,255,0.35)">(adapted to site equipment)</text>
+        <rect x="500" y="162" width="196" height="22" rx="3" fill="rgba(217,119,6,0.18)" stroke="rgba(217,119,6,0.4)" stroke-width="1"/>
+        <text x="598" y="178" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="#f0a020">Master Recipe</text>
+        <text x="598" y="195" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(255,255,255,0.4)">(validated, controlled, version-locked)</text>
+        <rect x="500" y="206" width="196" height="22" rx="3" fill="rgba(217,119,6,0.22)" stroke="rgba(217,119,6,0.5)" stroke-width="1"/>
+        <text x="598" y="222" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="#f5c060">Control Recipe</text>
+        <text x="598" y="239" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(255,255,255,0.4)">(instance running on the PLC)</text>
+        <text x="598" y="248" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(255,255,255,0.3)">Maps to: recipe management SOP</text>
+      </svg>
+      <figcaption>// THE PHYSICAL MODEL DEFINES EQUIPMENT HIERARCHY. THE PROCEDURAL MODEL DEFINES THE SEQUENCE STRUCTURE. THE RECIPE MODEL DEFINES PROCESS PARAMETERS. ON A PHARMA PLC, THE PHASE IS THE VALIDATED CODE UNIT — IT RUNS THE SAME WAY EVERY TIME, DRIVEN BY RECIPE PARAMETERS.</figcaption>
+    </figure>
+
+    <h3>The Physical Model — Equipment Hierarchy in the PLC</h3>
+    <p>The physical model maps directly to the <a href="functional-design-specification-guide.html">FDS</a> equipment design. A Process Cell contains one or more Units. Each Unit contains Equipment Modules and Control Modules. In the PLC, this hierarchy is reflected in the function block structure: the Unit function block (FB_Unit_Reactor01) calls Equipment Module function blocks (FB_EM_TIC101 for temperature control, FB_EM_LIC201 for level control), which in turn call Control Module function blocks (FB_CM_TT101 for the individual temperature transmitter).</p>
+    <p>The critical rule is that <strong>an Equipment Module has exclusive control of its Control Modules during a batch phase</strong>. The temperature control Equipment Module owns TT-101 and TIC-101 when the unit is running. Manual control from the HMI overrides this only through a defined mode structure — not by bypassing the Equipment Module. This exclusive control pattern is what allows each phase to be validated independently: you know exactly what is being controlled, by what, and under what conditions.</p>
+
+    <h3>The Procedural Model — Operations and Phases in SFC</h3>
+    <p>The procedural hierarchy — Procedure → Unit Procedure → Operation → Phase — maps to the SFC structure in the PLC. The Phase is the lowest-level procedural element and is the primary unit of validation. Each Phase is an SFC that implements a specific process action: Ramp (increase temperature from current value to setpoint at a defined rate), Hold (maintain temperature at setpoint for a defined duration), Cool (reduce temperature to defined endpoint), Add (execute a material addition at a defined rate and volume).</p>
+    <p>The Phase does not contain recipe parameters. It receives them as inputs. FB_Phase_Ramp takes as inputs: <code>r_TargetTemp</code> (the setpoint to ramp to), <code>r_RampRate</code> (degrees per minute), and <code>r_TimeoutMin</code> (abort if ramp not achieved within this time). All three values come from the recipe data block — they are not hardcoded in the Phase SFC. This is the implementation of the core ISA-88 principle.</p>
+
+    <div class="callout amber">
+      <div class="callout-label">The Most Common Implementation Error</div>
+      <p>Hardcoding recipe parameters inside phase logic is the most common ISA-88 implementation error on first pharma projects. If FB_Phase_Ramp has <code>r_TargetTemp := 75.0;</code> hardcoded inside the SFC rather than passed as an input from the recipe DB, then changing the target temperature from 75°C to 80°C requires a code change, a code review, a new PLC version, and a software change control. Done correctly, it is a recipe parameter change with its own lighter-weight procedure. The validation burden difference is significant.</p>
+    </div>
+
+    <h2 id="phase-sfc-structure">Phase SFC Structure — States and Transitions</h2>
+    <p>Each Phase SFC must implement the ISA-88 standard phase states to ensure consistent behaviour across all phases and consistent testability during OQ. The standard states are not optional — they are what makes phases interchangeable within an operation and what gives the batch system its hold, restart, and abort capabilities.</p>
+
+    <div class="mono-block">
+      <span class="label">ISA-88 STANDARD PHASE STATES — PLC IMPLEMENTATION</span>
+      <span class="hi">IDLE        </span><span class="dim">// Phase not running. Waiting for START command from operation.</span>
+      <span class="hi">RUNNING     </span><span class="dim">// Phase executing. Internal SFC steps progressing.</span>
+      <span class="hi">PAUSING     </span><span class="dim">// PAUSE command received. Completing current step safely.</span>
+      <span class="hi">PAUSED      </span><span class="dim">// Execution suspended. Equipment held at current state.</span>
+      <span class="hi">            </span><span class="dim">// RESUME command returns to RUNNING. ABORT goes to ABORTING.</span>
+      <span class="hi">HOLDING     </span><span class="dim">// HOLD command received. Different from PAUSE — typically</span>
+      <span class="hi">            </span><span class="dim">// triggered by a process exception (alarm) rather than operator.</span>
+      <span class="hi">HELD        </span><span class="dim">// Execution suspended due to exception. Requires operator review.</span>
+      <span class="hi">RESTARTING  </span><span class="dim">// RESTART command received from HELD. Re-entering RUNNING.</span>
+      <span class="hi">COMPLETING  </span><span class="dim">// Phase logic finished. Executing end-of-phase actions (audit trail).</span>
+      <span class="hi">COMPLETE    </span><span class="dim">// Phase done. Operation can proceed to next phase.</span>
+      <span class="hi">ABORTING    </span><span class="dim">// ABORT command. Execute safe-state actions (close valves, stop pumps).</span>
+      <span class="hi">ABORTED     </span><span class="dim">// Phase terminated. Batch record logs reason. Manual reset required.</span>
+      <span class="val"></span>
+      <span class="warn">// AUDIT TRAIL: FB_AuditTrail called at IDLE->RUNNING, RUNNING->HELD,</span>
+      <span class="warn">// RUNNING->COMPLETE, RUNNING->ABORTING, PAUSED->RESUME transitions.</span>
+      <span class="warn">// Each call logs: phase ID, state transition, timestamp, recipe version, user ID.</span>
+    </div>
+
+    <p>The HOLD state is frequently misunderstood. PAUSE is an operator-initiated suspension — the operator decides to pause a running sequence. HOLD is a system-initiated suspension triggered by a process exception, typically a <a href="plc-alarm-management-pharma.html">GxP alarm</a> that indicates an out-of-specification condition. The distinction matters for the OQ test cases: testing HOLD requires simulating an alarm condition that triggers the transition, not just pressing a pause button. The batch audit trail must record both transitions with the trigger reason.</p>
+
+    <h2 id="recipe-structure">Recipe Structure — Master Recipe and Control Recipe</h2>
+    <p>The Master Recipe is the validated, version-controlled definition of a product's manufacturing process. It contains the procedural logic (the sequence of operations and phases), the formula (the process parameters that each phase receives), and the equipment requirements (which Process Cell and Units the recipe requires). The Master Recipe is a controlled document — it has a version number, it is approved before use, and changes to it go through a recipe change control procedure.</p>
+    <p>The Control Recipe is an instance of the Master Recipe that is created for a specific batch. When Batch B00247 starts, the system creates Control Recipe CR-B00247 from Master Recipe MR-API-003-v2.1. The Control Recipe captures the actual parameter values used, the actual start and end times of each phase, any deviations from expected parameter values, and the batch disposition outcome. The Control Recipe is the batch record — it is what the QA reviewer signs to release the batch.</p>
+
+    <div class="table-scroll">
+      <table class="compare-table">
+        <thead>
+          <tr><th>Attribute</th><th>Master Recipe</th><th>Control Recipe</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Purpose</td>
+            <td>Defines how a product is made — validated, approved template</td>
+            <td>Records how a specific batch was made — executed instance</td>
+          </tr>
+          <tr>
+            <td>Version control</td>
+            <td>Formal version control; change requires recipe change control</td>
+            <td>Locked to master recipe version at batch start; immutable after</td>
+          </tr>
+          <tr>
+            <td>Content</td>
+            <td>Procedure, formula (parameter ranges), equipment class requirements</td>
+            <td>Actual parameter values used, actual times, deviations, operator IDs</td>
+          </tr>
+          <tr>
+            <td>GxP status</td>
+            <td>Validated — OQ verifies master recipe execution produces correct output</td>
+            <td>Batch record — subject to data integrity requirements; part of product release</td>
+          </tr>
+          <tr>
+            <td>Who approves</td>
+            <td>QA review and approval before use in production</td>
+            <td>Operator executes; QA reviews and approves batch record for release</td>
+          </tr>
+          <tr>
+            <td>Storage</td>
+            <td>Recipe management system or PLC DB with access control</td>
+            <td>Electronic batch record system or printed and signed; retained per site policy</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2 id="traceability">Traceability — URS to Phase to OQ</h2>
+    <p>The traceability chain for a batch phase runs: URS process requirement → FDS sequence description → SDS phase state machine design → PLC SFC implementation → OQ phase test case. This is the same traceability chain that applies to all <a href="plc-project-structure-pharma-validation.html">GxP-critical PLC functions</a>, but for batch systems it has an additional layer: the recipe parameter traceability.</p>
+    <p>Each recipe parameter — hold time, temperature setpoint, ramp rate, addition volume — must trace to a URS requirement that defines its valid range. The FDS process description specifies the nominal value and valid range. The Master Recipe stores the value within that range. The OQ verifies that the phase executes correctly with parameters at the nominal value and at the boundaries of the valid range. This boundary-value approach is the standard OQ methodology for recipe-driven phases.</p>
+    <p>The <a href="urs-vs-fds-pharma-difference.html">URS-to-FDS traceability</a> for batch systems is often where gaps appear. The URS says "the system shall heat the product to 75°C ± 2°C." The FDS should translate this into: target setpoint 75°C, acceptable range 73–77°C, alarm at 77°C (H), alarm at 79°C (HH with interlock). If the FDS only says "temperature control" without specifying the setpoint range and alarm structure, the traceability from URS to validated alarm limits is broken.</p>
+
+    <h2 id="oq-approach">OQ Approach for Batch Sequences</h2>
+    <p>Testing a batch sequence in the OQ requires a different approach from testing a steady-state control loop. The OQ must verify the sequence under three conditions: normal execution (all phases complete successfully to COMPLETE state), exception handling (a simulated process alarm drives a phase to HELD and the resume and abort paths both work correctly), and boundary values (key recipe parameters set at the minimum and maximum of the validated range).</p>
+    <ul class="checklist">
+      <li>Execute the full sequence with nominal recipe parameters — verify all phases reach COMPLETE state in correct order, all phase audit trail events generated with correct timestamps and recipe version reference</li>
+      <li>Simulate a process alarm during a running phase — verify phase transitions to HELD, system executes safe-state actions (defined in FDS), audit trail records HELD transition with alarm ID as trigger reason</li>
+      <li>From HELD state: test RESTART path — verify phase re-enters RUNNING correctly from the correct step, not from the beginning</li>
+      <li>From HELD state: test ABORT path — verify phase reaches ABORTED state, safe-state actions complete, batch record flags phase as aborted with reason</li>
+      <li>Execute critical phases with recipe parameters at validated minimum — verify phase completes within expected time with correct process behaviour</li>
+      <li>Execute critical phases with recipe parameters at validated maximum — same verification</li>
+      <li>Verify Master Recipe version is locked into the Control Recipe at batch start and cannot be modified during execution</li>
+      <li>Verify batch record (Control Recipe) contains all required fields: actual parameter values, phase start/end times, operator IDs, any deviations</li>
+    </ul>
+
+    <div class="callout green">
+      <div class="callout-label">In the QLean Framework</div>
+      <p>The FDS template includes a fully structured alarm list (Appendix B) with setpoints, deadbands, priorities, automatic actions, and URS cross-references — the foundation for both alarm management and batch exception handling. The OQ protocol template structures test cases with explicit acceptance criteria and pass/fail fields for each verification step. For batch-specific projects, the FDS Section 2 process control functions and alarm table are the sections to extend with ISA-88 procedural hierarchy, phase definitions, and recipe parameter ranges — the structure and referencing convention are already established in the template.</p>
+    </div>
+
+  </article>
+
+  <aside class="sidebar">
+    <div class="toc-card">
+      <div class="toc-label">In This Article</div>
+      <ul class="toc-list">
+        <li><a href="#why-isa88" class="active">Why ISA-88 Matters</a></li>
+        <li><a href="#three-models">The Three Models</a></li>
+        <li><a href="#phase-sfc-structure">Phase SFC Structure</a></li>
+        <li><a href="#recipe-structure">Recipe Structure</a></li>
+        <li><a href="#traceability">Traceability Chain</a></li>
+        <li><a href="#oq-approach">OQ Approach</a></li>
+      </ul>
+    </div>
+    <div class="sidebar-cta">
+      <div class="sc-eyebrow">QLean Framework</div>
+      <div class="sc-title">29 production-ready GAMP 5 documents</div>
+      <div class="sc-body">FDS template with full batch sequence section and OQ protocol with pre-written phase test cases included.</div>
+      <a href="../index.html#pricing" class="sc-btn">Get the Framework — €249 →</a>
+      <div class="sc-note">// INSTANT DOWNLOAD · COMPANY-WIDE LICENCE</div>
+    </div>
+    <div class="sidebar-share">
+      <div class="share-label">Share This Article</div>
+      <div class="share-links">
+        <a href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fqleanautomation.com%2Fblog%2Fisa-88-batch-sequencing-plc.html" target="_blank" rel="noopener" class="share-link">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          Share on LinkedIn
+        </a>
+        <a href="https://www.reddit.com/submit?url=https%3A%2F%2Fqleanautomation.com%2Fblog%2Fisa-88-batch-sequencing-plc.html&title=Batch+Sequencing+on+a+PLC+%E2%80%94+ISA-88+in+Practice" target="_blank" rel="noopener" class="share-link">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/></svg>
+          Share on Reddit
+        </a>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<section class="related">
+  <div class="related-inner">
+    <div class="related-label">More Articles</div>
+    <div class="related-grid">
+      <a href="plc-project-structure-pharma-validation.html" class="related-card">
+        <div class="rc-tag">⚙️ PLC Engineering</div>
+        <div class="rc-title">How to Structure a PLC Project for Pharma Validation</div>
+        <div class="rc-desc">The ISA-88 equipment hierarchy maps directly onto the PLC programme structure. Phase SFCs run in cyclic interrupt OBs — not the main cycle.</div>
+        <div class="rc-footer"><div class="rc-read">8 MIN READ</div><div class="rc-arrow">→</div></div>
+      </a>
+      <a href="urs-vs-fds-pharma-difference.html" class="related-card">
+        <div class="rc-tag">📝 Design Docs</div>
+        <div class="rc-title">URS vs FDS: What's the Difference and Why It Matters</div>
+        <div class="rc-desc">The URS defines what the batch process must achieve. The FDS translates that into ISA-88 procedural hierarchy, phase definitions, and recipe parameter ranges.</div>
+        <div class="rc-footer"><div class="rc-read">7 MIN READ</div><div class="rc-arrow">→</div></div>
+      </a>
+      <a href="plc-alarm-management-pharma.html" class="related-card">
+        <div class="rc-tag">⚙️ PLC Engineering</div>
+        <div class="rc-title">Implementing Alarm Management on a Pharma PLC</div>
+        <div class="rc-desc">A GxP alarm during a batch phase triggers the HOLD state. The alarm system and the batch sequencer must be designed to work together.</div>
+        <div class="rc-footer"><div class="rc-read">8 MIN READ</div><div class="rc-arrow">→</div></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="../index.html" class="nav-logo">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none" style="flex-shrink:0"><rect width="32" height="32" rx="7" fill="#0d0f12"/><rect x="8" y="7" width="16" height="16" rx="2" stroke="white" stroke-width="2.5" fill="none"/><line x1="20" y1="19" x2="26" y2="25" stroke="#0057FF" stroke-width="3" stroke-linecap="round"/></svg>
+          <span style="font-family:'Epilogue',sans-serif;font-weight:800;font-size:16px;color:#0d0f12;letter-spacing:-.03em;white-space:nowrap">QLean <span style="font-weight:300;color:#5a6172">Automation</span></span>
+        </a>
+        <p>GMP documentation tools for system integrators and automation engineers entering pharmaceutical projects.</p>
+      </div>
+      <div class="footer-col"><h4>Products</h4><ul><li><a href="../index.html#framework">GAMP 5 Framework</a></li><li><a href="../index.html#products">Technical Masterclass</a></li></ul></div>
+      <div class="footer-col"><h4>Knowledge Base</h4><ul>
+        <li><a href="blog-index.html">All Articles</a></li>
+        <li><a href="plc-project-structure-pharma-validation.html">PLC Project Structure</a></li>
+        <li><a href="iec-61131-3-pharma-compliant-code.html">GMP-Compliant PLC Code</a></li>
+        <li><a href="plc-alarm-management-pharma.html">Alarm Management</a></li>
+        <li><a href="functional-design-specification-guide.html">How to Write an FDS</a></li>
+        <li><a href="urs-vs-fds-pharma-difference.html">URS vs FDS</a></li>
+        <li><a href="iq-oq-pq-guide.html">IQ OQ PQ Guide</a></li>
+      </ul></div>
+      <div class="footer-col"><h4>Company</h4><ul><li><a href="https://www.linkedin.com/company/qlean-automation" target="_blank">LinkedIn</a></li><li><a href="mailto:hello@qleanautomation.com">Contact</a></li><li><a href="../terms.html">Terms</a></li></ul></div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 QLEAN AUTOMATION · QLEANAUTOMATION.COM</p>
+      <div class="compliance-pills"><span class="cp">ISA-88</span><span class="cp">GAMP 5</span><span class="cp">IEC 61512</span><span class="cp">EU ANNEX 11</span></div>
+    </div>
+  </div>
+</footer>
+
+<script>
+window.addEventListener('scroll',()=>{const d=document.documentElement;document.getElementById('progress').style.width=(d.scrollTop/(d.scrollHeight-d.clientHeight)*100)+'%'});
+const obs=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting){document.querySelectorAll('.toc-list a').forEach(l=>l.classList.remove('active'));const a=document.querySelector('.toc-list a[href="#'+x.target.id+'"]');if(a)a.classList.add('active')}})  ,{rootMargin:'-20% 0px -70% 0px'});
+document.querySelectorAll('[id]').forEach(s=>obs.observe(s));
+</script>
+</body>
+</html>

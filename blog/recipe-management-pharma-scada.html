@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-JJQ1TXZJX7"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-JJQ1TXZJX7');
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Recipe Management in a Pharma SCADA — Design and Validation | QLean Automation</title>
+<meta name="description" content="Recipe management in a pharma SCADA covers ISA-88 procedure models, electronic master recipe storage, parameter traceability, and the validation requirements for recipe execution. Here's how to design it correctly and what QA will check.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@300;400;500;600;700;800;900&family=Source+Sans+3:ital,wght@0,300;0,400;0,500;1,300&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--white:#ffffff;--off:#f7f8f9;--ink:#0d0f12;--ink2:#1e2128;--ink3:#3d4456;--ink4:#9199a8;--rule:#e2e5ea;--rule2:#c8cdd6;--blue:#0057ff;--blue2:#0044cc;--blue-dim:rgba(0,87,255,0.07);--green:#00875a;--green-dim:rgba(0,135,90,0.08);--amber:#d97706;--amber-dim:rgba(217,119,6,0.08);--red:#c0392b;--red-dim:rgba(192,57,43,0.08);--f-head:'Epilogue',sans-serif;--f-body:'Source Sans 3',sans-serif;--f-mono:'Roboto Mono',monospace;--shadow-sm:0 2px 8px rgba(13,15,18,0.06),0 1px 3px rgba(13,15,18,0.04)}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}body{background:var(--white);color:var(--ink);font-family:var(--f-body);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+nav{position:fixed;top:0;left:0;right:0;z-index:200;height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 6%;background:rgba(255,255,255,0.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--rule)}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;flex-shrink:0}
+.nav-links{display:flex;align-items:center;gap:36px;list-style:none}.nav-links a{font-size:14px;font-weight:400;color:var(--ink3);text-decoration:none;transition:color .2s}.nav-links a:hover{color:var(--ink)}
+.nav-btn{font-family:var(--f-body);font-size:13px;font-weight:500;padding:9px 20px;background:var(--blue);color:white;border:none;border-radius:6px;cursor:pointer;text-decoration:none;white-space:nowrap;flex-shrink:0}.nav-btn:hover{background:var(--blue2)}
+.progress-bar{position:fixed;top:64px;left:0;right:0;height:2px;background:var(--rule);z-index:199}.progress-fill{height:100%;background:var(--blue);width:0%}
+.article-hero{padding:120px 6% 64px;background:var(--white);border-bottom:1px solid var(--rule);position:relative;overflow:hidden}
+.article-hero::before{content:'';position:absolute;top:-80px;right:-80px;width:400px;height:400px;background:radial-gradient(circle,rgba(0,87,255,0.04) 0%,transparent 70%);pointer-events:none}
+.article-hero-inner{max-width:940px;margin:0 auto;position:relative;z-index:1}
+.breadcrumb{display:flex;align-items:center;gap:8px;font-family:var(--f-mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink4);margin-bottom:24px}.breadcrumb a{color:var(--ink4);text-decoration:none}.breadcrumb a:hover{color:var(--blue)}.breadcrumb span{color:var(--rule2)}
+.article-tag{display:inline-flex;align-items:center;gap:6px;font-family:var(--f-mono);font-size:10px;font-weight:500;color:var(--blue);letter-spacing:.1em;text-transform:uppercase;margin-bottom:20px;padding:4px 10px;background:var(--blue-dim);border-radius:4px}
+.article-hero h1{font-family:var(--f-head);font-size:clamp(30px,5vw,52px);font-weight:900;line-height:1.0;letter-spacing:-.04em;color:var(--ink);margin-bottom:20px}.article-hero h1 span{color:var(--blue)}
+.article-intro{font-size:18px;font-weight:400;color:var(--ink2);line-height:1.75;margin-bottom:32px;max-width:800px}
+.article-meta{display:flex;align-items:center;gap:24px;padding-top:24px;border-top:1px solid var(--rule);flex-wrap:wrap}
+.meta-author{display:flex;align-items:center;gap:10px}.author-avatar{width:36px;height:36px;border-radius:50%;background:var(--ink);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.author-name{font-size:13px;font-weight:500;color:var(--ink)}.author-role{font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.04em}
+.meta-divider{width:1px;height:28px;background:var(--rule)}.meta-stat{font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.06em}
+.article-wrap{max-width:1300px;margin:0 auto;padding:64px 6%;display:grid;grid-template-columns:1fr 300px;gap:60px;align-items:start}
+.article-body{min-width:0}
+.article-body h2{font-family:var(--f-head);font-size:26px;font-weight:800;letter-spacing:-.03em;color:var(--ink);margin:56px 0 16px;line-height:1.2}.article-body h2:first-child{margin-top:0}
+.article-body h3{font-family:var(--f-head);font-size:18px;font-weight:700;letter-spacing:-.02em;color:var(--ink);margin:32px 0 12px}
+.article-body p{font-size:16px;font-weight:400;color:var(--ink2);line-height:1.85;margin-bottom:20px}
+.article-body strong{color:var(--ink);font-weight:600}
+.article-body a{color:var(--blue);text-decoration:none;border-bottom:1px solid rgba(0,87,255,.25)}.article-body a:hover{border-color:var(--blue)}
+.callout{padding:20px 24px;border-radius:8px;margin:32px 0;border-left:3px solid}
+.callout.blue{background:var(--blue-dim);border-color:var(--blue)}.callout.amber{background:var(--amber-dim);border-color:var(--amber)}.callout.green{background:var(--green-dim);border-color:var(--green)}.callout.red{background:var(--red-dim);border-color:var(--red)}
+.callout-label{font-family:var(--f-mono);font-size:9px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px}.callout.blue .callout-label{color:var(--blue)}.callout.amber .callout-label{color:var(--amber)}.callout.green .callout-label{color:var(--green)}.callout.red .callout-label{color:var(--red)}
+.callout p{font-size:14px;color:var(--ink2);line-height:1.7;margin:0}.callout strong{color:var(--ink)}
+.article-img{width:100%;border-radius:8px;border:1px solid #1e2535;overflow:hidden;margin:36px 0}
+.article-img figcaption{padding:10px 14px;background:var(--off);font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.04em;border-top:1px solid var(--rule)}
+.arrow-list{list-style:none;display:flex;flex-direction:column;gap:8px;margin:16px 0 24px}
+.arrow-list li{display:flex;align-items:flex-start;gap:10px;font-size:15px;color:var(--ink2);line-height:1.6}
+.arrow-list li::before{content:'\2192';color:var(--blue);flex-shrink:0;font-size:12px;margin-top:3px}
+.checklist{list-style:none;display:flex;flex-direction:column;gap:8px;margin:20px 0 28px}
+.checklist li{display:flex;align-items:flex-start;gap:10px;font-size:15px;color:var(--ink2);line-height:1.6}
+.checklist li::before{content:'';width:16px;height:16px;flex-shrink:0;margin-top:3px;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 14 14' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='7' cy='7' r='6.5' fill='none' stroke='%230057ff' stroke-width='1'/%3E%3Cpath d='M4 7l2 2 4-4' stroke='%230057ff' stroke-width='1.3' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:center;background-size:contain}
+.table-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:28px 0}
+.compare-table{width:100%;border-collapse:collapse;font-size:14px}
+.compare-table th{font-family:var(--f-mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink4);padding:10px 16px;border-bottom:2px solid var(--rule);text-align:left;background:var(--off)}
+.compare-table td{padding:12px 16px;border-bottom:1px solid var(--rule);vertical-align:top;color:var(--ink2);line-height:1.6}
+.compare-table tr:last-child td{border-bottom:none}
+.compare-table td:first-child{font-weight:600;color:var(--ink);font-family:var(--f-mono);font-size:12px}
+.sidebar{position:sticky;top:88px;display:flex;flex-direction:column;gap:16px}
+.toc-card{border:1px solid var(--rule);border-radius:8px;padding:24px;background:var(--white);box-shadow:var(--shadow-sm)}
+.toc-label{font-family:var(--f-mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);margin-bottom:16px}
+.toc-list{list-style:none;display:flex;flex-direction:column;gap:2px}
+.toc-list a{display:block;font-size:13px;color:var(--ink3);text-decoration:none;padding:6px 10px;border-radius:4px;transition:all .15s;border-left:2px solid transparent}
+.toc-list a:hover,.toc-list a.active{color:var(--blue);background:var(--blue-dim);border-left-color:var(--blue)}
+.sidebar-cta{border:1px solid var(--blue);border-radius:8px;padding:24px;background:var(--blue-dim)}
+.sc-eyebrow{font-family:var(--f-mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);margin-bottom:10px}
+.sc-title{font-family:var(--f-head);font-size:17px;font-weight:800;letter-spacing:-.02em;color:var(--ink);margin-bottom:8px;line-height:1.2}
+.sc-body{font-size:13px;color:var(--ink3);line-height:1.6;margin-bottom:16px}
+.sc-btn{display:block;text-align:center;padding:11px 16px;background:var(--blue);color:white;border-radius:6px;font-family:var(--f-body);font-size:13px;font-weight:500;text-decoration:none}.sc-btn:hover{background:var(--blue2)}
+.sc-note{font-family:var(--f-mono);font-size:9px;color:var(--ink4);text-align:center;margin-top:8px;letter-spacing:.04em}
+.sidebar-share{border:1px solid var(--rule);border-radius:8px;padding:20px 24px;background:var(--white)}
+.share-label{font-family:var(--f-mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);margin-bottom:14px}
+.share-links{display:flex;flex-direction:column;gap:8px}
+.share-link{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--ink3);text-decoration:none;padding:9px 12px;border:1px solid var(--rule);border-radius:6px;transition:border-color .2s,color .2s}.share-link:hover{border-color:var(--blue);color:var(--blue)}
+.related{padding:64px 6%;border-top:1px solid var(--rule);background:var(--off)}
+.related-inner{max-width:1100px;margin:0 auto}
+.related-label{font-family:var(--f-mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);margin-bottom:32px;display:flex;align-items:center;gap:10px}
+.related-label::before{content:'';width:20px;height:1px;background:var(--blue)}
+.related-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.related-card{padding:24px;border:1px solid var(--rule);border-radius:8px;background:var(--white);box-shadow:var(--shadow-sm);transition:border-color .2s,transform .2s;text-decoration:none;display:flex;flex-direction:column;gap:12px}.related-card:hover{border-color:var(--blue);transform:translateY(-4px)}
+.rc-tag{font-family:var(--f-mono);font-size:9px;color:var(--blue);letter-spacing:.08em;text-transform:uppercase;padding:3px 8px;background:var(--blue-dim);border-radius:3px;align-self:flex-start}
+.rc-title{font-family:var(--f-head);font-size:16px;font-weight:700;letter-spacing:-.02em;color:var(--ink);line-height:1.25}
+.rc-desc{font-size:13px;color:var(--ink3);line-height:1.6;flex:1}
+.rc-footer{display:flex;align-items:center;justify-content:space-between;padding-top:12px;border-top:1px solid var(--rule)}
+.rc-read{font-family:var(--f-mono);font-size:10px;color:var(--ink4)}.rc-arrow{font-size:14px;color:var(--blue)}
+footer{padding:56px 6% 32px;border-top:1px solid var(--rule);background:var(--white)}
+.footer-inner{max-width:1160px;margin:0 auto}
+.footer-top{display:flex;justify-content:space-between;align-items:flex-start;gap:40px;flex-wrap:wrap;margin-bottom:48px}
+.footer-brand p{font-size:13px;font-weight:300;color:var(--ink3);margin-top:12px;max-width:260px;line-height:1.6}
+.footer-col h4{font-family:var(--f-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink4);margin-bottom:16px}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+.footer-col a{font-size:13px;color:var(--ink3);text-decoration:none}.footer-col a:hover{color:var(--blue)}
+.footer-bottom{padding-top:24px;border-top:1px solid var(--rule);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.footer-bottom p{font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.04em}
+.compliance-pills{display:flex;gap:6px;flex-wrap:wrap}
+.cp{font-family:var(--f-mono);font-size:9px;padding:3px 8px;border:1px solid var(--rule);border-radius:3px;color:var(--ink4);letter-spacing:.06em}
+@media(max-width:900px){.article-wrap{grid-template-columns:1fr;gap:48px}.sidebar{position:static}.related-grid{grid-template-columns:1fr}.table-scroll{margin:20px 0}}
+@media(max-width:900px){.nav-links{display:none}}
+@media(max-width:540px){nav{padding:0 4%}.nav-btn{font-size:12px;padding:8px 14px}}
+</style>
+</head>
+<body>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+<nav>
+  <a href="../index.html" class="nav-logo">
+    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" style="flex-shrink:0"><rect width="32" height="32" rx="7" fill="#0d0f12"/><rect x="8" y="7" width="16" height="16" rx="2" stroke="white" stroke-width="2.5" fill="none"/><line x1="20" y1="19" x2="26" y2="25" stroke="#0057FF" stroke-width="3" stroke-linecap="round"/></svg>
+    <span style="font-family:'Epilogue',sans-serif;font-weight:800;font-size:16px;color:#0d0f12;letter-spacing:-.03em;white-space:nowrap">QLean <span style="font-weight:300;color:#5a6172">Automation</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="../index.html#products">Products</a></li>
+    <li><a href="../index.html#framework">Framework</a></li>
+    <li><a href="blog-index.html">Knowledge Base</a></li>
+    <li><a href="../index.html#pricing">Pricing</a></li>
+    <li><a href="../about.html">About</a></li>
+    <li><a href="../index.html#faq">FAQ</a></li>
+  </ul>
+  <a href="../index.html#pricing" class="nav-btn">Get the Framework →</a>
+</nav>
+
+<header class="article-hero">
+  <div class="article-hero-inner">
+    <div class="breadcrumb"><a href="../index.html">Home</a><span>/</span><a href="blog-index.html">Knowledge Base</a><span>/</span>Recipe Management in a Pharma SCADA</div>
+    <div class="article-tag">🖥️ SCADA Engineering</div>
+    <h1>Recipe Management<br><span>in a Pharma SCADA</span><br>— Design and Validation</h1>
+    <p class="article-intro">Recipe management is one of the most scrutinised areas of a pharmaceutical SCADA system. The ISA-88 procedure model defines the structure. 21 CFR Part 11 and EU GMP Annex 11 define the integrity requirements. And your validation documentation must show both are implemented. Here's how to design it, document it, and get it through QA review.</p>
+    <div class="article-meta">
+      <div class="meta-author">
+        <div class="author-avatar"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="7" r="3.5" stroke="white" stroke-width="1.5"/><path d="M2.5 16c0-3.59 2.91-6.5 6.5-6.5s6.5 2.91 6.5 6.5" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+        <div><div class="author-name">QLean Automation</div><div class="author-role">ENGINEERS WHO BUILD SYSTEMS, NOT JUST SIGN THEM</div></div>
+      </div>
+      <div class="meta-divider"></div><div class="meta-stat">8 MIN READ</div>
+      <div class="meta-divider"></div><div class="meta-stat">ISA-88 · SCADA · RECIPE MANAGEMENT</div>
+    </div>
+  </div>
+</header>
+
+<div class="article-wrap">
+  <article class="article-body">
+
+    <h2 id="what-recipe-management-is">What Recipe Management Actually Means in a GMP SCADA</h2>
+    <p>Recipe management is the capability to define, store, version, select, execute, and record the use of process recipes in a way that the executed parameters are unambiguously traceable to the approved master recipe. In a pharmaceutical context, that traceability has a direct product quality implication: if the wrong recipe was used, or if a recipe parameter was modified outside the approved change control process, the batch is potentially compromised.</p>
+    <p>The distinction that matters most in a GMP context is between the <strong>master recipe</strong> and the <strong>control recipe</strong>. The master recipe is the approved, version-controlled specification for a product — defined, reviewed, and released by QA. The control recipe is the run-time instance derived from the master recipe and issued to the SCADA or batch management system for a specific execution. Any system that allows operators to modify control recipe parameters at runtime without audit trail — even if it generates a batch record — does not have compliant recipe management.</p>
+
+    <div class="callout amber">
+      <div class="callout-label">The Most Common Mistake</div>
+      <p>Systems where operators can modify recipe parameters freely during execution and those modifications simply appear in the batch record — without locking the master recipe, without version control, and without requiring a deviation — are not compliant recipe management systems. They are <strong>recipe execution systems with a logging function</strong>. The difference matters enormously during an inspection.</p>
+    </div>
+
+    <h2 id="isa88-model">The ISA-88 Model — What the Standard Actually Requires</h2>
+    <p>ISA-88 (IEC 61512) defines a hierarchical model for batch process control. Most engineers know the equipment hierarchy — Enterprise, Site, Area, Process Cell, Unit, Equipment Module, Control Module. Less well understood is the recipe structure, which maps directly onto the equipment hierarchy and defines what your SCADA needs to implement.</p>
+
+    <figure class="article-img">
+      <svg viewBox="0 0 720 340" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;background:#0d0f12;border-radius:8px 8px 0 0">
+        <text x="360" y="18" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(255,255,255,0.2)" letter-spacing="0.12em">ISA-88 RECIPE HIERARCHY — PHARMA SCADA IMPLEMENTATION</text>
+
+        <!-- General Recipe -->
+        <rect x="260" y="28" width="200" height="48" rx="4" fill="rgba(0,87,255,0.12)" stroke="rgba(0,87,255,0.5)" stroke-width="1.5"/>
+        <text x="360" y="50" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="10" fill="#6699ff">GENERAL RECIPE</text>
+        <text x="360" y="66" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(255,255,255,0.5)">Site/enterprise-level process definition</text>
+
+        <!-- arrow down -->
+        <line x1="360" y1="76" x2="360" y2="100" stroke="rgba(255,255,255,0.2)" stroke-width="1.5" stroke-dasharray="4,3"/>
+        <polygon points="355,98 365,98 360,106" fill="rgba(255,255,255,0.2)"/>
+
+        <!-- Site Recipe -->
+        <rect x="240" y="108" width="240" height="48" rx="4" fill="rgba(0,87,255,0.10)" stroke="rgba(0,87,255,0.4)" stroke-width="1.5"/>
+        <text x="360" y="130" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="10" fill="#6699ff">SITE RECIPE</text>
+        <text x="360" y="146" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(255,255,255,0.5)">Adapted for site equipment capabilities</text>
+
+        <!-- arrow down -->
+        <line x1="360" y1="156" x2="360" y2="178" stroke="rgba(255,255,255,0.2)" stroke-width="1.5" stroke-dasharray="4,3"/>
+        <polygon points="355,176 365,176 360,184" fill="rgba(255,255,255,0.2)"/>
+
+        <!-- Master Recipe — highlighted -->
+        <rect x="200" y="186" width="320" height="56" rx="4" fill="rgba(0,87,255,0.18)" stroke="#0057ff" stroke-width="2"/>
+        <text x="360" y="208" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="11" fill="#6699ff" letter-spacing="0.05em">MASTER RECIPE</text>
+        <text x="360" y="224" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(255,255,255,0.65)">QA-approved, version-controlled — stored in SCADA</text>
+        <text x="360" y="238" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(0,87,255,0.8)">21 CFR PART 11 / ANNEX 11 CONTROLS APPLY HERE</text>
+
+        <!-- arrow down -->
+        <line x1="360" y1="242" x2="360" y2="264" stroke="rgba(255,255,255,0.2)" stroke-width="1.5" stroke-dasharray="4,3"/>
+        <polygon points="355,262 365,262 360,270" fill="rgba(255,255,255,0.2)"/>
+
+        <!-- Control Recipe -->
+        <rect x="210" y="272" width="300" height="48" rx="4" fill="rgba(0,135,90,0.12)" stroke="rgba(0,135,90,0.4)" stroke-width="1.5"/>
+        <text x="360" y="294" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="10" fill="#00c97a">CONTROL RECIPE</text>
+        <text x="360" y="310" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(255,255,255,0.5)">Run-time instance — issued for a specific batch execution</text>
+
+        <!-- Labels on right -->
+        <text x="550" y="52" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(255,255,255,0.25)">R&amp;D / regulatory</text>
+        <text x="550" y="130" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(255,255,255,0.25)">Tech transfer</text>
+        <text x="550" y="214" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(0,87,255,0.7)">&#x2190; PRIMARY GMP OBJECT</text>
+        <text x="550" y="296" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(0,135,90,0.6)">&#x2190; BATCH RECORD SOURCE</text>
+      </svg>
+      <figcaption>ISA-88 RECIPE HIERARCHY — The master recipe is the primary GMP object requiring version control and electronic signature under 21 CFR Part 11 and EU GMP Annex 11. The control recipe is the execution instance derived from it.</figcaption>
+    </figure>
+
+    <p>For most system integrators on a pharma project, the relevant scope is the <strong>master recipe and control recipe</strong> layers. You're not writing a general recipe (that's R&D). You're building the system that stores the approved master recipe, generates control recipe instances, executes them, and produces a batch record that traces every executed parameter back to the approved master.</p>
+    <p>ISA-88 also defines a <strong>procedure model</strong> for how recipes execute: Procedure → Unit Procedure → Operation → Phase. Each level maps to a piece of equipment or a control module. The PLC phase logic is the lowest level — individual operations like "fill tank," "heat to setpoint," or "mix for duration." Understanding this hierarchy is essential when writing the <a href="urs-vs-fds-pharma-difference.html">URS and FDS</a> for a batch system, because QA will expect your functional requirements to align with this model.</p>
+
+    <h2 id="gmp-requirements">The GMP Requirements That Drive Your Design</h2>
+    <p>Recipe management in a GMP environment is subject to three overlapping regulatory frameworks, and the intersection of all three defines your minimum design requirements.</p>
+
+    <h3>21 CFR Part 11 — Electronic Records and Signatures</h3>
+    <p>Any master recipe stored electronically and subject to an electronic approval process falls under <a href="21-cfr-part-11.html">21 CFR Part 11</a>. This means the recipe record must be attributable, legible, contemporaneous, original, and accurate (ALCOA+). The practical implications: the SCADA must enforce unique user authentication before recipe approval, each recipe approval must carry the meaning of the signature (reviewed, approved), and the record must be protected against modification after approval. See the <a href="21-cfr-part-11-audit-trail-checklist.html">audit trail checklist</a> for the specific fields required on every recipe modification event.</p>
+
+    <h3>EU GMP Annex 11 — Computerised Systems</h3>
+    <p>Annex 11 clause 4.8 requires that data entered into a computerised system manually should be subject to an additional check. For recipe parameters, this means a second-person verification step — either a second electronic signature or a review-and-approve workflow before a recipe is released for production use. Clause 5 requires that the audit trail captures all changes to recipes, including the old value, the new value, the reason for change, and the user who made the change. This is not optional in an Annex 11 environment.</p>
+
+    <h3>GAMP 5 Category 4 and Category 5</h3>
+    <p>A SCADA with recipe management is typically Category 4 (configured software) if the recipe engine is a standard vendor module, or Category 5 if the recipe logic is custom-coded in a PLC. The <a href="gamp5-categories.html">GAMP 5 category</a> determines the depth of your V-model documentation. Category 5 custom recipe logic requires an SDS with the state machine design documented — including all state transitions, parameter validation logic, and abort conditions.</p>
+
+    <div class="callout blue">
+      <div class="callout-label">What "Version-Controlled Recipe" Actually Means in Practice</div>
+      <p>A version-controlled recipe is not just a recipe with a version number field. It means: <strong>(1) the previous version is never overwritten</strong> — a new version is created; <strong>(2) only one version is "active" at any time</strong> — the SCADA enforces this; <strong>(3) any execution uses the active version at the time of execution</strong> and the batch record records which version was used; <strong>(4) changes require approval</strong> — the SCADA does not allow a draft recipe to be selected for execution. Systems that store only the current recipe with a manually maintained version log fail this test at inspection.</p>
+    </div>
+
+    <h2 id="master-recipe-design">Designing the Master Recipe — What It Must Contain</h2>
+    <p>The master recipe definition in your FDS must specify the data structure the SCADA stores for each recipe. This is what QA will review during the FDS review, and what the OQ will test. At minimum, a GMP master recipe record must contain the following fields:</p>
+
+    <ul class="checklist">
+      <li><strong>Recipe ID and Name</strong> — unique identifier, human-readable product name</li>
+      <li><strong>Version number</strong> — sequential, never reused, incremented on each approved change</li>
+      <li><strong>Status</strong> — Draft / Under Review / Approved / Superseded / Obsolete</li>
+      <li><strong>Approval record</strong> — approver ID, timestamp, e-signature meaning</li>
+      <li><strong>Product and process parameters</strong> — all setpoints, durations, quantities, and tolerances required by the procedure</li>
+      <li><strong>Parameter limits</strong> — hard limits enforced by the SCADA that cannot be overridden at runtime</li>
+      <li><strong>Applicable equipment</strong> — which process cell or unit the recipe is valid for</li>
+      <li><strong>Change history</strong> — audit trail of every modification from recipe creation</li>
+    </ul>
+
+    <p>The parameter limits deserve special attention. The master recipe defines the nominal setpoint. The hard limits are the outer boundary beyond which the system will not execute, regardless of what is entered. These limits must be defined in the FDS and verified in the OQ — they are a critical Part 11 control. A recipe management system that allows operators to enter any value during execution with no enforcement limit is not a compliant system.</p>
+
+    <h2 id="runtime-controls">Runtime Controls — What Happens During Batch Execution</h2>
+    <p>Once a control recipe is instantiated from the master recipe, the question is: what can operators modify during execution, and what happens when they do? This is the area where most system integrators underdesign on their first batch project.</p>
+
+    <figure class="article-img">
+      <svg viewBox="0 0 720 280" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;background:#0d0f12;border-radius:8px 8px 0 0">
+        <text x="360" y="18" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(255,255,255,0.2)" letter-spacing="0.12em">RECIPE PARAMETER MODIFICATION — RUNTIME CONTROL MATRIX</text>
+
+        <!-- Column headers -->
+        <text x="90" y="42" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(255,255,255,0.4)">MODIFICATION TYPE</text>
+        <text x="250" y="42" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(255,255,255,0.4)">PERMITTED?</text>
+        <text x="420" y="42" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(255,255,255,0.4)">CONTROLS REQUIRED</text>
+        <text x="620" y="42" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(255,255,255,0.4)">BATCH RECORD IMPACT</text>
+        <line x1="12" y1="50" x2="708" y2="50" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+
+        <!-- Row 1 -->
+        <rect x="12" y="56" width="696" height="44" rx="2" fill="rgba(0,135,90,0.05)"/>
+        <text x="90" y="74" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="11" fill="rgba(255,255,255,0.75)">Pre-batch parameter</text>
+        <text x="90" y="90" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="11" fill="rgba(255,255,255,0.75)">review (Supervisor)</text>
+        <text x="250" y="78" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="10" fill="#00c97a">YES</text>
+        <text x="420" y="74" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="11" fill="rgba(255,255,255,0.6)">Within limits + audit trail</text>
+        <text x="420" y="90" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="11" fill="rgba(255,255,255,0.6)">+ Supervisor e-signature</text>
+        <text x="620" y="78" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="11" fill="rgba(255,255,255,0.6)">Recorded as planned</text>
+        <text x="620" y="90" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="11" fill="rgba(255,255,255,0.6)">deviation</text>
+
+        <!-- Row 2 -->
+        <rect x="12" y="102" width="696" height="44" rx="2" fill="rgba(217,119,6,0.05)"/>
+        <text x="90" y="120" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="11" fill="rgba(255,255,255,0.75)">Mid-execution parameter</text>
+        <text x="90" y="136" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="11" fill="rgba(255,255,255,0.75)">change (Operator)</text>
+        <text x="250" y="120" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="10" fill="rgba(240,160,40,0.9)">RESTRICTED</text>
+        <text x="420" y="120" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="11" fill="rgba(255,255,255,0.6)">Supervisor override +</text>
+        <text x="420" y="136" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="11" fill="rgba(255,255,255,0.6)">mandatory reason + audit</text>
+        <text x="620" y="120" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="11" fill="rgba(255,255,255,0.6)">Flagged as in-process</text>
+        <text x="620" y="136" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="11" fill="rgba(255,255,255,0.6)">deviation — triggers review</text>
+
+        <!-- Row 3 -->
+        <rect x="12" y="148" width="696" height="44" rx="2" fill="rgba(192,57,43,0.05)"/>
+        <text x="90" y="166" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="11" fill="rgba(255,255,255,0.75)">Parameter outside</text>
+        <text x="90" y="182" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="11" fill="rgba(255,255,255,0.75)">hard limits</text>
+        <text x="250" y="166" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="10" fill="rgba(220,80,80,0.9)">BLOCKED</text>
+        <text x="420" y="166" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="11" fill="rgba(255,255,255,0.6)">System rejects entry —</text>
+        <text x="420" y="182" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="11" fill="rgba(255,255,255,0.6)">no role can override</text>
+        <text x="620" y="174" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="11" fill="rgba(255,255,255,0.6)">Attempt logged in audit trail</text>
+
+        <!-- Row 4 -->
+        <rect x="12" y="194" width="696" height="44" rx="2" fill="rgba(192,57,43,0.05)"/>
+        <text x="90" y="212" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="11" fill="rgba(255,255,255,0.75)">Modifying master</text>
+        <text x="90" y="228" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="11" fill="rgba(255,255,255,0.75)">recipe during execution</text>
+        <text x="250" y="212" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="10" fill="rgba(220,80,80,0.9)">BLOCKED</text>
+        <text x="420" y="212" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="11" fill="rgba(255,255,255,0.6)">Approved recipe locked</text>
+        <text x="420" y="228" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="11" fill="rgba(255,255,255,0.6)">while batch is active</text>
+        <text x="620" y="220" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="11" fill="rgba(255,255,255,0.6)">N/A — not possible</text>
+
+        <!-- column dividers -->
+        <line x1="165" y1="50" x2="165" y2="238" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+        <line x1="330" y1="50" x2="330" y2="238" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+        <line x1="510" y1="50" x2="510" y2="238" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+
+        <text x="360" y="265" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(255,255,255,0.2)">HARD LIMITS ARE AN FDS REQUIREMENT — VERIFIED AT OQ</text>
+      </svg>
+      <figcaption>RECIPE PARAMETER MODIFICATION MATRIX — The runtime control design must be documented in the FDS and verified at OQ. Hard parameter limits are a non-negotiable GMP control — no role can override them.</figcaption>
+    </figure>
+
+    <p>Three principles govern runtime recipe control in a GMP SCADA. First, <strong>hard limits are absolute</strong> — they are engineered controls, not administrative ones. No role, including administrator, can enter a value outside the hard limit. This is tested adversarially in the OQ. Second, <strong>every parameter change has a reason</strong> — the system must require the operator to enter a reason before accepting any mid-execution modification. Blank reason fields are not acceptable in a GMP system. Third, <strong>the approved master recipe cannot be modified while a batch is active</strong> — the SCADA must lock the master recipe for the duration of execution. If a new version is needed, it takes effect on the next batch, not the current one.</p>
+
+    <h2 id="batch-record-requirements">What the Batch Record Must Contain</h2>
+    <p>The batch record — whether an Electronic Batch Record (EBR) generated by the SCADA, or a paper record completed alongside — must allow a QA reviewer to reconstruct exactly what happened during the batch. In a SCADA-driven batch system, the electronic batch record is generated from the data captured during execution. The key fields are not optional.</p>
+
+    <ul class="arrow-list">
+      <li><strong>Recipe ID and version used</strong> — not the current version, but the version that was active at batch start. If a new version was approved mid-campaign, the batch record must show which version executed this specific batch.</li>
+      <li><strong>Batch ID and start/end timestamps</strong> — with NTP-synchronised timestamps. Time source must be traceable and verified. See the <a href="audit-trail-implementation-scada.html">audit trail implementation guide</a> for NTP requirements.</li>
+      <li><strong>All executed parameters with planned vs actual</strong> — nominal setpoint from master recipe, actual executed value. Any deviation between planned and actual must be clearly flagged, not buried in a data table.</li>
+      <li><strong>Operator and supervisor identities</strong> — for every critical operation, who performed it and when. These must be real user IDs from authenticated sessions, not generic "Operator" accounts.</li>
+      <li><strong>All parameter changes during execution</strong> — with old value, new value, reason, user, and timestamp. If a parameter was changed mid-batch for any reason, it appears here, not just in a separate audit trail query.</li>
+      <li><strong>Any process deviations</strong> — alarms triggered, their response, and resolution. An alarm that fired and was acknowledged without corrective action is a process deviation, and the batch record should make this visible.</li>
+      <li><strong>Electronic signatures</strong> — batch initiation, critical process steps, and batch release, each with meaning text and timestamp.</li>
+    </ul>
+
+    <p>The key test for a well-designed electronic batch record: a QA reviewer who was not present during the batch should be able to determine whether the batch was executed correctly, using only the batch record, without needing to query separate historian or audit trail databases. If answers require separate database queries to reconstruct, the batch record is incomplete.</p>
+
+    <h2 id="validation-approach">How to Validate Recipe Management — The Test Strategy</h2>
+    <p>Recipe management validation follows the same V-model structure as any other system function, but there are specific test cases that are mandatory regardless of system type. The <a href="how-to-write-oq-protocol.html">OQ protocol</a> must include all of the following.</p>
+
+    <h3>Master Recipe Version Control Tests</h3>
+    <p>Verify that version increments correctly on approved change, that the previous version is retained and accessible, and that an expired version cannot be selected for batch execution. These are positive tests. The adversarial test is attempting to select an obsolete recipe for execution — the system must reject it with a clear message, and the attempt must be logged.</p>
+
+    <h3>Electronic Signature Tests</h3>
+    <p>Verify that recipe approval requires an authenticated electronic signature from a user with the correct role. Test the negative: an operator role (without recipe approval permission) attempting to approve a recipe must be rejected. Test the signature record: the batch record must show the approver ID, timestamp, and meaning text — not just a checkbox.</p>
+
+    <h3>Parameter Limit Enforcement Tests</h3>
+    <p>These are boundary tests. For each critical recipe parameter, attempt to enter the value exactly at the hard limit (should be accepted) and one unit outside the hard limit (must be rejected). This is the most important adversarial test in recipe management validation. Platforms like Ignition, WinCC, FactoryTalk View, and HistoriAN handle this enforcement differently — the test must verify the actual enforcement, not just that the FDS states limits exist.</p>
+
+    <h3>Mid-Execution Modification Tests</h3>
+    <p>With a batch in execution, attempt to modify a recipe parameter as an Operator role (should be blocked or require Supervisor override), then successfully modify it as a Supervisor with a valid reason. Verify the audit trail entry contains old value, new value, user, timestamp, and reason. Verify the modification appears in the batch record.</p>
+
+    <h3>Recipe Lock Tests</h3>
+    <p>With a batch in active execution, attempt to approve a new version of the master recipe currently in use. The system must reject this or queue the new version for post-completion activation. The current batch must complete using the version it started with.</p>
+
+    <div class="callout green">
+      <div class="callout-label">FAT vs OQ for Recipe Management</div>
+      <p>At FAT, recipe management is tested with simulated I/O and a test recipe. At OQ, it is tested with the production equipment connected. The test cases are structurally identical, but the OQ tests must use real process values — not simulated data — and must use production user accounts with real RBAC roles. An FAT that passes with a single "Admin" test account does not satisfy OQ requirements. See the <a href="iq-oq-pq-guide.html">IQ/OQ/PQ guide</a> for the full FAT-to-OQ leveraging strategy.</p>
+    </div>
+
+    <h2 id="fds-documentation">What the FDS Must Document for Recipe Management</h2>
+    <p>Recipe management must be fully specified in the FDS before any coding begins. QA will review the FDS recipe management sections before approving it for development. The FDS must define — not just describe — the following elements.</p>
+
+    <p>The <strong>recipe data model</strong>: every field in the master recipe record, with data type, allowed values, and edit permissions per role. This is not a narrative description — it is a table. The FDS reviewer needs to see that every compliance requirement has a corresponding data field.</p>
+
+    <p>The <strong>state machine for recipe lifecycle</strong>: Draft → Under Review → Approved → Active → Superseded → Obsolete. Each transition must have a defined trigger, required role, and audit trail requirement. Systems that skip states (Draft → Active in one step with no review) are non-compliant, regardless of how small the organisation is.</p>
+
+    <p>The <strong>runtime enforcement logic</strong>: which parameters can be modified at runtime, by which roles, with which controls. The FDS must be explicit. "Parameters can be modified within limits" is not sufficient — the FDS must state which parameters, what the hard limits are, and what the SCADA does when a limit is exceeded.</p>
+
+    <p>The <strong>batch record structure</strong>: a field-level description of what the electronic batch record contains. If the batch record is generated by the SCADA, its format must be approved before FAT. You cannot execute a FAT and then decide what the batch record looks like — the batch record format is part of what the FAT verifies.</p>
+
+    <div class="callout blue">
+      <div class="callout-label">Framework Note</div>
+      <p>The QLean GAMP 5 Framework is built around a Purified Water distribution system — a continuous process system, not a batch manufacturing system. There are no master recipe templates, batch record templates, or ISA-88 phase logic templates in the framework. What the framework does provide is directly applicable to the foundational requirements: the <strong>e-signature design</strong> (FUNC-SEC-004 in FDS-SYS-001) covers unique ID + password authentication, signed manifestation, meaning text, and locked-after-signature record — the same Part 11 e-signature requirements that apply to recipe approval. The <strong>audit trail data structure</strong> (typ_AuditEntry_GxP in SDS-SYS-001) with its 8 fields covers every modification event, including recipe parameter changes. The <strong>write-once architecture</strong> verified in OQ-021 demonstrates the SQL-level protection approach. These are the compliance foundations that recipe management in any pharma SCADA must build on — the framework gives you the verified pattern to adapt.</p>
+    </div>
+
+  </article>
+
+  <aside class="sidebar">
+    <div class="toc-card">
+      <div class="toc-label">In This Article</div>
+      <ul class="toc-list">
+        <li><a href="#what-recipe-management-is" class="active">What Recipe Management Is</a></li>
+        <li><a href="#isa88-model">The ISA-88 Model</a></li>
+        <li><a href="#gmp-requirements">GMP Requirements</a></li>
+        <li><a href="#master-recipe-design">Designing the Master Recipe</a></li>
+        <li><a href="#runtime-controls">Runtime Controls</a></li>
+        <li><a href="#batch-record-requirements">Batch Record Requirements</a></li>
+        <li><a href="#validation-approach">Validation Approach</a></li>
+        <li><a href="#fds-documentation">FDS Documentation</a></li>
+      </ul>
+    </div>
+    <div class="sidebar-cta">
+      <div class="sc-eyebrow">QLean Framework</div>
+      <div class="sc-title">29 production-ready GAMP 5 documents</div>
+      <div class="sc-body">Every document referenced in this article — templates, protocols, and registers — ready to adapt for your project.</div>
+      <a href="../index.html#pricing" class="sc-btn">Get the Framework — €249 →</a>
+      <div class="sc-note">// INSTANT DOWNLOAD · COMPANY-WIDE LICENCE</div>
+    </div>
+    <div class="sidebar-share">
+      <div class="share-label">Share This Article</div>
+      <div class="share-links">
+        <a href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fqleanautomation.com%2Fblog%2Frecipe-management-pharma-scada.html" target="_blank" rel="noopener" class="share-link">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          Share on LinkedIn
+        </a>
+        <a href="https://www.reddit.com/submit?url=https%3A%2F%2Fqleanautomation.com%2Fblog%2Frecipe-management-pharma-scada.html&title=Recipe+Management+in+a+Pharma+SCADA+%E2%80%94+Design+and+Validation" target="_blank" rel="noopener" class="share-link">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/></svg>
+          Share on Reddit
+        </a>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<section class="related">
+  <div class="related-inner">
+    <div class="related-label">More Articles</div>
+    <div class="related-grid">
+      <a href="electronic-batch-records-scada.html" class="related-card">
+        <div class="rc-tag">🖥️ SCADA Engineering</div>
+        <div class="rc-title">Building Electronic Batch Records in a SCADA System</div>
+        <div class="rc-desc">The EBR is the output of recipe execution. This article covers the record structure, Part 11 requirements, and how to design a SCADA EBR that survives a QA review.</div>
+        <div class="rc-footer"><div class="rc-read">9 MIN READ</div><div class="rc-arrow">→</div></div>
+      </a>
+      <a href="urs-vs-fds-pharma-difference.html" class="related-card">
+        <div class="rc-tag">📄 Design Docs</div>
+        <div class="rc-title">URS vs FDS: What's the Difference</div>
+        <div class="rc-desc">The URS states the recipe management capability required. The FDS documents how the SCADA implements it — data model, state machine, enforcement logic. Both documents are required before development begins.</div>
+        <div class="rc-footer"><div class="rc-read">7 MIN READ</div><div class="rc-arrow">→</div></div>
+      </a>
+      <a href="how-to-write-oq-protocol.html" class="related-card">
+        <div class="rc-tag">📋 Validation</div>
+        <div class="rc-title">How to Write an OQ Protocol for a PLC/SCADA System</div>
+        <div class="rc-desc">Recipe management requires a comprehensive OQ test strategy — version control, e-signatures, parameter limits, and mid-execution modification tests. Here's the full OQ protocol structure.</div>
+        <div class="rc-footer"><div class="rc-read">10 MIN READ</div><div class="rc-arrow">→</div></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="../index.html" class="nav-logo">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none" style="flex-shrink:0"><rect width="32" height="32" rx="7" fill="#0d0f12"/><rect x="8" y="7" width="16" height="16" rx="2" stroke="white" stroke-width="2.5" fill="none"/><line x1="20" y1="19" x2="26" y2="25" stroke="#0057FF" stroke-width="3" stroke-linecap="round"/></svg>
+          <span style="font-family:'Epilogue',sans-serif;font-weight:800;font-size:16px;color:#0d0f12;letter-spacing:-.03em;white-space:nowrap">QLean <span style="font-weight:300;color:#5a6172">Automation</span></span>
+        </a>
+        <p>GMP documentation tools for system integrators and automation engineers entering pharmaceutical projects.</p>
+      </div>
+      <div class="footer-col"><h4>Products</h4><ul><li><a href="../index.html#framework">GAMP 5 Framework</a></li><li><a href="../index.html#products">Technical Masterclass</a></li></ul></div>
+      <div class="footer-col"><h4>Knowledge Base</h4><ul>
+        <li><a href="blog-index.html">All Articles</a></li>
+        <li><a href="electronic-batch-records-scada.html">Electronic Batch Records</a></li>
+        <li><a href="urs-vs-fds-pharma-difference.html">URS vs FDS</a></li>
+        <li><a href="how-to-write-oq-protocol.html">How to Write an OQ Protocol</a></li>
+        <li><a href="21-cfr-part-11.html">21 CFR Part 11 Guide</a></li>
+        <li><a href="iq-oq-pq-guide.html">IQ OQ PQ Guide</a></li>
+        <li><a href="audit-trail-implementation-scada.html">Audit Trail Implementation</a></li>
+      </ul></div>
+      <div class="footer-col"><h4>Company</h4><ul><li><a href="https://www.linkedin.com/company/qlean-automation" target="_blank">LinkedIn</a></li><li><a href="mailto:hello@qleanautomation.com">Contact</a></li><li><a href="../terms.html">Terms</a></li></ul></div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 QLEAN AUTOMATION · QLEANAUTOMATION.COM</p>
+      <div class="compliance-pills"><span class="cp">ISA-88</span><span class="cp">21 CFR PART 11</span><span class="cp">EU ANNEX 11</span><span class="cp">GAMP 5</span></div>
+    </div>
+  </div>
+</footer>
+
+<script>
+window.addEventListener('scroll',()=>{const d=document.documentElement;document.getElementById('progress').style.width=(d.scrollTop/(d.scrollHeight-d.clientHeight)*100)+'%'});
+const obs=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting){document.querySelectorAll('.toc-list a').forEach(l=>l.classList.remove('active'));const a=document.querySelector('.toc-list a[href="#'+x.target.id+'"]');if(a)a.classList.add('active')}})  ,{rootMargin:'-20% 0px -70% 0px'});
+document.querySelectorAll('[id]').forEach(s=>obs.observe(s));
+</script>
+</body>
+</html>

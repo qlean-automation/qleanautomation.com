@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-JJQ1TXZJX7"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-JJQ1TXZJX7');
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Managing Scope Creep on Validation Projects | QLean Automation</title>
+<meta name="description" content="Scope creep on a standard automation project costs margin. On a validated pharma project, it costs margin plus requalification. Here is how to identify scope change early, process it correctly through change control, and protect the validation package from silent expansion.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@300;400;500;600;700;800;900&family=Source+Sans+3:ital,wght@0,300;0,400;0,500;1,300&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--white:#ffffff;--off:#f7f8f9;--ink:#0d0f12;--ink2:#1e2128;--ink3:#3d4456;--ink4:#9199a8;--rule:#e2e5ea;--rule2:#c8cdd6;--blue:#0057ff;--blue2:#0044cc;--blue-dim:rgba(0,87,255,0.07);--green:#00875a;--green-dim:rgba(0,135,90,0.08);--amber:#d97706;--amber-dim:rgba(217,119,6,0.08);--red:#c0392b;--red-dim:rgba(192,57,43,0.08);--f-head:'Epilogue',sans-serif;--f-body:'Source Sans 3',sans-serif;--f-mono:'Roboto Mono',monospace;--shadow-sm:0 2px 8px rgba(13,15,18,0.06),0 1px 3px rgba(13,15,18,0.04)}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}body{background:var(--white);color:var(--ink);font-family:var(--f-body);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+nav{position:fixed;top:0;left:0;right:0;z-index:200;height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 6%;background:rgba(255,255,255,0.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--rule)}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;flex-shrink:0}
+.nav-links{display:flex;align-items:center;gap:36px;list-style:none}.nav-links a{font-size:14px;font-weight:400;color:var(--ink3);text-decoration:none;transition:color .2s}.nav-links a:hover{color:var(--ink)}
+.nav-btn{font-family:var(--f-body);font-size:13px;font-weight:500;padding:9px 20px;background:var(--blue);color:white;border:none;border-radius:6px;cursor:pointer;text-decoration:none;white-space:nowrap;flex-shrink:0}.nav-btn:hover{background:var(--blue2)}
+.progress-bar{position:fixed;top:64px;left:0;right:0;height:2px;background:var(--rule);z-index:199}.progress-fill{height:100%;background:var(--blue);width:0%}
+.article-hero{padding:120px 6% 64px;background:var(--white);border-bottom:1px solid var(--rule);position:relative;overflow:hidden}
+.article-hero::before{content:'';position:absolute;top:-80px;right:-80px;width:400px;height:400px;background:radial-gradient(circle,rgba(0,87,255,0.04) 0%,transparent 70%);pointer-events:none}
+.article-hero-inner{max-width:940px;margin:0 auto;position:relative;z-index:1}
+.breadcrumb{display:flex;align-items:center;gap:8px;font-family:var(--f-mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink4);margin-bottom:24px}.breadcrumb a{color:var(--ink4);text-decoration:none}.breadcrumb a:hover{color:var(--blue)}.breadcrumb span{color:var(--rule2)}
+.article-tag{display:inline-flex;align-items:center;gap:6px;font-family:var(--f-mono);font-size:10px;font-weight:500;color:var(--blue);letter-spacing:.1em;text-transform:uppercase;margin-bottom:20px;padding:4px 10px;background:var(--blue-dim);border-radius:4px}
+.article-hero h1{font-family:var(--f-head);font-size:clamp(30px,5vw,52px);font-weight:900;line-height:1.0;letter-spacing:-.04em;color:var(--ink);margin-bottom:20px}.article-hero h1 span{color:var(--blue)}
+.article-intro{font-size:18px;font-weight:400;color:var(--ink2);line-height:1.75;margin-bottom:32px;max-width:800px}
+.article-meta{display:flex;align-items:center;gap:24px;padding-top:24px;border-top:1px solid var(--rule);flex-wrap:wrap}
+.meta-author{display:flex;align-items:center;gap:10px}.author-avatar{width:36px;height:36px;border-radius:50%;background:var(--ink);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.author-name{font-size:13px;font-weight:500;color:var(--ink)}.author-role{font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.04em}
+.meta-divider{width:1px;height:28px;background:var(--rule)}.meta-stat{font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.06em}
+.article-wrap{max-width:1300px;margin:0 auto;padding:64px 6%;display:grid;grid-template-columns:1fr 300px;gap:60px;align-items:start}
+.article-body{min-width:0}
+.article-body h2{font-family:var(--f-head);font-size:26px;font-weight:800;letter-spacing:-.03em;color:var(--ink);margin:56px 0 16px;line-height:1.2}.article-body h2:first-child{margin-top:0}
+.article-body h3{font-family:var(--f-head);font-size:18px;font-weight:700;letter-spacing:-.02em;color:var(--ink);margin:32px 0 12px}
+.article-body p{font-size:16px;font-weight:400;color:var(--ink2);line-height:1.85;margin-bottom:20px}
+.article-body strong{color:var(--ink);font-weight:600}
+.article-body a{color:var(--blue);text-decoration:none;border-bottom:1px solid rgba(0,87,255,.25)}.article-body a:hover{border-color:var(--blue)}
+.callout{padding:20px 24px;border-radius:8px;margin:32px 0;border-left:3px solid}
+.callout.blue{background:var(--blue-dim);border-color:var(--blue)}.callout.amber{background:var(--amber-dim);border-color:var(--amber)}.callout.green{background:var(--green-dim);border-color:var(--green)}.callout.red{background:var(--red-dim);border-color:var(--red)}
+.callout-label{font-family:var(--f-mono);font-size:9px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px}.callout.blue .callout-label{color:var(--blue)}.callout.amber .callout-label{color:var(--amber)}.callout.green .callout-label{color:var(--green)}.callout.red .callout-label{color:var(--red)}
+.callout p{font-size:14px;color:var(--ink2);line-height:1.7;margin:0}.callout strong{color:var(--ink)}
+.article-img{width:100%;border-radius:8px;border:1px solid #1e2535;overflow:hidden;margin:36px 0}
+.article-img figcaption{padding:10px 14px;background:var(--off);font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.04em;border-top:1px solid var(--rule)}
+.checklist{list-style:none;display:flex;flex-direction:column;gap:8px;margin:20px 0 28px}
+.checklist li{display:flex;align-items:flex-start;gap:10px;font-size:15px;color:var(--ink2);line-height:1.6}
+.checklist li::before{content:'';width:16px;height:16px;flex-shrink:0;margin-top:3px;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 14 14' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='7' cy='7' r='6.5' fill='none' stroke='%230057ff' stroke-width='1'/%3E%3Cpath d='M4 7l2 2 4-4' stroke='%230057ff' stroke-width='1.3' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:center;background-size:contain}
+.arrow-list{list-style:none;display:flex;flex-direction:column;gap:8px;margin:20px 0 28px}
+.arrow-list li{display:flex;align-items:flex-start;gap:10px;font-size:15px;color:var(--ink2);line-height:1.6}
+.arrow-list li::before{content:'\2192';color:var(--blue);flex-shrink:0;font-family:var(--f-mono);font-size:13px;margin-top:2px}
+.table-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:28px 0}
+.compare-table{width:100%;border-collapse:collapse;font-size:14px}
+.compare-table th{font-family:var(--f-mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink4);padding:10px 16px;border-bottom:2px solid var(--rule);text-align:left;background:var(--off)}
+.compare-table td{padding:12px 16px;border-bottom:1px solid var(--rule);vertical-align:top;color:var(--ink2);line-height:1.6}
+.compare-table tr:last-child td{border-bottom:none}
+.compare-table td:first-child{font-weight:600;color:var(--ink);font-family:var(--f-mono);font-size:12px}
+.sidebar{position:sticky;top:88px;display:flex;flex-direction:column;gap:16px}
+.toc-card{border:1px solid var(--rule);border-radius:8px;padding:24px;background:var(--white);box-shadow:var(--shadow-sm)}
+.toc-label{font-family:var(--f-mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);margin-bottom:16px}
+.toc-list{list-style:none;display:flex;flex-direction:column;gap:2px}
+.toc-list a{display:block;font-size:13px;color:var(--ink3);text-decoration:none;padding:6px 10px;border-radius:4px;transition:all .15s;border-left:2px solid transparent}
+.toc-list a:hover,.toc-list a.active{color:var(--blue);background:var(--blue-dim);border-left-color:var(--blue)}
+.sidebar-cta{border:1px solid var(--blue);border-radius:8px;padding:24px;background:var(--blue-dim)}
+.sc-eyebrow{font-family:var(--f-mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);margin-bottom:10px}
+.sc-title{font-family:var(--f-head);font-size:17px;font-weight:800;letter-spacing:-.02em;color:var(--ink);margin-bottom:8px;line-height:1.2}
+.sc-body{font-size:13px;color:var(--ink3);line-height:1.6;margin-bottom:16px}
+.sc-btn{display:block;text-align:center;padding:11px 16px;background:var(--blue);color:white;border-radius:6px;font-family:var(--f-body);font-size:13px;font-weight:500;text-decoration:none}.sc-btn:hover{background:var(--blue2)}
+.sc-note{font-family:var(--f-mono);font-size:9px;color:var(--ink4);text-align:center;margin-top:8px;letter-spacing:.04em}
+.sidebar-share{border:1px solid var(--rule);border-radius:8px;padding:20px 24px;background:var(--white)}
+.share-label{font-family:var(--f-mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);margin-bottom:14px}
+.share-links{display:flex;flex-direction:column;gap:8px}
+.share-link{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--ink3);text-decoration:none;padding:9px 12px;border:1px solid var(--rule);border-radius:6px;transition:border-color .2s,color .2s}.share-link:hover{border-color:var(--blue);color:var(--blue)}
+.related{padding:64px 6%;border-top:1px solid var(--rule);background:var(--off)}
+.related-inner{max-width:1100px;margin:0 auto}
+.related-label{font-family:var(--f-mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);margin-bottom:32px;display:flex;align-items:center;gap:10px}
+.related-label::before{content:'';width:20px;height:1px;background:var(--blue)}
+.related-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.related-card{padding:24px;border:1px solid var(--rule);border-radius:8px;background:var(--white);box-shadow:var(--shadow-sm);transition:border-color .2s,transform .2s;text-decoration:none;display:flex;flex-direction:column;gap:12px}.related-card:hover{border-color:var(--blue);transform:translateY(-4px)}
+.rc-tag{font-family:var(--f-mono);font-size:9px;color:var(--blue);letter-spacing:.08em;text-transform:uppercase;padding:3px 8px;background:var(--blue-dim);border-radius:3px;align-self:flex-start}
+.rc-title{font-family:var(--f-head);font-size:16px;font-weight:700;letter-spacing:-.02em;color:var(--ink);line-height:1.25}
+.rc-desc{font-size:13px;color:var(--ink3);line-height:1.6;flex:1}
+.rc-footer{display:flex;align-items:center;justify-content:space-between;padding-top:12px;border-top:1px solid var(--rule)}
+.rc-read{font-family:var(--f-mono);font-size:10px;color:var(--ink4)}.rc-arrow{font-size:14px;color:var(--blue)}
+footer{padding:56px 6% 32px;border-top:1px solid var(--rule);background:var(--white)}
+.footer-inner{max-width:1160px;margin:0 auto}
+.footer-top{display:flex;justify-content:space-between;align-items:flex-start;gap:40px;flex-wrap:wrap;margin-bottom:48px}
+.footer-brand p{font-size:13px;font-weight:300;color:var(--ink3);margin-top:12px;max-width:260px;line-height:1.6}
+.footer-col h4{font-family:var(--f-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink4);margin-bottom:16px}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+.footer-col a{font-size:13px;color:var(--ink3);text-decoration:none}.footer-col a:hover{color:var(--blue)}
+.footer-bottom{padding-top:24px;border-top:1px solid var(--rule);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.footer-bottom p{font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.04em}
+.compliance-pills{display:flex;gap:6px;flex-wrap:wrap}
+.cp{font-family:var(--f-mono);font-size:9px;padding:3px 8px;border:1px solid var(--rule);border-radius:3px;color:var(--ink4);letter-spacing:.06em}
+@media(max-width:900px){.article-wrap{grid-template-columns:1fr;gap:48px}.sidebar{position:static}.related-grid{grid-template-columns:1fr}.table-scroll{margin:20px 0}}
+@media(max-width:900px){.nav-links{display:none}}
+@media(max-width:540px){nav{padding:0 4%}.nav-btn{font-size:12px;padding:8px 14px}}
+</style>
+</head>
+<body>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+<nav>
+  <a href="../index.html" class="nav-logo">
+    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" style="flex-shrink:0"><rect width="32" height="32" rx="7" fill="#0d0f12"/><rect x="8" y="7" width="16" height="16" rx="2" stroke="white" stroke-width="2.5" fill="none"/><line x1="20" y1="19" x2="26" y2="25" stroke="#0057FF" stroke-width="3" stroke-linecap="round"/></svg>
+    <span style="font-family:'Epilogue',sans-serif;font-weight:800;font-size:16px;color:#0d0f12;letter-spacing:-.03em;white-space:nowrap">QLean <span style="font-weight:300;color:#5a6172">Automation</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="../index.html#products">Products</a></li>
+    <li><a href="../index.html#framework">Framework</a></li>
+    <li><a href="blog-index.html">Knowledge Base</a></li>
+    <li><a href="../index.html#pricing">Pricing</a></li>
+    <li><a href="../about.html">About</a></li>
+    <li><a href="../index.html#faq">FAQ</a></li>
+  </ul>
+  <a href="../index.html#pricing" class="nav-btn">Get the Framework &#8594;</a>
+</nav>
+
+<header class="article-hero">
+  <div class="article-hero-inner">
+    <div class="breadcrumb"><a href="../index.html">Home</a><span>/</span><a href="blog-index.html">Knowledge Base</a><span>/</span>Managing Scope Creep on Validation Projects</div>
+    <div class="article-tag">&#128203; Project Management</div>
+    <h1>Managing Scope Creep<br><span>on Validation</span><br>Projects</h1>
+    <p class="article-intro">Scope creep on a standard automation project costs margin. On a validated pharma project, it costs margin plus requalification — and if it happened silently, it also costs the integrity of the validation package. A feature added to the system without a change control, a new instrument integrated without updating the URS, a modified alarm setpoint never reflected in the OQ: each of these is a documentation gap with regulatory consequences. Here is how to prevent them, catch them early, and handle them correctly when they happen anyway.</p>
+    <div class="article-meta">
+      <div class="meta-author">
+        <div class="author-avatar"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="7" r="3.5" stroke="white" stroke-width="1.5"/><path d="M2.5 16c0-3.59 2.91-6.5 6.5-6.5s6.5 2.91 6.5 6.5" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+        <div><div class="author-name">QLean Automation</div><div class="author-role">ENGINEERS WHO BUILD SYSTEMS, NOT JUST SIGN THEM</div></div>
+      </div>
+      <div class="meta-divider"></div><div class="meta-stat">6 MIN READ</div>
+      <div class="meta-divider"></div><div class="meta-stat">PROJECT MANAGEMENT &#183; SCOPE CONTROL &#183; CHANGE CONTROL</div>
+    </div>
+  </div>
+</header>
+
+<div class="article-wrap">
+  <article class="article-body">
+
+    <h2 id="why-scope-creep-is-worse-in-pharma">Why Scope Creep Is Worse in Pharma Than Anywhere Else</h2>
+    <p>In most engineering projects, scope creep is a commercial problem: the client asks for more, the SI delivers it, and the budget conversation happens at the end. The system still works, even if the margin did not survive. In a validated pharma context, scope creep has a second dimension that the commercial conversation cannot resolve: every change to the validated scope either goes through change control or it becomes an undocumented deviation from the approved design.</p>
+    <p>The Project Quality Plan explicitly identifies scope creep — specifically "system changes after URS approval without Change Control" — as a HIGH-risk project quality risk. It is HIGH-risk because it is common, often unintentional, and creates exactly the kind of documentation-to-reality mismatch that auditors are trained to find. A system that does more than the URS says it does is not a system that has added value. It is a system with untested, unvalidated functionality operating in a GMP environment.</p>
+
+    <div class="callout red">
+      <div class="callout-label">The Undocumented Feature Problem</div>
+      <p>When an engineer adds a feature during development that was not in the URS — however useful or sensible — that feature has no requirement, no design reference, no test case, and no entry in the traceability matrix. It exists in the validated system with no paper trail. An auditor who discovers it will ask: where is the requirement for this? Where was it tested? What risk was assessed? <strong>If those questions cannot be answered, the feature is an undocumented change in a validated system — a finding, regardless of whether it works perfectly.</strong></p>
+    </div>
+
+    <h2 id="the-three-types-of-scope-change-on-validation-projects">The Three Types of Scope Change on Validation Projects</h2>
+    <p>Not all scope changes carry the same risk or require the same response. Understanding the three types helps the project team apply the right control proportionately.</p>
+
+    <figure class="article-img">
+      <svg viewBox="0 0 720 230" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;background:#0d0f12;border-radius:8px 8px 0 0">
+        <text x="360" y="18" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(255,255,255,0.2)" letter-spacing="0.12em">THREE TYPES OF SCOPE CHANGE — RISK LEVEL AND REQUIRED CONTROL</text>
+
+        <!-- Type 1 -->
+        <rect x="10" y="30" width="222" height="180" rx="5" fill="rgba(0,87,255,0.08)" stroke="rgba(0,87,255,0.3)" stroke-width="1"/>
+        <rect x="10" y="30" width="222" height="32" rx="5" fill="rgba(0,87,255,0.15)"/>
+        <rect x="10" y="50" width="222" height="12" rx="0" fill="rgba(0,87,255,0.15)"/>
+        <text x="121" y="52" text-anchor="middle" font-family="Epilogue,sans-serif" font-weight="800" font-size="12" fill="white">TYPE 1 — ADDITION</text>
+        <text x="121" y="68" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(0,135,255,0.7)">New feature or I/O added to scope</text>
+        <line x1="20" y1="76" x2="222" y2="76" stroke="rgba(0,87,255,0.15)" stroke-width="1"/>
+        <text x="121" y="94" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(180,200,230,0.75)">Requires: URS amendment</text>
+        <text x="121" y="108" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(180,200,230,0.75)">+ FDS update + new test cases</text>
+        <text x="121" y="122" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(180,200,230,0.75)">+ TM update + CCR</text>
+        <text x="121" y="144" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(192,57,43,0.8)" text-anchor="middle">RISK: HIGH</text>
+        <text x="121" y="158" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(180,200,230,0.6)">Adds unvalidated functionality</text>
+        <text x="121" y="172" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(180,200,230,0.6)">to a GMP environment</text>
+        <text x="121" y="196" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(0,200,100,0.6)">CCR required before implementation</text>
+
+        <!-- Type 2 -->
+        <rect x="249" y="30" width="222" height="180" rx="5" fill="rgba(217,119,6,0.06)" stroke="rgba(217,119,6,0.25)" stroke-width="1"/>
+        <rect x="249" y="30" width="222" height="32" rx="5" fill="rgba(217,119,6,0.12)"/>
+        <rect x="249" y="50" width="222" height="12" rx="0" fill="rgba(217,119,6,0.12)"/>
+        <text x="360" y="52" text-anchor="middle" font-family="Epilogue,sans-serif" font-weight="800" font-size="12" fill="white">TYPE 2 — MODIFICATION</text>
+        <text x="360" y="68" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(240,160,40,0.7)">Existing requirement changed</text>
+        <line x1="259" y1="76" x2="461" y2="76" stroke="rgba(217,119,6,0.12)" stroke-width="1"/>
+        <text x="360" y="94" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(180,200,230,0.75)">Requires: URS amendment</text>
+        <text x="360" y="108" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(180,200,230,0.75)">+ FDS update (if design affected)</text>
+        <text x="360" y="122" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(180,200,230,0.75)">+ test case revision + CCR</text>
+        <text x="360" y="144" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(217,119,6,0.8)" text-anchor="middle">RISK: MEDIUM</text>
+        <text x="360" y="158" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(180,200,230,0.6)">May invalidate existing test</text>
+        <text x="360" y="172" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(180,200,230,0.6)">evidence if setpoint changes</text>
+        <text x="360" y="196" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(0,200,100,0.6)">CCR required before implementation</text>
+
+        <!-- Type 3 -->
+        <rect x="488" y="30" width="222" height="180" rx="5" fill="rgba(0,135,90,0.06)" stroke="rgba(0,135,90,0.22)" stroke-width="1"/>
+        <rect x="488" y="30" width="222" height="32" rx="5" fill="rgba(0,135,90,0.12)"/>
+        <rect x="488" y="50" width="222" height="12" rx="0" fill="rgba(0,135,90,0.12)"/>
+        <text x="599" y="52" text-anchor="middle" font-family="Epilogue,sans-serif" font-weight="800" font-size="12" fill="white">TYPE 3 — CLARIFICATION</text>
+        <text x="599" y="68" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(0,175,100,0.7)">Requirement better defined</text>
+        <line x1="498" y1="76" x2="700" y2="76" stroke="rgba(0,135,90,0.12)" stroke-width="1"/>
+        <text x="599" y="94" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(180,200,230,0.75)">Requires: URS revision only</text>
+        <text x="599" y="108" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(180,200,230,0.75)">No functional change.</text>
+        <text x="599" y="122" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(180,200,230,0.75)">Existing tests still valid.</text>
+        <text x="599" y="144" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(0,200,100,0.7)" text-anchor="middle">RISK: LOW</text>
+        <text x="599" y="158" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(180,200,230,0.6)">Ambiguous language made</text>
+        <text x="599" y="172" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(180,200,230,0.6)">precise; intent unchanged</text>
+        <text x="599" y="196" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(0,200,100,0.6)">Document revision only required</text>
+      </svg>
+      <figcaption>FIGURE 1 — Three types of scope change and their required controls. Type 3 (clarification) is frequently misclassified as Type 1 or 2 — getting this right avoids unnecessary CCRs while keeping the URS accurate.</figcaption>
+    </figure>
+
+    <h2 id="early-detection-the-urs-as-scope-baseline">Early Detection — The URS as Scope Baseline</h2>
+    <p>The most effective scope creep prevention tool is a well-written, approved URS with a clearly stated scope boundary. The <a href="how-to-write-urs-plc-scada.html">URS</a> defines exactly what the system must do. Anything the system does that is not in the URS is, by definition, outside the validated scope. This sounds obvious but is consistently underestimated: most scope creep does not come from deliberate additions — it comes from engineers solving problems they encounter during development and implementing solutions that were not formally specified.</p>
+    <p>The URS scope boundary section is the reference point for every scope question during the project. When a client asks "can you also add a display of the daily production total on the main overview screen?" — the answer is not yes or no. The answer is: "that is not currently in the URS scope; if you want it, we raise a change request and assess the impact on the validation timeline and cost." That conversation, had consistently and professionally, is what keeps validation projects from quietly expanding until they are unmanageable.</p>
+
+    <h2 id="the-change-control-as-scope-protection-mechanism">The Change Control as Scope Protection Mechanism</h2>
+    <p>The <a href="change-control-validated-system.html">change control process</a> is most commonly discussed in the context of post-validation system changes. Its scope protection function during the project — before the system is validated — is equally important and less frequently applied correctly.</p>
+    <p>Once the URS is approved, every addition or modification to its content requires a Change Control Request. This is true even if the project is still in the design phase. The CCR creates a record that the scope changed, why it changed, what the impact on the validation timeline is, and what additional testing is required. Without this record, the validation package will contain a URS at Revision A and an OQ that tests things that are not in Revision A of the URS — a traceability gap that every auditor will find.</p>
+    <p>The practical challenge is that raising a formal CCR for every small client request feels bureaucratic during an active engineering phase. The resolution is to batch minor clarifications and corrections into periodic URS revision reviews — every two to three weeks during active development — rather than trying to process each change as a separate CCR. What cannot be batched are genuine additions or modifications to functional requirements, which need their own CCR because they affect test case development.</p>
+
+    <h2 id="the-traceability-matrix-as-an-early-warning-system">The Traceability Matrix as an Early Warning System</h2>
+    <p>The <a href="traceability-matrix-guide.html">Traceability Matrix</a> maintained in parallel with active development is one of the most effective early warning systems for scope creep. If an engineer adds a test case to the OQ protocol that does not map to a URS requirement, the TM will show an orphaned test case — a test with no requirement. That is gold plating at minimum and an undocumented addition at worst. If the system implements a behaviour that requires a test case but there is no requirement in the URS for it, the TM reveals the gap before the OQ is approved.</p>
+    <p>A TM that is updated incrementally — as requirements are written, as design decisions are made, as test cases are developed — catches scope creep at the point it enters the project rather than when the auditor finds it. The TM is not a document to be assembled at the end; it is a living project management tool. The discipline of populating it continuously is the same discipline that prevents scope creep from accumulating into a problem that cannot be fixed without a major documentation rework.</p>
+
+    <div class="callout amber">
+      <div class="callout-label">The Scope Creep Budget</div>
+      <p>One practical commercial approach is to price a defined scope change budget into the project contract — a bank of hours that can absorb minor scope additions through the change control process without triggering a commercial dispute for each one. The budget is consumed by formal CCRs; when it is exhausted, further changes are priced individually. This structure acknowledges that some scope evolution is inevitable on complex pharma projects while maintaining the formal change control discipline that keeps the validation package coherent. <strong>The alternative — absorbing every scope addition as overhead while maintaining the fiction that the project has not changed — destroys margin and creates documentation inconsistencies simultaneously.</strong></p>
+    </div>
+
+    <h2 id="retroactively-addressing-undocumented-scope-changes">Retroactively Addressing Undocumented Scope Changes</h2>
+    <p>When scope creep is discovered — a feature is in the system that was never in the URS, or a parameter was changed and neither the FDS nor the test cases reflect the change — the correct response is to address it through a formal retrospective change control rather than hoping nobody notices. Hoping is not a compliance strategy.</p>
+    <p>A retrospective CCR documents: what was built or changed, when it was implemented, why the change was not captured at the time, what the impact assessment shows retrospectively, and what testing exists or needs to be performed to validate the changed scope. The retrospective CCR is a stronger audit position than no CCR, because it demonstrates that the gap was identified and addressed through the quality system rather than ignored.</p>
+    <p>At the VSR stage, the Validation Lead must be able to account for every feature in the validated system. A well-maintained TM and change control log makes this straightforward. A system where features accreted silently over the project makes it impossible without a comprehensive retrospective review — which costs far more time than the change controls would have cost during the project.</p>
+
+    <div class="callout green">
+      <div class="callout-label">In the QLean Framework</div>
+      <p>The Project Quality Plan (PQP-SYS-001) explicitly lists scope creep as QR-004 — a HIGH-risk project quality risk — with the mitigation: enforce the Change Control gate (CCR-SYS-001) for all post-approval changes; no informal verbal changes. The Change Control Log (CCLSYS001) tracks all CCRs with their status, scope, and impact assessment. The Traceability Matrix (TMSYS001) is the early warning tool. <strong>The framework's risk register, change control log, and traceability matrix form a coherent scope protection system when maintained together throughout the project.</strong></p>
+    </div>
+
+  </article>
+
+  <aside class="sidebar">
+    <div class="toc-card">
+      <div class="toc-label">In This Article</div>
+      <ul class="toc-list">
+        <li><a href="#why-scope-creep-is-worse-in-pharma" class="active">Why It's Worse in Pharma</a></li>
+        <li><a href="#the-three-types-of-scope-change-on-validation-projects">Three Types of Scope Change</a></li>
+        <li><a href="#early-detection-the-urs-as-scope-baseline">URS as Scope Baseline</a></li>
+        <li><a href="#the-change-control-as-scope-protection-mechanism">Change Control as Protection</a></li>
+        <li><a href="#the-traceability-matrix-as-an-early-warning-system">TM as Early Warning</a></li>
+        <li><a href="#retroactively-addressing-undocumented-scope-changes">Retroactive Remediation</a></li>
+      </ul>
+    </div>
+
+    <div class="sidebar-cta">
+      <div class="sc-eyebrow">QLean Framework</div>
+      <div class="sc-title">29 production-ready GAMP 5 documents</div>
+      <div class="sc-body">PQP with scope creep risk register, Change Control Log, Change Control SOP, and Traceability Matrix — the complete scope protection toolkit for a pharma validation project.</div>
+      <a href="../index.html#pricing" class="sc-btn">Get the Framework &#8212; &#8364;249 &#8594;</a>
+      <div class="sc-note">// INSTANT DOWNLOAD &middot; COMPANY-WIDE LICENCE</div>
+    </div>
+
+    <div class="sidebar-share">
+      <div class="share-label">Share This Article</div>
+      <div class="share-links">
+        <a href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fqleanautomation.com%2Fblog%2Fscope-creep-validation-projects.html" target="_blank" rel="noopener" class="share-link">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          Share on LinkedIn
+        </a>
+        <a href="https://www.reddit.com/submit?url=https%3A%2F%2Fqleanautomation.com%2Fblog%2Fscope-creep-validation-projects.html&title=Managing+Scope+Creep+on+Validation+Projects" target="_blank" rel="noopener" class="share-link">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/></svg>
+          Share on Reddit
+        </a>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<section class="related">
+  <div class="related-inner">
+    <div class="related-label">Continue Reading</div>
+    <div class="related-grid">
+      <a href="change-control-validated-system.html" class="related-card">
+        <span class="rc-tag">&#128196; GAMP 5 Theory</span>
+        <div class="rc-title">Change Control on a Validated System</div>
+        <div class="rc-desc">The full change control process — what triggers it, how to scope the impact assessment, and what happens to the validation status when a change is applied.</div>
+        <div class="rc-footer"><span class="rc-read">8 MIN READ</span><span class="rc-arrow">&#8594;</span></div>
+      </a>
+      <a href="validation-plan-what-it-must-contain.html" class="related-card">
+        <span class="rc-tag">&#128203; Project Management</span>
+        <div class="rc-title">Validation Plan — What It Must Contain</div>
+        <div class="rc-desc">The VP is where the scope boundary is formally defined. A well-written VP with explicit in-scope/out-of-scope boundaries is the primary scope creep prevention tool.</div>
+        <div class="rc-footer"><span class="rc-read">7 MIN READ</span><span class="rc-arrow">&#8594;</span></div>
+      </a>
+      <a href="how-to-write-urs-plc-scada.html" class="related-card">
+        <span class="rc-tag">&#128196; GAMP 5 Theory</span>
+        <div class="rc-title">How to Write a URS for a PLC/SCADA System</div>
+        <div class="rc-desc">A well-written URS with testable requirements and a clear scope boundary is the first line of defence against scope creep throughout the project lifecycle.</div>
+        <div class="rc-footer"><span class="rc-read">9 MIN READ</span><span class="rc-arrow">&#8594;</span></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="../index.html" class="nav-logo" style="text-decoration:none">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="7" fill="#0d0f12"/><rect x="8" y="7" width="16" height="16" rx="2" stroke="white" stroke-width="2.5" fill="none"/><line x1="20" y1="19" x2="26" y2="25" stroke="#0057FF" stroke-width="3" stroke-linecap="round"/></svg>
+          <span style="font-family:'Epilogue',sans-serif;font-weight:800;font-size:16px;color:#0d0f12;letter-spacing:-.03em">QLean <span style="font-weight:300;color:#5a6172">Automation</span></span>
+        </a>
+        <p>GMP validation documentation tools for automation engineers and system integrators.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Products</h4>
+        <ul>
+          <li><a href="../index.html#products">GAMP 5 Framework Pack</a></li>
+          <li><a href="../index.html#products">Technical Ebook</a></li>
+          <li><a href="../index.html#pricing">Pricing</a></li>
+          <li><a href="../index.html#faq">FAQ</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Knowledge Base</h4>
+        <ul>
+          <li><a href="blog-index.html">All Articles</a></li>
+          <li><a href="cluster-project-mgmt.html">Project Management</a></li>
+          <li><a href="change-control-validated-system.html">Change Control</a></li>
+          <li><a href="validation-plan-what-it-must-contain.html">Validation Plan</a></li>
+          <li><a href="traceability-matrix-guide.html">Traceability Matrix</a></li>
+          <li><a href="how-to-write-urs-plc-scada.html">How to Write a URS</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="../index.html#framework">Framework</a></li>
+          <li><a href="../terms.html">Terms of Service</a></li>
+          <li><a href="../privacy.html">Privacy Policy</a></li>
+          <li><a href="mailto:hello@qleanautomation.com">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 QLean Automation. All rights reserved.</p>
+      <div class="compliance-pills">
+        <span class="cp">GAMP 5</span>
+        <span class="cp">EU GMP ANNEX 11</span>
+        <span class="cp">21 CFR PART 11</span>
+        <span class="cp">GXP</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+window.addEventListener('scroll',function(){
+  var s=document.getElementById('progress');
+  var h=document.documentElement;
+  var p=(h.scrollTop||document.body.scrollTop)/(h.scrollHeight-h.clientHeight)*100;
+  s.style.width=p+'%';
+});
+var tl=document.querySelectorAll('.toc-list a');
+window.addEventListener('scroll',function(){
+  var headings=document.querySelectorAll('.article-body h2[id]');
+  var scrollY=window.scrollY+120;
+  var current='';
+  headings.forEach(function(h){if(h.offsetTop<=scrollY)current=h.id;});
+  tl.forEach(function(a){
+    a.classList.remove('active');
+    if(a.getAttribute('href')==='#'+current)a.classList.add('active');
+  });
+});
+</script>
+</body>
+</html>

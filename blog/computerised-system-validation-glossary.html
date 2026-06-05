@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-JJQ1TXZJX7"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-JJQ1TXZJX7');
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GMP Validation Glossary for Automation Engineers — 60 Terms Defined | QLean Automation</title>
+<meta name="description" content="60 GMP validation terms explained for PLC and SCADA engineers. From ALCOA+ to V-Model, GAMP 5 to 21 CFR Part 11 — every term you will encounter working on pharma automation projects, defined in plain engineering language.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@300;400;500;600;700;800;900&family=Source+Sans+3:ital,wght@0,300;0,400;0,500;1,300&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--white:#ffffff;--off:#f7f8f9;--ink:#0d0f12;--ink2:#1e2128;--ink3:#3d4456;--ink4:#9199a8;--rule:#e2e5ea;--rule2:#c8cdd6;--blue:#0057ff;--blue2:#0044cc;--blue-dim:rgba(0,87,255,0.07);--green:#00875a;--green-dim:rgba(0,135,90,0.08);--amber:#d97706;--amber-dim:rgba(217,119,6,0.08);--red:#c0392b;--red-dim:rgba(192,57,43,0.08);--f-head:'Epilogue',sans-serif;--f-body:'Source Sans 3',sans-serif;--f-mono:'Roboto Mono',monospace;--shadow-sm:0 2px 8px rgba(13,15,18,0.06),0 1px 3px rgba(13,15,18,0.04)}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}body{background:var(--white);color:var(--ink);font-family:var(--f-body);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+nav{position:fixed;top:0;left:0;right:0;z-index:200;height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 6%;background:rgba(255,255,255,0.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--rule)}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;flex-shrink:0}
+.nav-links{display:flex;align-items:center;gap:36px;list-style:none}.nav-links a{font-size:14px;font-weight:400;color:var(--ink3);text-decoration:none;transition:color .2s}.nav-links a:hover{color:var(--ink)}
+.nav-btn{font-family:var(--f-body);font-size:13px;font-weight:500;padding:9px 20px;background:var(--blue);color:white;border:none;border-radius:6px;cursor:pointer;text-decoration:none;white-space:nowrap;flex-shrink:0}.nav-btn:hover{background:var(--blue2)}
+.progress-bar{position:fixed;top:64px;left:0;right:0;height:2px;background:var(--rule);z-index:199}.progress-fill{height:100%;background:var(--blue);width:0%}
+.article-hero{padding:120px 6% 64px;background:var(--white);border-bottom:1px solid var(--rule);position:relative;overflow:hidden}
+.article-hero::before{content:'';position:absolute;top:-80px;right:-80px;width:400px;height:400px;background:radial-gradient(circle,rgba(0,87,255,0.04) 0%,transparent 70%);pointer-events:none}
+.article-hero-inner{max-width:940px;margin:0 auto;position:relative;z-index:1}
+.breadcrumb{display:flex;align-items:center;gap:8px;font-family:var(--f-mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink4);margin-bottom:24px}.breadcrumb a{color:var(--ink4);text-decoration:none}.breadcrumb a:hover{color:var(--blue)}.breadcrumb span{color:var(--rule2)}
+.article-tag{display:inline-flex;align-items:center;gap:6px;font-family:var(--f-mono);font-size:10px;font-weight:500;color:var(--blue);letter-spacing:.1em;text-transform:uppercase;margin-bottom:20px;padding:4px 10px;background:var(--blue-dim);border-radius:4px}
+.article-hero h1{font-family:var(--f-head);font-size:clamp(30px,5vw,52px);font-weight:900;line-height:1.0;letter-spacing:-.04em;color:var(--ink);margin-bottom:20px}.article-hero h1 span{color:var(--blue)}
+.article-intro{font-size:18px;font-weight:400;color:var(--ink2);line-height:1.75;margin-bottom:32px;max-width:800px}
+.article-meta{display:flex;align-items:center;gap:24px;padding-top:24px;border-top:1px solid var(--rule);flex-wrap:wrap}
+.meta-author{display:flex;align-items:center;gap:10px}.author-avatar{width:36px;height:36px;border-radius:50%;background:var(--ink);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.author-name{font-size:13px;font-weight:500;color:var(--ink)}.author-role{font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.04em}
+.meta-divider{width:1px;height:28px;background:var(--rule)}.meta-stat{font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.06em}
+.article-wrap{max-width:1300px;margin:0 auto;padding:64px 6%;display:grid;grid-template-columns:1fr 300px;gap:60px;align-items:start}
+.article-body{min-width:0}
+.article-body h2{font-family:var(--f-head);font-size:22px;font-weight:800;letter-spacing:-.03em;color:var(--ink);margin:52px 0 20px;line-height:1.2;padding-bottom:10px;border-bottom:2px solid var(--blue)}
+.article-body h2:first-child{margin-top:0}
+.article-body p{font-size:16px;font-weight:400;color:var(--ink2);line-height:1.85;margin-bottom:20px}
+.article-body strong{color:var(--ink);font-weight:600}
+.article-body a{color:var(--blue);text-decoration:none;border-bottom:1px solid rgba(0,87,255,.25)}.article-body a:hover{border-color:var(--blue)}
+.callout{padding:20px 24px;border-radius:8px;margin:32px 0;border-left:3px solid}
+.callout.blue{background:var(--blue-dim);border-color:var(--blue)}.callout.green{background:var(--green-dim);border-color:var(--green)}
+.callout-label{font-family:var(--f-mono);font-size:9px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px}.callout.blue .callout-label{color:var(--blue)}.callout.green .callout-label{color:var(--green)}
+.callout p{font-size:14px;color:var(--ink2);line-height:1.7;margin:0}.callout strong{color:var(--ink)}
+.alpha-nav{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:40px;padding:16px;background:var(--off);border-radius:8px;border:1px solid var(--rule)}
+.alpha-nav a{font-family:var(--f-mono);font-size:12px;font-weight:500;color:var(--blue);text-decoration:none;padding:4px 8px;border-radius:4px;background:var(--white);border:1px solid var(--rule)}.alpha-nav a:hover{background:var(--blue-dim);border-color:var(--blue)}
+.term-entry{padding:16px 0;border-bottom:1px solid var(--rule)}
+.term-entry:last-child{border-bottom:none}
+.term-head{display:flex;align-items:baseline;gap:12px;margin-bottom:8px;flex-wrap:wrap}
+.term-name{font-family:var(--f-head);font-size:17px;font-weight:800;letter-spacing:-.02em;color:var(--ink)}
+.term-abbr{font-family:var(--f-mono);font-size:10px;color:var(--blue);padding:2px 7px;background:var(--blue-dim);border-radius:3px;letter-spacing:.06em;white-space:nowrap}
+.term-cat{font-family:var(--f-mono);font-size:9px;color:var(--ink4);letter-spacing:.06em;padding:2px 6px;border:1px solid var(--rule);border-radius:3px;white-space:nowrap}
+.term-def{font-size:14px;color:var(--ink2);line-height:1.7}
+.term-def a{color:var(--blue);text-decoration:none;border-bottom:1px solid rgba(0,87,255,.2)}.term-def a:hover{border-color:var(--blue)}
+.sidebar{position:sticky;top:88px;display:flex;flex-direction:column;gap:16px}
+.toc-card{border:1px solid var(--rule);border-radius:8px;padding:24px;background:var(--white);box-shadow:var(--shadow-sm)}
+.toc-label{font-family:var(--f-mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);margin-bottom:16px}
+.toc-list{list-style:none;display:flex;flex-direction:column;gap:2px}
+.toc-list a{display:block;font-size:13px;color:var(--ink3);text-decoration:none;padding:5px 10px;border-radius:4px;transition:all .15s;border-left:2px solid transparent}
+.toc-list a:hover,.toc-list a.active{color:var(--blue);background:var(--blue-dim);border-left-color:var(--blue)}
+.sidebar-cta{border:1px solid var(--blue);border-radius:8px;padding:24px;background:var(--blue-dim)}
+.sc-eyebrow{font-family:var(--f-mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);margin-bottom:10px}
+.sc-title{font-family:var(--f-head);font-size:17px;font-weight:800;letter-spacing:-.02em;color:var(--ink);margin-bottom:8px;line-height:1.2}
+.sc-body{font-size:13px;color:var(--ink3);line-height:1.6;margin-bottom:16px}
+.sc-btn{display:block;text-align:center;padding:11px 16px;background:var(--blue);color:white;border-radius:6px;font-family:var(--f-body);font-size:13px;font-weight:500;text-decoration:none}.sc-btn:hover{background:var(--blue2)}
+.sc-note{font-family:var(--f-mono);font-size:9px;color:var(--ink4);text-align:center;margin-top:8px;letter-spacing:.04em}
+.sidebar-share{border:1px solid var(--rule);border-radius:8px;padding:20px 24px;background:var(--white)}
+.share-label{font-family:var(--f-mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);margin-bottom:14px}
+.share-links{display:flex;flex-direction:column;gap:8px}
+.share-link{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--ink3);text-decoration:none;padding:9px 12px;border:1px solid var(--rule);border-radius:6px;transition:border-color .2s,color .2s}.share-link:hover{border-color:var(--blue);color:var(--blue)}
+.related{padding:64px 6%;border-top:1px solid var(--rule);background:var(--off)}
+.related-inner{max-width:1100px;margin:0 auto}
+.related-label{font-family:var(--f-mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);margin-bottom:32px;display:flex;align-items:center;gap:10px}
+.related-label::before{content:'';width:20px;height:1px;background:var(--blue)}
+.related-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.related-card{padding:24px;border:1px solid var(--rule);border-radius:8px;background:var(--white);box-shadow:var(--shadow-sm);transition:border-color .2s,transform .2s;text-decoration:none;display:flex;flex-direction:column;gap:12px}.related-card:hover{border-color:var(--blue);transform:translateY(-4px)}
+.rc-tag{font-family:var(--f-mono);font-size:9px;color:var(--blue);letter-spacing:.08em;text-transform:uppercase;padding:3px 8px;background:var(--blue-dim);border-radius:3px;align-self:flex-start}
+.rc-title{font-family:var(--f-head);font-size:16px;font-weight:700;letter-spacing:-.02em;color:var(--ink);line-height:1.25}
+.rc-desc{font-size:13px;color:var(--ink3);line-height:1.6;flex:1}
+.rc-footer{display:flex;align-items:center;justify-content:space-between;padding-top:12px;border-top:1px solid var(--rule)}
+.rc-read{font-family:var(--f-mono);font-size:10px;color:var(--ink4)}.rc-arrow{font-size:14px;color:var(--blue)}
+footer{padding:56px 6% 32px;border-top:1px solid var(--rule);background:var(--white)}
+.footer-inner{max-width:1160px;margin:0 auto}
+.footer-top{display:flex;justify-content:space-between;align-items:flex-start;gap:40px;flex-wrap:wrap;margin-bottom:48px}
+.footer-brand p{font-size:13px;font-weight:300;color:var(--ink3);margin-top:12px;max-width:260px;line-height:1.6}
+.footer-col h4{font-family:var(--f-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink4);margin-bottom:16px}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+.footer-col a{font-size:13px;color:var(--ink3);text-decoration:none}.footer-col a:hover{color:var(--blue)}
+.footer-bottom{padding-top:24px;border-top:1px solid var(--rule);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.footer-bottom p{font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.04em}
+.compliance-pills{display:flex;gap:6px;flex-wrap:wrap}
+.cp{font-family:var(--f-mono);font-size:9px;padding:3px 8px;border:1px solid var(--rule);border-radius:3px;color:var(--ink4);letter-spacing:.06em}
+@media(max-width:900px){.article-wrap{grid-template-columns:1fr;gap:48px}.sidebar{position:static}.related-grid{grid-template-columns:1fr}}
+@media(max-width:900px){.nav-links{display:none}}
+@media(max-width:540px){nav{padding:0 4%}.nav-btn{font-size:12px;padding:8px 14px}}
+</style>
+</head>
+<body>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+<nav>
+  <a href="../index.html" class="nav-logo">
+    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" style="flex-shrink:0"><rect width="32" height="32" rx="7" fill="#0d0f12"/><rect x="8" y="7" width="16" height="16" rx="2" stroke="white" stroke-width="2.5" fill="none"/><line x1="20" y1="19" x2="26" y2="25" stroke="#0057FF" stroke-width="3" stroke-linecap="round"/></svg>
+    <span style="font-family:'Epilogue',sans-serif;font-weight:800;font-size:16px;color:#0d0f12;letter-spacing:-.03em;white-space:nowrap">QLean <span style="font-weight:300;color:#5a6172">Automation</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="../index.html#products">Products</a></li>
+    <li><a href="../index.html#framework">Framework</a></li>
+    <li><a href="blog-index.html">Knowledge Base</a></li>
+    <li><a href="../index.html#pricing">Pricing</a></li>
+    <li><a href="../about.html">About</a></li>
+    <li><a href="../index.html#faq">FAQ</a></li>
+  </ul>
+  <a href="../index.html#pricing" class="nav-btn">Get the Framework &#8594;</a>
+</nav>
+
+<header class="article-hero">
+  <div class="article-hero-inner">
+    <div class="breadcrumb"><a href="../index.html">Home</a><span>/</span><a href="blog-index.html">Knowledge Base</a><span>/</span>GMP Validation Glossary</div>
+    <div class="article-tag">&#128218; Reference</div>
+    <h1>GMP Validation Glossary<br><span>for Automation Engineers</span><br>— 60 Terms Defined</h1>
+    <p class="article-intro">Every term you will encounter working on PLC and SCADA projects in GMP-regulated pharmaceutical environments — defined in plain engineering language. From ALCOA+ to V-Model, GAMP 5 categories to 21 CFR Part 11, deviation to VSR. Use this as your quick reference and starting point for deeper reading.</p>
+    <div class="article-meta">
+      <div class="meta-author">
+        <div class="author-avatar"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="7" r="3.5" stroke="white" stroke-width="1.5"/><path d="M2.5 16c0-3.59 2.91-6.5 6.5-6.5s6.5 2.91 6.5 6.5" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+        <div><div class="author-name">QLean Automation</div><div class="author-role">ENGINEERS WHO BUILD SYSTEMS, NOT JUST SIGN THEM</div></div>
+      </div>
+      <div class="meta-divider"></div><div class="meta-stat">10 MIN READ</div>
+      <div class="meta-divider"></div><div class="meta-stat">REFERENCE &#183; GLOSSARY &#183; 60 TERMS</div>
+    </div>
+  </div>
+</header>
+
+<div class="article-wrap">
+  <article class="article-body">
+
+    <div class="alpha-nav">
+      <a href="#section-a">A</a><a href="#section-b">B</a><a href="#section-c">C</a><a href="#section-d">D</a><a href="#section-e">E</a><a href="#section-f">F</a><a href="#section-g">G</a><a href="#section-h">H</a><a href="#section-i">I</a><a href="#section-l">L</a><a href="#section-m">M</a><a href="#section-n">N</a><a href="#section-o">O</a><a href="#section-p">P</a><a href="#section-q">Q</a><a href="#section-r">R</a><a href="#section-s">S</a><a href="#section-t">T</a><a href="#section-u">U</a><a href="#section-v">V</a><a href="#section-w">W</a>
+    </div>
+
+    <h2 id="section-a">A</h2>
+
+    <div class="term-entry">
+      <div class="term-head"><span class="term-name">21 CFR Part 11</span><span class="term-cat">REGULATION</span></div>
+      <div class="term-def">US FDA regulation governing electronic records and electronic signatures in pharmaceutical manufacturing. Requires computer-generated, tamper-evident audit trails; unique individual user accounts; and validated electronic signature mechanisms. Applies to any system generating electronic GMP records intended for FDA review. See: <a href="21-cfr-part-11.html">21 CFR Part 11 Guide</a>.</div>
+    </div>
+
+    <div class="term-entry">
+      <div class="term-head"><span class="term-name">ALCOA+</span><span class="term-cat">DATA INTEGRITY</span></div>
+      <div class="term-def">Attributable, Legible, Contemporaneous, Original, Accurate — plus Complete, Consistent, Enduring, Available. The nine-principle data integrity framework used by FDA and MHRA inspectors to assess GMP records. Every principle maps to a URS requirement and an OQ test case. See: <a href="data-integrity-pharma-automation-alcoa.html">ALCOA+ Applied to OT Systems</a>.</div>
+    </div>
+
+    <div class="term-entry">
+      <div class="term-head"><span class="term-name">Annex 11</span><span class="term-cat">REGULATION</span></div>
+      <div class="term-def">EU GMP Annex 11 — guidance for computerised systems in pharmaceutical manufacturing. Covers the full system lifecycle including validation, access controls, audit trails, data integrity, and supplier assessment. Broader in scope than 21 CFR Part 11 and uses guidance language (should) rather than regulatory mandate (shall). See: <a href="eu-gmp-annex-11-vs-21-cfr-part-11.html">Annex 11 vs Part 11</a>.</div>
+    </div>
+
+    <div class="term-entry">
+      <div class="term-head"><span class="term-name">Audit Trail</span><span class="term-cat">DATA INTEGRITY</span></div>
+      <div class="term-def">A secure, computer-generated, time-stamped, write-once electronic record of all GMP-relevant actions, changes, and events on a system. Must capture: user ID, timestamp, parameter name, old value, new value, and reason for change. No user — including administrators — can modify or delete entries. See: <a href="21-cfr-part-11-audit-trail-checklist.html">Audit Trail Checklist</a>.</div>
+    </div>
+
+    <h2 id="section-b">B</h2>
+
+    <div class="term-entry">
+      <div class="term-head"><span class="term-name">Baseline</span><span class="term-cat">CONFIGURATION MANAGEMENT</span></div>
+      <div class="term-def">A formally approved, documented snapshot of a system's configuration at a defined point in time. The validated baseline is the reference against which all subsequent changes are assessed. Any deviation from the baseline without a formal CCR constitutes an undocumented change — a data integrity and validation status risk.</div>
+    </div>
+
+    <div class="term-entry">
+      <div class="term-head"><span class="term-name">Boundary Test</span><span class="term-cat">TESTING</span></div>
+      <div class="term-def">An OQ test case that verifies a function at the exact specified acceptance limit — not comfortably inside it. If a high-temperature alarm must trigger at 80&#176;C, the boundary test inputs 80.0&#176;C and verifies activation. Inputs 10% below the limit also need separate test cases. Boundary testing is the defining characteristic of rigorous OQ execution.</div>
+    </div>
+
+    <h2 id="section-c">C</h2>
+
+    <div class="term-entry">
+      <div class="term-head"><span class="term-name">CAPA</span><span class="term-abbr">Corrective and Preventive Action</span><span class="term-cat">QUALITY MANAGEMENT</span></div>
+      <div class="term-def">A formal process for investigating the root cause of a non-conformance (corrective) and implementing changes to prevent recurrence (preventive). In GMP validation, CAPAs arise from audit findings, deviation investigations, and periodic reviews. Each CAPA must have a defined owner, timeline, and effectiveness check.</div>
+    </div>
+
+    <div class="term-entry">
+      <div class="term-head"><span class="term-name">Category 4 / Category 5</span><span class="term-cat">GAMP 5</span></div>
+      <div class="term-def">GAMP 5 software categories. Category 4: configurable commercial software (standard SCADA platform with configured application, no bespoke code). Category 5: custom software (bespoke PLC application, purpose-written code). Category 5 requires full software design specification, source code review, and unit testing in addition to Category 4 requirements. See: <a href="gamp5-categories.html">GAMP 5 Categories Explained</a>.</div>
+    </div>
+
+    <div class="term-entry">
+      <div class="term-head"><span class="term-name">CCR</span><span class="term-abbr">Change Control Request</span><span class="term-cat">CHANGE MANAGEMENT</span></div>
+      <div class="term-def">The formal document used to request, assess, approve, implement, and close a change to a validated system or its supporting documentation. Must be raised before implementation — retroactive CCRs are used only for emergency or undocumented changes discovered post-fact. See: <a href="change-control-validated-system.html">Change Control Guide</a>.</div>
+    </div>
+
+    <div class="term-entry">
+      <div class="term-head"><span class="term-name">Closed System</span><span class="term-cat">21 CFR PART 11</span></div>
+      <div class="term-def">Under 21 CFR Part 11, a system where access is controlled entirely by the pharmaceutical company operating the system. Subject to &#167;11.10 requirements. Distinguished from an Open System where records may transit networks outside the company's control (which triggers additional &#167;11.30 requirements). Cloud-connected systems are typically Open Systems. See: <a href="21-cfr-part-11-open-vs-closed-systems.html">Open vs Closed Systems</a>.</div>
+    </div>
+
+    <div class="term-entry">
+      <div class="term-head"><span class="term-name">CP</span><span class="term-abbr">Control Philosophy</span><span class="term-cat">DESIGN DOCUMENT</span></div>
+      <div class="term-def">A design document describing how the automation system will control the process — operating modes, interlocks, alarm philosophy, data recording strategy, and user access philosophy. Written at a functional level before the detailed FDS. The CP is where ALCOA+ data integrity is built into the design, not retrofitted later.</div>
+    </div>
+
+    <div class="term-entry">
+      <div class="term-head"><span class="term-name">CPP</span><span class="term-abbr">Critical Process Parameter</span><span class="term-cat">PROCESS VALIDATION</span></div>
+      <div class="term-def">A process input parameter whose variability directly affects a Critical Quality Attribute. Temperature in a sterile filling process, mixing speed in a granulation step. CPPs require the most intensive monitoring, tighter alarm setpoints, and the highest test case coverage in the OQ and PQ.</div>
+    </div>
+
+    <div class="term-entry">
+      <div class="term-head"><span class="term-name">CQA</span><span class="term-abbr">Critical Quality Attribute</span><span class="term-cat">PROCESS VALIDATION</span></div>
+      <div class="term-def">A physical, chemical, biological, or microbiological property of a drug product or intermediate that must be within defined limits to ensure product safety, identity, strength, purity, or quality. CQAs drive the identification of CPPs and the depth of validation testing required for the systems monitoring those parameters.</div>
+    </div>
+
+    <div class="term-entry">
+      <div class="term-head"><span class="term-name">CSA</span><span class="term-abbr">Computer Software Assurance</span><span class="term-cat">VALIDATION METHODOLOGY</span></div>
+      <div class="term-def">FDA guidance published in 2022 introducing a risk-based approach to validation that emphasises critical thinking over documentation volume. Does not replace the V-model or IQ/OQ/PQ structure. Changes the question from "have we documented everything?" to "have we tested what actually matters?" See: <a href="csv-vs-csa-pharma-validation.html">CSV vs CSA</a>.</div>
+    </div>
+
+    <div class="term-entry">
+      <div class="term-head"><span class="term-name">CSV</span><span class="term-abbr">Computer System Validation</span><span class="term-cat">VALIDATION METHODOLOGY</span></div>
+      <div class="term-def">The traditional document-driven approach to validating computerised systems in pharmaceutical manufacturing, based on the V-model lifecycle with formal IQ/OQ/PQ protocols. Still the dominant approach in EU-regulated environments. CSA builds on CSV principles rather than replacing them.</div>
+    </div>
+
+    <h2 id="section-d">D</h2>
+
+    <div class="term-entry">
+      <div class="term-head"><span class="term-name">DCS</span><span class="term-abbr">Distributed Control System</span><span class="term-cat">AUTOMATION HARDWARE</span></div>
+      <div class="term-def">An industrial control system architecture where control functions are distributed across multiple field controllers rather than centralised in a single PLC. Common in large continuous process applications such as API manufacturing and bulk pharmaceutical production. Subject to the same GAMP 5 validation requirements as PLC/SCADA systems.</div>
+    </div>
+
+    <div class="term-entry">
+      <div class="term-head"><span class="term-name">Deviation</span><span class="term-cat">QUALITY MANAGEMENT</span></div>
+      <div class="term-def">In the context of validation testing: any test case result that is not as expected. Must be formally logged in the Master Deviation Ledger with a description of what was observed, root cause investigation, corrective action, and re-test reference. A deviation that is fixed and re-tested without formal logging is a data integrity violation. See: <a href="gamp5-risk-assessment-how-to-score.html">Risk Assessment and Deviation Categories</a>.</div>
+    </div>
+
+    <h2 id="section-e">E</h2>
+
+    <div class="term-entry">
+      <div class="term-head"><span class="term-name">Electronic Signature</span><span class="term-cat">21 CFR PART 11</span></div>
+      <div class="term-def">Under 21 CFR Part 11 Subpart C: a computer-compiled combination of a unique individual identification code and password, with a signed manifestation linking the signature to the record being signed. Distinct from a handwritten signature scanned as an image (which is not an electronic signature under Part 11). Must be unique to the individual and not reusable or transferable.</div>
+    </div>
+
+    <h2 id="section-f">F</h2>
+
+    <div class="term-entry">
+      <div class="term-head"><span class="term-name">FAT</span><span class="term-abbr">Factory Acceptance Test</span><span class="term-cat">TESTING</span></div>
+      <div class="term-def">Formal testing of the system at the supplier's facility before site delivery. In GMP projects, FAT is a validation activity that generates formal, QA-reviewed test evidence. FAT test results feed directly into the IQ and OQ evidence package. A FAT executed without formal protocols and approved deviation management produces no usable validation evidence. See: <a href="pharma-fat-guide.html">FAT Guide</a>.</div>
+    </div>
+
+    <div class="term-entry">
+      <div class="term-head"><span class="term-name">FDS</span><span class="term-abbr">Functional Design Specification</span><span class="term-cat">DESIGN DOCUMENT</span></div>
+      <div class="term-def">A design document describing how the system will function — control sequences, interlocks, alarm logic, HMI screen structure, data recording behaviour. Maps URS requirements to design solutions. The FDS is the primary input for OQ test case development. See: <a href="functional-design-specification-guide.html">FDS Guide</a>.</div>
+    </div>
+
+    <h2 id="section-g">G</h2>
+
+    <div class="term-entry">
+      <div class="term-head"><span class="term-name">GAMP 5</span><span class="term-abbr">Good Automated Manufacturing Practice</span><span class="term-cat">FRAMEWORK</span></div>
+      <div class="term-def">ISPE guidance for GMP computerised system validation. 2nd Edition (2022) is current. Provides a risk-based lifecycle framework from URS through VSR. Defines software categories 1&#8211;5 that determine validation depth. Not a regulation — it is industry guidance, but widely treated as the authoritative standard by regulatory inspectors globally.</div>
+    </div>
+
+    <div class="term-entry">
+      <div class="term-head"><span class="term-name">GMP</span><span class="term-abbr">Good Manufacturing Practice</span><span class="term-cat">REGULATORY FRAMEWORK</span></div>
+      <div class="term-def">The regulatory framework governing pharmaceutical manufacturing quality. Enforced by FDA (21 CFR Parts 210/211), EMA (EU GMP), MHRA, TGA, and other national regulators. GMP requirements for computerised systems are primarily expressed through 21 CFR Part 11, EU GMP Annex 11, and GAMP 5 guidance.</div>
+    </div>
+
+    <h2 id="section-h">H</h2>
+
+    <div class="term-entry">
+      <div class="term-head"><span class="term-name">HDS</span><span class="term-abbr">Hardware Design Specification</span><span class="term-cat">DESIGN DOCUMENT</span></div>
+      <div class="term-def">A design document describing the physical hardware components of the system — PLC model and configuration, network topology, server specifications, panel layout, instrument list. The HDS is the primary input for IQ test cases. Hardware substitutions during build that are not reflected in the HDS are undocumented changes requiring a CCR.</div>
+    </div>
+
+    <div class="term-entry">
+      <div class="term-head"><span class="term-name">HMI</span><span class="term-abbr">Human Machine Interface</span><span class="term-cat">AUTOMATION HARDWARE</span></div>
+      <div class="term-def">The operator interface for an automation system — screens, controls, alarm displays, and trend views. In GMP systems, the HMI is part of the validated boundary and its access controls, audit trail capture, and data display accuracy must all be verified in OQ. An HMI change after FAT requires a CCR even if the underlying PLC logic is unchanged.</div>
+    </div>
+
+    <h2 id="section-i">I</h2>
+
+    <div class="term-entry">
+      <div class="term-head"><span class="term-name">IEC 62443</span><span class="term-cat">OT CYBERSECURITY</span></div>
+      <div class="term-def">The international standard for industrial automation and control system cybersecurity. Defines the zone and conduit model for OT network segmentation, security levels, and security lifecycle requirements. Referenced in EU GMP Annex 11 &#167;12 and GAMP 5 as the appropriate framework for OT cybersecurity in GMP environments. See: <a href="cybersecurity-pharma-ot-iec62443.html">OT Cybersecurity Guide</a>.</div>
+    </div>
+
+    <div class="term-entry">
+      <div class="term-head"><span class="term-name">IQ</span><span class="term-abbr">Installation Qualification</span><span class="term-cat">TESTING</span></div>
+      <div class="term-def">The first phase of formal validation testing. Verifies that the system is installed correctly — hardware inventory matches the HDS, software versions match the SDS, configuration baseline is established, and physical installation meets specifications. The IQ creates the documented baseline against which future changes will be assessed. See: <a href="iq-oq-pq-guide.html">IQ OQ PQ Guide</a>.</div>
+    </div>
+
+    <div class="term-entry">
+      <div class="term-head"><span class="term-name">ISA-88</span><span class="term-cat">AUTOMATION STANDARD</span></div>
+      <div class="term-def">International standard defining the batch control model — physical model (enterprise, site, area, process cell, unit, equipment module, control module) and procedural model (procedure, unit procedure, operation, phase). Batch recipes in ISA-88 structure create traceable audit trails of every state transition with user attribution — directly implementing ALCOA+ Attributable and Contemporaneous principles.</div>
+    </div>
+
+    <h2 id="section-l">L</h2>
+
+    <div class="term-entry">
+      <div class="term-head"><span class="term-name">Lifecycle</span><span class="term-cat">VALIDATION FRAMEWORK</span></div>
+      <div class="term-def">In the GAMP 5 context, the complete sequence of activities from planning through to retirement for a GMP computerised system: Planning, Specification, Design, Build and Configure, Verification and Testing, Reporting, and GMP Lifecycle (change control, periodic review, retirement). Validation is not a one-time activity — it is maintained through the lifecycle.</div>
+    </div>
+
+    <h2 id="section-m">M</h2>
+
+    <div class="term-entry">
+      <div class="term-head"><span class="term-name">MDL</span><span class="term-abbr">Master Deviation Ledger</span><span class="term-cat">QUALITY MANAGEMENT</span></div>
+      <div class="term-def">A sequential log of all test deviations raised during qualification activities. Each entry records the deviation ID, phase, description, root cause, corrective action, re-test reference, category (A or B), and closure date. The MDL is opened at FAT and kept active through VSR approval. The VSR cannot be signed off while Category A deviations remain open.</div>
+    </div>
+
+    <div class="term-entry">
+      <div class="term-head"><span class="term-name">MFA</span><span class="term-abbr">Multi-Factor Authentication</span><span class="term-cat">CYBERSECURITY</span></div>
+      <div class="term-def">Authentication requiring two or more verification factors: something you know (password), something you have (token or authenticator app), something you are (biometric). Required for all remote VPN access to GMP OT systems under IEC 62443 and Annex 11 &#167;12. See: <a href="vpn-remote-access-validated-systems.html">VPN Remote Access Guide</a>.</div>
+    </div>
+
+    <h2 id="section-n">N</h2>
+
+    <div class="term-entry">
+      <div class="term-head"><span class="term-name">NTP</span><span class="term-abbr">Network Time Protocol</span><span class="term-cat">DATA INTEGRITY</span></div>
+      <div class="term-def">Protocol for synchronising system clocks to a reference time source. Required for ALCOA+ Contemporaneous compliance. All nodes on a GMP OT network (PLC, SCADA server, historian, HMI) must be synchronised to the same NTP source within &#177;30 seconds. Any manual time change must generate an audit trail entry and alarm.</div>
+    </div>
+
+    <h2 id="section-o">O</h2>
+
+    <div class="term-entry">
+      <div class="term-head"><span class="term-name">OQ</span><span class="term-abbr">Operational Qualification</span><span class="term-cat">TESTING</span></div>
+      <div class="term-def">The second phase of formal validation testing. Verifies that the system functions correctly as designed — sequences execute correctly, alarms trigger at specified setpoints, interlocks prevent unsafe operation, data is recorded accurately. OQ test cases are derived from the FDS and must include boundary tests at specified limits. See: <a href="iq-oq-pq-guide.html">IQ OQ PQ Guide</a>.</div>
+    </div>
+
+    <div class="term-entry">
+      <div class="term-head"><span class="term-name">OT</span><span class="term-abbr">Operational Technology</span><span class="term-cat">AUTOMATION</span></div>
+      <div class="term-def">Hardware and software that monitors and controls physical industrial processes — PLC, SCADA, DCS, HMI, historians, field instruments. Distinct from IT (information technology) systems. OT systems in pharma manufacturing that generate or store GMP records are subject to Annex 11, 21 CFR Part 11, and GAMP 5 validation requirements.</div>
+    </div>
+
+    <h2 id="section-p">P</h2>
+
+    <div class="term-entry">
+      <div class="term-head"><span class="term-name">PLC</span><span class="term-abbr">Programmable Logic Controller</span><span class="term-cat">AUTOMATION HARDWARE</span></div>
+      <div class="term-def">Industrial computer used for automation control of manufacturing processes. In GMP environments, PLC application code is typically GAMP 5 Category 5 (custom software) because it is purpose-written for the specific process. The PLC programme is a controlled document — version-controlled, peer-reviewed, and subject to change control.</div>
+    </div>
+
+    <div class="term-entry">
+      <div class="term-head"><span class="term-name">PQ</span><span class="term-abbr">Performance Qualification</span><span class="term-cat">TESTING</span></div>
+      <div class="term-def">The third phase of formal validation testing. Verifies that the system performs correctly under real production conditions, over a defined period, with real process materials. PQ moves from bench testing to process validation. For GMP automation systems, PQ includes monitoring CPP stability, verifying data completeness over the study period, and confirming system availability meets requirements. See: <a href="iq-oq-pq-guide.html">IQ OQ PQ Guide</a>.</div>
+    </div>
+
+    <div class="term-entry">
+      <div class="term-head"><span class="term-name">PQP</span><span class="term-abbr">Project Quality Plan</span><span class="term-cat">PROJECT MANAGEMENT</span></div>
+      <div class="term-def">A document defining how quality requirements will be met and managed during the project. Covers document control, review and approval processes, non-conformance handling, supplier quality oversight, and the RACI for quality activities. The PQP is the project-level quality governance document that sits alongside the Validation Plan.</div>
+    </div>
+
+    <h2 id="section-q">Q</h2>
+
+    <div class="term-entry">
+      <div class="term-head"><span class="term-name">QMS</span><span class="term-abbr">Quality Management System</span><span class="term-cat">QUALITY MANAGEMENT</span></div>
+      <div class="term-def">A documented system of policies, procedures, and responsibilities that define how an organisation manages quality. For system integrators working in pharma, a QMS covering document control, training, non-conformance management, and CAPA is a prerequisite for supplier qualification. ISO 9001 certification is the standard evidence of a formal QMS.</div>
+    </div>
+
+    <h2 id="section-r">R</h2>
+
+    <div class="term-entry">
+      <div class="term-head"><span class="term-name">RBAC</span><span class="term-abbr">Role-Based Access Control</span><span class="term-cat">ACCESS CONTROL</span></div>
+      <div class="term-def">An access management model where permissions are assigned to roles rather than individuals. In GMP SCADA systems, typical roles include: Viewer (read-only), Operator (acknowledge alarms, data entry), Engineer (configuration, setpoint changes), Administrator (user management, system configuration). Every user is assigned to a role — never given individual permission overrides.</div>
+    </div>
+
+    <div class="term-entry">
+      <div class="term-head"><span class="term-name">Risk Assessment</span><span class="term-cat">GAMP 5</span></div>
+      <div class="term-def">A structured evaluation of the GMP risks associated with a validated system. In GAMP 5, risk assessment drives validation scope: high-risk functions get more test cases, lower-risk functions get proportionally less. The risk assessment output determines the test approach for each system function. See: <a href="gamp5-risk-assessment-how-to-score.html">Risk Assessment Scoring Guide</a>.</div>
+    </div>
+
+    <div class="term-entry">
+      <div class="term-head"><span class="term-name">RMP</span><span class="term-abbr">Risk Management Plan</span><span class="term-cat">PROJECT DOCUMENT</span></div>
+      <div class="term-def">A document defining the risk management methodology for the project — risk assessment approach, scoring criteria, risk acceptance thresholds, and roles responsible for risk decisions. The RMP is the governance document for the risk assessment process; the RA-SYS-001 Excel workbook is the operational tool.</div>
+    </div>
+
+    <div class="term-entry">
+      <div class="term-head"><span class="term-name">RPN</span><span class="term-abbr">Risk Priority Number</span><span class="term-cat">RISK ASSESSMENT</span></div>
+      <div class="term-def">Severity &#215; Occurrence &#215; Detection. A numerical score used in FMEA-based risk assessment to prioritise risks. Higher RPN = higher risk = more testing required. Note: the QLean RA-SYS-001 workbook uses a Severity &#8805;5 override rule — any function with maximum severity automatically becomes high risk regardless of RPN score.</div>
+    </div>
+
+    <h2 id="section-s">S</h2>
+
+    <div class="term-entry">
+      <div class="term-head"><span class="term-name">SAQ / SAR</span><span class="term-abbr">Supplier Assessment Questionnaire / Report</span><span class="term-cat">SUPPLIER MANAGEMENT</span></div>
+      <div class="term-def">The two documents used to assess and qualify suppliers for GMP automation projects. The SAQ is sent to the supplier; the SAR is produced by the client's QA team based on the supplier's response. Together they constitute the formal supplier qualification record. See: <a href="supplier-assessment-gamp5.html">Supplier Assessment Under GAMP 5</a>.</div>
+    </div>
+
+    <div class="term-entry">
+      <div class="term-head"><span class="term-name">SAT</span><span class="term-abbr">Site Acceptance Test</span><span class="term-cat">TESTING</span></div>
+      <div class="term-def">Formal testing of the system at the pharmaceutical site after installation, typically covering integration with site utilities, communication with connected systems, and physical installation verification. SAT evidence feeds into the IQ and OQ package. See: <a href="site-acceptance-test-pharma-guide.html">SAT Guide</a>.</div>
+    </div>
+
+    <div class="term-entry">
+      <div class="term-head"><span class="term-name">SCADA</span><span class="term-abbr">Supervisory Control and Data Acquisition</span><span class="term-cat">AUTOMATION HARDWARE</span></div>
+      <div class="term-def">A software system providing operator interface, data acquisition, alarming, trending, and reporting for industrial processes. In GMP environments, the SCADA is the primary system generating electronic process records. Its audit trail, access controls, data storage architecture, and historian are all GMP-critical and must be validated to Category 4 or 5 depending on the degree of custom configuration.</div>
+    </div>
+
+    <div class="term-entry">
+      <div class="term-head"><span class="term-name">SDS</span><span class="term-abbr">Software Design Specification</span><span class="term-cat">DESIGN DOCUMENT</span></div>
+      <div class="term-def">A design document describing the software implementation — application code structure, function block library, ISA-88 implementation, data types, database schema, security configuration. Required for Category 5 systems. The SDS is the input for unit testing and code review activities.</div>
+    </div>
+
+    <div class="term-entry">
+      <div class="term-head"><span class="term-name">SIL</span><span class="term-abbr">Safety Integrity Level</span><span class="term-cat">FUNCTIONAL SAFETY</span></div>
+      <div class="term-def">A measure of the risk reduction provided by a safety function, as defined in IEC 61511. SIL 1&#8211;4, with SIL 4 providing the highest risk reduction. Safety-instrumented systems (SIS) on GMP manufacturing equipment are designed and validated to a defined SIL. SIS validation follows IEC 61511 requirements in addition to GAMP 5.</div>
+    </div>
+
+    <h2 id="section-t">T</h2>
+
+    <div class="term-entry">
+      <div class="term-head"><span class="term-name">TM</span><span class="term-abbr">Traceability Matrix</span><span class="term-cat">VALIDATION DOCUMENT</span></div>
+      <div class="term-def">A living document that links every URS requirement to its corresponding design reference and test case. The TM is the evidence that every requirement has been designed for and tested. Gaps in the TM (requirements with no linked test case) are audit findings. The TM is maintained throughout the project, not assembled at closeout. See: <a href="traceability-matrix-guide.html">Traceability Matrix Guide</a>.</div>
+    </div>
+
+    <h2 id="section-u">U</h2>
+
+    <div class="term-entry">
+      <div class="term-head"><span class="term-name">URS</span><span class="term-abbr">User Requirements Specification</span><span class="term-cat">DESIGN DOCUMENT</span></div>
+      <div class="term-def">The document defining what the system must do — from the user's perspective, in testable terms. Every requirement must be unambiguous, testable, and traceable. The URS is the origin point of the V-model — every downstream document derives from it. A URS requirement that cannot be tested is not a finished requirement. See: <a href="how-to-write-urs-plc-scada.html">How to Write a URS</a> and <a href="urs-vs-fds-pharma-difference.html">URS vs FDS</a>.</div>
+    </div>
+
+    <h2 id="section-v">V</h2>
+
+    <div class="term-entry">
+      <div class="term-head"><span class="term-name">V-Model</span><span class="term-cat">VALIDATION FRAMEWORK</span></div>
+      <div class="term-def">The lifecycle framework that maps each design document on the left arm to a corresponding test phase on the right arm: URS &#8594; PQ; FDS/HDS &#8594; OQ; SDS &#8594; Unit Testing / IQ. The V-model ensures every design decision generates a test obligation, and every test case traces back to a design specification. See: <a href="v-model-pharma-validation.html">V-Model in Pharma Validation</a>.</div>
+    </div>
+
+    <div class="term-entry">
+      <div class="term-head"><span class="term-name">Validated State</span><span class="term-cat">VALIDATION FRAMEWORK</span></div>
+      <div class="term-def">The condition of a system that has been formally qualified, is operating in accordance with its validated baseline, and has had all changes managed through formal change control. A system is in its validated state when its current configuration matches the documented baseline approved during qualification. Any undocumented modification removes the system from its validated state.</div>
+    </div>
+
+    <div class="term-entry">
+      <div class="term-head"><span class="term-name">Validation Plan</span><span class="term-cat">VALIDATION DOCUMENT</span></div>
+      <div class="term-def">The governing document for the entire validation effort. Defines scope, GAMP 5 category, document structure, roles and responsibilities, acceptance criteria, and the phase gate conditions that must be met before each lifecycle stage can proceed. Must be approved before any design documents are issued. See: <a href="validation-plan-what-it-must-contain.html">Validation Plan Guide</a>.</div>
+    </div>
+
+    <div class="term-entry">
+      <div class="term-head"><span class="term-name">VP</span><span class="term-abbr">Validation Plan</span><span class="term-cat">VALIDATION DOCUMENT</span></div>
+      <div class="term-def">See Validation Plan above.</div>
+    </div>
+
+    <div class="term-entry">
+      <div class="term-head"><span class="term-name">VSR</span><span class="term-abbr">Validation Summary Report</span><span class="term-cat">VALIDATION DOCUMENT</span></div>
+      <div class="term-def">The document that closes the validation lifecycle. Summarises all qualification phases completed, deviations raised and resolved, open items and their risk assessment, and provides the formal conclusion that the system is validated for its intended use. QA approval of the VSR is the formal validation release. Cannot be signed while Category A deviations remain open. See: <a href="validation-summary-report-guide.html">VSR Guide</a>.</div>
+    </div>
+
+    <h2 id="section-w">W</h2>
+
+    <div class="term-entry">
+      <div class="term-head"><span class="term-name">Waterfall</span><span class="term-cat">PROJECT METHODOLOGY</span></div>
+      <div class="term-def">A sequential project delivery methodology where each phase must be complete before the next begins. Traditional CSV validation follows a waterfall model: URS &#8594; design &#8594; build &#8594; test &#8594; report. The structured sequence ensures traceability between phases. CSA and agile-informed approaches are beginning to challenge the strict waterfall assumption for iteratively delivered software systems.</div>
+    </div>
+
+    <div class="callout green">
+      <div class="callout-label">Use This As a Starting Point</div>
+      <p>Each term above links to the in-depth article where the concept is explored in full engineering detail. The glossary is intentionally concise — the linked articles contain the practical implementation guidance, test case examples, and design patterns that turn definitions into deliverables. <strong>The QLean Framework provides the actual document templates that implement every term defined here — 29 production-ready GAMP 5 documents, instantly downloadable.</strong></p>
+    </div>
+
+  </article>
+
+  <aside class="sidebar">
+    <div class="toc-card">
+      <div class="toc-label">Jump to Letter</div>
+      <ul class="toc-list">
+        <li><a href="#section-a">A — 21 CFR, ALCOA+, Annex 11&#8230;</a></li>
+        <li><a href="#section-b">B — Baseline, Boundary Test</a></li>
+        <li><a href="#section-c">C — CAPA, Category 4/5, CCR&#8230;</a></li>
+        <li><a href="#section-d">D — DCS, Deviation</a></li>
+        <li><a href="#section-e">E — Electronic Signature</a></li>
+        <li><a href="#section-f">F — FAT, FDS</a></li>
+        <li><a href="#section-g">G — GAMP 5, GMP</a></li>
+        <li><a href="#section-h">H — HDS, HMI</a></li>
+        <li><a href="#section-i">I — IEC 62443, IQ, ISA-88</a></li>
+        <li><a href="#section-l">L — Lifecycle</a></li>
+        <li><a href="#section-m">M — MDL, MFA</a></li>
+        <li><a href="#section-n">N — NTP</a></li>
+        <li><a href="#section-o">O — OQ, OT</a></li>
+        <li><a href="#section-p">P — PLC, PQ, PQP</a></li>
+        <li><a href="#section-q">Q — QMS</a></li>
+        <li><a href="#section-r">R — RBAC, Risk Assessment, RPN</a></li>
+        <li><a href="#section-s">S — SAQ/SAR, SAT, SCADA, SDS, SIL</a></li>
+        <li><a href="#section-t">T — TM</a></li>
+        <li><a href="#section-u">U — URS</a></li>
+        <li><a href="#section-v">V — V-Model, VSR, VP</a></li>
+        <li><a href="#section-w">W — Waterfall</a></li>
+      </ul>
+    </div>
+
+    <div class="sidebar-cta">
+      <div class="sc-eyebrow">QLean Framework</div>
+      <div class="sc-title">Every document in this glossary — production-ready</div>
+      <p class="sc-body">VP, URS, FDS, HDS, SDS, IQ, OQ, PQ, TM, MDL, CCR, VSR — all 29 GAMP 5 templates, instantly downloadable.</p>
+      <a href="../index.html#pricing" class="sc-btn">Get the Framework &#8594; &#8364;249</a>
+      <div class="sc-note">INSTANT DOWNLOAD &middot; COMPANY-WIDE LICENCE</div>
+    </div>
+
+    <div class="sidebar-share">
+      <div class="share-label">Share This Article</div>
+      <div class="share-links">
+        <a href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fqleanautomation.com%2Fblog%2Fcomputerised-system-validation-glossary.html" class="share-link" target="_blank" rel="noopener">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+          Share on LinkedIn
+        </a>
+        <a href="https://www.reddit.com/submit?url=https%3A%2F%2Fqleanautomation.com%2Fblog%2Fcomputerised-system-validation-glossary.html&title=GMP%20Validation%20Glossary%20for%20Automation%20Engineers%20%E2%80%94%2060%20Terms%20Defined" class="share-link" target="_blank" rel="noopener">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/></svg>
+          Share on Reddit
+        </a>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<section class="related">
+  <div class="related-inner">
+    <div class="related-label">Start Reading</div>
+    <div class="related-grid">
+      <a href="iq-oq-pq-guide.html" class="related-card">
+        <span class="rc-tag">&#128214; Validation Fundamentals</span>
+        <div class="rc-title">IQ OQ PQ — A Practical Guide</div>
+        <div class="rc-desc">The three qualification phases that every validated pharma system must pass through — what each one verifies and how they connect.</div>
+        <div class="rc-footer"><span class="rc-read">8 MIN READ</span><span class="rc-arrow">&#8594;</span></div>
+      </a>
+      <a href="gamp5-categories.html" class="related-card">
+        <span class="rc-tag">&#128214; GAMP 5</span>
+        <div class="rc-title">GAMP 5 Software Categories Explained</div>
+        <div class="rc-desc">Categories 1 through 5 — how to classify your system correctly and why it determines the entire scope of your validation effort.</div>
+        <div class="rc-footer"><span class="rc-read">7 MIN READ</span><span class="rc-arrow">&#8594;</span></div>
+      </a>
+      <a href="v-model-pharma-validation.html" class="related-card">
+        <span class="rc-tag">&#128214; Validation Framework</span>
+        <div class="rc-title">The V-Model in Pharma Validation</div>
+        <div class="rc-desc">The lifecycle framework that connects every design document to a test phase — the structural backbone of GAMP 5 validation.</div>
+        <div class="rc-footer"><span class="rc-read">6 MIN READ</span><span class="rc-arrow">&#8594;</span></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="../index.html" class="nav-logo" style="text-decoration:none">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="7" fill="#0d0f12"/><rect x="8" y="7" width="16" height="16" rx="2" stroke="white" stroke-width="2.5" fill="none"/><line x1="20" y1="19" x2="26" y2="25" stroke="#0057FF" stroke-width="3" stroke-linecap="round"/></svg>
+          <span style="font-family:'Epilogue',sans-serif;font-weight:800;font-size:16px;color:#0d0f12;letter-spacing:-.03em">QLean <span style="font-weight:300;color:#5a6172">Automation</span></span>
+        </a>
+        <p>GMP validation documentation tools for automation engineers and system integrators.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Products</h4>
+        <ul>
+          <li><a href="../index.html#products">GAMP 5 Framework Pack</a></li>
+          <li><a href="../index.html#products">Technical Ebook</a></li>
+          <li><a href="../index.html#pricing">Pricing</a></li>
+          <li><a href="../index.html#faq">FAQ</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Knowledge Base</h4>
+        <ul>
+          <li><a href="blog-index.html">All Articles</a></li>
+          <li><a href="iq-oq-pq-guide.html">IQ OQ PQ Guide</a></li>
+          <li><a href="gamp5-categories.html">GAMP 5 Categories</a></li>
+          <li><a href="v-model-pharma-validation.html">V-Model Guide</a></li>
+          <li><a href="21-cfr-part-11.html">21 CFR Part 11</a></li>
+          <li><a href="data-integrity-pharma-automation-alcoa.html">ALCOA+ Guide</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="../index.html#framework">Framework</a></li>
+          <li><a href="../terms.html">Terms of Service</a></li>
+          <li><a href="../privacy.html">Privacy Policy</a></li>
+          <li><a href="mailto:hello@qleanautomation.com">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 QLean Automation. All rights reserved.</p>
+      <div class="compliance-pills">
+        <span class="cp">GAMP 5</span>
+        <span class="cp">EU GMP ANNEX 11</span>
+        <span class="cp">21 CFR PART 11</span>
+        <span class="cp">GXP</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+window.addEventListener('scroll',function(){
+  var s=document.getElementById('progress');
+  var h=document.documentElement;
+  var p=(h.scrollTop||document.body.scrollTop)/(h.scrollHeight-h.clientHeight)*100;
+  s.style.width=p+'%';
+});
+var tl=document.querySelectorAll('.toc-list a');
+window.addEventListener('scroll',function(){
+  var headings=document.querySelectorAll('.article-body h2[id]');
+  var scrollY=window.scrollY+120;
+  var current='';
+  headings.forEach(function(h){if(h.offsetTop<=scrollY)current=h.id;});
+  tl.forEach(function(a){
+    a.classList.remove('active');
+    if(a.getAttribute('href')==='#'+current)a.classList.add('active');
+  });
+});
+</script>
+</body>
+</html>

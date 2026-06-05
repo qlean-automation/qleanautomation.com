@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-JJQ1TXZJX7"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-JJQ1TXZJX7');
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calibration Management Systems for GMP — What the Database Needs | QLean Automation</title>
+<meta name="description" content="A spreadsheet will survive a pharma audit. A shared folder of PDFs will not. Here is what a calibration management system — whether dedicated software or a well-designed register — must contain to satisfy GMP requirements.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@300;400;500;600;700;800;900&family=Source+Sans+3:ital,wght@0,300;0,400;0,500;1,300&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--white:#ffffff;--off:#f7f8f9;--ink:#0d0f12;--ink2:#1e2128;--ink3:#3d4456;--ink4:#9199a8;--rule:#e2e5ea;--rule2:#c8cdd6;--blue:#0057ff;--blue2:#0044cc;--blue-dim:rgba(0,87,255,0.07);--green:#00875a;--green-dim:rgba(0,135,90,0.08);--amber:#d97706;--amber-dim:rgba(217,119,6,0.08);--red:#c0392b;--red-dim:rgba(192,57,43,0.08);--f-head:'Epilogue',sans-serif;--f-body:'Source Sans 3',sans-serif;--f-mono:'Roboto Mono',monospace;--shadow-sm:0 2px 8px rgba(13,15,18,0.06),0 1px 3px rgba(13,15,18,0.04)}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}body{background:var(--white);color:var(--ink);font-family:var(--f-body);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+nav{position:fixed;top:0;left:0;right:0;z-index:200;height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 6%;background:rgba(255,255,255,0.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--rule)}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;flex-shrink:0}
+.nav-links{display:flex;align-items:center;gap:36px;list-style:none}.nav-links a{font-size:14px;font-weight:400;color:var(--ink3);text-decoration:none;transition:color .2s}.nav-links a:hover{color:var(--ink)}
+.nav-btn{font-family:var(--f-body);font-size:13px;font-weight:500;padding:9px 20px;background:var(--blue);color:white;border:none;border-radius:6px;cursor:pointer;text-decoration:none;white-space:nowrap;flex-shrink:0}.nav-btn:hover{background:var(--blue2)}
+.progress-bar{position:fixed;top:64px;left:0;right:0;height:2px;background:var(--rule);z-index:199}.progress-fill{height:100%;background:var(--blue);width:0%}
+.article-hero{padding:120px 6% 64px;background:var(--white);border-bottom:1px solid var(--rule);position:relative;overflow:hidden}
+.article-hero::before{content:'';position:absolute;top:-80px;right:-80px;width:400px;height:400px;background:radial-gradient(circle,rgba(0,87,255,0.04) 0%,transparent 70%);pointer-events:none}
+.article-hero-inner{max-width:940px;margin:0 auto;position:relative;z-index:1}
+.breadcrumb{display:flex;align-items:center;gap:8px;font-family:var(--f-mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink4);margin-bottom:24px}.breadcrumb a{color:var(--ink4);text-decoration:none}.breadcrumb a:hover{color:var(--blue)}.breadcrumb span{color:var(--rule2)}
+.article-tag{display:inline-flex;align-items:center;gap:6px;font-family:var(--f-mono);font-size:10px;font-weight:500;color:var(--blue);letter-spacing:.1em;text-transform:uppercase;margin-bottom:20px;padding:4px 10px;background:var(--blue-dim);border-radius:4px}
+.article-hero h1{font-family:var(--f-head);font-size:clamp(30px,5vw,52px);font-weight:900;line-height:1.0;letter-spacing:-.04em;color:var(--ink);margin-bottom:20px}.article-hero h1 span{color:var(--blue)}
+.article-intro{font-size:18px;font-weight:400;color:var(--ink2);line-height:1.75;margin-bottom:32px;max-width:800px}
+.article-meta{display:flex;align-items:center;gap:24px;padding-top:24px;border-top:1px solid var(--rule);flex-wrap:wrap}
+.meta-author{display:flex;align-items:center;gap:10px}.author-avatar{width:36px;height:36px;border-radius:50%;background:var(--ink);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.author-name{font-size:13px;font-weight:500;color:var(--ink)}.author-role{font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.04em}
+.meta-divider{width:1px;height:28px;background:var(--rule)}.meta-stat{font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.06em}
+.article-wrap{max-width:1300px;margin:0 auto;padding:64px 6%;display:grid;grid-template-columns:1fr 300px;gap:60px;align-items:start}
+.article-body{min-width:0}
+.article-body h2{font-family:var(--f-head);font-size:26px;font-weight:800;letter-spacing:-.03em;color:var(--ink);margin:56px 0 16px;line-height:1.2}.article-body h2:first-child{margin-top:0}
+.article-body h3{font-family:var(--f-head);font-size:18px;font-weight:700;letter-spacing:-.02em;color:var(--ink);margin:32px 0 12px}
+.article-body p{font-size:16px;font-weight:400;color:var(--ink2);line-height:1.85;margin-bottom:20px}
+.article-body strong{color:var(--ink);font-weight:600}
+.article-body a{color:var(--blue);text-decoration:none;border-bottom:1px solid rgba(0,87,255,.25)}.article-body a:hover{border-color:var(--blue)}
+.callout{padding:20px 24px;border-radius:8px;margin:32px 0;border-left:3px solid}
+.callout.blue{background:var(--blue-dim);border-color:var(--blue)}.callout.amber{background:var(--amber-dim);border-color:var(--amber)}.callout.green{background:var(--green-dim);border-color:var(--green)}.callout.red{background:var(--red-dim);border-color:var(--red)}
+.callout-label{font-family:var(--f-mono);font-size:9px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px}.callout.blue .callout-label{color:var(--blue)}.callout.amber .callout-label{color:var(--amber)}.callout.green .callout-label{color:var(--green)}.callout.red .callout-label{color:var(--red)}
+.callout p{font-size:14px;color:var(--ink2);line-height:1.7;margin:0}.callout strong{color:var(--ink)}
+.article-img{width:100%;border-radius:8px;border:1px solid #1e2535;overflow:hidden;margin:36px 0}
+.article-img figcaption{padding:10px 14px;background:var(--off);font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.04em;border-top:1px solid var(--rule)}
+.checklist{list-style:none;display:flex;flex-direction:column;gap:8px;margin:20px 0 28px}
+.checklist li{display:flex;align-items:flex-start;gap:10px;font-size:15px;color:var(--ink2);line-height:1.6}
+.checklist li::before{content:'';width:16px;height:16px;flex-shrink:0;margin-top:3px;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 14 14' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='7' cy='7' r='6.5' fill='none' stroke='%230057ff' stroke-width='1'/%3E%3Cpath d='M4 7l2 2 4-4' stroke='%230057ff' stroke-width='1.3' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:center;background-size:contain}
+.arrow-list{list-style:none;display:flex;flex-direction:column;gap:8px;margin:20px 0 28px}
+.arrow-list li{display:flex;align-items:flex-start;gap:10px;font-size:15px;color:var(--ink2);line-height:1.6}
+.arrow-list li::before{content:'\2192';color:var(--blue);flex-shrink:0;font-family:var(--f-mono);font-size:13px;margin-top:2px}
+.table-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:28px 0}
+.compare-table{width:100%;border-collapse:collapse;font-size:14px}
+.compare-table th{font-family:var(--f-mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink4);padding:10px 16px;border-bottom:2px solid var(--rule);text-align:left;background:var(--off)}
+.compare-table td{padding:12px 16px;border-bottom:1px solid var(--rule);vertical-align:top;color:var(--ink2);line-height:1.6}
+.compare-table tr:last-child td{border-bottom:none}
+.compare-table td:first-child{font-weight:600;color:var(--ink);font-family:var(--f-mono);font-size:12px}
+.sidebar{position:sticky;top:88px;display:flex;flex-direction:column;gap:16px}
+.toc-card{border:1px solid var(--rule);border-radius:8px;padding:24px;background:var(--white);box-shadow:var(--shadow-sm)}
+.toc-label{font-family:var(--f-mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);margin-bottom:16px}
+.toc-list{list-style:none;display:flex;flex-direction:column;gap:2px}
+.toc-list a{display:block;font-size:13px;color:var(--ink3);text-decoration:none;padding:6px 10px;border-radius:4px;transition:all .15s;border-left:2px solid transparent}
+.toc-list a:hover,.toc-list a.active{color:var(--blue);background:var(--blue-dim);border-left-color:var(--blue)}
+.sidebar-cta{border:1px solid var(--blue);border-radius:8px;padding:24px;background:var(--blue-dim)}
+.sc-eyebrow{font-family:var(--f-mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);margin-bottom:10px}
+.sc-title{font-family:var(--f-head);font-size:17px;font-weight:800;letter-spacing:-.02em;color:var(--ink);margin-bottom:8px;line-height:1.2}
+.sc-body{font-size:13px;color:var(--ink3);line-height:1.6;margin-bottom:16px}
+.sc-btn{display:block;text-align:center;padding:11px 16px;background:var(--blue);color:white;border-radius:6px;font-family:var(--f-body);font-size:13px;font-weight:500;text-decoration:none}.sc-btn:hover{background:var(--blue2)}
+.sc-note{font-family:var(--f-mono);font-size:9px;color:var(--ink4);text-align:center;margin-top:8px;letter-spacing:.04em}
+.sidebar-share{border:1px solid var(--rule);border-radius:8px;padding:20px 24px;background:var(--white)}
+.share-label{font-family:var(--f-mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);margin-bottom:14px}
+.share-links{display:flex;flex-direction:column;gap:8px}
+.share-link{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--ink3);text-decoration:none;padding:9px 12px;border:1px solid var(--rule);border-radius:6px;transition:border-color .2s,color .2s}.share-link:hover{border-color:var(--blue);color:var(--blue)}
+.related{padding:64px 6%;border-top:1px solid var(--rule);background:var(--off)}
+.related-inner{max-width:1100px;margin:0 auto}
+.related-label{font-family:var(--f-mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);margin-bottom:32px;display:flex;align-items:center;gap:10px}
+.related-label::before{content:'';width:20px;height:1px;background:var(--blue)}
+.related-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.related-card{padding:24px;border:1px solid var(--rule);border-radius:8px;background:var(--white);box-shadow:var(--shadow-sm);transition:border-color .2s,transform .2s;text-decoration:none;display:flex;flex-direction:column;gap:12px}.related-card:hover{border-color:var(--blue);transform:translateY(-4px)}
+.rc-tag{font-family:var(--f-mono);font-size:9px;color:var(--blue);letter-spacing:.08em;text-transform:uppercase;padding:3px 8px;background:var(--blue-dim);border-radius:3px;align-self:flex-start}
+.rc-title{font-family:var(--f-head);font-size:16px;font-weight:700;letter-spacing:-.02em;color:var(--ink);line-height:1.25}
+.rc-desc{font-size:13px;color:var(--ink3);line-height:1.6;flex:1}
+.rc-footer{display:flex;align-items:center;justify-content:space-between;padding-top:12px;border-top:1px solid var(--rule)}
+.rc-read{font-family:var(--f-mono);font-size:10px;color:var(--ink4)}.rc-arrow{font-size:14px;color:var(--blue)}
+footer{padding:56px 6% 32px;border-top:1px solid var(--rule);background:var(--white)}
+.footer-inner{max-width:1160px;margin:0 auto}
+.footer-top{display:flex;justify-content:space-between;align-items:flex-start;gap:40px;flex-wrap:wrap;margin-bottom:48px}
+.footer-brand p{font-size:13px;font-weight:300;color:var(--ink3);margin-top:12px;max-width:260px;line-height:1.6}
+.footer-col h4{font-family:var(--f-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink4);margin-bottom:16px}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+.footer-col a{font-size:13px;color:var(--ink3);text-decoration:none}.footer-col a:hover{color:var(--blue)}
+.footer-bottom{padding-top:24px;border-top:1px solid var(--rule);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.footer-bottom p{font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.04em}
+.compliance-pills{display:flex;gap:6px;flex-wrap:wrap}
+.cp{font-family:var(--f-mono);font-size:9px;padding:3px 8px;border:1px solid var(--rule);border-radius:3px;color:var(--ink4);letter-spacing:.06em}
+@media(max-width:900px){.article-wrap{grid-template-columns:1fr;gap:48px}.sidebar{position:static}.related-grid{grid-template-columns:1fr}.table-scroll{margin:20px 0}}
+@media(max-width:900px){.nav-links{display:none}}
+@media(max-width:540px){nav{padding:0 4%}.nav-btn{font-size:12px;padding:8px 14px}}
+</style>
+</head>
+<body>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+<nav>
+  <a href="../index.html" class="nav-logo">
+    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" style="flex-shrink:0"><rect width="32" height="32" rx="7" fill="#0d0f12"/><rect x="8" y="7" width="16" height="16" rx="2" stroke="white" stroke-width="2.5" fill="none"/><line x1="20" y1="19" x2="26" y2="25" stroke="#0057FF" stroke-width="3" stroke-linecap="round"/></svg>
+    <span style="font-family:'Epilogue',sans-serif;font-weight:800;font-size:16px;color:#0d0f12;letter-spacing:-.03em;white-space:nowrap">QLean <span style="font-weight:300;color:#5a6172">Automation</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="../index.html#products">Products</a></li>
+    <li><a href="../index.html#framework">Framework</a></li>
+    <li><a href="blog-index.html">Knowledge Base</a></li>
+    <li><a href="../index.html#pricing">Pricing</a></li>
+    <li><a href="../about.html">About</a></li>
+    <li><a href="../index.html#faq">FAQ</a></li>
+  </ul>
+  <a href="../index.html#pricing" class="nav-btn">Get the Framework &#8594;</a>
+</nav>
+
+<header class="article-hero">
+  <div class="article-hero-inner">
+    <div class="breadcrumb"><a href="../index.html">Home</a><span>/</span><a href="blog-index.html">Knowledge Base</a><span>/</span>Calibration Management Systems for GMP</div>
+    <div class="article-tag">&#128207; Instrumentation &amp; Calibration</div>
+    <h1>Calibration Management<br><span>Systems for GMP</span><br>What the Database Needs</h1>
+    <p class="article-intro">Most pharma sites manage calibration in one of two ways: a dedicated CMMS or calibration management software, or a controlled spreadsheet maintained by the automation or QA team. Both can pass an audit. But both will fail an audit if the underlying data structure is wrong. Here is what GMP requires from a calibration management system — regardless of which tool you use to run it.</p>
+    <div class="article-meta">
+      <div class="meta-author">
+        <div class="author-avatar"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="7" r="3.5" stroke="white" stroke-width="1.5"/><path d="M2.5 16c0-3.59 2.91-6.5 6.5-6.5s6.5 2.91 6.5 6.5" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+        <div><div class="author-name">QLean Automation</div><div class="author-role">ENGINEERS WHO BUILD SYSTEMS, NOT JUST SIGN THEM</div></div>
+      </div>
+      <div class="meta-divider"></div><div class="meta-stat">6 MIN READ</div>
+      <div class="meta-divider"></div><div class="meta-stat">CALIBRATION &#183; CMMS &#183; GMP &#183; DATA INTEGRITY</div>
+    </div>
+  </div>
+</header>
+
+<div class="article-wrap">
+  <article class="article-body">
+
+    <h2 id="what-gmp-actually-requires">What GMP Actually Requires From Calibration Records</h2>
+    <p>There is no GMP regulation that mandates a specific software platform for calibration management. EU GMP Annex 11 requires that computerised systems used to manage calibration status be validated if they are used to support GMP decisions — but the regulation is silent on which tool. What the regulations do prescribe is what information must be maintained, how it must be protected, and what must happen when an instrument fails calibration.</p>
+    <p>The practical requirements, drawn from EU GMP Annex 11, 21 CFR Part 211.68, and GAMP 5, collapse into five things a calibration management system must do reliably: maintain a complete instrument inventory, track calibration status in real time, link physical certificates to specific installed devices, trigger action when due dates approach or pass, and support the <a href="calibration-intervals-oot-procedures.html">out-of-tolerance investigation</a> by making the historical calibration record immediately retrievable.</p>
+
+    <div class="callout amber">
+      <div class="callout-label">The Audit Reality</div>
+      <p>During an FDA or MHRA inspection, an inspector asking to see your calibration records is not checking whether your CMMS is impressive. They are checking whether you can demonstrate, for any GMP-critical instrument on-site, the complete calibration history — certificates, dates, results, and OOT events — without a significant delay. <strong>A system that requires 20 minutes to locate a specific certificate will cause more concern than a well-maintained spreadsheet that produces it in 30 seconds.</strong></p>
+    </div>
+
+    <h2 id="the-minimum-data-fields">The Minimum Data Fields Every Calibration Record Needs</h2>
+    <p>Whether the calibration register lives in dedicated software or a controlled Excel workbook, each instrument record must carry a defined minimum set of fields. Missing fields are not a minor gap — they break the traceability chain that links a specific measurement to a specific certified device at a specific point in time.</p>
+
+    <div class="table-scroll">
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th>Field</th>
+            <th>What It Contains</th>
+            <th>Why It Is GMP-Required</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Tag No.</td>
+            <td>Instrument tag — must match P&ID, loop diagram, SCADA tag, and IQ protocol exactly</td>
+            <td>Traceability anchor — every other document references this identifier</td>
+          </tr>
+          <tr>
+            <td>Description</td>
+            <td>Plain-language description of what the instrument measures and where</td>
+            <td>Allows human verification without cross-referencing instrument list</td>
+          </tr>
+          <tr>
+            <td>Manufacturer / Model</td>
+            <td>Full manufacturer name and model number as it appears on the nameplate</td>
+            <td>Links the record to the correct calibration procedure and acceptance criteria</td>
+          </tr>
+          <tr>
+            <td>Serial Number</td>
+            <td>The serial number of the specific installed device</td>
+            <td>Links the calibration certificate to this device, not just this type of device</td>
+          </tr>
+          <tr>
+            <td>Calibration Range</td>
+            <td>The range over which calibration is performed, in engineering units</td>
+            <td>Confirms the calibration covers the actual measurement range in use</td>
+          </tr>
+          <tr>
+            <td>GMP Critical?</td>
+            <td>Yes / No classification — consistent with the risk assessment</td>
+            <td>Drives the calibration interval and the OOT response requirement</td>
+          </tr>
+          <tr>
+            <td>Calibration Interval</td>
+            <td>The approved interval between calibrations — risk-based, documented in the control philosophy or URS</td>
+            <td>Defines the maximum time between verified calibration events</td>
+          </tr>
+          <tr>
+            <td>Certificate Reference</td>
+            <td>The unique certificate number issued by the calibration laboratory</td>
+            <td>Enables retrieval of the physical certificate for any inspection or OOT investigation</td>
+          </tr>
+          <tr>
+            <td>Last Calibration Date</td>
+            <td>The date the calibration was performed — from the certificate, not the filing date</td>
+            <td>Start point for the next due date calculation</td>
+          </tr>
+          <tr>
+            <td>Next Due Date</td>
+            <td>Last calibration date plus calibration interval</td>
+            <td>The field that drives the advisory and overdue status flags</td>
+          </tr>
+          <tr>
+            <td>Calibration Status</td>
+            <td>Current / Due Soon / Overdue / No Certificate — ideally formula-driven from next due date</td>
+            <td>The operational field that tells maintenance what action is needed today</td>
+          </tr>
+          <tr>
+            <td>Responsible Technician</td>
+            <td>The person or calibration provider responsible for the next calibration event</td>
+            <td>Accountability — who to chase when an instrument approaches due date</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2 id="status-logic-the-three-states-that-matter">Status Logic — The Three States That Matter</h2>
+    <p>The calibration status field is the operational heart of the register. Its value at any given moment determines whether a GMP-critical instrument is permitted to support batch release decisions. The three active states are straightforward, but their definitions must be explicit in the controlled document that governs the register — not assumed.</p>
+
+    <figure class="article-img">
+      <svg viewBox="0 0 720 200" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;background:#0d0f12;border-radius:8px 8px 0 0">
+        <defs>
+          <marker id="arr3" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><polygon points="0 0,7 3.5,0 7" fill="rgba(0,87,255,0.6)"/></marker>
+        </defs>
+        <text x="360" y="18" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(255,255,255,0.2)" letter-spacing="0.12em">CALIBRATION STATUS STATES — TRANSITION TRIGGERS AND REQUIRED ACTIONS</text>
+
+        <!-- Current -->
+        <rect x="20" y="40" width="160" height="130" rx="5" fill="rgba(0,135,90,0.10)" stroke="rgba(0,135,90,0.5)" stroke-width="1.5"/>
+        <text x="100" y="64" text-anchor="middle" font-family="Epilogue,sans-serif" font-weight="800" font-size="13" fill="rgba(0,175,100,0.9)">CURRENT</text>
+        <text x="100" y="84" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7" fill="rgba(0,200,100,0.55)">Next due &gt;30 days away</text>
+        <line x1="100" y1="94" x2="100" y2="96" stroke="rgba(0,135,90,0.3)" stroke-width="1"/>
+        <text x="100" y="110" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(180,220,200,0.7)">Instrument in normal</text>
+        <text x="100" y="124" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(180,220,200,0.7)">GMP service</text>
+        <text x="100" y="140" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7" fill="rgba(0,200,100,0.4)">No action required</text>
+        <text x="100" y="155" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7" fill="rgba(0,200,100,0.4)">Monitor register weekly</text>
+
+        <!-- Arrow Current to Due Soon -->
+        <line x1="180" y1="105" x2="225" y2="105" stroke="rgba(0,87,255,0.4)" stroke-width="1.5" marker-end="url(#arr3)"/>
+        <text x="202" y="99" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7" fill="rgba(255,255,255,0.2)">&#8804;30 days</text>
+
+        <!-- Due Soon -->
+        <rect x="225" y="40" width="160" height="130" rx="5" fill="rgba(217,119,6,0.08)" stroke="rgba(217,119,6,0.5)" stroke-width="1.5"/>
+        <text x="305" y="64" text-anchor="middle" font-family="Epilogue,sans-serif" font-weight="800" font-size="13" fill="rgba(240,160,40,0.9)">DUE SOON</text>
+        <text x="305" y="84" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7" fill="rgba(240,160,40,0.55)">Next due &#8804;30 days away</text>
+        <line x1="305" y1="94" x2="305" y2="96" stroke="rgba(217,119,6,0.3)" stroke-width="1"/>
+        <text x="305" y="110" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(240,200,150,0.7)">Advisory flag active</text>
+        <text x="305" y="124" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(240,200,150,0.7)">Schedule calibration</text>
+        <text x="305" y="140" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7" fill="rgba(240,160,40,0.4)">Notify responsible tech</text>
+        <text x="305" y="155" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7" fill="rgba(240,160,40,0.4)">Book external lab if req'd</text>
+
+        <!-- Arrow Due Soon to Overdue -->
+        <line x1="385" y1="105" x2="430" y2="105" stroke="rgba(192,57,43,0.5)" stroke-width="1.5" marker-end="url(#arr3)"/>
+        <text x="407" y="99" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7" fill="rgba(255,255,255,0.2)">date passed</text>
+
+        <!-- Overdue -->
+        <rect x="430" y="40" width="160" height="130" rx="5" fill="rgba(192,57,43,0.10)" stroke="rgba(192,57,43,0.5)" stroke-width="1.5"/>
+        <text x="510" y="64" text-anchor="middle" font-family="Epilogue,sans-serif" font-weight="800" font-size="13" fill="rgba(220,80,60,0.9)">OVERDUE</text>
+        <text x="510" y="84" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7" fill="rgba(220,80,60,0.55)">Next due date has passed</text>
+        <line x1="510" y1="94" x2="510" y2="96" stroke="rgba(192,57,43,0.3)" stroke-width="1"/>
+        <text x="510" y="110" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(240,180,170,0.7)">Instrument flagged on HMI</text>
+        <text x="510" y="124" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(240,180,170,0.7)">Medium alarm generated</text>
+        <text x="510" y="140" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7" fill="rgba(220,80,60,0.5)">Take OOS or accept risk</text>
+        <text x="510" y="155" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7" fill="rgba(220,80,60,0.5)">Document QA decision</text>
+
+        <!-- Arrow back to Current -->
+        <path d="M590 80 Q650 40 650 105 Q650 160 590 155" fill="none" stroke="rgba(0,135,90,0.3)" stroke-width="1" stroke-dasharray="4,3"/>
+        <text x="672" y="108" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7" fill="rgba(0,175,100,0.35)">pass</text>
+        <text x="672" y="118" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7" fill="rgba(0,175,100,0.35)">cal</text>
+
+        <text x="360" y="188" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(255,255,255,0.15)">Status transitions are formula-driven from next due date — never manually updated</text>
+      </svg>
+      <figcaption>FIGURE 1 — The three calibration status states, their transition triggers, and the required action at each state. Status should be formula-driven so it updates automatically as dates change — manual status updates introduce human error and data integrity risk.</figcaption>
+    </figure>
+
+    <p><strong>Current</strong> means the next due date is more than 30 days in the future. No action is required beyond routine monitoring of the register. The instrument is in normal GMP service.</p>
+    <p><strong>Due Soon</strong> means the next due date is 30 days or fewer away. This is an advisory state — the instrument is still in normal service, but a calibration should be scheduled. The 30-day threshold is designed to give enough lead time to book an external calibration laboratory if needed. The threshold itself should be documented in the URS or the site calibration SOP — not left as an undocumented assumption.</p>
+    <p><strong>Overdue</strong> means the next due date has passed. This is not a routine state. A GMP-critical instrument that is overdue for calibration should be flagged as a medium alarm on the HMI calibration dashboard, and a documented QA decision should be made about whether to keep it in service (with a risk acceptance record) or take it out of service pending calibration. Running a GMP-critical instrument indefinitely in an overdue state without a documented QA decision is a data integrity finding.</p>
+
+    <div class="callout red">
+      <div class="callout-label">The Manual Status Problem</div>
+      <p>If the calibration status field is updated manually — someone types "Current" after updating the due date — you have introduced a human error opportunity. The status field should be a formula: if today's date is more than 30 days before the next due date, the status is Current; if within 30 days, Due Soon; if past the due date, Overdue. <strong>A formula-driven status field cannot be accidentally left as "Current" for an instrument that became overdue last month.</strong></p>
+    </div>
+
+    <h2 id="linking-the-register-to-physical-certificates">Linking the Register to Physical Certificates</h2>
+    <p>The calibration register is a tracking document, not a calibration record. The actual calibration record — with measurement data, reference standard details, temperature at time of calibration, and technician signature — lives in the calibration certificate issued by the calibration laboratory. The register must link to that certificate unambiguously.</p>
+    <p>The certificate reference field in the register should contain the unique certificate number exactly as it appears on the certificate itself. This is not the instrument tag number, not the purchase order number, and not an internal reference code you assigned. It is the laboratory's certificate number, because that is what an inspector will use to pull the physical document when they ask to see it.</p>
+    <p>Where certificates are stored electronically, the storage system must be access-controlled, the files must be named consistently (certificate number in the filename), and the records must be retained for the full regulatory period — a minimum of two years online and seven years total under EU GMP, though site policy may require longer. <a href="calibration-certificates-gmp-requirements.html">The requirements for what makes a certificate valid for GMP</a> are a separate topic, but the storage and retrieval architecture must be decided before the first calibration event, not retrofitted after the first audit finding.</p>
+
+    <h2 id="the-calibration-dashboard-in-scada">The Calibration Dashboard in SCADA</h2>
+    <p>In a system where the SCADA or HMI is the primary operational interface, the calibration register should not exist in isolation. The calibration status of GMP-critical instruments should be visible to operators and supervisors from within the control system — not only to the maintenance team in a spreadsheet.</p>
+    <p>The practical implementation is a calibration dashboard screen within the SCADA: a list of all GMP-critical instruments, their current calibration status, and their next due date. Instruments in the Due Soon state are highlighted in amber. Instruments in the Overdue state are highlighted in red and generate a medium alarm that appears in the alarm banner. Operators cannot acknowledge and clear overdue calibration alarms without supervisor-level credentials, because a calibration overdue state requires a documented management decision — not a routine alarm clearance.</p>
+    <p>This architecture means the calibration management system has two components that must stay synchronised: the controlled register that maintenance updates after each calibration event, and the SCADA dashboard that reflects that data. The mechanism for keeping them synchronised — whether a direct database link, a manual update procedure, or a SCADA-native calibration module — must be defined and tested during OQ.</p>
+
+    <h2 id="what-happens-at-instrument-replacement">What Happens at Instrument Replacement</h2>
+    <p>An instrument that is replaced in service — whether due to failure, planned upgrade, or post-OOT finding — creates a specific obligation in the calibration register. The record for the old device must be closed with the date of removal. A new record must be created for the replacement device with its own serial number, its own certificate reference, and its own calibration history starting from zero. The replacement event is a <a href="change-control-validated-system.html">change control</a> entry, and the calibration register update is one of the required actions within that change control.</p>
+    <p>If the same tag number continues after replacement — TT-001 remains TT-001 — the register entry for TT-001 should show the transition clearly. A note field recording "replaced [old S/N] with [new S/N] on [date] per CCR-[ref]" makes the history auditable. What must never happen is silently overwriting the old serial number and certificate reference with the new ones, which erases the historical record and creates an apparent gap between the original IQ certificate and the current device.</p>
+
+    <div class="callout blue">
+      <div class="callout-label">Calibration Register vs. Calibration History</div>
+      <p>The calibration register shows the current state of every instrument. The calibration history — which records every calibration event, pass/fail result, and OOT finding for each instrument over its lifetime — is a separate document or set of records. Both are required for GMP. The register tells you the status today; the history tells you what happened and when. <strong>An inspector conducting a periodic review will want both.</strong></p>
+    </div>
+
+    <h2 id="cmms-versus-controlled-spreadsheet">CMMS Software Versus Controlled Spreadsheet</h2>
+    <p>The question of whether to use dedicated calibration management software (Calibrio, Blue Mountain RAM, site CMMS modules) or a controlled spreadsheet is ultimately a question of scale and risk — not a GMP mandate. Both are viable if implemented correctly; both will fail an audit if implemented poorly.</p>
+
+    <div class="table-scroll">
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th>Approach</th>
+            <th>Advantages</th>
+            <th>GMP Risks to Manage</th>
+            <th>Best Fit</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Dedicated CMMS / Cal Software</td>
+            <td>Audit trail built-in; e-signature support; automatic scheduling; certificate storage integrated; reporting</td>
+            <td>Software must be validated (GAMP 5 Cat 4); vendor audit required; change control on software updates; high cost</td>
+            <td>Large sites with 100+ instruments; FDA-regulated environments where 21 CFR Part 11 e-signature requirements apply to the CMMS itself</td>
+          </tr>
+          <tr>
+            <td>Controlled Spreadsheet</td>
+            <td>Low cost; immediately available; easy to audit; formula-driven status; no software validation required if used as a reference register only</td>
+            <td>No built-in audit trail; version control must be enforced manually; certificates stored separately; update procedure must prevent unauthorised edits</td>
+            <td>Small-to-mid sites with fewer than 50 instruments; system integrators managing a single validated system during the project phase</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>The key risk with a controlled spreadsheet is version control and access control. If the spreadsheet is on a shared drive with no permission controls, multiple people can edit it simultaneously, previous states are not preserved, and there is no record of who changed what and when. The minimum controls for a GMP-compliant spreadsheet register are: read-only access for general users, edit access only for the calibration coordinator, a version history, and a periodic review procedure to confirm the data is current.</p>
+
+    <div class="callout green">
+      <div class="callout-label">In the QLean Framework</div>
+      <p>The Engineering Lists workbook (EL-SYS-001) includes a dedicated Calibration Register on Sheet 9 — a live operational document maintained post-PQ. It tracks all GMP-critical instruments with certificate reference, last calibration date, next due date, responsible technician, and calibration status with conditional formatting: overdue entries flag red, due-soon entries flag amber. The IQ protocol (IQ-SYS-001) references this register in the calibration certificate verification section — the fields populated at IQ (certificate reference, calibration date, next due date) become the starting record for the operational register. The URS (URS-MNT-001) and Control Philosophy (Section 8.2) define the 30-day advisory threshold and the overdue alarm behaviour. <strong>The register structure, the IQ starting entries, and the operational rules are all pre-built and aligned — ready to populate with your project's instrument data.</strong></p>
+    </div>
+
+    <h2 id="calibration-intervals-and-the-register">Calibration Intervals and the Register</h2>
+    <p>The calibration interval column in the register is not just a scheduling field — it is a documented risk decision. The interval should be consistent with what is written in the Control Philosophy or URS, and those documents should explain the rationale. Changing an interval in the register without a corresponding change to the source document — and a change control record — is a data integrity issue.</p>
+    <p>When drift data from historical calibration results supports extending an interval — an instrument that has passed its last eight calibrations comfortably within tolerance — the extension should be proposed through a formal review process, approved by QA, and documented. The register then reflects the approved new interval from the change effective date, not retroactively. This is how <a href="calibration-intervals-oot-procedures.html">risk-based interval management</a> works in practice: the data justifies the change, the change is approved, and the register captures the new state.</p>
+
+  </article>
+
+  <aside class="sidebar">
+    <div class="toc-card">
+      <div class="toc-label">In This Article</div>
+      <ul class="toc-list">
+        <li><a href="#what-gmp-actually-requires" class="active">What GMP Requires</a></li>
+        <li><a href="#the-minimum-data-fields">Minimum Data Fields</a></li>
+        <li><a href="#status-logic-the-three-states-that-matter">Status Logic</a></li>
+        <li><a href="#linking-the-register-to-physical-certificates">Linking to Certificates</a></li>
+        <li><a href="#the-calibration-dashboard-in-scada">Calibration Dashboard in SCADA</a></li>
+        <li><a href="#what-happens-at-instrument-replacement">Instrument Replacement</a></li>
+        <li><a href="#cmms-versus-controlled-spreadsheet">CMMS vs Spreadsheet</a></li>
+        <li><a href="#calibration-intervals-and-the-register">Calibration Intervals</a></li>
+      </ul>
+    </div>
+
+    <div class="sidebar-cta">
+      <div class="sc-eyebrow">QLean Framework</div>
+      <div class="sc-title">Calibration Register — ready to populate</div>
+      <div class="sc-body">Engineering Lists workbook includes a GMP-ready calibration register with formula-driven status, conditional formatting, and IQ starting entries — aligned to the IQ protocol and Control Philosophy.</div>
+      <a href="../index.html#pricing" class="sc-btn">Get the Framework &#8212; &#8364;249 &#8594;</a>
+      <div class="sc-note">// INSTANT DOWNLOAD &middot; COMPANY-WIDE LICENCE</div>
+    </div>
+
+    <div class="sidebar-share">
+      <div class="share-label">Share This Article</div>
+      <div class="share-links">
+        <a href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fqleanautomation.com%2Fblog%2Fcalibration-database-pharma-requirements.html" target="_blank" rel="noopener" class="share-link">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          Share on LinkedIn
+        </a>
+        <a href="https://www.reddit.com/submit?url=https%3A%2F%2Fqleanautomation.com%2Fblog%2Fcalibration-database-pharma-requirements.html&title=Calibration+Management+Systems+for+GMP+%E2%80%94+What+the+Database+Needs" target="_blank" rel="noopener" class="share-link">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/></svg>
+          Share on Reddit
+        </a>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<section class="related">
+  <div class="related-inner">
+    <div class="related-label">Continue Reading</div>
+    <div class="related-grid">
+      <a href="calibration-management-pharma-iq.html" class="related-card">
+        <span class="rc-tag">&#128207; Instrumentation</span>
+        <div class="rc-title">Calibration Management for Pharma Automation</div>
+        <div class="rc-desc">Certificate traceability requirements, calibration intervals, OOT response procedure, and how calibration status is tracked across the validated system lifecycle.</div>
+        <div class="rc-footer"><span class="rc-read">7 MIN READ</span><span class="rc-arrow">&#8594;</span></div>
+      </a>
+      <a href="calibration-intervals-oot-procedures.html" class="related-card">
+        <span class="rc-tag">&#128207; Instrumentation</span>
+        <div class="rc-title">Calibration Intervals and Out-of-Tolerance Procedures</div>
+        <div class="rc-desc">How to set risk-based calibration intervals, use drift data to review them over time, and manage the full OOT investigation when an instrument fails calibration.</div>
+        <div class="rc-footer"><span class="rc-read">7 MIN READ</span><span class="rc-arrow">&#8594;</span></div>
+      </a>
+      <a href="calibration-certificates-gmp-requirements.html" class="related-card">
+        <span class="rc-tag">&#128207; Instrumentation</span>
+        <div class="rc-title">Calibration Certificates — What Makes Them Valid for GMP</div>
+        <div class="rc-desc">UKAS traceability, measurement uncertainty, the accreditation statement, and why not every certificate from a calibration laboratory is automatically GMP-compliant.</div>
+        <div class="rc-footer"><span class="rc-read">6 MIN READ</span><span class="rc-arrow">&#8594;</span></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="../index.html" class="nav-logo" style="text-decoration:none">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="7" fill="#0d0f12"/><rect x="8" y="7" width="16" height="16" rx="2" stroke="white" stroke-width="2.5" fill="none"/><line x1="20" y1="19" x2="26" y2="25" stroke="#0057FF" stroke-width="3" stroke-linecap="round"/></svg>
+          <span style="font-family:'Epilogue',sans-serif;font-weight:800;font-size:16px;color:#0d0f12;letter-spacing:-.03em">QLean <span style="font-weight:300;color:#5a6172">Automation</span></span>
+        </a>
+        <p>GMP validation documentation tools for automation engineers and system integrators.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Products</h4>
+        <ul>
+          <li><a href="../index.html#products">GAMP 5 Framework Pack</a></li>
+          <li><a href="../index.html#products">Technical Ebook</a></li>
+          <li><a href="../index.html#pricing">Pricing</a></li>
+          <li><a href="../index.html#faq">FAQ</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Knowledge Base</h4>
+        <ul>
+          <li><a href="blog-index.html">All Articles</a></li>
+          <li><a href="cluster-instrumentation.html">Instrumentation &amp; Calibration</a></li>
+          <li><a href="calibration-management-pharma-iq.html">Calibration Management</a></li>
+          <li><a href="calibration-intervals-oot-procedures.html">Calibration Intervals</a></li>
+          <li><a href="calibration-certificates-gmp-requirements.html">Calibration Certificates</a></li>
+          <li><a href="instrument-loop-diagram-pharma-iq.html">Instrument Loop Diagrams</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="../index.html#framework">Framework</a></li>
+          <li><a href="../terms.html">Terms of Service</a></li>
+          <li><a href="../privacy.html">Privacy Policy</a></li>
+          <li><a href="mailto:hello@qleanautomation.com">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 QLean Automation. All rights reserved.</p>
+      <div class="compliance-pills">
+        <span class="cp">GAMP 5</span>
+        <span class="cp">EU GMP ANNEX 11</span>
+        <span class="cp">21 CFR PART 11</span>
+        <span class="cp">ISO/IEC 17025</span>
+        <span class="cp">GXP</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+window.addEventListener('scroll',function(){
+  var s=document.getElementById('progress');
+  var h=document.documentElement;
+  var p=(h.scrollTop||document.body.scrollTop)/(h.scrollHeight-h.clientHeight)*100;
+  s.style.width=p+'%';
+});
+var tl=document.querySelectorAll('.toc-list a');
+window.addEventListener('scroll',function(){
+  var headings=document.querySelectorAll('.article-body h2[id]');
+  var scrollY=window.scrollY+120;
+  var current='';
+  headings.forEach(function(h){if(h.offsetTop<=scrollY)current=h.id;});
+  tl.forEach(function(a){
+    a.classList.remove('active');
+    if(a.getAttribute('href')==='#'+current)a.classList.add('active');
+  });
+});
+</script>
+</body>
+</html>

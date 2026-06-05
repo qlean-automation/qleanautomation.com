@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-JJQ1TXZJX7"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-JJQ1TXZJX7');
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OT/IT Convergence in Pharma — What Changes When SCADA Meets Enterprise IT | QLean Automation</title>
+<meta name="description" content="As pharma sites connect SCADA systems to ERP, LIMS, and cloud reporting platforms, the boundary between OT and IT blurs. Here is what changes from a validation, cybersecurity, and governance perspective — and how to manage it without losing control of the validated state.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@300;400;500;600;700;800;900&family=Source+Sans+3:ital,wght@0,300;0,400;0,500;1,300&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--white:#ffffff;--off:#f7f8f9;--ink:#0d0f12;--ink2:#1e2128;--ink3:#3d4456;--ink4:#9199a8;--rule:#e2e5ea;--rule2:#c8cdd6;--blue:#0057ff;--blue2:#0044cc;--blue-dim:rgba(0,87,255,0.07);--green:#00875a;--green-dim:rgba(0,135,90,0.08);--amber:#d97706;--amber-dim:rgba(217,119,6,0.08);--red:#c0392b;--red-dim:rgba(192,57,43,0.08);--f-head:'Epilogue',sans-serif;--f-body:'Source Sans 3',sans-serif;--f-mono:'Roboto Mono',monospace;--shadow-sm:0 2px 8px rgba(13,15,18,0.06),0 1px 3px rgba(13,15,18,0.04)}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}body{background:var(--white);color:var(--ink);font-family:var(--f-body);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+nav{position:fixed;top:0;left:0;right:0;z-index:200;height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 6%;background:rgba(255,255,255,0.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--rule)}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;flex-shrink:0}
+.nav-links{display:flex;align-items:center;gap:36px;list-style:none}.nav-links a{font-size:14px;font-weight:400;color:var(--ink3);text-decoration:none;transition:color .2s}.nav-links a:hover{color:var(--ink)}
+.nav-btn{font-family:var(--f-body);font-size:13px;font-weight:500;padding:9px 20px;background:var(--blue);color:white;border:none;border-radius:6px;cursor:pointer;text-decoration:none;white-space:nowrap;flex-shrink:0}.nav-btn:hover{background:var(--blue2)}
+.progress-bar{position:fixed;top:64px;left:0;right:0;height:2px;background:var(--rule);z-index:199}.progress-fill{height:100%;background:var(--blue);width:0%}
+.article-hero{padding:120px 6% 64px;background:var(--white);border-bottom:1px solid var(--rule);position:relative;overflow:hidden}
+.article-hero::before{content:'';position:absolute;top:-80px;right:-80px;width:400px;height:400px;background:radial-gradient(circle,rgba(0,87,255,0.04) 0%,transparent 70%);pointer-events:none}
+.article-hero-inner{max-width:940px;margin:0 auto;position:relative;z-index:1}
+.breadcrumb{display:flex;align-items:center;gap:8px;font-family:var(--f-mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink4);margin-bottom:24px}.breadcrumb a{color:var(--ink4);text-decoration:none}.breadcrumb a:hover{color:var(--blue)}.breadcrumb span{color:var(--rule2)}
+.article-tag{display:inline-flex;align-items:center;gap:6px;font-family:var(--f-mono);font-size:10px;font-weight:500;color:var(--blue);letter-spacing:.1em;text-transform:uppercase;margin-bottom:20px;padding:4px 10px;background:var(--blue-dim);border-radius:4px}
+.article-hero h1{font-family:var(--f-head);font-size:clamp(30px,5vw,52px);font-weight:900;line-height:1.0;letter-spacing:-.04em;color:var(--ink);margin-bottom:20px}.article-hero h1 span{color:var(--blue)}
+.article-intro{font-size:18px;font-weight:400;color:var(--ink2);line-height:1.75;margin-bottom:32px;max-width:800px}
+.article-meta{display:flex;align-items:center;gap:24px;padding-top:24px;border-top:1px solid var(--rule);flex-wrap:wrap}
+.meta-author{display:flex;align-items:center;gap:10px}.author-avatar{width:36px;height:36px;border-radius:50%;background:var(--ink);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.author-name{font-size:13px;font-weight:500;color:var(--ink)}.author-role{font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.04em}
+.meta-divider{width:1px;height:28px;background:var(--rule)}.meta-stat{font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.06em}
+.article-wrap{max-width:1300px;margin:0 auto;padding:64px 6%;display:grid;grid-template-columns:1fr 300px;gap:60px;align-items:start}
+.article-body{min-width:0}
+.article-body h2{font-family:var(--f-head);font-size:26px;font-weight:800;letter-spacing:-.03em;color:var(--ink);margin:56px 0 16px;line-height:1.2}.article-body h2:first-child{margin-top:0}
+.article-body h3{font-family:var(--f-head);font-size:18px;font-weight:700;letter-spacing:-.02em;color:var(--ink);margin:32px 0 12px}
+.article-body p{font-size:16px;font-weight:400;color:var(--ink2);line-height:1.85;margin-bottom:20px}
+.article-body strong{color:var(--ink);font-weight:600}
+.article-body a{color:var(--blue);text-decoration:none;border-bottom:1px solid rgba(0,87,255,.25)}.article-body a:hover{border-color:var(--blue)}
+.callout{padding:20px 24px;border-radius:8px;margin:32px 0;border-left:3px solid}
+.callout.blue{background:var(--blue-dim);border-color:var(--blue)}.callout.amber{background:var(--amber-dim);border-color:var(--amber)}.callout.green{background:var(--green-dim);border-color:var(--green)}.callout.red{background:var(--red-dim);border-color:var(--red)}
+.callout-label{font-family:var(--f-mono);font-size:9px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px}.callout.blue .callout-label{color:var(--blue)}.callout.amber .callout-label{color:var(--amber)}.callout.green .callout-label{color:var(--green)}.callout.red .callout-label{color:var(--red)}
+.callout p{font-size:14px;color:var(--ink2);line-height:1.7;margin:0}.callout strong{color:var(--ink)}
+.article-img{width:100%;border-radius:8px;border:1px solid #1e2535;overflow:hidden;margin:36px 0}
+.article-img figcaption{padding:10px 14px;background:var(--off);font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.04em;border-top:1px solid var(--rule)}
+.table-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:28px 0}
+.compare-table{width:100%;border-collapse:collapse;font-size:14px}
+.compare-table th{font-family:var(--f-mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink4);padding:10px 16px;border-bottom:2px solid var(--rule);text-align:left;background:var(--off)}
+.compare-table td{padding:12px 16px;border-bottom:1px solid var(--rule);vertical-align:top;color:var(--ink2);line-height:1.6}
+.compare-table tr:last-child td{border-bottom:none}
+.compare-table td:first-child{font-weight:600;color:var(--ink);font-family:var(--f-mono);font-size:12px}
+.sidebar{position:sticky;top:88px;display:flex;flex-direction:column;gap:16px}
+.toc-card{border:1px solid var(--rule);border-radius:8px;padding:24px;background:var(--white);box-shadow:var(--shadow-sm)}
+.toc-label{font-family:var(--f-mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);margin-bottom:16px}
+.toc-list{list-style:none;display:flex;flex-direction:column;gap:2px}
+.toc-list a{display:block;font-size:13px;color:var(--ink3);text-decoration:none;padding:6px 10px;border-radius:4px;transition:all .15s;border-left:2px solid transparent}
+.toc-list a:hover,.toc-list a.active{color:var(--blue);background:var(--blue-dim);border-left-color:var(--blue)}
+.sidebar-cta{border:1px solid var(--blue);border-radius:8px;padding:24px;background:var(--blue-dim)}
+.sc-eyebrow{font-family:var(--f-mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);margin-bottom:10px}
+.sc-title{font-family:var(--f-head);font-size:17px;font-weight:800;letter-spacing:-.02em;color:var(--ink);margin-bottom:8px;line-height:1.2}
+.sc-body{font-size:13px;color:var(--ink3);line-height:1.6;margin-bottom:16px}
+.sc-btn{display:block;text-align:center;padding:11px 16px;background:var(--blue);color:white;border-radius:6px;font-family:var(--f-body);font-size:13px;font-weight:500;text-decoration:none}.sc-btn:hover{background:var(--blue2)}
+.sc-note{font-family:var(--f-mono);font-size:9px;color:var(--ink4);text-align:center;margin-top:8px;letter-spacing:.04em}
+.sidebar-share{border:1px solid var(--rule);border-radius:8px;padding:20px 24px;background:var(--white)}
+.share-label{font-family:var(--f-mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);margin-bottom:14px}
+.share-links{display:flex;flex-direction:column;gap:8px}
+.share-link{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--ink3);text-decoration:none;padding:9px 12px;border:1px solid var(--rule);border-radius:6px;transition:border-color .2s,color .2s}.share-link:hover{border-color:var(--blue);color:var(--blue)}
+.related{padding:64px 6%;border-top:1px solid var(--rule);background:var(--off)}
+.related-inner{max-width:1100px;margin:0 auto}
+.related-label{font-family:var(--f-mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);margin-bottom:32px;display:flex;align-items:center;gap:10px}
+.related-label::before{content:'';width:20px;height:1px;background:var(--blue)}
+.related-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.related-card{padding:24px;border:1px solid var(--rule);border-radius:8px;background:var(--white);box-shadow:var(--shadow-sm);transition:border-color .2s,transform .2s;text-decoration:none;display:flex;flex-direction:column;gap:12px}.related-card:hover{border-color:var(--blue);transform:translateY(-4px)}
+.rc-tag{font-family:var(--f-mono);font-size:9px;color:var(--blue);letter-spacing:.08em;text-transform:uppercase;padding:3px 8px;background:var(--blue-dim);border-radius:3px;align-self:flex-start}
+.rc-title{font-family:var(--f-head);font-size:16px;font-weight:700;letter-spacing:-.02em;color:var(--ink);line-height:1.25}
+.rc-desc{font-size:13px;color:var(--ink3);line-height:1.6;flex:1}
+.rc-footer{display:flex;align-items:center;justify-content:space-between;padding-top:12px;border-top:1px solid var(--rule)}
+.rc-read{font-family:var(--f-mono);font-size:10px;color:var(--ink4)}.rc-arrow{font-size:14px;color:var(--blue)}
+footer{padding:56px 6% 32px;border-top:1px solid var(--rule);background:var(--white)}
+.footer-inner{max-width:1160px;margin:0 auto}
+.footer-top{display:flex;justify-content:space-between;align-items:flex-start;gap:40px;flex-wrap:wrap;margin-bottom:48px}
+.footer-brand p{font-size:13px;font-weight:300;color:var(--ink3);margin-top:12px;max-width:260px;line-height:1.6}
+.footer-col h4{font-family:var(--f-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink4);margin-bottom:16px}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+.footer-col a{font-size:13px;color:var(--ink3);text-decoration:none}.footer-col a:hover{color:var(--blue)}
+.footer-bottom{padding-top:24px;border-top:1px solid var(--rule);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.footer-bottom p{font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.04em}
+.compliance-pills{display:flex;gap:6px;flex-wrap:wrap}
+.cp{font-family:var(--f-mono);font-size:9px;padding:3px 8px;border:1px solid var(--rule);border-radius:3px;color:var(--ink4);letter-spacing:.06em}
+@media(max-width:900px){.article-wrap{grid-template-columns:1fr;gap:48px}.sidebar{position:static}.related-grid{grid-template-columns:1fr}.table-scroll{margin:20px 0}}
+@media(max-width:900px){.nav-links{display:none}}
+@media(max-width:540px){nav{padding:0 4%}.nav-btn{font-size:12px;padding:8px 14px}}
+</style>
+</head>
+<body>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+<nav>
+  <a href="../index.html" class="nav-logo">
+    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" style="flex-shrink:0"><rect width="32" height="32" rx="7" fill="#0d0f12"/><rect x="8" y="7" width="16" height="16" rx="2" stroke="white" stroke-width="2.5" fill="none"/><line x1="20" y1="19" x2="26" y2="25" stroke="#0057FF" stroke-width="3" stroke-linecap="round"/></svg>
+    <span style="font-family:'Epilogue',sans-serif;font-weight:800;font-size:16px;color:#0d0f12;letter-spacing:-.03em;white-space:nowrap">QLean <span style="font-weight:300;color:#5a6172">Automation</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="../index.html#products">Products</a></li>
+    <li><a href="../index.html#framework">Framework</a></li>
+    <li><a href="blog-index.html">Knowledge Base</a></li>
+    <li><a href="../index.html#pricing">Pricing</a></li>
+    <li><a href="../about.html">About</a></li>
+    <li><a href="../index.html#faq">FAQ</a></li>
+  </ul>
+  <a href="../index.html#pricing" class="nav-btn">Get the Framework &#8594;</a>
+</nav>
+
+<header class="article-hero">
+  <div class="article-hero-inner">
+    <div class="breadcrumb"><a href="../index.html">Home</a><span>/</span><a href="blog-index.html">Knowledge Base</a><span>/</span>OT/IT Convergence in Pharma</div>
+    <div class="article-tag">&#128225; Network &amp; Infrastructure</div>
+    <h1>OT/IT Convergence<br><span>in Pharma</span><br>What Changes When SCADA Meets Enterprise IT</h1>
+    <p class="article-intro">Pharma sites are increasingly connecting validated SCADA and historian systems to LIMS, ERP, MES, and cloud reporting platforms. The business case is clear — real-time batch data in the enterprise, automated release workflows, dashboards for site management. The compliance case is more complicated. OT/IT convergence introduces governance challenges, cybersecurity risks, and validation scope questions that a purely isolated OT network does not face. Here is what changes and how to manage it.</p>
+    <div class="article-meta">
+      <div class="meta-author">
+        <div class="author-avatar"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="7" r="3.5" stroke="white" stroke-width="1.5"/><path d="M2.5 16c0-3.59 2.91-6.5 6.5-6.5s6.5 2.91 6.5 6.5" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+        <div><div class="author-name">QLean Automation</div><div class="author-role">ENGINEERS WHO BUILD SYSTEMS, NOT JUST SIGN THEM</div></div>
+      </div>
+      <div class="meta-divider"></div><div class="meta-stat">7 MIN READ</div>
+      <div class="meta-divider"></div><div class="meta-stat">OT/IT &#183; INTEGRATION &#183; GOVERNANCE &#183; GAMP 5</div>
+    </div>
+  </div>
+</header>
+
+<div class="article-wrap">
+  <article class="article-body">
+
+    <h2 id="what-convergence-means-in-practice">What Convergence Means in Practice</h2>
+    <p>OT/IT convergence in pharma is not a technology trend — it is a series of specific integration decisions that each introduce a new data flow, a new interface, and a new governance question. When a pharma site connects its SCADA historian to a LIMS for automated data transfer, the data path crosses a zone boundary, the LIMS becomes a downstream consumer of GMP data, and someone needs to own the question: if the data that arrives in the LIMS is wrong, who is responsible and what is the investigation process?</p>
+    <p>The practical convergence scenarios most commonly encountered in pharma automation are: historian data pushed to LIMS or ERP via a DMZ replication server; batch records generated by the SCADA exported to a document management system; MES or scheduling systems sending recipe parameters down to the SCADA; and remote monitoring dashboards — sometimes cloud-hosted — consuming process data from the historian. Each scenario has a different risk profile, a different validation boundary question, and a different governance requirement.</p>
+
+    <div class="callout blue">
+      <div class="callout-label">The Core Governance Question</div>
+      <p>Every OT/IT integration creates a new answer to: <strong>if the data is wrong, who is responsible?</strong> In a purely isolated OT system, the answer is clear — the validated system owns its data. When a LIMS reads batch data from a historian via a replication server, there are now three potential failure points: the historian data (OT responsibility), the replication mechanism (IT infrastructure responsibility), and the LIMS import (IT/quality systems responsibility). The validation and governance framework must assign ownership and define how data integrity is maintained across each handoff. If no one has done this explicitly, it has not been done.</p>
+    </div>
+
+    <h2 id="the-validation-boundary-question">The Validation Boundary Question</h2>
+    <p>The most important question OT/IT convergence raises is: where does the validated system boundary end? In a traditional isolated OT system the answer is straightforward — everything inside the OT zone is validated, everything outside is not. When SCADA data flows into a LIMS, the LIMS becomes a downstream user of GMP data. If the LIMS uses that data to support a batch release decision, it is now within scope of the GMP data integrity requirements — which means the data transfer interface itself needs to be validated.</p>
+    <p>GAMP 5 addresses this through the concept of interface validation. The interface between the OT historian and the LIMS — the data replication mechanism, the protocol (OPC-UA, SQL, CSV/SFTP), the field mapping, and the transfer frequency — is a validated interface. It needs a specification (which fields transfer, in what format, at what frequency), a test (which confirms the right data arrives in the LIMS with the correct values and timestamps), and a change control requirement (any change to the interface specification requires re-testing the transfer).</p>
+
+    <figure class="article-img">
+      <svg viewBox="0 0 720 260" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;background:#0d0f12;border-radius:8px 8px 0 0">
+        <text x="360" y="18" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(255,255,255,0.2)" letter-spacing="0.12em">OT/IT CONVERGENCE — VALIDATION BOUNDARY AND INTERFACE OWNERSHIP</text>
+        <defs><marker id="arrconv" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="rgba(0,87,255,0.6)"/></marker></defs>
+
+        <!-- OT Zone -->
+        <rect x="12" y="32" width="250" height="210" rx="5" fill="rgba(0,180,100,0.05)" stroke="rgba(0,180,100,0.3)" stroke-width="1.5"/>
+        <text x="137" y="50" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(0,200,120,0.5)" letter-spacing="0.1em">VALIDATED OT ZONE</text>
+
+        <rect x="28" y="60" width="100" height="30" rx="3" fill="rgba(0,180,100,0.1)" stroke="rgba(0,180,100,0.25)" stroke-width="1"/>
+        <text x="78" y="79" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(0,200,120,0.8)">SCADA</text>
+
+        <rect x="148" y="60" width="100" height="30" rx="3" fill="rgba(0,180,100,0.1)" stroke="rgba(0,180,100,0.25)" stroke-width="1"/>
+        <text x="198" y="79" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(0,200,120,0.8)">HISTORIAN</text>
+
+        <rect x="28" y="120" width="218" height="30" rx="3" fill="rgba(0,87,255,0.1)" stroke="rgba(0,87,255,0.3)" stroke-width="1"/>
+        <text x="137" y="139" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(100,160,255,0.8)">VALIDATED INTERFACE</text>
+
+        <rect x="28" y="175" width="218" height="54" rx="3" fill="rgba(0,87,255,0.06)" stroke="rgba(0,87,255,0.2)" stroke-width="1"/>
+        <text x="137" y="193" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7" fill="rgba(0,87,255,0.5)">INTERFACE SPEC REQUIRED:</text>
+        <text x="40" y="208" font-family="Source Sans 3,sans-serif" font-size="9" fill="rgba(100,160,255,0.5)">&#8594; Which fields transfer</text>
+        <text x="40" y="221" font-family="Source Sans 3,sans-serif" font-size="9" fill="rgba(100,160,255,0.5)">&#8594; Format / frequency / protocol</text>
+
+        <!-- Arrow to DMZ -->
+        <line x1="262" y1="135" x2="298" y2="135" stroke="rgba(0,87,255,0.5)" stroke-width="1.5" marker-end="url(#arrconv)"/>
+        <text x="280" y="128" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7" fill="rgba(0,87,255,0.5)">OT-INIT</text>
+        <text x="280" y="148" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7" fill="rgba(0,87,255,0.35)">OUTBOUND</text>
+
+        <!-- DMZ -->
+        <rect x="299" y="80" width="120" height="120" rx="4" fill="rgba(0,87,255,0.07)" stroke="rgba(0,87,255,0.25)" stroke-width="1.5"/>
+        <text x="359" y="100" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7" fill="rgba(0,87,255,0.5)">DMZ</text>
+        <rect x="315" y="110" width="88" height="26" rx="3" fill="rgba(0,87,255,0.1)" stroke="rgba(0,87,255,0.25)" stroke-width="1"/>
+        <text x="359" y="127" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(100,160,255,0.7)">REPLICATION</text>
+        <rect x="315" y="146" width="88" height="26" rx="3" fill="rgba(0,87,255,0.1)" stroke="rgba(0,87,255,0.25)" stroke-width="1"/>
+        <text x="359" y="163" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(100,160,255,0.7)">READ-ONLY</text>
+
+        <!-- Arrow DMZ to IT -->
+        <line x1="419" y1="135" x2="455" y2="135" stroke="rgba(150,150,150,0.4)" stroke-width="1.5" marker-end="url(#arrconv)"/>
+        <text x="437" y="128" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7" fill="rgba(255,255,255,0.2)">IT-PULL</text>
+
+        <!-- Enterprise IT Zone -->
+        <rect x="456" y="32" width="250" height="210" rx="5" fill="rgba(100,100,100,0.04)" stroke="rgba(150,150,150,0.2)" stroke-width="1" stroke-dasharray="5 3"/>
+        <text x="581" y="50" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(200,200,200,0.3)" letter-spacing="0.1em">ENTERPRISE IT ZONE</text>
+
+        <rect x="472" y="60" width="90" height="30" rx="3" fill="rgba(100,100,100,0.08)" stroke="rgba(150,150,150,0.2)" stroke-width="1"/>
+        <text x="517" y="79" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(200,200,200,0.5)">LIMS</text>
+
+        <rect x="600" y="60" width="90" height="30" rx="3" fill="rgba(100,100,100,0.08)" stroke="rgba(150,150,150,0.2)" stroke-width="1"/>
+        <text x="645" y="79" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(200,200,200,0.5)">ERP</text>
+
+        <rect x="472" y="140" width="218" height="50" rx="3" fill="rgba(217,119,6,0.06)" stroke="rgba(217,119,6,0.2)" stroke-width="1"/>
+        <text x="581" y="158" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7" fill="rgba(255,180,60,0.6)">DOWNSTREAM GMP SCOPE</text>
+        <text x="481" y="174" font-family="Source Sans 3,sans-serif" font-size="9" fill="rgba(255,180,60,0.4)">If LIMS uses data for batch release &#8594; LIMS is in scope</text>
+
+        <!-- Downward MES arrow -->
+        <rect x="472" y="195" width="218" height="36" rx="3" fill="rgba(192,57,43,0.06)" stroke="rgba(192,57,43,0.2)" stroke-width="1"/>
+        <text x="581" y="213" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7" fill="rgba(220,80,80,0.5)">MES/SCHEDULING &#8595; TO OT</text>
+        <text x="481" y="225" font-family="Source Sans 3,sans-serif" font-size="9" fill="rgba(220,80,80,0.4)">Recipe push-down = higher risk, needs separate URS</text>
+      </svg>
+      <figcaption>OT/IT CONVERGENCE — VALIDATION BOUNDARY &#183; Data flows outbound from OT via DMZ (lower risk). MES recipe push-down into OT (inbound) carries higher validation scope implications and needs explicit URS requirements.</figcaption>
+    </figure>
+
+    <h2 id="the-five-interface-types">The Five Interface Types — Risk and Validation Scope</h2>
+    <p>Not all OT/IT interfaces carry the same risk or validation scope. The direction of data flow and the nature of what is transferred are the primary risk drivers.</p>
+
+    <div class="table-scroll">
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th>Interface Type</th>
+            <th>Direction</th>
+            <th>GMP Risk Level</th>
+            <th>Validation Requirement</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Historian → LIMS (read-only data)</td>
+            <td>OT &#8594; IT (outbound push)</td>
+            <td>Medium — data integrity of transferred values</td>
+            <td>Interface specification in FDS; transfer verification tests in OQ; data integrity sampling test confirming values match source</td>
+          </tr>
+          <tr>
+            <td>Historian → ERP (batch summary)</td>
+            <td>OT &#8594; IT (outbound, aggregated)</td>
+            <td>Low-Medium — aggregated summaries, not primary records</td>
+            <td>Interface specification; basic transfer verification; primary record remains in historian</td>
+          </tr>
+          <tr>
+            <td>MES &#8594; SCADA (recipe parameters)</td>
+            <td>IT &#8594; OT (inbound — high risk)</td>
+            <td>High — external system can modify GMP-critical process parameters</td>
+            <td>Full URS requirement for the MES interface; SCADA must validate received parameter ranges before accepting; audit trail entry on every parameter receive event; MES itself may require validation</td>
+          </tr>
+          <tr>
+            <td>SCADA &#8594; Document Management (batch record export)</td>
+            <td>OT &#8594; IT (export)</td>
+            <td>Medium — authenticity and integrity of the exported record</td>
+            <td>Export format specification; integrity check (hash or digital signature) on exported file; chain of custody documented</td>
+          </tr>
+          <tr>
+            <td>Cloud reporting dashboard (read-only)</td>
+            <td>OT &#8594; Cloud (outbound)</td>
+            <td>Low — if display-only with no write-back path</td>
+            <td>Interface documented in HDS; confirm no write-back path exists; assess open vs closed system classification impact</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2 id="the-active-directory-integration-question">The Active Directory Integration Question</h2>
+    <p>One of the most common and least carefully considered OT/IT integrations is connecting the SCADA user management to the corporate Active Directory (AD). The operational appeal is obvious — users authenticate to the SCADA with their corporate credentials, IT manages the accounts centrally, and there is no separate OT user database to maintain. The compliance concern is equally obvious: a change made by an IT administrator to a corporate AD account — disabling an account, changing a group membership, resetting a password — immediately affects the validated system's access control without going through the validated system's change control process.</p>
+    <p>The compliant approach to AD integration is to use a dedicated OT organisational unit (OU) within AD, with change control applied to any modification of that OU. Changes to OT user accounts must go through the same SOP that governs access changes on the SCADA itself. The IT administrator managing the broader AD cannot make changes to the OT OU without a formal request and approval from the validated system owner. This requires a formal agreement between the OT/validation team and the IT team — typically documented in a Data Governance or IT-OT Interface Agreement.</p>
+
+    <h2 id="the-governance-framework">The Governance Framework — What Needs to Exist</h2>
+    <p>OT/IT convergence expands the governance footprint of the validated system. The following elements must be explicitly defined before any integration goes live:</p>
+
+    <p><strong>Interface ownership.</strong> Every interface between the OT zone and the IT zone needs a named owner — who is responsible for the specification, who is responsible if the data is wrong, and who initiates change control when the interface needs to change. In practice this is typically a shared ownership model: the OT/validation team owns the OT side of the interface; the IT team or quality systems team owns the IT side; and a joint review is required for any change.</p>
+
+    <p><strong>Change control scope.</strong> The change control SOP must explicitly state that changes to any IT system that sends data to, or receives data from, the validated OT system are in scope for impact assessment. A database schema change in the LIMS that affects a field populated from the historian is a change to the validated interface — even though the change was made entirely in the IT zone.</p>
+
+    <p><strong>Incident and deviation scope.</strong> If the LIMS receives incorrect data from the historian, that is a potential GMP deviation. The deviation management process must extend to cover interface failures, not just in-system failures. The investigation must trace the data path end to end — the historian, the replication mechanism, the transfer protocol, and the LIMS import — to identify the root cause.</p>
+
+    <div class="callout amber">
+      <div class="callout-label">The Governance Gap That Causes Findings</div>
+      <p>The most common OT/IT convergence finding is not a technical failure — it is a governance gap. The IT team made a change to a downstream system that affected how GMP data was displayed or stored, without realising the validated system's change control process applied. No CCR was raised, no impact assessment was done, and the change was deployed directly to production. The finding is not "the change broke something" — it is "a change was made to a GMP system without change control." Preventing this requires explicit communication of the change control scope to the IT team and a defined process for IT-initiated changes to converged systems.</p>
+    </div>
+
+    <h2 id="remote-access-in-a-converged-environment">Remote Access in a Converged Environment</h2>
+    <p>OT/IT convergence typically expands the number of people who want remote access to OT systems — IT administrators, quality systems teams, business intelligence analysts, remote monitoring services. In a purely isolated OT system, the <a href="remote-access-pharma-scada.html">remote access controls</a> are relatively simple because the population of users is small and the use cases are defined. In a converged environment, the population is larger and more varied.</p>
+    <p>The key principle is unchanged: every remote session must be authenticated, time-limited, logged, and controlled by the site. What changes is the access control policy must now define different roles for different populations — an IT administrator who needs read access to the historian for troubleshooting the replication mechanism does not need the same access as the automation engineer who needs to download PLC code. The jump host architecture supports this through role-based access policies that determine which OT zone targets each user type can reach after authenticating through the jump host.</p>
+
+    <div class="callout green">
+      <div class="callout-label">In the QLean Framework</div>
+      <p>The FDS-SYS-001 communication interfaces section (Section 7) documents every OT/IT interface with protocol, direction, field mapping, update frequency, and the URS requirement it satisfies. The SDS-SYS-001 security model includes the AD integration approach and the OT OU governance policy. HDS Section 7 firewall rules explicitly document each OT/IT interface as a named conduit with source, destination, protocol, and direction. The URS-SYS-001 includes cybersecurity requirements (URS-CYB-001 series) that drive the OT boundary design — including a requirement that all OT/IT data flows are outbound-initiated from the OT zone, with no IT-initiated connections to the OT network outside of the VPN/jump host path.</p>
+    </div>
+
+  </article>
+
+  <aside class="sidebar">
+    <div class="toc-card">
+      <div class="toc-label">In This Article</div>
+      <ul class="toc-list">
+        <li><a href="#what-convergence-means-in-practice">What Convergence Means</a></li>
+        <li><a href="#the-validation-boundary-question">Validation Boundary Question</a></li>
+        <li><a href="#the-five-interface-types">Five Interface Types</a></li>
+        <li><a href="#the-active-directory-integration-question">Active Directory Integration</a></li>
+        <li><a href="#the-governance-framework">Governance Framework</a></li>
+        <li><a href="#remote-access-in-a-converged-environment">Remote Access in Convergence</a></li>
+      </ul>
+    </div>
+
+    <div class="sidebar-cta">
+      <div class="sc-eyebrow">QLean Framework</div>
+      <div class="sc-title">29 production-ready GAMP 5 documents</div>
+      <div class="sc-body">FDS communication interfaces section, URS OT/IT boundary requirements, and HDS firewall rules for every OT/IT interface — structured to cover convergence from design through IQ verification.</div>
+      <a href="../index.html#pricing" class="sc-btn">Get the Framework &#8594;</a>
+      <div class="sc-note">SINGLE LICENCE &#183; IMMEDIATE DOWNLOAD</div>
+    </div>
+
+    <div class="sidebar-share">
+      <div class="share-label">Share This Article</div>
+      <div class="share-links">
+        <a href="https://www.linkedin.com/sharing/share-offsite/?url=https://qleanautomation.com/blog/ot-it-convergence-pharma.html" target="_blank" rel="noopener" class="share-link">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          Share on LinkedIn
+        </a>
+        <a href="https://reddit.com/submit?url=https://qleanautomation.com/blog/ot-it-convergence-pharma.html&title=OT%2FIT%20Convergence%20in%20Pharma%20%E2%80%94%20What%20Changes%20When%20SCADA%20Meets%20Enterprise%20IT" target="_blank" rel="noopener" class="share-link">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/></svg>
+          Share on Reddit
+        </a>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<section class="related">
+  <div class="related-inner">
+    <div class="related-label">Continue Reading</div>
+    <div class="related-grid">
+      <a href="ot-network-architecture-pharma.html" class="related-card">
+        <span class="rc-tag">&#128225; Network</span>
+        <div class="rc-title">OT Network Architecture for Pharma — The Purdue Model in Practice</div>
+        <div class="rc-desc">The zone boundary architecture that keeps OT/IT interfaces controlled — and how the DMZ enforces outbound-only data flows from the OT zone.</div>
+        <div class="rc-footer"><span class="rc-read">8 MIN READ</span><span class="rc-arrow">&#8594;</span></div>
+      </a>
+      <a href="remote-access-pharma-scada.html" class="related-card">
+        <span class="rc-tag">&#128187; SCADA</span>
+        <div class="rc-title">Remote Access to Pharma SCADA — How to Implement It Compliantly</div>
+        <div class="rc-desc">Remote access in a converged OT/IT environment — how the jump host architecture handles the expanded user population that convergence brings.</div>
+        <div class="rc-footer"><span class="rc-read">7 MIN READ</span><span class="rc-arrow">&#8594;</span></div>
+      </a>
+      <a href="network-segmentation-pharma-scada.html" class="related-card">
+        <span class="rc-tag">&#128225; Network</span>
+        <div class="rc-title">Network Segmentation for Pharma SCADA — DMZ and Firewalls</div>
+        <div class="rc-desc">How to design and document the DMZ and firewall rules that make OT/IT interfaces controlled conduits rather than unmanaged connections.</div>
+        <div class="rc-footer"><span class="rc-read">8 MIN READ</span><span class="rc-arrow">&#8594;</span></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="../index.html" class="nav-logo" style="text-decoration:none">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="7" fill="#0d0f12"/><rect x="8" y="7" width="16" height="16" rx="2" stroke="white" stroke-width="2.5" fill="none"/><line x1="20" y1="19" x2="26" y2="25" stroke="#0057FF" stroke-width="3" stroke-linecap="round"/></svg>
+          <span style="font-family:'Epilogue',sans-serif;font-weight:800;font-size:16px;color:#0d0f12;letter-spacing:-.03em">QLean <span style="font-weight:300;color:#5a6172">Automation</span></span>
+        </a>
+        <p>GMP validation documentation tools for automation engineers and system integrators.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Products</h4>
+        <ul>
+          <li><a href="../index.html#products">GAMP 5 Framework Pack</a></li>
+          <li><a href="../index.html#products">Technical Ebook</a></li>
+          <li><a href="../index.html#pricing">Pricing</a></li>
+          <li><a href="../index.html#faq">FAQ</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Knowledge Base</h4>
+        <ul>
+          <li><a href="blog-index.html">All Articles</a></li>
+          <li><a href="cluster-network.html">Network &amp; Infrastructure</a></li>
+          <li><a href="ot-network-architecture-pharma.html">OT Network Architecture</a></li>
+          <li><a href="network-segmentation-pharma-scada.html">Network Segmentation</a></li>
+          <li><a href="cybersecurity-pharma-ot-iec62443.html">Cybersecurity OT</a></li>
+          <li><a href="remote-access-pharma-scada.html">Remote Access SCADA</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="../index.html#framework">Framework</a></li>
+          <li><a href="../terms.html">Terms of Service</a></li>
+          <li><a href="../privacy.html">Privacy Policy</a></li>
+          <li><a href="mailto:hello@qleanautomation.com">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 QLean Automation. All rights reserved.</p>
+      <div class="compliance-pills">
+        <span class="cp">GAMP 5</span>
+        <span class="cp">EU GMP ANNEX 11</span>
+        <span class="cp">21 CFR PART 11</span>
+        <span class="cp">IEC 62443</span>
+        <span class="cp">ICH Q9(R1)</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+window.addEventListener('scroll',function(){
+  var s=document.getElementById('progress');
+  var h=document.documentElement;
+  var p=(h.scrollTop||document.body.scrollTop)/(h.scrollHeight-h.clientHeight)*100;
+  s.style.width=p+'%';
+});
+var tl=document.querySelectorAll('.toc-list a');
+window.addEventListener('scroll',function(){
+  var headings=document.querySelectorAll('.article-body h2[id]');
+  var scrollY=window.scrollY+120;
+  var current='';
+  headings.forEach(function(h){if(h.offsetTop<=scrollY)current=h.id;});
+  tl.forEach(function(a){
+    a.classList.remove('active');
+    if(a.getAttribute('href')==='#'+current)a.classList.add('active');
+  });
+});
+</script>
+</body>
+</html>

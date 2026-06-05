@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-JJQ1TXZJX7"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-JJQ1TXZJX7');
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PLC Disaster Recovery — Backup, Restore and Testing | QLean Automation</title>
+<meta name="description" content="A pharma PLC backup strategy is not just a daily scheduled task. It covers operational backups, a validated configuration archive, a tested restore procedure with a defined RTO, and OQ evidence. Here is how to build it correctly.">
+<link rel="canonical" href="https://qleanautomation.com/blog/plc-disaster-recovery-backup.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@300;400;500;600;700;800;900&family=Source+Sans+3:ital,wght@0,300;0,400;0,500;1,300&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--white:#ffffff;--off:#f7f8f9;--ink:#0d0f12;--ink2:#1e2128;--ink3:#3d4456;--ink4:#9199a8;--rule:#e2e5ea;--rule2:#c8cdd6;--blue:#0057ff;--blue2:#0044cc;--blue-dim:rgba(0,87,255,0.07);--green:#00875a;--green-dim:rgba(0,135,90,0.08);--amber:#d97706;--amber-dim:rgba(217,119,6,0.08);--red:#c0392b;--red-dim:rgba(192,57,43,0.08);--f-head:'Epilogue',sans-serif;--f-body:'Source Sans 3',sans-serif;--f-mono:'Roboto Mono',monospace;--shadow-sm:0 2px 8px rgba(13,15,18,0.06),0 1px 3px rgba(13,15,18,0.04)}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}body{background:var(--white);color:var(--ink);font-family:var(--f-body);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+nav{position:fixed;top:0;left:0;right:0;z-index:200;height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 6%;background:rgba(255,255,255,0.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--rule)}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;flex-shrink:0}
+.nav-links{display:flex;align-items:center;gap:36px;list-style:none}.nav-links a{font-size:14px;font-weight:400;color:var(--ink3);text-decoration:none;transition:color .2s}.nav-links a:hover{color:var(--ink)}
+.nav-btn{font-family:var(--f-body);font-size:13px;font-weight:500;padding:9px 20px;background:var(--blue);color:white;border:none;border-radius:6px;cursor:pointer;text-decoration:none;white-space:nowrap;flex-shrink:0}.nav-btn:hover{background:var(--blue2)}
+.progress-bar{position:fixed;top:64px;left:0;right:0;height:2px;background:var(--rule);z-index:199}.progress-fill{height:100%;background:var(--blue);width:0%}
+.article-hero{padding:120px 6% 64px;background:var(--white);border-bottom:1px solid var(--rule);position:relative;overflow:hidden}
+.article-hero::before{content:'';position:absolute;top:-80px;right:-80px;width:400px;height:400px;background:radial-gradient(circle,rgba(0,87,255,0.04) 0%,transparent 70%);pointer-events:none}
+.article-hero-inner{max-width:940px;margin:0 auto;position:relative;z-index:1}
+.breadcrumb{display:flex;align-items:center;gap:8px;font-family:var(--f-mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink4);margin-bottom:24px}.breadcrumb a{color:var(--ink4);text-decoration:none}.breadcrumb a:hover{color:var(--blue)}.breadcrumb span{color:var(--rule2)}
+.article-tag{display:inline-flex;align-items:center;gap:6px;font-family:var(--f-mono);font-size:10px;font-weight:500;color:var(--blue);letter-spacing:.1em;text-transform:uppercase;margin-bottom:20px;padding:4px 10px;background:var(--blue-dim);border-radius:4px}
+.article-hero h1{font-family:var(--f-head);font-size:clamp(30px,5vw,52px);font-weight:900;line-height:1.0;letter-spacing:-.04em;color:var(--ink);margin-bottom:20px}.article-hero h1 span{color:var(--blue)}
+.article-intro{font-size:18px;font-weight:400;color:var(--ink2);line-height:1.75;margin-bottom:32px;max-width:800px}
+.article-meta{display:flex;align-items:center;gap:24px;padding-top:24px;border-top:1px solid var(--rule);flex-wrap:wrap}
+.meta-author{display:flex;align-items:center;gap:10px}.author-avatar{width:36px;height:36px;border-radius:50%;background:var(--ink);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.author-name{font-size:13px;font-weight:500;color:var(--ink)}.author-role{font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.04em}
+.meta-divider{width:1px;height:28px;background:var(--rule)}.meta-stat{font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.06em}
+.article-wrap{max-width:1300px;margin:0 auto;padding:64px 6%;display:grid;grid-template-columns:1fr 300px;gap:60px;align-items:start}
+.article-body{min-width:0}
+.article-body h2{font-family:var(--f-head);font-size:26px;font-weight:800;letter-spacing:-.03em;color:var(--ink);margin:56px 0 16px;line-height:1.2}.article-body h2:first-child{margin-top:0}
+.article-body h3{font-family:var(--f-head);font-size:18px;font-weight:700;letter-spacing:-.02em;color:var(--ink);margin:32px 0 12px}
+.article-body p{font-size:16px;font-weight:400;color:var(--ink2);line-height:1.85;margin-bottom:20px}
+.article-body strong{color:var(--ink);font-weight:600}
+.article-body a{color:var(--blue);text-decoration:none;border-bottom:1px solid rgba(0,87,255,.25)}.article-body a:hover{border-color:var(--blue)}
+.callout{padding:20px 24px;border-radius:8px;margin:32px 0;border-left:3px solid}
+.callout.blue{background:var(--blue-dim);border-color:var(--blue)}.callout.amber{background:var(--amber-dim);border-color:var(--amber)}.callout.green{background:var(--green-dim);border-color:var(--green)}.callout.red{background:var(--red-dim);border-color:var(--red)}
+.callout-label{font-family:var(--f-mono);font-size:9px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px}.callout.blue .callout-label{color:var(--blue)}.callout.amber .callout-label{color:var(--amber)}.callout.green .callout-label{color:var(--green)}.callout.red .callout-label{color:var(--red)}
+.callout p{font-size:14px;color:var(--ink2);line-height:1.7;margin:0}.callout strong{color:var(--ink)}
+.article-img{width:100%;border-radius:8px;border:1px solid #1e2535;overflow:hidden;margin:36px 0}
+.article-img figcaption{padding:10px 14px;background:var(--off);font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.04em;border-top:1px solid var(--rule)}
+.arrow-list{list-style:none;display:flex;flex-direction:column;gap:8px;margin:16px 0 24px}
+.arrow-list li{display:flex;align-items:flex-start;gap:10px;font-size:15px;color:var(--ink2);line-height:1.6}
+.arrow-list li::before{content:'\2192';color:var(--blue);flex-shrink:0;font-size:12px;margin-top:3px}
+.checklist{list-style:none;display:flex;flex-direction:column;gap:8px;margin:20px 0 28px}
+.checklist li{display:flex;align-items:flex-start;gap:10px;font-size:15px;color:var(--ink2);line-height:1.6}
+.checklist li::before{content:'';width:16px;height:16px;flex-shrink:0;margin-top:3px;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 14 14' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='7' cy='7' r='6.5' fill='none' stroke='%230057ff' stroke-width='1'/%3E%3Cpath d='M4 7l2 2 4-4' stroke='%230057ff' stroke-width='1.3' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:center;background-size:contain}
+.table-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:28px 0}
+.compare-table{width:100%;border-collapse:collapse;font-size:14px}
+.compare-table th{font-family:var(--f-mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink4);padding:10px 16px;border-bottom:2px solid var(--rule);text-align:left;background:var(--off)}
+.compare-table td{padding:12px 16px;border-bottom:1px solid var(--rule);vertical-align:top;color:var(--ink2);line-height:1.6}
+.compare-table tr:last-child td{border-bottom:none}
+.compare-table td:first-child{font-weight:600;color:var(--ink);font-family:var(--f-mono);font-size:12px}
+.sidebar{position:sticky;top:88px;display:flex;flex-direction:column;gap:16px}
+.toc-card{border:1px solid var(--rule);border-radius:8px;padding:24px;background:var(--white);box-shadow:var(--shadow-sm)}
+.toc-label{font-family:var(--f-mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);margin-bottom:16px}
+.toc-list{list-style:none;display:flex;flex-direction:column;gap:2px}
+.toc-list a{display:block;font-size:13px;color:var(--ink3);text-decoration:none;padding:6px 10px;border-radius:4px;transition:all .15s;border-left:2px solid transparent}
+.toc-list a:hover,.toc-list a.active{color:var(--blue);background:var(--blue-dim);border-left-color:var(--blue)}
+.sidebar-cta{border:1px solid var(--blue);border-radius:8px;padding:24px;background:var(--blue-dim)}
+.sc-eyebrow{font-family:var(--f-mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);margin-bottom:10px}
+.sc-title{font-family:var(--f-head);font-size:17px;font-weight:800;letter-spacing:-.02em;color:var(--ink);margin-bottom:8px;line-height:1.2}
+.sc-body{font-size:13px;color:var(--ink3);line-height:1.6;margin-bottom:16px}
+.sc-btn{display:block;text-align:center;padding:11px 16px;background:var(--blue);color:white;border-radius:6px;font-family:var(--f-body);font-size:13px;font-weight:500;text-decoration:none}.sc-btn:hover{background:var(--blue2)}
+.sc-note{font-family:var(--f-mono);font-size:9px;color:var(--ink4);text-align:center;margin-top:8px;letter-spacing:.04em}
+.sidebar-share{border:1px solid var(--rule);border-radius:8px;padding:20px 24px;background:var(--white)}
+.share-label{font-family:var(--f-mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);margin-bottom:14px}
+.share-links{display:flex;flex-direction:column;gap:8px}
+.share-link{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--ink3);text-decoration:none;padding:9px 12px;border:1px solid var(--rule);border-radius:6px;transition:border-color .2s,color .2s}.share-link:hover{border-color:var(--blue);color:var(--blue)}
+.related{padding:64px 6%;border-top:1px solid var(--rule);background:var(--off)}
+.related-inner{max-width:1100px;margin:0 auto}
+.related-label{font-family:var(--f-mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);margin-bottom:32px;display:flex;align-items:center;gap:10px}
+.related-label::before{content:'';width:20px;height:1px;background:var(--blue)}
+.related-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.related-card{padding:24px;border:1px solid var(--rule);border-radius:8px;background:var(--white);box-shadow:var(--shadow-sm);transition:border-color .2s,transform .2s;text-decoration:none;display:flex;flex-direction:column;gap:12px}.related-card:hover{border-color:var(--blue);transform:translateY(-4px)}
+.rc-tag{font-family:var(--f-mono);font-size:9px;color:var(--blue);letter-spacing:.08em;text-transform:uppercase;padding:3px 8px;background:var(--blue-dim);border-radius:3px;align-self:flex-start}
+.rc-title{font-family:var(--f-head);font-size:16px;font-weight:700;letter-spacing:-.02em;color:var(--ink);line-height:1.25}
+.rc-desc{font-size:13px;color:var(--ink3);line-height:1.6;flex:1}
+.rc-footer{display:flex;align-items:center;justify-content:space-between;padding-top:12px;border-top:1px solid var(--rule)}
+.rc-read{font-family:var(--f-mono);font-size:10px;color:var(--ink4)}.rc-arrow{font-size:14px;color:var(--blue)}
+footer{padding:56px 6% 32px;border-top:1px solid var(--rule);background:var(--white)}
+.footer-inner{max-width:1160px;margin:0 auto}
+.footer-top{display:flex;justify-content:space-between;align-items:flex-start;gap:40px;flex-wrap:wrap;margin-bottom:48px}
+.footer-brand p{font-size:13px;font-weight:300;color:var(--ink3);margin-top:12px;max-width:260px;line-height:1.6}
+.footer-col h4{font-family:var(--f-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink4);margin-bottom:16px}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+.footer-col a{font-size:13px;color:var(--ink3);text-decoration:none}.footer-col a:hover{color:var(--blue)}
+.footer-bottom{padding-top:24px;border-top:1px solid var(--rule);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.footer-bottom p{font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.04em}
+.compliance-pills{display:flex;gap:6px;flex-wrap:wrap}
+.cp{font-family:var(--f-mono);font-size:9px;padding:3px 8px;border:1px solid var(--rule);border-radius:3px;color:var(--ink4);letter-spacing:.06em}
+@media(max-width:900px){.article-wrap{grid-template-columns:1fr;gap:48px}.sidebar{position:static}.related-grid{grid-template-columns:1fr}.table-scroll{margin:20px 0}}
+@media(max-width:900px){.nav-links{display:none}}
+@media(max-width:540px){nav{padding:0 4%}.nav-btn{font-size:12px;padding:8px 14px}}
+</style>
+</head>
+<body>
+
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+
+<nav>
+  <a href="../index.html" class="nav-logo">
+    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" style="flex-shrink:0"><rect width="32" height="32" rx="7" fill="#0d0f12"/><rect x="8" y="7" width="16" height="16" rx="2" stroke="white" stroke-width="2.5" fill="none"/><line x1="20" y1="19" x2="26" y2="25" stroke="#0057FF" stroke-width="3" stroke-linecap="round"/></svg>
+    <span style="font-family:'Epilogue',sans-serif;font-weight:800;font-size:16px;color:#0d0f12;letter-spacing:-.03em;white-space:nowrap">QLean <span style="font-weight:300;color:#5a6172">Automation</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="../index.html#products">Products</a></li>
+    <li><a href="../index.html#framework">Framework</a></li>
+    <li><a href="blog-index.html">Knowledge Base</a></li>
+    <li><a href="../index.html#pricing">Pricing</a></li>
+    <li><a href="../about.html">About</a></li>
+    <li><a href="../index.html#faq">FAQ</a></li>
+  </ul>
+  <a href="../index.html#pricing" class="nav-btn">Get the Framework &#8594;</a>
+</nav>
+
+<header class="article-hero">
+  <div class="article-hero-inner">
+    <div class="breadcrumb"><a href="../index.html">Home</a><span>/</span><a href="blog-index.html">Knowledge Base</a><span>/</span>PLC Disaster Recovery</div>
+    <div class="article-tag">&#9881;&#65039; PLC Engineering</div>
+    <h1>PLC Disaster Recovery<br><span>&#8212; Backup, Restore and Testing</span></h1>
+    <p class="article-intro">A pharma PLC backup strategy is not just a daily scheduled task. It covers operational data backups, a separate validated configuration archive, a tested restore procedure with a defined RTO, and OQ evidence that it all works. Here is how to build it and what QA expects to see.</p>
+    <div class="article-meta">
+      <div class="meta-author">
+        <div class="author-avatar"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="7" r="3.5" stroke="white" stroke-width="1.5"/><path d="M2.5 16c0-3.59 2.91-6.5 6.5-6.5s6.5 2.91 6.5 6.5" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+        <div><div class="author-name">QLean Automation</div><div class="author-role">ENGINEERS WHO BUILD SYSTEMS, NOT JUST SIGN THEM</div></div>
+      </div>
+      <div class="meta-divider"></div><div class="meta-stat">7 MIN READ</div>
+      <div class="meta-divider"></div><div class="meta-stat">EU ANNEX 11 &#183; BACKUP &#183; DATA INTEGRITY</div>
+    </div>
+  </div>
+</header>
+
+<div class="article-wrap">
+  <article class="article-body">
+
+    <h2 id="two-different-things">Two Different Things That Get Conflated</h2>
+    <p>The first mistake on pharma projects is treating backup and validated configuration archive as the same thing. They serve completely different purposes and they need to be maintained separately.</p>
+    <p>The <strong>operational backup</strong> is the daily automated snapshot of GMP data — the historian database, SCADA application, and PLC project archive — that you restore from if a server fails. It protects against data loss. It runs every night and retains rolling copies according to a defined retention schedule.</p>
+    <p>The <strong>validated configuration archive</strong> is the permanent baseline record of the approved software at each key milestone: FAT, SAT, IQ, OQ, PQ, and every approved change. It protects the validated state. It is never overwritten. It is updated only when a formally approved change has been made to the software, and each update adds a new entry — it does not replace the previous one.</p>
+    <p>These two things can co-exist on the same NAS and they can both be covered by the same procedure document. But they must be managed separately, versioned separately, and referenced separately in the qualification evidence. Confusing them — using the nightly backup as the configuration archive, or treating the validated archive as the restore source — is a data integrity gap.</p>
+
+    <h2 id="rto-rpo">RTO and RPO — Define Them Before the URS Is Approved</h2>
+    <p>The Recovery Time Objective and Recovery Point Objective must be defined as requirements — in the URS — before the system is designed. They drive hardware and architecture decisions: storage type, backup frequency, network infrastructure. If you define them after the system is built, you may find you have designed a system that cannot meet the operational needs of the site.</p>
+    <p>The RTO is how long the site can tolerate the system being offline from the point of failure declaration to the point of verified restoration. For most pharma utility and monitoring systems, &#8804;4 hours is achievable with a well-prepared restore procedure and reasonable hardware. For continuous manufacturing processes with in-process product at risk, the tolerance may be 30 minutes or less — which forces a very different architecture.</p>
+    <p>The RPO is the maximum acceptable data loss measured in time — effectively, how old the most recent backup can be. A daily backup at 02:00 means the worst-case RPO is approximately 24 hours: a server failure at 01:59 means up to a day of historian records may not be in the backup. The data buffering capability in the PLC (which stores records in non-volatile memory and synchronises them to the historian on reconnection) reduces the actual data loss within that window, but the RPO for the historian database itself is bounded by the backup frequency.</p>
+
+    <div class="callout blue">
+      <div class="callout-label">EU GMP Annex 11 Requirement</div>
+      <p>Annex 11 Clause 7.2 requires that data backup and restore procedures are defined and tested. Clause 17 requires availability of backup data. The requirement is not prescriptive about architecture — but it is clear that backup must exist, restore must be tested, and the test evidence must be retained. An untested backup procedure is not compliant, regardless of how well the backup itself is configured. The OQ is where the test evidence is generated.</p>
+    </div>
+
+    <h2 id="what-to-back-up">What to Back Up — The Four Components</h2>
+    <p>A complete pharma system backup covers four distinct components. Missing any one of them means the restore will be incomplete.</p>
+    <ul class="arrow-list">
+      <li><strong>Historian SQL database</strong> — the GMP process data, alarm history, and audit trail. This is the most critical backup target. It must be backed up with the database engine offline or using a hot-backup method that guarantees transactional consistency. Copying the raw SQL files while the database is running does not produce a consistent backup.</li>
+      <li><strong>SCADA application snapshot</strong> — the InTouch, WinCC, Ignition, or FactoryTalk application itself: screens, scripts, tag database, alarm configuration. This is what gets restored when the SCADA server hardware fails. Without it, you have the historian data but no application to display or query it.</li>
+      <li><strong>Historian tag configuration export</strong> — the tag configuration tells the historian which tags to record, at what scan rate, with what deadband, and how long to retain each. This is often stored inside the SCADA application but should be separately exported, because a misconfigured historian after restore (pointing at wrong tag names or missing tags) will record data silently with gaps or wrong engineering units.</li>
+      <li><strong>PLC project archive</strong> — the full TIA Portal, Studio 5000, or equivalent project file. This is what you load onto a replacement CPU if the PLC hardware fails. Without it, you cannot restore the validated PLC program. The archive in the nightly backup should match the validated archive; if they diverge (because a change was made without going through change control) that divergence is itself a compliance finding.</li>
+    </ul>
+
+    <h2 id="operational-backup-architecture">Operational Backup Architecture</h2>
+    <p>The backup should run automatically — never rely on a manual step to initiate it. A scheduled task at a low-traffic time (02:00 is standard) triggers the backup script. The script performs the backup, calculates a SHA-256 checksum of the backup files, and writes the checksum alongside the backup. The SCADA system reads the backup status tag and displays it on the maintenance dashboard. A backup failure within 15 minutes of the backup window generates a High alarm in the active alarm banner. Nobody has to log in and check a log file to know the backup failed.</p>
+    <p>The backup target should be a physically separate device from the SCADA server — a NAS on the OT network segment. A server failure that takes down both the SCADA server and a backup disk in the same chassis is not a backup. For sites with an offsite or cloud backup policy, the NAS should synchronise to the offsite target after the primary backup completes. The GMP data retention requirement — typically seven years for process records — must be reflected in the backup retention policy: 30 daily backups online, annual backups archived for seven years.</p>
+    <p>The checksum requirement is important for a pharma context. If a backup file is silently corrupted — bit rot on the NAS, a partial write due to a network interruption — you need to know before you discover it at the worst possible moment during a restore. The SHA-256 checksum calculated immediately after backup and stored alongside the file gives you the ability to verify integrity at any point. During restore, you recalculate the checksum and compare. If it does not match, you do not use that backup.</p>
+
+    <h2 id="validated-config-archive">The Validated Configuration Archive — Separate and Permanent</h2>
+    <p>The validated configuration archive is not a backup. It is a controlled record. It lives on the SCADA server itself (in a protected directory) and is replicated to the NAS. Its contents never get deleted or overwritten — each new entry is additive.</p>
+    <p>The archive holds three items for each milestone: the PLC project archive file, the SCADA application snapshot, and the historian tag configuration export. Each file is named with a convention that embeds the system ID, component, software version, date, and change control reference. The hash log file records the SHA-256 hash of each item at each milestone — this is what creates the hash chain that the <a href="validation-summary-report-guide.html">Validation Summary Report</a> confirms as intact.</p>
+
+    <figure class="article-img">
+      <svg viewBox="0 0 720 250" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;background:#0d0f12;border-radius:8px 8px 0 0">
+        <text x="360" y="20" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(255,255,255,0.2)" letter-spacing="0.12em">OPERATIONAL BACKUP vs VALIDATED CONFIGURATION ARCHIVE</text>
+
+        <!-- Left: Operational Backup -->
+        <rect x="20" y="32" width="310" height="200" rx="6" fill="rgba(0,87,255,0.06)" stroke="rgba(0,87,255,0.25)" stroke-width="1.5"/>
+        <rect x="20" y="32" width="310" height="26" rx="6" fill="rgba(0,87,255,0.18)"/>
+        <rect x="20" y="44" width="310" height="14" rx="0" fill="rgba(0,87,255,0.18)"/>
+        <text x="175" y="50" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="#6699ff" letter-spacing="0.06em">OPERATIONAL BACKUP</text>
+        <text x="175" y="72" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(255,255,255,0.35)">PURPOSE: RESTORE AFTER FAILURE</text>
+        <text x="44" y="95" font-family="Source Sans 3,sans-serif" font-size="11.5" fill="rgba(255,255,255,0.6)">&#8226;  Daily at 02:00 — automated</text>
+        <text x="44" y="113" font-family="Source Sans 3,sans-serif" font-size="11.5" fill="rgba(255,255,255,0.6)">&#8226;  Full backup: historian SQL + SCADA + PLC</text>
+        <text x="44" y="131" font-family="Source Sans 3,sans-serif" font-size="11.5" fill="rgba(255,255,255,0.6)">&#8226;  SHA-256 checksum verified on completion</text>
+        <text x="44" y="149" font-family="Source Sans 3,sans-serif" font-size="11.5" fill="rgba(255,255,255,0.6)">&#8226;  30 daily copies retained online</text>
+        <text x="44" y="167" font-family="Source Sans 3,sans-serif" font-size="11.5" fill="rgba(255,255,255,0.6)">&#8226;  Annual backups archived 7 years</text>
+        <text x="44" y="185" font-family="Source Sans 3,sans-serif" font-size="11.5" fill="rgba(255,255,255,0.6)">&#8226;  Backup failure &#8594; ALM-DATA-002 High alarm</text>
+        <rect x="44" y="204" width="242" height="18" rx="3" fill="rgba(0,87,255,0.12)"/>
+        <text x="165" y="217" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="#6699ff">ROLLING &#183; OVERWRITES OLD COPIES</text>
+
+        <!-- Right: Validated Archive -->
+        <rect x="390" y="32" width="310" height="200" rx="6" fill="rgba(0,135,90,0.06)" stroke="rgba(0,135,90,0.25)" stroke-width="1.5"/>
+        <rect x="390" y="32" width="310" height="26" rx="6" fill="rgba(0,135,90,0.18)"/>
+        <rect x="390" y="44" width="310" height="14" rx="0" fill="rgba(0,135,90,0.18)"/>
+        <text x="545" y="50" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="#00c97a" letter-spacing="0.06em">VALIDATED CONFIG ARCHIVE</text>
+        <text x="545" y="72" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(255,255,255,0.35)">PURPOSE: PROTECT VALIDATED STATE</text>
+        <text x="414" y="95" font-family="Source Sans 3,sans-serif" font-size="11.5" fill="rgba(255,255,255,0.6)">&#8226;  Updated only on approved change</text>
+        <text x="414" y="113" font-family="Source Sans 3,sans-serif" font-size="11.5" fill="rgba(255,255,255,0.6)">&#8226;  FAT &#8594; SAT &#8594; IQ &#8594; OQ &#8594; PQ &#8594; each CCR</text>
+        <text x="414" y="131" font-family="Source Sans 3,sans-serif" font-size="11.5" fill="rgba(255,255,255,0.6)">&#8226;  PLC + SCADA + tag config + hash log</text>
+        <text x="414" y="149" font-family="Source Sans 3,sans-serif" font-size="11.5" fill="rgba(255,255,255,0.6)">&#8226;  Each entry named with version + CCR ref</text>
+        <text x="414" y="167" font-family="Source Sans 3,sans-serif" font-size="11.5" fill="rgba(255,255,255,0.6)">&#8226;  NEVER overwritten &#8212; additive only</text>
+        <text x="414" y="185" font-family="Source Sans 3,sans-serif" font-size="11.5" fill="rgba(255,255,255,0.6)">&#8226;  Hash chain confirmed in VSR</text>
+        <rect x="414" y="204" width="242" height="18" rx="3" fill="rgba(0,135,90,0.12)"/>
+        <text x="535" y="217" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="#00c97a">PERMANENT &#183; MILESTONE-BASED &#183; CONTROLLED</text>
+      </svg>
+      <figcaption>// THE NIGHTLY BACKUP AND THE VALIDATED ARCHIVE ARE SEPARATE THINGS WITH SEPARATE PURPOSES. CONFLATING THEM IS A DATA INTEGRITY GAP.</figcaption>
+    </figure>
+
+    <p>The critical discipline here is the naming convention. Every archive file must be uniquely named so that an engineer three years from now can look at the archive folder and immediately understand the version history. The convention should embed at minimum: system identifier, component (PLC / SCADA / Historian), software version tag, date in YYYYMMDD format, and the change control reference that authorised the update. Never use "latest" or "final" in a file name.</p>
+
+    <h2 id="restore-procedure">The Restore Procedure — What It Must Cover</h2>
+    <p>The restore procedure is where most sites are exposed. They have backups. They have never tested the restore. An untested restore procedure in a GMP context is not a compliant backup strategy — EU GMP Annex 11 is explicit that recovery procedures must be tested.</p>
+    <p>A complete restore procedure covers fifteen steps in a defined sequence. The key ones that get missed:</p>
+    <ul class="arrow-list">
+      <li><strong>QA approval before execution.</strong> A system restore on a production validated system is not an IT task — it is a change to the validated state. QA must be informed and must approve before the restore begins. Record the approval, the time it was given, and who gave it.</li>
+      <li><strong>Hash verification after restore.</strong> Once the system is back up, recalculate the PLC and SCADA hashes and compare them against the validated archive. If they match, the restore has returned the system to its validated state. If they do not match — because the backup was taken from a state that does not correspond to the validated baseline — that is a deviation requiring investigation before the system returns to production.</li>
+      <li><strong>Post-restore data integrity checks.</strong> Before returning the system to production: query the historian for records from before the backup timestamp to confirm pre-backup data is intact; log in with AD credentials across all defined roles to confirm authentication works; verify that a sample of audit trail records are present and read-only.</li>
+      <li><strong>RTO measurement.</strong> Record the start time when the restore begins and the end time when post-restore verification is complete. Calculate the elapsed time. The RTO criterion — &#8804;4 hours — must be met. If it is not, that is a finding: either the procedure needs to be optimised or the hardware needs to be upgraded.</li>
+    </ul>
+
+    <h2 id="oq-test-cases">The Two OQ Test Cases</h2>
+    <p>Backup and recovery generates two OQ test cases. Both are mandatory.</p>
+    <h3>Backup Failure Detection (OQ-075)</h3>
+    <p>Simulate a backup failure by making the backup target temporarily inaccessible — disconnect the NAS or rename the target share. Trigger a manual backup run. Verify that within 15 minutes of the backup window end, a High alarm appears in the active alarm banner and the backup status tag on the SCADA maintenance dashboard shows FAILED. This confirms the monitoring works. Record the time from backup attempt to alarm as evidence.</p>
+    <h3>Full Restore Test with RTO Measurement (OQ-076)</h3>
+    <p>This is the test that actually validates the recovery procedure. Confirm a recent successful backup exists and record its timestamp. Initiate a full restore per the recovery procedure. Take the SCADA server offline during the restore. Record start time. Bring the system back up, complete all post-restore verification steps, and record end time. Calculate and record the RTO. The acceptance criterion is &#8804;4 hours (240 minutes). Post-restore verification covers: historian data from before the backup timestamp is intact, AD authentication is functional, and the audit trail is intact and read-only up to the backup timestamp.</p>
+    <p>The OQ evidence for OQ-076 includes screenshots of the restored system online, the RTO calculation, and a historian query export showing pre-backup data. This evidence feeds into the <a href="validation-summary-report-guide.html">Validation Summary Report</a>, which reports the measured RTO and confirms it was within specification.</p>
+
+    <div class="callout green">
+      <div class="callout-label">In the QLean Framework</div>
+      <p>The Recovery and Backup Procedure (RBP-SYS-001) covers all six areas: backup architecture (daily 02:00, full backup to NAS-BKP-01, SHA-256 checksum, 30-day online retention, 7-year annual archive), validated configuration archive (four archive items, naming convention, hash log, never-overwrite rule), scheduled backup monitoring (operator dashboard check, backup failure alarm ALM-DATA-002), 15-step full system restore procedure (QA approval, hash re-verification after restore, post-restore data integrity checks, RTO measurement), and backup failure investigation. RTO specification is &#8804;4 hours; RPO is &#8804;1 calendar day. OQ-SYS-001 contains OQ-075 (backup failure detection) and OQ-076 (full restore test with RTO measurement) as High-risk test cases. The VSR confirms the measured RTO from OQ-076 as part of the Phase Results Summary.</p>
+    </div>
+
+    <h2 id="periodic-review">Backup in the Periodic Review</h2>
+    <p>The backup strategy does not stop being a compliance topic after the OQ is closed. EU GMP Annex 11 requires that backup and recovery is reviewed as part of the periodic review cycle. The <a href="change-control-validated-system.html">periodic review</a> should check: backup success rate over the review period (100% is the target; any failure should have a corresponding MDL entry with root cause and resolution), whether the hardware on the backup path has changed (new NAS, new server), and whether the RTO is still achievable given any changes to the data volumes or restore infrastructure since the OQ was executed.</p>
+    <p>A site that runs the same backup restore test at each periodic review — every 24 months — has much stronger evidence of ongoing compliance than one that tested it once at OQ five years ago and has not touched it since. The restore test takes a few hours. The compliance benefit is substantial.</p>
+
+  </article>
+
+  <aside class="sidebar">
+    <div class="toc-card">
+      <div class="toc-label">In This Article</div>
+      <ul class="toc-list">
+        <li><a href="#two-different-things" class="active">Two things that get conflated</a></li>
+        <li><a href="#rto-rpo">RTO and RPO</a></li>
+        <li><a href="#what-to-back-up">What to back up</a></li>
+        <li><a href="#operational-backup-architecture">Operational backup architecture</a></li>
+        <li><a href="#validated-config-archive">Validated configuration archive</a></li>
+        <li><a href="#restore-procedure">The restore procedure</a></li>
+        <li><a href="#oq-test-cases">The two OQ test cases</a></li>
+        <li><a href="#periodic-review">Backup in the periodic review</a></li>
+      </ul>
+    </div>
+    <div class="sidebar-cta">
+      <div class="sc-eyebrow">QLean Framework</div>
+      <div class="sc-title">29 production-ready GAMP 5 documents</div>
+      <div class="sc-body">RBP-SYS-001 recovery procedure with 15-step restore checklist, OQ-075 and OQ-076 test cases, and VSR RTO reporting — all included.</div>
+      <a href="../index.html#pricing" class="sc-btn">Get the Framework &#8212; &#8364;249 &#8594;</a>
+      <div class="sc-note">// INSTANT DOWNLOAD &#183; COMPANY-WIDE LICENCE</div>
+    </div>
+    <div class="sidebar-share">
+      <div class="share-label">Share This Article</div>
+      <div class="share-links">
+        <a href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fqleanautomation.com%2Fblog%2Fplc-disaster-recovery-backup.html" target="_blank" rel="noopener" class="share-link">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          Share on LinkedIn
+        </a>
+        <a href="https://www.reddit.com/submit?url=https%3A%2F%2Fqleanautomation.com%2Fblog%2Fplc-disaster-recovery-backup.html&title=PLC+Disaster+Recovery+%E2%80%94+Backup%2C+Restore+and+Testing" target="_blank" rel="noopener" class="share-link">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/></svg>
+          Share on Reddit
+        </a>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<section class="related">
+  <div class="related-inner">
+    <div class="related-label">More Articles</div>
+    <div class="related-grid">
+      <a href="eu-gmp-annex-11-vs-21-cfr-part-11.html" class="related-card">
+        <div class="rc-tag">&#128203; Regulations</div>
+        <div class="rc-title">EU GMP Annex 11 vs 21 CFR Part 11</div>
+        <div class="rc-desc">Both regulations require backup and recovery testing. Here is how Annex 11 and Part 11 align and where they differ on data availability requirements.</div>
+        <div class="rc-footer"><div class="rc-read">7 MIN READ</div><div class="rc-arrow">&#8594;</div></div>
+      </a>
+      <a href="plc-redundancy-pharma-validation.html" class="related-card">
+        <div class="rc-tag">&#9881;&#65039; PLC Engineering</div>
+        <div class="rc-title">Redundancy in Pharma PLC Systems</div>
+        <div class="rc-desc">Backup handles failure after it happens. Redundancy prevents the failure from impacting the process. Here is when each approach is justified.</div>
+        <div class="rc-footer"><div class="rc-read">7 MIN READ</div><div class="rc-arrow">&#8594;</div></div>
+      </a>
+      <a href="validation-summary-report-guide.html" class="related-card">
+        <div class="rc-tag">&#128196; Validation</div>
+        <div class="rc-title">Validation Summary Report Guide</div>
+        <div class="rc-desc">The VSR confirms the measured RTO from OQ-076 and the hash chain integrity. Here is the full structure of what the VSR must contain.</div>
+        <div class="rc-footer"><div class="rc-read">7 MIN READ</div><div class="rc-arrow">&#8594;</div></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="../index.html" class="nav-logo">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none" style="flex-shrink:0"><rect width="32" height="32" rx="7" fill="#0d0f12"/><rect x="8" y="7" width="16" height="16" rx="2" stroke="white" stroke-width="2.5" fill="none"/><line x1="20" y1="19" x2="26" y2="25" stroke="#0057FF" stroke-width="3" stroke-linecap="round"/></svg>
+          <span style="font-family:'Epilogue',sans-serif;font-weight:800;font-size:16px;color:#0d0f12;letter-spacing:-.03em;white-space:nowrap">QLean <span style="font-weight:300;color:#5a6172">Automation</span></span>
+        </a>
+        <p>GMP documentation tools for system integrators and automation engineers entering pharmaceutical projects.</p>
+      </div>
+      <div class="footer-col"><h4>Products</h4><ul><li><a href="../index.html#framework">GAMP 5 Framework</a></li><li><a href="../index.html#products">Technical Masterclass</a></li></ul></div>
+      <div class="footer-col"><h4>Knowledge Base</h4><ul>
+        <li><a href="blog-index.html">All Articles</a></li>
+        <li><a href="eu-gmp-annex-11-vs-21-cfr-part-11.html">Annex 11 vs Part 11</a></li>
+        <li><a href="plc-redundancy-pharma-validation.html">PLC Redundancy</a></li>
+        <li><a href="validation-summary-report-guide.html">Validation Summary Report</a></li>
+        <li><a href="change-control-validated-system.html">Change Control</a></li>
+        <li><a href="iq-oq-pq-guide.html">IQ OQ PQ Guide</a></li>
+        <li><a href="21-cfr-part-11-audit-trail-checklist.html">Audit Trail Checklist</a></li>
+      </ul></div>
+      <div class="footer-col"><h4>Company</h4><ul><li><a href="https://www.linkedin.com/company/qlean-automation" target="_blank">LinkedIn</a></li><li><a href="mailto:hello@qleanautomation.com">Contact</a></li><li><a href="../terms.html">Terms</a></li></ul></div>
+    </div>
+    <div class="footer-bottom">
+      <p>&#169; 2026 QLEAN AUTOMATION &#183; QLEANAUTOMATION.COM</p>
+      <div class="compliance-pills"><span class="cp">EU ANNEX 11</span><span class="cp">21 CFR PART 11</span><span class="cp">GAMP 5</span><span class="cp">ALCOA+</span></div>
+    </div>
+  </div>
+</footer>
+
+<script>
+window.addEventListener('scroll',()=>{const d=document.documentElement;document.getElementById('progress').style.width=(d.scrollTop/(d.scrollHeight-d.clientHeight)*100)+'%'});
+const obs=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting){document.querySelectorAll('.toc-list a').forEach(l=>l.classList.remove('active'));const a=document.querySelector('.toc-list a[href="#'+x.target.id+'"]');if(a)a.classList.add('active')}})  ,{rootMargin:'-20% 0px -70% 0px'});
+document.querySelectorAll('[id]').forEach(s=>obs.observe(s));
+</script>
+</body>
+</html>

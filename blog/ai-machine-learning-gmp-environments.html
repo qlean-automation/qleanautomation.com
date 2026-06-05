@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-JJQ1TXZJX7"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-JJQ1TXZJX7');
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI and Machine Learning in GMP Environments — What GAMP Says | QLean Automation</title>
+<meta name="description" content="AI and ML are entering pharma manufacturing. GAMP 5 2nd Edition addresses them directly. Here is what the framework says, how AI systems are classified, and what your validation approach needs to cover.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@300;400;500;600;700;800;900&family=Source+Sans+3:ital,wght@0,300;0,400;0,500;1,300&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--white:#ffffff;--off:#f7f8f9;--ink:#0d0f12;--ink2:#1e2128;--ink3:#3d4456;--ink4:#9199a8;--rule:#e2e5ea;--rule2:#c8cdd6;--blue:#0057ff;--blue2:#0044cc;--blue-dim:rgba(0,87,255,0.07);--green:#00875a;--green-dim:rgba(0,135,90,0.08);--amber:#d97706;--amber-dim:rgba(217,119,6,0.08);--red:#c0392b;--red-dim:rgba(192,57,43,0.08);--f-head:'Epilogue',sans-serif;--f-body:'Source Sans 3',sans-serif;--f-mono:'Roboto Mono',monospace;--shadow-sm:0 2px 8px rgba(13,15,18,0.06),0 1px 3px rgba(13,15,18,0.04)}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}body{background:var(--white);color:var(--ink);font-family:var(--f-body);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+nav{position:fixed;top:0;left:0;right:0;z-index:200;height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 6%;background:rgba(255,255,255,0.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--rule)}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;flex-shrink:0}
+.nav-links{display:flex;align-items:center;gap:36px;list-style:none}.nav-links a{font-size:14px;font-weight:400;color:var(--ink3);text-decoration:none;transition:color .2s}.nav-links a:hover{color:var(--ink)}
+.nav-btn{font-family:var(--f-body);font-size:13px;font-weight:500;padding:9px 20px;background:var(--blue);color:white;border:none;border-radius:6px;cursor:pointer;text-decoration:none;white-space:nowrap;flex-shrink:0}.nav-btn:hover{background:var(--blue2)}
+.progress-bar{position:fixed;top:64px;left:0;right:0;height:2px;background:var(--rule);z-index:199}.progress-fill{height:100%;background:var(--blue);width:0%}
+.article-hero{padding:120px 6% 64px;background:var(--white);border-bottom:1px solid var(--rule);position:relative;overflow:hidden}
+.article-hero::before{content:'';position:absolute;top:-80px;right:-80px;width:400px;height:400px;background:radial-gradient(circle,rgba(0,87,255,0.04) 0%,transparent 70%);pointer-events:none}
+.article-hero-inner{max-width:940px;margin:0 auto;position:relative;z-index:1}
+.breadcrumb{display:flex;align-items:center;gap:8px;font-family:var(--f-mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink4);margin-bottom:24px}.breadcrumb a{color:var(--ink4);text-decoration:none}.breadcrumb a:hover{color:var(--blue)}.breadcrumb span{color:var(--rule2)}
+.article-tag{display:inline-flex;align-items:center;gap:6px;font-family:var(--f-mono);font-size:10px;font-weight:500;color:var(--blue);letter-spacing:.1em;text-transform:uppercase;margin-bottom:20px;padding:4px 10px;background:var(--blue-dim);border-radius:4px}
+.article-hero h1{font-family:var(--f-head);font-size:clamp(30px,5vw,52px);font-weight:900;line-height:1.0;letter-spacing:-.04em;color:var(--ink);margin-bottom:20px}.article-hero h1 span{color:var(--blue)}
+.article-intro{font-size:18px;font-weight:400;color:var(--ink2);line-height:1.75;margin-bottom:32px;max-width:800px}
+.article-meta{display:flex;align-items:center;gap:24px;padding-top:24px;border-top:1px solid var(--rule);flex-wrap:wrap}
+.meta-author{display:flex;align-items:center;gap:10px}.author-avatar{width:36px;height:36px;border-radius:50%;background:var(--ink);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.author-name{font-size:13px;font-weight:500;color:var(--ink)}.author-role{font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.04em}
+.meta-divider{width:1px;height:28px;background:var(--rule)}.meta-stat{font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.06em}
+.article-wrap{max-width:1300px;margin:0 auto;padding:64px 6%;display:grid;grid-template-columns:1fr 300px;gap:60px;align-items:start}
+.article-body{min-width:0}
+.article-body h2{font-family:var(--f-head);font-size:26px;font-weight:800;letter-spacing:-.03em;color:var(--ink);margin:56px 0 16px;line-height:1.2}.article-body h2:first-child{margin-top:0}
+.article-body h3{font-family:var(--f-head);font-size:18px;font-weight:700;letter-spacing:-.02em;color:var(--ink);margin:32px 0 12px}
+.article-body p{font-size:16px;font-weight:400;color:var(--ink2);line-height:1.85;margin-bottom:20px}
+.article-body strong{color:var(--ink);font-weight:600}
+.article-body a{color:var(--blue);text-decoration:none;border-bottom:1px solid rgba(0,87,255,.25)}.article-body a:hover{border-color:var(--blue)}
+.callout{padding:20px 24px;border-radius:8px;margin:32px 0;border-left:3px solid}
+.callout.blue{background:var(--blue-dim);border-color:var(--blue)}.callout.amber{background:var(--amber-dim);border-color:var(--amber)}.callout.green{background:var(--green-dim);border-color:var(--green)}.callout.red{background:var(--red-dim);border-color:var(--red)}
+.callout-label{font-family:var(--f-mono);font-size:9px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px}.callout.blue .callout-label{color:var(--blue)}.callout.amber .callout-label{color:var(--amber)}.callout.green .callout-label{color:var(--green)}.callout.red .callout-label{color:var(--red)}
+.callout p{font-size:14px;color:var(--ink2);line-height:1.7;margin:0}.callout strong{color:var(--ink)}
+.article-img{width:100%;border-radius:8px;border:1px solid #1e2535;overflow:hidden;margin:36px 0}
+.article-img figcaption{padding:10px 14px;background:var(--off);font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.04em;border-top:1px solid var(--rule)}
+.use-case-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:24px 0 32px}
+.use-case-card{padding:20px;border:1px solid var(--rule);border-radius:7px;background:var(--white);box-shadow:var(--shadow-sm)}
+.uc-tag{font-family:var(--f-mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);margin-bottom:8px}
+.uc-title{font-family:var(--f-head);font-size:15px;font-weight:700;color:var(--ink);margin-bottom:8px}
+.uc-body{font-size:13px;color:var(--ink3);line-height:1.6;margin-bottom:10px}
+.uc-risk{font-family:var(--f-mono);font-size:9px;padding:3px 8px;border-radius:3px;display:inline-block}
+.uc-risk.high{background:var(--red-dim);color:var(--red);border:1px solid rgba(192,57,43,0.2)}
+.uc-risk.medium{background:var(--amber-dim);color:var(--amber);border:1px solid rgba(217,119,6,0.2)}
+.uc-risk.low{background:var(--green-dim);color:var(--green);border:1px solid rgba(0,135,90,0.2)}
+.arrow-list{list-style:none;display:flex;flex-direction:column;gap:8px;margin:20px 0 28px}
+.arrow-list li{display:flex;align-items:flex-start;gap:10px;font-size:15px;color:var(--ink2);line-height:1.6}
+.arrow-list li::before{content:'\2192';color:var(--blue);flex-shrink:0;font-family:var(--f-mono);font-size:13px;margin-top:2px}
+.table-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:28px 0}
+.compare-table{width:100%;border-collapse:collapse;font-size:14px}
+.compare-table th{font-family:var(--f-mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink4);padding:10px 16px;border-bottom:2px solid var(--rule);text-align:left;background:var(--off)}
+.compare-table td{padding:12px 16px;border-bottom:1px solid var(--rule);vertical-align:top;color:var(--ink2);line-height:1.6}
+.compare-table tr:last-child td{border-bottom:none}
+.compare-table td:first-child{font-weight:600;color:var(--ink);font-family:var(--f-mono);font-size:12px}
+.sidebar{position:sticky;top:88px;display:flex;flex-direction:column;gap:16px}
+.toc-card{border:1px solid var(--rule);border-radius:8px;padding:24px;background:var(--white);box-shadow:var(--shadow-sm)}
+.toc-label{font-family:var(--f-mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);margin-bottom:16px}
+.toc-list{list-style:none;display:flex;flex-direction:column;gap:2px}
+.toc-list a{display:block;font-size:13px;color:var(--ink3);text-decoration:none;padding:6px 10px;border-radius:4px;transition:all .15s;border-left:2px solid transparent}
+.toc-list a:hover,.toc-list a.active{color:var(--blue);background:var(--blue-dim);border-left-color:var(--blue)}
+.sidebar-cta{border:1px solid var(--blue);border-radius:8px;padding:24px;background:var(--blue-dim)}
+.sc-eyebrow{font-family:var(--f-mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);margin-bottom:10px}
+.sc-title{font-family:var(--f-head);font-size:17px;font-weight:800;letter-spacing:-.02em;color:var(--ink);margin-bottom:8px;line-height:1.2}
+.sc-body{font-size:13px;color:var(--ink3);line-height:1.6;margin-bottom:16px}
+.sc-btn{display:block;text-align:center;padding:11px 16px;background:var(--blue);color:white;border-radius:6px;font-family:var(--f-body);font-size:13px;font-weight:500;text-decoration:none}.sc-btn:hover{background:var(--blue2)}
+.sc-note{font-family:var(--f-mono);font-size:9px;color:var(--ink4);text-align:center;margin-top:8px;letter-spacing:.04em}
+.sidebar-share{border:1px solid var(--rule);border-radius:8px;padding:20px 24px;background:var(--white)}
+.share-label{font-family:var(--f-mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);margin-bottom:14px}
+.share-links{display:flex;flex-direction:column;gap:8px}
+.share-link{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--ink3);text-decoration:none;padding:9px 12px;border:1px solid var(--rule);border-radius:6px;transition:border-color .2s,color .2s}.share-link:hover{border-color:var(--blue);color:var(--blue)}
+.related{padding:64px 6%;border-top:1px solid var(--rule);background:var(--off)}
+.related-inner{max-width:1100px;margin:0 auto}
+.related-label{font-family:var(--f-mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);margin-bottom:32px;display:flex;align-items:center;gap:10px}
+.related-label::before{content:'';width:20px;height:1px;background:var(--blue)}
+.related-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.related-card{padding:24px;border:1px solid var(--rule);border-radius:8px;background:var(--white);box-shadow:var(--shadow-sm);transition:border-color .2s,transform .2s;text-decoration:none;display:flex;flex-direction:column;gap:12px}.related-card:hover{border-color:var(--blue);transform:translateY(-4px)}
+.rc-tag{font-family:var(--f-mono);font-size:9px;color:var(--blue);letter-spacing:.08em;text-transform:uppercase;padding:3px 8px;background:var(--blue-dim);border-radius:3px;align-self:flex-start}
+.rc-title{font-family:var(--f-head);font-size:16px;font-weight:700;letter-spacing:-.02em;color:var(--ink);line-height:1.25}
+.rc-desc{font-size:13px;color:var(--ink3);line-height:1.6;flex:1}
+.rc-footer{display:flex;align-items:center;justify-content:space-between;padding-top:12px;border-top:1px solid var(--rule)}
+.rc-read{font-family:var(--f-mono);font-size:10px;color:var(--ink4)}.rc-arrow{font-size:14px;color:var(--blue)}
+footer{padding:56px 6% 32px;border-top:1px solid var(--rule);background:var(--white)}
+.footer-inner{max-width:1160px;margin:0 auto}
+.footer-top{display:flex;justify-content:space-between;align-items:flex-start;gap:40px;flex-wrap:wrap;margin-bottom:48px}
+.footer-brand p{font-size:13px;font-weight:300;color:var(--ink3);margin-top:12px;max-width:260px;line-height:1.6}
+.footer-col h4{font-family:var(--f-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink4);margin-bottom:16px}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+.footer-col a{font-size:13px;color:var(--ink3);text-decoration:none}.footer-col a:hover{color:var(--blue)}
+.footer-bottom{padding-top:24px;border-top:1px solid var(--rule);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.footer-bottom p{font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.04em}
+.compliance-pills{display:flex;gap:6px;flex-wrap:wrap}
+.cp{font-family:var(--f-mono);font-size:9px;padding:3px 8px;border:1px solid var(--rule);border-radius:3px;color:var(--ink4);letter-spacing:.06em}
+@media(max-width:900px){.article-wrap{grid-template-columns:1fr;gap:48px}.sidebar{position:static}.related-grid{grid-template-columns:1fr}.use-case-grid{grid-template-columns:1fr}.table-scroll{margin:20px 0}}
+@media(max-width:900px){.nav-links{display:none}}
+@media(max-width:540px){nav{padding:0 4%}.nav-btn{font-size:12px;padding:8px 14px}}
+</style>
+</head>
+<body>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+<nav>
+  <a href="../index.html" class="nav-logo">
+    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" style="flex-shrink:0"><rect width="32" height="32" rx="7" fill="#0d0f12"/><rect x="8" y="7" width="16" height="16" rx="2" stroke="white" stroke-width="2.5" fill="none"/><line x1="20" y1="19" x2="26" y2="25" stroke="#0057FF" stroke-width="3" stroke-linecap="round"/></svg>
+    <span style="font-family:'Epilogue',sans-serif;font-weight:800;font-size:16px;color:#0d0f12;letter-spacing:-.03em;white-space:nowrap">QLean <span style="font-weight:300;color:#5a6172">Automation</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="../index.html#products">Products</a></li>
+    <li><a href="../index.html#framework">Framework</a></li>
+    <li><a href="blog-index.html">Knowledge Base</a></li>
+    <li><a href="../index.html#pricing">Pricing</a></li>
+    <li><a href="../about.html">About</a></li>
+    <li><a href="../index.html#faq">FAQ</a></li>
+  </ul>
+  <a href="../index.html#pricing" class="nav-btn">Get the Framework &#8594;</a>
+</nav>
+
+<header class="article-hero">
+  <div class="article-hero-inner">
+    <div class="breadcrumb"><a href="../index.html">Home</a><span>/</span><a href="blog-index.html">Knowledge Base</a><span>/</span>AI and ML in GMP Environments</div>
+    <div class="article-tag">&#9729; Emerging Topics</div>
+    <h1>AI and Machine Learning<br><span>in GMP Environments</span><br>— What GAMP Says</h1>
+    <p class="article-intro">AI and machine learning are entering pharmaceutical manufacturing — predictive maintenance, process analytical technology, anomaly detection, yield optimisation. GAMP 5 2nd Edition addresses them directly. The framework does not ban AI in GMP environments; it classifies it, risk-assesses it, and demands you can explain what it does and why. Here is what that means for validation.</p>
+    <div class="article-meta">
+      <div class="meta-author">
+        <div class="author-avatar"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="7" r="3.5" stroke="white" stroke-width="1.5"/><path d="M2.5 16c0-3.59 2.91-6.5 6.5-6.5s6.5 2.91 6.5 6.5" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+        <div><div class="author-name">QLean Automation</div><div class="author-role">ENGINEERS WHO BUILD SYSTEMS, NOT JUST SIGN THEM</div></div>
+      </div>
+      <div class="meta-divider"></div><div class="meta-stat">7 MIN READ</div>
+      <div class="meta-divider"></div><div class="meta-stat">EMERGING TOPICS &#183; GAMP 5 &#183; AI &#183; MACHINE LEARNING</div>
+    </div>
+  </div>
+</header>
+
+<div class="article-wrap">
+  <article class="article-body">
+
+    <h2 id="gamp5-on-ai">What GAMP 5 2nd Edition Actually Says About AI</h2>
+    <p>GAMP 5 2nd Edition, published in 2022, introduced explicit guidance on artificial intelligence and machine learning for the first time. The core position is consistent with GAMP 5's overall philosophy: the appropriate level of validation effort is proportional to the GMP risk and complexity of the system. AI and ML are not categorically exempt from validation, nor do they automatically require extraordinary treatment. What they do require is a validation approach that accounts for their specific characteristics — particularly the ones that distinguish them from conventional deterministic software.</p>
+    <p>The key characteristics GAMP 5 highlights for AI/ML systems in GMP contexts are: the model may learn and change its behaviour over time; the decision logic may not be fully interpretable; performance depends heavily on training data quality; and the system's outputs may be probabilistic rather than deterministic. Each of these creates validation challenges that standard V-model approaches do not fully address — and GAMP 5 2nd Edition's guidance provides the framework for addressing them.</p>
+
+    <div class="callout blue">
+      <div class="callout-label">The Core Principle</div>
+      <p>GAMP 5 2nd Edition states that AI/ML systems used in GMP-regulated activities must be validated to demonstrate they are fit for intended use, with the approach scaled to the intended use, GMP criticality, and the inherent characteristics of the AI model type. <strong>The validation requirement does not disappear because the system uses a neural network instead of deterministic logic. It changes shape.</strong></p>
+    </div>
+
+    <h2 id="gamp-category-for-ai">GAMP Category Classification for AI Systems</h2>
+    <p>AI and ML systems in pharma typically fall into <a href="gamp5-categories.html">GAMP 5 Category 5</a> — custom software — because the trained model itself represents bespoke, purpose-built logic that is specific to the training data and intended application. A pre-trained commercial AI platform configured for a specific use case may have elements of Category 4, but any system where the model training, architecture, or decision boundaries are specific to the pharmaceutical application will carry Category 5 obligations.</p>
+    <p>Category 5 classification means the full software development lifecycle applies: a Software Design Specification describing the model architecture and training approach, documented version control of the trained model as well as the application code, unit testing and integration testing evidence, and full functional qualification through IQ, OQ, and PQ. For AI systems, the SDS needs additional content that is not standard in conventional automation projects: training data provenance and quality assessment, model performance metrics and their acceptance criteria, and the retraining trigger conditions and change control process for model updates.</p>
+
+    <figure class="article-img">
+      <svg viewBox="0 0 720 290" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;background:#0d0f12;border-radius:8px 8px 0 0">
+        <text x="360" y="18" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(255,255,255,0.2)" letter-spacing="0.12em">AI/ML VALIDATION LIFECYCLE — KEY ADDITIONS TO THE STANDARD V-MODEL</text>
+
+        <!-- Left side design -->
+        <text x="30" y="45" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(100,160,255,0.5)" letter-spacing="0.08em">DESIGN (LEFT ARM)</text>
+
+        <rect x="20" y="55" width="170" height="40" rx="4" fill="rgba(0,87,255,0.12)" stroke="rgba(0,87,255,0.4)" stroke-width="1"/>
+        <text x="105" y="71" text-anchor="middle" font-family="Epilogue,sans-serif" font-weight="700" font-size="10" fill="white">URS — AI INTENDED USE</text>
+        <text x="105" y="85" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7.5" fill="rgba(100,160,255,0.5)">Define decision scope + GMP criticality</text>
+
+        <rect x="20" y="108" width="170" height="40" rx="4" fill="rgba(0,87,255,0.10)" stroke="rgba(0,87,255,0.35)" stroke-width="1"/>
+        <text x="105" y="124" text-anchor="middle" font-family="Epilogue,sans-serif" font-weight="700" font-size="10" fill="white">SDS — MODEL SPEC</text>
+        <text x="105" y="138" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7.5" fill="rgba(100,160,255,0.5)">Architecture + training data + metrics</text>
+
+        <rect x="20" y="161" width="170" height="40" rx="4" fill="rgba(0,87,255,0.08)" stroke="rgba(0,87,255,0.3)" stroke-width="1"/>
+        <text x="105" y="177" text-anchor="middle" font-family="Epilogue,sans-serif" font-weight="700" font-size="10" fill="white">RA — AI RISK ASSESSMENT</text>
+        <text x="105" y="191" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7.5" fill="rgba(100,160,255,0.5)">Explainability + drift + data quality</text>
+
+        <!-- Centre training box -->
+        <rect x="265" y="195" width="190" height="55" rx="5" fill="rgba(217,119,6,0.10)" stroke="rgba(217,119,6,0.4)" stroke-width="1.5"/>
+        <text x="360" y="215" text-anchor="middle" font-family="Epilogue,sans-serif" font-weight="800" font-size="11" fill="white">MODEL TRAINING</text>
+        <text x="360" y="229" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(220,140,40,0.6)">Version-controlled + documented</text>
+        <text x="360" y="241" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(220,140,40,0.6)">Training set / validation set / test set</text>
+
+        <!-- Right side testing -->
+        <text x="530" y="45" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(100,160,255,0.5)" letter-spacing="0.08em">TESTING (RIGHT ARM)</text>
+
+        <rect x="530" y="55" width="170" height="40" rx="4" fill="rgba(0,87,255,0.12)" stroke="rgba(0,87,255,0.4)" stroke-width="1"/>
+        <text x="615" y="71" text-anchor="middle" font-family="Epilogue,sans-serif" font-weight="700" font-size="10" fill="white">PQ — IN-PROCESS PERF</text>
+        <text x="615" y="85" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7.5" fill="rgba(100,160,255,0.5)">Real data, live process, KPI monitoring</text>
+
+        <rect x="530" y="108" width="170" height="40" rx="4" fill="rgba(0,87,255,0.10)" stroke="rgba(0,87,255,0.35)" stroke-width="1"/>
+        <text x="615" y="124" text-anchor="middle" font-family="Epilogue,sans-serif" font-weight="700" font-size="10" fill="white">OQ — MODEL ACCURACY</text>
+        <text x="615" y="138" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7.5" fill="rgba(100,160,255,0.5)">Holdout set, boundary cases, edge inputs</text>
+
+        <rect x="530" y="161" width="170" height="40" rx="4" fill="rgba(0,87,255,0.08)" stroke="rgba(0,87,255,0.3)" stroke-width="1"/>
+        <text x="615" y="177" text-anchor="middle" font-family="Epilogue,sans-serif" font-weight="700" font-size="10" fill="white">IQ — MODEL BASELINE</text>
+        <text x="615" y="191" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7.5" fill="rgba(100,160,255,0.5)">Version hash, infrastructure, config</text>
+
+        <!-- V shape lines -->
+        <polyline points="190,75 265,220 530,220" fill="none" stroke="rgba(0,87,255,0.2)" stroke-width="1.5" stroke-dasharray="5,3"/>
+
+        <!-- Drift monitoring note -->
+        <rect x="200" y="260" width="320" height="24" rx="3" fill="rgba(0,135,90,0.08)" stroke="rgba(0,135,90,0.25)" stroke-width="1"/>
+        <text x="360" y="276" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(0,175,100,0.7)">Ongoing: model drift monitoring + retraining change control</text>
+      </svg>
+      <figcaption>FIGURE 1 — The AI/ML validation lifecycle mapped to the V-model. The centre training box is the new element not present in conventional automation validation. Model drift monitoring and retraining change control extend the lifecycle beyond initial qualification.</figcaption>
+    </figure>
+
+    <h2 id="the-explainability-problem">The Explainability Problem — Why Black-Box AI Is Difficult in GMP</h2>
+    <p>One of the most distinctive compliance challenges AI introduces in GMP environments is explainability. In a conventional PLC programme, every output has a traceable, deterministic cause: the pump started because the level sensor crossed threshold X and interlock Y was satisfied. You can write a test case that confirms this logic, and you can explain it to an auditor in unambiguous terms.</p>
+    <p>A deep learning model that classifies tablet coating quality from camera images may achieve 98% accuracy on the test set, but the decision pathway from input pixels to classification output is not directly interpretable. The model works — the evidence shows it works — but the question "why did it reject this tablet?" does not have the same kind of traceable answer that a rule-based system provides.</p>
+    <p>GAMP 5 2nd Edition addresses this through the concept of explainability requirements in the URS. Depending on the GMP criticality of the AI decision, the URS should specify what level of explainability is required. For a decision that directly affects product release — such as an automated batch disposition recommendation — a higher level of explainability (feature importance, confidence scores, human-in-the-loop review) may be required. For a decision that affects process efficiency but not product quality — such as a predictive maintenance alarm — lower explainability may be acceptable with compensating controls.</p>
+
+    <div class="callout amber">
+      <div class="callout-label">The Human-in-the-Loop Requirement</div>
+      <p>For AI systems making decisions that directly affect GMP-critical outcomes — batch release, critical process parameters, product quality attributes — GAMP 5 2nd Edition guidance and current regulatory expectation strongly favour maintaining a human review step rather than allowing fully autonomous AI decisions. <strong>An AI recommendation reviewed and approved by a qualified person is far easier to defend than an autonomous AI decision, regardless of the model's demonstrated accuracy.</strong></p>
+    </div>
+
+    <h2 id="use-cases-by-risk">AI Use Cases in Pharma — Ranked by GMP Risk</h2>
+    <p>Not all AI applications in pharmaceutical manufacturing carry the same GMP risk. The validation depth and ongoing monitoring requirements scale with the criticality of what the AI system is deciding or predicting.</p>
+
+    <div class="use-case-grid">
+      <div class="use-case-card">
+        <div class="uc-tag">Use Case</div>
+        <div class="uc-title">Predictive Maintenance</div>
+        <div class="uc-body">ML model predicts equipment failure probability from vibration, temperature, and operational data. Triggers maintenance work orders. No direct effect on product quality.</div>
+        <span class="uc-risk low">LOW GMP RISK</span>
+      </div>
+      <div class="use-case-card">
+        <div class="uc-tag">Use Case</div>
+        <div class="uc-title">Process Anomaly Detection</div>
+        <div class="uc-body">ML model detects process parameter drift before it becomes a deviation. Alerts operators. Decision to act remains human. Affects process efficiency and deviation rate.</div>
+        <span class="uc-risk medium">MEDIUM GMP RISK</span>
+      </div>
+      <div class="use-case-card">
+        <div class="uc-tag">Use Case</div>
+        <div class="uc-title">Visual Inspection / Quality Classification</div>
+        <div class="uc-body">Computer vision model classifies products as pass/reject based on appearance. Direct effect on product quality and potential patient safety. Typically requires human oversight loop.</div>
+        <span class="uc-risk high">HIGH GMP RISK</span>
+      </div>
+      <div class="use-case-card">
+        <div class="uc-tag">Use Case</div>
+        <div class="uc-title">Batch Disposition Support</div>
+        <div class="uc-body">AI system analyses batch data and recommends release or reject decision. Directly affects product release. Human QA sign-off mandatory. Highest regulatory scrutiny.</div>
+        <span class="uc-risk high">HIGHEST GMP RISK</span>
+      </div>
+    </div>
+
+    <h2 id="training-data-as-a-gmp-record">Training Data as a GMP Record</h2>
+    <p>A validation consideration that is easy to overlook for AI systems is the status of training data. A trained ML model is only as reliable as the data it was trained on. If the training dataset contained labelled errors — misclassified samples, out-of-specification readings logged as in-spec, sensor readings from a miscalibrated instrument — the model will have learned from corrupt data, and its outputs reflect that corruption regardless of how sophisticated the model architecture is.</p>
+    <p>GAMP 5 2nd Edition and the broader industry guidance position training data as a critical artefact that must be controlled and documented. This means: the training dataset must be version-controlled, the data sources must be documented and qualified, any labelling process must be described and the labellers identified, and the data quality assessment must be included in the SDS. For a GMP-critical AI application, the training data is effectively a GMP record — it must be retained, it must be reproducible, and it must be available for regulatory inspection.</p>
+
+    <h2 id="model-drift-and-change-control">Model Drift and Change Control</h2>
+    <p>The most distinctive lifecycle challenge for AI systems in GMP environments is model drift — the gradual degradation of model performance as the real-world data the model encounters diverges from the distribution it was trained on. A visual inspection model trained on images from one tablet press may perform poorly on images from a second tablet press with different lighting. A predictive maintenance model trained on data from new equipment may give misleading predictions as the equipment ages and its failure signatures change.</p>
+    <p>Managing model drift in a GMP context requires defining, in the URS, the performance metrics that will be monitored and the thresholds that trigger retraining. When retraining occurs, it constitutes a change to the validated software baseline and must go through formal <a href="change-control-validated-system.html">change control</a>. The retrained model is a new validated version — it needs a new model hash, updated documentation, and re-execution of the relevant qualification test cases before it can be deployed in a GMP-regulated application.</p>
+    <p>This is the area where the difference between AI validation and conventional software validation is most practically significant. A PLC programme does not spontaneously change its behaviour over time. An ML model's effective behaviour can degrade without any human intervention. The ongoing monitoring and change control discipline required for AI systems is therefore more intensive than for conventional automation, and this must be reflected in the lifecycle plan from the start of the project.</p>
+
+    <h2 id="what-your-validation-package-needs">What Your Validation Package Needs for an AI System</h2>
+    <p>The structure of a GAMP 5 validation package for an AI or ML system follows the same V-model as any Category 5 custom application, with additional content at each stage. The URS must define the intended use with enough precision that a holdout test set can be constructed to verify it — which means specifying performance metrics, not just functional requirements. The SDS must describe the model architecture, training methodology, training/validation/test data split, and performance acceptance criteria. The IQ must establish the version-controlled model baseline including the trained model hash.</p>
+    <p>The OQ testing approach for AI systems is fundamentally different from rule-based software testing. Rather than writing test cases that verify specific logical conditions, OQ for an ML model involves executing the model against a holdout dataset that was not used in training and verifying that the pre-defined performance metrics are met. Edge cases, adversarial inputs, and out-of-distribution inputs should be included. The PQ phase then verifies performance under real process conditions over a defined period, with ongoing metric monitoring.</p>
+
+    <div class="table-scroll">
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th>V-Model Stage</th>
+            <th>Conventional Automation</th>
+            <th>AI/ML System — Additional Content</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>URS</td><td>Functional requirements</td><td>Performance metrics, explainability requirements, drift thresholds, human oversight scope</td></tr>
+          <tr><td>SDS</td><td>Application code description</td><td>Model architecture, training data provenance, data split methodology, performance acceptance criteria</td></tr>
+          <tr><td>IQ</td><td>Software version, config baseline</td><td>Trained model version hash, training infrastructure, data lineage documentation</td></tr>
+          <tr><td>OQ</td><td>Scripted functional test cases</td><td>Holdout dataset performance tests, edge case testing, adversarial input testing</td></tr>
+          <tr><td>PQ</td><td>Process performance under production conditions</td><td>Live performance monitoring, drift detection, KPI tracking over defined period</td></tr>
+          <tr><td>Lifecycle</td><td>Change control for code changes</td><td>Change control for retraining events + ongoing drift monitoring programme</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>AI in GMP environments is not a future consideration — it is a present one. The validation framework exists. The categories are defined. The lifecycle requirements are documented in GAMP 5 2nd Edition. What the industry is still developing is the practical experience of executing these requirements at scale, and the regulatory confidence to accept AI-assisted decisions in the most critical GMP applications. For automation engineers building these systems now, the approach is clear: treat the AI model as a Category 5 custom software component, document the training and performance evidence with the same rigour as any other validated software, and build the ongoing monitoring and change control discipline into the project from day one.</p>
+
+  </article>
+
+  <aside class="sidebar">
+    <div class="toc-card">
+      <div class="toc-label">In This Article</div>
+      <ul class="toc-list">
+        <li><a href="#gamp5-on-ai">What GAMP 5 Says About AI</a></li>
+        <li><a href="#gamp-category-for-ai">GAMP Category for AI Systems</a></li>
+        <li><a href="#the-explainability-problem">The Explainability Problem</a></li>
+        <li><a href="#use-cases-by-risk">Use Cases by GMP Risk</a></li>
+        <li><a href="#training-data-as-a-gmp-record">Training Data as GMP Record</a></li>
+        <li><a href="#model-drift-and-change-control">Model Drift &amp; Change Control</a></li>
+        <li><a href="#what-your-validation-package-needs">Validation Package Requirements</a></li>
+      </ul>
+    </div>
+
+    <div class="sidebar-cta">
+      <div class="sc-eyebrow">QLean Framework</div>
+      <div class="sc-title">29 production-ready GAMP 5 documents</div>
+      <p class="sc-body">URS, SDS, risk assessment, and IQ/OQ/PQ templates structured for Category 5 custom software — the foundation for any AI/ML validation package.</p>
+      <a href="../index.html#pricing" class="sc-btn">Get the Framework &#8594; &#8364;249</a>
+      <div class="sc-note">INSTANT DOWNLOAD &middot; COMPANY-WIDE LICENCE</div>
+    </div>
+
+    <div class="sidebar-share">
+      <div class="share-label">Share This Article</div>
+      <div class="share-links">
+        <a href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fqleanautomation.com%2Fblog%2Fai-machine-learning-gmp-environments.html" class="share-link" target="_blank" rel="noopener">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+          Share on LinkedIn
+        </a>
+        <a href="https://www.reddit.com/submit?url=https%3A%2F%2Fqleanautomation.com%2Fblog%2Fai-machine-learning-gmp-environments.html&title=AI%20and%20Machine%20Learning%20in%20GMP%20Environments%20%E2%80%94%20What%20GAMP%20Says" class="share-link" target="_blank" rel="noopener">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/></svg>
+          Share on Reddit
+        </a>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<section class="related">
+  <div class="related-inner">
+    <div class="related-label">Continue Reading</div>
+    <div class="related-grid">
+      <a href="gamp5-categories.html" class="related-card">
+        <span class="rc-tag">&#128214; GAMP 5</span>
+        <div class="rc-title">GAMP 5 Software Categories Explained</div>
+        <div class="rc-desc">Categories 1 through 5 — how AI and ML systems sit within the GAMP classification framework and what each category requires.</div>
+        <div class="rc-footer"><span class="rc-read">7 MIN READ</span><span class="rc-arrow">&#8594;</span></div>
+      </a>
+      <a href="csv-vs-csa-pharma-validation.html" class="related-card">
+        <span class="rc-tag">&#128214; Emerging Topics</span>
+        <div class="rc-title">CSV vs CSA — What Changed in Pharma Validation</div>
+        <div class="rc-desc">How Computer Software Assurance shifts validation thinking away from documentation volume toward critical thinking — directly relevant to AI system validation.</div>
+        <div class="rc-footer"><span class="rc-read">7 MIN READ</span><span class="rc-arrow">&#8594;</span></div>
+      </a>
+      <a href="change-control-validated-system.html" class="related-card">
+        <span class="rc-tag">&#128203; Project Management</span>
+        <div class="rc-title">Change Control in a Validated System</div>
+        <div class="rc-desc">Every AI model retraining event is a change to the validated baseline — here is how formal change control applies to model updates.</div>
+        <div class="rc-footer"><span class="rc-read">6 MIN READ</span><span class="rc-arrow">&#8594;</span></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="../index.html" class="nav-logo" style="text-decoration:none">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="7" fill="#0d0f12"/><rect x="8" y="7" width="16" height="16" rx="2" stroke="white" stroke-width="2.5" fill="none"/><line x1="20" y1="19" x2="26" y2="25" stroke="#0057FF" stroke-width="3" stroke-linecap="round"/></svg>
+          <span style="font-family:'Epilogue',sans-serif;font-weight:800;font-size:16px;color:#0d0f12;letter-spacing:-.03em">QLean <span style="font-weight:300;color:#5a6172">Automation</span></span>
+        </a>
+        <p>GMP validation documentation tools for automation engineers and system integrators.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Products</h4>
+        <ul>
+          <li><a href="../index.html#products">GAMP 5 Framework Pack</a></li>
+          <li><a href="../index.html#products">Technical Ebook</a></li>
+          <li><a href="../index.html#pricing">Pricing</a></li>
+          <li><a href="../index.html#faq">FAQ</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Knowledge Base</h4>
+        <ul>
+          <li><a href="blog-index.html">All Articles</a></li>
+          <li><a href="cluster-emerging.html">Emerging Topics</a></li>
+          <li><a href="gamp5-categories.html">GAMP 5 Categories</a></li>
+          <li><a href="csv-vs-csa-pharma-validation.html">CSV vs CSA</a></li>
+          <li><a href="cloud-scada-pharma-compliance.html">Cloud SCADA Compliance</a></li>
+          <li><a href="change-control-validated-system.html">Change Control</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="../index.html#framework">Framework</a></li>
+          <li><a href="../terms.html">Terms of Service</a></li>
+          <li><a href="../privacy.html">Privacy Policy</a></li>
+          <li><a href="mailto:hello@qleanautomation.com">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 QLean Automation. All rights reserved.</p>
+      <div class="compliance-pills">
+        <span class="cp">GAMP 5</span>
+        <span class="cp">EU GMP ANNEX 11</span>
+        <span class="cp">21 CFR PART 11</span>
+        <span class="cp">GXP</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+window.addEventListener('scroll',function(){
+  var s=document.getElementById('progress');
+  var h=document.documentElement;
+  var p=(h.scrollTop||document.body.scrollTop)/(h.scrollHeight-h.clientHeight)*100;
+  s.style.width=p+'%';
+});
+var tl=document.querySelectorAll('.toc-list a');
+window.addEventListener('scroll',function(){
+  var headings=document.querySelectorAll('.article-body h2[id]');
+  var scrollY=window.scrollY+120;
+  var current='';
+  headings.forEach(function(h){if(h.offsetTop<=scrollY)current=h.id;});
+  tl.forEach(function(a){
+    a.classList.remove('active');
+    if(a.getAttribute('href')==='#'+current)a.classList.add('active');
+  });
+});
+</script>
+</body>
+</html>

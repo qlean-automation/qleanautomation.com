@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-JJQ1TXZJX7"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-JJQ1TXZJX7');
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SCADA Alarm Management — Priorities, Shelving and Suppression | QLean Automation</title>
+<meta name="description" content="Configuring alarm management in a pharma SCADA goes beyond entering setpoints. Priority assignment, the ISA-18.2 state machine, suppression vs shelving, and the OQ test cases that QA will expect — all covered.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@300;400;500;600;700;800;900&family=Source+Sans+3:ital,wght@0,300;0,400;0,500;1,300&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--white:#ffffff;--off:#f7f8f9;--ink:#0d0f12;--ink2:#1e2128;--ink3:#3d4456;--ink4:#9199a8;--rule:#e2e5ea;--rule2:#c8cdd6;--blue:#0057ff;--blue2:#0044cc;--blue-dim:rgba(0,87,255,0.07);--green:#00875a;--green-dim:rgba(0,135,90,0.08);--amber:#d97706;--amber-dim:rgba(217,119,6,0.08);--red:#c0392b;--red-dim:rgba(192,57,43,0.08);--f-head:'Epilogue',sans-serif;--f-body:'Source Sans 3',sans-serif;--f-mono:'Roboto Mono',monospace;--shadow-sm:0 2px 8px rgba(13,15,18,0.06),0 1px 3px rgba(13,15,18,0.04)}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}body{background:var(--white);color:var(--ink);font-family:var(--f-body);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+nav{position:fixed;top:0;left:0;right:0;z-index:200;height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 6%;background:rgba(255,255,255,0.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--rule)}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;flex-shrink:0}
+.nav-links{display:flex;align-items:center;gap:36px;list-style:none}.nav-links a{font-size:14px;font-weight:400;color:var(--ink3);text-decoration:none;transition:color .2s}.nav-links a:hover{color:var(--ink)}
+.nav-btn{font-family:var(--f-body);font-size:13px;font-weight:500;padding:9px 20px;background:var(--blue);color:white;border:none;border-radius:6px;cursor:pointer;text-decoration:none;white-space:nowrap;flex-shrink:0}.nav-btn:hover{background:var(--blue2)}
+.progress-bar{position:fixed;top:64px;left:0;right:0;height:2px;background:var(--rule);z-index:199}.progress-fill{height:100%;background:var(--blue);width:0%}
+.article-hero{padding:120px 6% 64px;background:var(--white);border-bottom:1px solid var(--rule);position:relative;overflow:hidden}
+.article-hero::before{content:'';position:absolute;top:-80px;right:-80px;width:400px;height:400px;background:radial-gradient(circle,rgba(0,87,255,0.04) 0%,transparent 70%);pointer-events:none}
+.article-hero-inner{max-width:940px;margin:0 auto;position:relative;z-index:1}
+.breadcrumb{display:flex;align-items:center;gap:8px;font-family:var(--f-mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink4);margin-bottom:24px}.breadcrumb a{color:var(--ink4);text-decoration:none}.breadcrumb a:hover{color:var(--blue)}.breadcrumb span{color:var(--rule2)}
+.article-tag{display:inline-flex;align-items:center;gap:6px;font-family:var(--f-mono);font-size:10px;font-weight:500;color:var(--blue);letter-spacing:.1em;text-transform:uppercase;margin-bottom:20px;padding:4px 10px;background:var(--blue-dim);border-radius:4px}
+.article-hero h1{font-family:var(--f-head);font-size:clamp(30px,5vw,52px);font-weight:900;line-height:1.0;letter-spacing:-.04em;color:var(--ink);margin-bottom:20px}.article-hero h1 span{color:var(--blue)}
+.article-intro{font-size:18px;font-weight:400;color:var(--ink2);line-height:1.75;margin-bottom:32px;max-width:800px}
+.article-meta{display:flex;align-items:center;gap:24px;padding-top:24px;border-top:1px solid var(--rule);flex-wrap:wrap}
+.meta-author{display:flex;align-items:center;gap:10px}.author-avatar{width:36px;height:36px;border-radius:50%;background:var(--ink);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.author-name{font-size:13px;font-weight:500;color:var(--ink)}.author-role{font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.04em}
+.meta-divider{width:1px;height:28px;background:var(--rule)}.meta-stat{font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.06em}
+.article-wrap{max-width:1300px;margin:0 auto;padding:64px 6%;display:grid;grid-template-columns:1fr 300px;gap:60px;align-items:start}
+.article-body{min-width:0}
+.article-body h2{font-family:var(--f-head);font-size:26px;font-weight:800;letter-spacing:-.03em;color:var(--ink);margin:56px 0 16px;line-height:1.2}.article-body h2:first-child{margin-top:0}
+.article-body h3{font-family:var(--f-head);font-size:18px;font-weight:700;letter-spacing:-.02em;color:var(--ink);margin:32px 0 12px}
+.article-body p{font-size:16px;font-weight:400;color:var(--ink2);line-height:1.85;margin-bottom:20px}
+.article-body strong{color:var(--ink);font-weight:600}
+.article-body a{color:var(--blue);text-decoration:none;border-bottom:1px solid rgba(0,87,255,.25)}.article-body a:hover{border-color:var(--blue)}
+.callout{padding:20px 24px;border-radius:8px;margin:32px 0;border-left:3px solid}
+.callout.blue{background:var(--blue-dim);border-color:var(--blue)}.callout.amber{background:var(--amber-dim);border-color:var(--amber)}.callout.green{background:var(--green-dim);border-color:var(--green)}.callout.red{background:var(--red-dim);border-color:var(--red)}
+.callout-label{font-family:var(--f-mono);font-size:9px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px}.callout.blue .callout-label{color:var(--blue)}.callout.amber .callout-label{color:var(--amber)}.callout.green .callout-label{color:var(--green)}.callout.red .callout-label{color:var(--red)}
+.callout p{font-size:14px;color:var(--ink2);line-height:1.7;margin:0}.callout strong{color:var(--ink)}
+.article-img{width:100%;border-radius:8px;border:1px solid #1e2535;overflow:hidden;margin:36px 0}
+.article-img figcaption{padding:10px 14px;background:var(--off);font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.04em;border-top:1px solid var(--rule)}
+.arrow-list{list-style:none;display:flex;flex-direction:column;gap:8px;margin:16px 0 24px}
+.arrow-list li{display:flex;align-items:flex-start;gap:10px;font-size:15px;color:var(--ink2);line-height:1.6}
+.arrow-list li::before{content:'\2192';color:var(--blue);flex-shrink:0;font-size:12px;margin-top:3px}
+.checklist{list-style:none;display:flex;flex-direction:column;gap:8px;margin:20px 0 28px}
+.checklist li{display:flex;align-items:flex-start;gap:10px;font-size:15px;color:var(--ink2);line-height:1.6}
+.checklist li::before{content:'';width:16px;height:16px;flex-shrink:0;margin-top:3px;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 14 14' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='7' cy='7' r='6.5' fill='none' stroke='%230057ff' stroke-width='1'/%3E%3Cpath d='M4 7l2 2 4-4' stroke='%230057ff' stroke-width='1.3' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:center;background-size:contain}
+.table-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:28px 0}
+.compare-table{width:100%;border-collapse:collapse;font-size:14px}
+.compare-table th{font-family:var(--f-mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink4);padding:10px 16px;border-bottom:2px solid var(--rule);text-align:left;background:var(--off)}
+.compare-table td{padding:12px 16px;border-bottom:1px solid var(--rule);vertical-align:top;color:var(--ink2);line-height:1.6}
+.compare-table tr:last-child td{border-bottom:none}
+.compare-table td:first-child{font-weight:600;color:var(--ink);font-family:var(--f-mono);font-size:12px}
+.sidebar{position:sticky;top:88px;display:flex;flex-direction:column;gap:16px}
+.toc-card{border:1px solid var(--rule);border-radius:8px;padding:24px;background:var(--white);box-shadow:var(--shadow-sm)}
+.toc-label{font-family:var(--f-mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);margin-bottom:16px}
+.toc-list{list-style:none;display:flex;flex-direction:column;gap:2px}
+.toc-list a{display:block;font-size:13px;color:var(--ink3);text-decoration:none;padding:6px 10px;border-radius:4px;transition:all .15s;border-left:2px solid transparent}
+.toc-list a:hover,.toc-list a.active{color:var(--blue);background:var(--blue-dim);border-left-color:var(--blue)}
+.sidebar-cta{border:1px solid var(--blue);border-radius:8px;padding:24px;background:var(--blue-dim)}
+.sc-eyebrow{font-family:var(--f-mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);margin-bottom:10px}
+.sc-title{font-family:var(--f-head);font-size:17px;font-weight:800;letter-spacing:-.02em;color:var(--ink);margin-bottom:8px;line-height:1.2}
+.sc-body{font-size:13px;color:var(--ink3);line-height:1.6;margin-bottom:16px}
+.sc-btn{display:block;text-align:center;padding:11px 16px;background:var(--blue);color:white;border-radius:6px;font-family:var(--f-body);font-size:13px;font-weight:500;text-decoration:none}.sc-btn:hover{background:var(--blue2)}
+.sc-note{font-family:var(--f-mono);font-size:9px;color:var(--ink4);text-align:center;margin-top:8px;letter-spacing:.04em}
+.sidebar-share{border:1px solid var(--rule);border-radius:8px;padding:20px 24px;background:var(--white)}
+.share-label{font-family:var(--f-mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);margin-bottom:14px}
+.share-links{display:flex;flex-direction:column;gap:8px}
+.share-link{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--ink3);text-decoration:none;padding:9px 12px;border:1px solid var(--rule);border-radius:6px;transition:border-color .2s,color .2s}.share-link:hover{border-color:var(--blue);color:var(--blue)}
+.related{padding:64px 6%;border-top:1px solid var(--rule);background:var(--off)}
+.related-inner{max-width:1100px;margin:0 auto}
+.related-label{font-family:var(--f-mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);margin-bottom:32px;display:flex;align-items:center;gap:10px}
+.related-label::before{content:'';width:20px;height:1px;background:var(--blue)}
+.related-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.related-card{padding:24px;border:1px solid var(--rule);border-radius:8px;background:var(--white);box-shadow:var(--shadow-sm);transition:border-color .2s,transform .2s;text-decoration:none;display:flex;flex-direction:column;gap:12px}.related-card:hover{border-color:var(--blue);transform:translateY(-4px)}
+.rc-tag{font-family:var(--f-mono);font-size:9px;color:var(--blue);letter-spacing:.08em;text-transform:uppercase;padding:3px 8px;background:var(--blue-dim);border-radius:3px;align-self:flex-start}
+.rc-title{font-family:var(--f-head);font-size:16px;font-weight:700;letter-spacing:-.02em;color:var(--ink);line-height:1.25}
+.rc-desc{font-size:13px;color:var(--ink3);line-height:1.6;flex:1}
+.rc-footer{display:flex;align-items:center;justify-content:space-between;padding-top:12px;border-top:1px solid var(--rule)}
+.rc-read{font-family:var(--f-mono);font-size:10px;color:var(--ink4)}.rc-arrow{font-size:14px;color:var(--blue)}
+footer{padding:56px 6% 32px;border-top:1px solid var(--rule);background:var(--white)}
+.footer-inner{max-width:1160px;margin:0 auto}
+.footer-top{display:flex;justify-content:space-between;align-items:flex-start;gap:40px;flex-wrap:wrap;margin-bottom:48px}
+.footer-brand p{font-size:13px;font-weight:300;color:var(--ink3);margin-top:12px;max-width:260px;line-height:1.6}
+.footer-col h4{font-family:var(--f-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink4);margin-bottom:16px}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+.footer-col a{font-size:13px;color:var(--ink3);text-decoration:none}.footer-col a:hover{color:var(--blue)}
+.footer-bottom{padding-top:24px;border-top:1px solid var(--rule);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.footer-bottom p{font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.04em}
+.compliance-pills{display:flex;gap:6px;flex-wrap:wrap}
+.cp{font-family:var(--f-mono);font-size:9px;padding:3px 8px;border:1px solid var(--rule);border-radius:3px;color:var(--ink4);letter-spacing:.06em}
+@media(max-width:900px){.article-wrap{grid-template-columns:1fr;gap:48px}.sidebar{position:static}.related-grid{grid-template-columns:1fr}.table-scroll{margin:20px 0}}
+@media(max-width:900px){.nav-links{display:none}}
+@media(max-width:540px){nav{padding:0 4%}.nav-btn{font-size:12px;padding:8px 14px}}
+</style>
+</head>
+<body>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+<nav>
+  <a href="../index.html" class="nav-logo">
+    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" style="flex-shrink:0"><rect width="32" height="32" rx="7" fill="#0d0f12"/><rect x="8" y="7" width="16" height="16" rx="2" stroke="white" stroke-width="2.5" fill="none"/><line x1="20" y1="19" x2="26" y2="25" stroke="#0057FF" stroke-width="3" stroke-linecap="round"/></svg>
+    <span style="font-family:'Epilogue',sans-serif;font-weight:800;font-size:16px;color:#0d0f12;letter-spacing:-.03em;white-space:nowrap">QLean <span style="font-weight:300;color:#5a6172">Automation</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="../index.html#products">Products</a></li>
+    <li><a href="../index.html#framework">Framework</a></li>
+    <li><a href="blog-index.html">Knowledge Base</a></li>
+    <li><a href="../index.html#pricing">Pricing</a></li>
+    <li><a href="../about.html">About</a></li>
+    <li><a href="../index.html#faq">FAQ</a></li>
+  </ul>
+  <a href="../index.html#pricing" class="nav-btn">Get the Framework →</a>
+</nav>
+
+<header class="article-hero">
+  <div class="article-hero-inner">
+    <div class="breadcrumb"><a href="../index.html">Home</a><span>/</span><a href="blog-index.html">Knowledge Base</a><span>/</span>SCADA Alarm Management Configuration</div>
+    <div class="article-tag">🖥️ SCADA Engineering</div>
+    <h1>SCADA Alarm Management<br><span>— Priorities, Shelving</span><br>and Suppression</h1>
+    <p class="article-intro">Alarm rationalisation decides what each alarm should be. SCADA alarm management configuration is what makes it actually work — and what QA audits. Priority assignment, the ISA-18.2 five-state machine, the difference between suppression and shelving, and the OQ test cases that catch misconfigured systems before they reach production.</p>
+    <div class="article-meta">
+      <div class="meta-author">
+        <div class="author-avatar"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="7" r="3.5" stroke="white" stroke-width="1.5"/><path d="M2.5 16c0-3.59 2.91-6.5 6.5-6.5s6.5 2.91 6.5 6.5" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+        <div><div class="author-name">QLean Automation</div><div class="author-role">ENGINEERS WHO BUILD SYSTEMS, NOT JUST SIGN THEM</div></div>
+      </div>
+      <div class="meta-divider"></div><div class="meta-stat">7 MIN READ</div>
+      <div class="meta-divider"></div><div class="meta-stat">ISA-18.2 · SCADA · ALARM MANAGEMENT</div>
+    </div>
+  </div>
+</header>
+
+<div class="article-wrap">
+  <article class="article-body">
+
+    <h2 id="configuration-vs-rationalisation">Configuration Is Not Rationalisation</h2>
+    <p>If you've read the article on <a href="isa-18-2-alarm-rationalisation-scada.html">ISA-18.2 alarm rationalisation</a>, you know that rationalisation is the upstream process — it determines what every alarm's setpoint, priority, and required operator response should be, and produces the FDS alarm table. Configuration is the downstream act of implementing those decisions in the SCADA platform. The two are often conflated, and that conflation causes problems.</p>
+    <p>The most common version of the problem: a SCADA is configured with alarm priorities that were assigned during configuration by whoever happened to be at the keyboard, with no documented rationalisation process behind them. The FDS alarm table doesn't exist, or doesn't match what's in the system. At FAT, QA asks for the document that justifies why that conductivity alarm is High and not Critical. There isn't one. That's a deviation that stops the FAT.</p>
+    <p>The correct sequence is: rationalisation produces the FDS alarm table → configuration implements it exactly → FAT verifies the configuration matches the FDS table → OQ retests the critical ones in the installed environment. This article covers the configuration side: what the SCADA needs to implement, how suppression and shelving work, and what the OQ tests for.</p>
+
+    <h2 id="priority-configuration">Priority Configuration — What Each Level Actually Does</h2>
+    <p>Alarm priority in a GMP SCADA is not a cosmetic choice. The priority drives four distinct system behaviours: display colour and flash pattern, audible alert type and repeat cycle, acknowledgement requirement, and suppression access control. All four must be consistent with the Control Philosophy and FDS. If the FDS says Critical alarms use a sustained audible tone and your SCADA plays a single chime, that's a design non-conformance — and it will be found at FAT.</p>
+
+    <figure class="article-img">
+      <svg viewBox="0 0 720 300" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;background:#0d0f12;border-radius:8px 8px 0 0">
+        <text x="360" y="18" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(255,255,255,0.2)" letter-spacing="0.12em">SCADA ALARM PRIORITY — FOUR CONFIGURATION AXES</text>
+
+        <!-- Header row -->
+        <text x="90"  y="40" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(255,255,255,0.35)" letter-spacing="0.06em">PRIORITY</text>
+        <text x="230" y="40" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(255,255,255,0.35)" letter-spacing="0.06em">DISPLAY</text>
+        <text x="380" y="40" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(255,255,255,0.35)" letter-spacing="0.06em">AUDIBLE</text>
+        <text x="530" y="40" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(255,255,255,0.35)" letter-spacing="0.06em">ACK REQUIRED</text>
+        <text x="660" y="40" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(255,255,255,0.35)" letter-spacing="0.06em">SUPPRESS ROLE</text>
+        <line x1="12" y1="48" x2="708" y2="48" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+
+        <!-- Critical row -->
+        <rect x="12" y="54" width="696" height="52" rx="2" fill="rgba(192,57,43,0.08)"/>
+        <rect x="12" y="54" width="4" height="52" fill="rgba(200,50,50,0.7)"/>
+        <text x="90"  y="76" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="11" fill="rgba(220,80,80,0.95)">CRITICAL</text>
+        <text x="90"  y="93" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(220,80,80,0.5)">P1</text>
+        <text x="230" y="76" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="12" fill="rgba(220,80,80,0.85)">Red + flashing</text>
+        <text x="230" y="93" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(255,255,255,0.35)">Banner permanent</text>
+        <text x="380" y="76" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="12" fill="rgba(255,255,255,0.7)">Sustained continuous</text>
+        <text x="380" y="93" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(220,80,80,0.5)">Cannot silence — ack only</text>
+        <text x="530" y="80" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="11" fill="rgba(220,80,80,0.9)">YES — Operator+</text>
+        <text x="660" y="80" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="11" fill="rgba(220,80,80,0.8)">Admin only</text>
+
+        <!-- High row -->
+        <rect x="12" y="110" width="696" height="52" rx="2" fill="rgba(217,119,6,0.06)"/>
+        <rect x="12" y="110" width="4" height="52" fill="rgba(240,160,40,0.6)"/>
+        <text x="90"  y="132" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="11" fill="rgba(240,160,40,0.9)">HIGH</text>
+        <text x="90"  y="149" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(240,160,40,0.4)">P2</text>
+        <text x="230" y="132" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="12" fill="rgba(240,160,40,0.8)">Orange + solid</text>
+        <text x="230" y="149" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(255,255,255,0.35)">Banner permanent</text>
+        <text x="380" y="132" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="12" fill="rgba(255,255,255,0.7)">30-second repeat</text>
+        <text x="380" y="149" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(255,255,255,0.35)">Until acknowledged</text>
+        <text x="530" y="136" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="11" fill="rgba(240,160,40,0.8)">YES — Operator+</text>
+        <text x="660" y="136" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="11" fill="rgba(240,160,40,0.7)">Supervisor+</text>
+
+        <!-- Medium row -->
+        <rect x="12" y="166" width="696" height="52" rx="2" fill="rgba(234,179,8,0.04)"/>
+        <rect x="12" y="166" width="4" height="52" fill="rgba(250,200,50,0.4)"/>
+        <text x="90"  y="188" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="11" fill="rgba(250,200,50,0.75)">MEDIUM</text>
+        <text x="90"  y="205" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(250,200,50,0.3)">P3</text>
+        <text x="230" y="188" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="12" fill="rgba(250,200,50,0.65)">Yellow + solid</text>
+        <text x="230" y="205" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(255,255,255,0.35)">Banner — may scroll</text>
+        <text x="380" y="188" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="12" fill="rgba(255,255,255,0.65)">Single tone on activation</text>
+        <text x="380" y="205" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(255,255,255,0.35)">No repeat</text>
+        <text x="530" y="192" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="11" fill="rgba(250,200,50,0.6)">YES — Operator+</text>
+        <text x="660" y="192" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="11" fill="rgba(250,200,50,0.55)">Supervisor+</text>
+
+        <!-- Low row -->
+        <rect x="12" y="222" width="696" height="52" rx="2" fill="rgba(59,130,246,0.04)"/>
+        <rect x="12" y="222" width="4" height="52" fill="rgba(100,160,255,0.3)"/>
+        <text x="90"  y="244" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="11" fill="rgba(100,160,255,0.65)">LOW</text>
+        <text x="90"  y="261" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(100,160,255,0.3)">P4</text>
+        <text x="230" y="244" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="12" fill="rgba(100,160,255,0.6)">Blue + solid</text>
+        <text x="230" y="261" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(255,255,255,0.35)">Advisory — no banner flash</text>
+        <text x="380" y="252" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="12" fill="rgba(255,255,255,0.5)">No audible</text>
+        <text x="530" y="252" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="11" fill="rgba(100,160,255,0.5)">YES — Operator+</text>
+        <text x="660" y="252" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="11" fill="rgba(100,160,255,0.45)">Supervisor+</text>
+
+        <!-- column dividers -->
+        <line x1="155" y1="48" x2="155" y2="274" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+        <line x1="305" y1="48" x2="305" y2="274" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+        <line x1="455" y1="48" x2="455" y2="274" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+        <line x1="600" y1="48" x2="600" y2="274" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+
+        <text x="360" y="292" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(255,255,255,0.18)">ALL FOUR AXES MUST BE CONSISTENT WITH FDS APPENDIX B AND CP-SYS-001 SECTION 3</text>
+      </svg>
+      <figcaption>SCADA ALARM PRIORITY CONFIGURATION — Priority drives four independent system behaviours. All must be specified in the FDS and verified consistently at FAT. Discrepancies between FDS specification and SCADA configuration are protocol deviations.</figcaption>
+    </figure>
+
+    <p>One configuration detail that frequently causes FAT deviations: <strong>the audible silence behaviour for Critical alarms</strong>. ISA-18.2 and the GMP Control Philosophy both require that a Critical alarm audible cannot be silenced by the operator — only acknowledgement stops the tone. Systems where operators can click a "mute" or "silence" button on the alarm banner without acknowledging the alarm are non-compliant. The test at FAT is simple: activate a Critical alarm and attempt to silence the audible without acknowledging. If the audible stops, it's a deviation.</p>
+    <p>Platform-specific note: in Ignition the alarm pipeline and notification profiles control this behaviour. In WinCC the alarm class configuration drives it. In FactoryTalk View SE it's the alarm setup in the alarm server. In Wonderware InTouch it's the alarm DB Logger configuration combined with the alarm display scripts. The configuration approach differs across platforms, but the required behaviour is identical.</p>
+
+    <h2 id="isa182-state-machine">The ISA-18.2 Five-State Machine — What the SCADA Must Implement</h2>
+    <p>The single most common alarm management configuration failure in pharma SCADA systems is the missing RTN_UNACKNOWLEDGED state. This is the state where the process has returned to normal — the alarm condition is gone — but the operator has not yet acknowledged that it occurred. ISA-18.2 requires this state to exist and to remain visible in the active alarm list until explicitly acknowledged. Many SCADA configurations auto-clear alarms on return to normal, which means an alarm can fire and clear with no operator acknowledgement and no record that it required a response.</p>
+
+    <figure class="article-img">
+      <svg viewBox="0 0 720 260" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;background:#0d0f12;border-radius:8px 8px 0 0">
+        <text x="360" y="18" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(255,255,255,0.2)" letter-spacing="0.12em">ISA-18.2 FIVE-STATE ALARM MODEL — SCADA IMPLEMENTATION</text>
+
+        <!-- State boxes -->
+        <!-- 1: INACTIVE -->
+        <rect x="20" y="100" width="120" height="44" rx="4" fill="rgba(0,135,90,0.12)" stroke="rgba(0,135,90,0.4)" stroke-width="1.5"/>
+        <text x="80" y="118" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="#00c97a">INACTIVE</text>
+        <text x="80" y="133" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(255,255,255,0.45)">Normal / in-spec</text>
+
+        <!-- 2: ACTIVE_UNACK -->
+        <rect x="190" y="46" width="140" height="44" rx="4" fill="rgba(192,57,43,0.15)" stroke="rgba(200,50,50,0.55)" stroke-width="1.5"/>
+        <text x="260" y="64" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(220,80,80,0.9)">ACTIVE_UNACK</text>
+        <text x="260" y="79" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(255,255,255,0.5)">Alarm firing, not acked</text>
+
+        <!-- 3: ACTIVE_ACK -->
+        <rect x="190" y="154" width="140" height="44" rx="4" fill="rgba(217,119,6,0.10)" stroke="rgba(217,119,6,0.4)" stroke-width="1.5"/>
+        <text x="260" y="172" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(240,160,40,0.85)">ACTIVE_ACK</text>
+        <text x="260" y="187" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(255,255,255,0.5)">Alarm active, acked</text>
+
+        <!-- 4: RTN_UNACK — highlighted as the critical state -->
+        <rect x="400" y="46" width="145" height="50" rx="4" fill="rgba(0,87,255,0.18)" stroke="#0057ff" stroke-width="2"/>
+        <text x="472" y="65" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="#6699ff">RTN_UNACK</text>
+        <text x="472" y="80" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(255,255,255,0.65)">Process normal — NOT acked</text>
+        <text x="472" y="93" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(0,87,255,0.8)">&#x2190; MOST OFTEN MISCONFIGURED</text>
+
+        <!-- 5: RTN_ACK / CLOSED -->
+        <rect x="400" y="154" width="145" height="44" rx="4" fill="rgba(0,135,90,0.12)" stroke="rgba(0,135,90,0.4)" stroke-width="1.5"/>
+        <text x="472" y="172" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="#00c97a">RTN_ACK</text>
+        <text x="472" y="187" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(255,255,255,0.45)">Closed — returns to Inactive</text>
+
+        <!-- Arrows -->
+        <!-- INACTIVE → ACTIVE_UNACK -->
+        <path d="M140 115 Q165 68 190 68" fill="none" stroke="rgba(220,80,80,0.5)" stroke-width="1.5" stroke-dasharray="4,3"/>
+        <polygon points="186,63 196,68 186,73" fill="rgba(220,80,80,0.5)"/>
+        <text x="155" y="78" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(255,255,255,0.3)">setpoint</text>
+        <text x="155" y="88" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(255,255,255,0.3)">breach</text>
+
+        <!-- ACTIVE_UNACK → ACTIVE_ACK (operator acks) -->
+        <line x1="260" y1="90" x2="260" y2="154" stroke="rgba(240,160,40,0.5)" stroke-width="1.5"/>
+        <polygon points="255,150 265,150 260,158" fill="rgba(240,160,40,0.5)"/>
+        <text x="265" y="126" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(255,255,255,0.3)">operator</text>
+        <text x="265" y="136" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(255,255,255,0.3)">ack</text>
+
+        <!-- ACTIVE_UNACK → RTN_UNACK (process returns) -->
+        <line x1="330" y1="68" x2="400" y2="68" stroke="rgba(0,87,255,0.6)" stroke-width="1.5"/>
+        <polygon points="396,63 406,68 396,73" fill="rgba(0,87,255,0.6)"/>
+        <text x="355" y="60" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(255,255,255,0.3)">RTN</text>
+
+        <!-- ACTIVE_ACK → RTN_ACK (process returns) -->
+        <line x1="330" y1="176" x2="400" y2="176" stroke="rgba(0,135,90,0.5)" stroke-width="1.5"/>
+        <polygon points="396,171 406,176 396,181" fill="rgba(0,135,90,0.5)"/>
+        <text x="355" y="168" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(255,255,255,0.3)">RTN</text>
+
+        <!-- RTN_UNACK → RTN_ACK (operator acks the cleared alarm) -->
+        <line x1="472" y1="96" x2="472" y2="154" stroke="rgba(0,87,255,0.5)" stroke-width="1.5"/>
+        <polygon points="467,150 477,150 472,158" fill="rgba(0,87,255,0.5)"/>
+        <text x="478" y="130" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(255,255,255,0.3)">operator</text>
+        <text x="478" y="140" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(255,255,255,0.3)">ack</text>
+
+        <!-- RTN_ACK → INACTIVE -->
+        <path d="M545 176 Q630 176 630 122 Q630 68 545 68" fill="none" stroke="rgba(0,135,90,0.3)" stroke-width="1.5" stroke-dasharray="4,3"/>
+        <polygon points="545,63 548,73 538,68" fill="rgba(0,135,90,0.3)"/>
+
+        <text x="360" y="240" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(255,255,255,0.18)">RTN_UNACK MUST REMAIN IN ACTIVE ALARM LIST — AUTO-CLEAR ON RTN IS A GMP NON-COMPLIANCE</text>
+      </svg>
+      <figcaption>ISA-18.2 FIVE-STATE ALARM MODEL — The RTN_UNACKNOWLEDGED state is the most frequently misconfigured. An alarm that fires and clears without acknowledgement must remain visible and require explicit operator acknowledgement before it is removed from the active list.</figcaption>
+    </figure>
+
+    <p>The practical consequence of a missing RTN_UNACK state is this: during a night shift, a High conductivity alarm fires briefly and auto-clears. The operator on duty doesn't see it or ignores it. The alarm history shows it occurred, but there's no acknowledgement record, no indication that anyone responded, and — critically — no audit trail entry showing who saw it and decided no corrective action was needed. An inspector reviewing the alarm history asks why there's no acknowledgement for a High quality alarm. There isn't a good answer.</p>
+    <p>The OQ test for this state is simple and must be executed: activate an alarm, do not acknowledge it, allow the process to return to normal, and verify that the alarm remains visible in the active alarm list with a "RTN Unacknowledged" status marker. Then acknowledge it and verify it moves to closed. Both steps are required in the test protocol — missing the second step is also a common omission.</p>
+
+    <h2 id="suppression-vs-shelving">Suppression vs Shelving — The Difference That Matters</h2>
+    <p>These two terms are used interchangeably in some platforms and loosely in conversation, but in a GMP SCADA they refer to distinct mechanisms with different regulatory implications. Getting the terminology wrong in the FDS or SDS creates confusion at FAT review.</p>
+
+    <div class="callout blue">
+      <div class="callout-label">Suppression vs Shelving — Defined</div>
+      <p><strong>Suppression</strong> is applied to an alarm that is currently active — it tells the system "I know this alarm is firing, I have a reason, don't annunciate it for a defined period." The alarm condition still exists. The alarm is still recorded in history. It is visible in a dedicated Suppressed Alarms view. <strong>Shelving</strong> is applied to an alarm that is not currently active — it pre-emptively prevents a known alarm from annunciating during a planned activity (calibration, maintenance, controlled startup). The difference is timing: suppression is reactive, shelving is proactive. Both require Supervisor authorisation, both require a reason, both have a maximum duration, and both are audit-trailed.</p>
+    </div>
+
+    <p>The regulatory concern with both mechanisms is the same: unauthorised alarm suppression is a recurring FDA 483 and MHRA inspection finding. The fix is not to eliminate suppression and shelving — they are legitimate and necessary tools. The fix is to enforce documented controls around them: role restriction, mandatory reason text, maximum duration with auto-expiry, and an always-visible suppressed/shelved alarms view that makes it impossible to claim ignorance of what's been muted.</p>
+
+    <h3>Suppression Configuration Requirements</h3>
+    <ul class="arrow-list">
+      <li><strong>Role enforcement:</strong> Supervisor minimum to suppress any alarm. Critical alarms require Administrator role — this must be enforced in the SCADA, not just stated in the SOP. The OQ tests this adversarially: a Supervisor attempting to suppress a Critical alarm must be blocked.</li>
+      <li><strong>Mandatory reason text:</strong> The SCADA must require a reason entry before accepting the suppression. Minimum 10 characters is a reasonable enforcement threshold. The reason becomes part of the audit trail record. A blank reason field is not acceptable.</li>
+      <li><strong>Maximum duration with auto-expiry:</strong> Standard suppression maximum is 4 hours, configurable by Administrator. On timer expiry the alarm auto-reactivates and generates a "Suppression Expired" advisory event. There is no indefinite suppression.</li>
+      <li><strong>Suppressed Alarms view:</strong> All active suppressions must be visible in a dedicated view accessible from the alarm management screen by Read-Only role and above. This view must show: alarm tag, description, suppressing user, start time, expiry time, and reason. Suppressions cannot be hidden.</li>
+    </ul>
+
+    <h3>Shelving Configuration Requirements</h3>
+    <ul class="arrow-list">
+      <li><strong>Scope restriction:</strong> Shelving applies per-tag, not per-area or per-priority. You can shelve the alarms on instrument AIC-001 while it is out for calibration without shelving all conductivity alarms.</li>
+      <li><strong>Maximum duration:</strong> 8 hours is a common maximum for shelving — longer than suppression because maintenance windows can extend overnight, but still bounded.</li>
+      <li><strong>Shelved Alarms view:</strong> Same requirement as the suppressed alarms view — all shelved alarms visible, with who, why, and when.</li>
+      <li><strong>Audit trail on activation and deactivation:</strong> Both the start and end of shelving must generate audit trail entries, including the instrument returned to service and the user who cleared the shelve.</li>
+    </ul>
+
+    <h2 id="database-configuration">Alarm Database Configuration — What the Historian Must Record</h2>
+    <p>In a GMP SCADA, the alarm database is a GMP record. Every alarm state transition — not just the activation, but the acknowledgement, the return to normal, and the closure — must be written to the historian with the full set of required fields. Missing fields discovered at OQ are a deviation and may require re-execution of the affected test.</p>
+
+    <p>The required fields for every alarm history record are not optional. The historian must capture: alarm tag name (matching the FDS Appendix B ID exactly), alarm description, priority, process area, activation timestamp (NTP-synchronised), acknowledgement timestamp plus the user ID of the acknowledging user, return-to-normal timestamp, and the process value at the time of alarm activation. All fields must be non-null — a historian configuration that allows null acknowledgement fields when an alarm is acknowledged by an unknown or deleted user account is a data integrity failure.</p>
+
+    <div class="callout amber">
+      <div class="callout-label">Tag Name Consistency Is Non-Negotiable</div>
+      <p>The alarm tag name in the SCADA alarm database must be identical to the alarm ID in FDS Appendix B and to the tag name used in OQ test protocols. Any discrepancy between these three — even a case difference or underscore variation — creates a traceability gap. During OQ you cannot verify "ALM-COND-002 fired at 14:32:01" against a historian record showing "alm_cond_002" without an explanation. <strong>Tag names are frozen at FAT baseline.</strong> A post-FAT tag name change is a change control event requiring OQ retesting of all affected historian queries and reports. This is documented in the SDS tag naming convention — see the <a href="scada-project-structure-pharma.html">SCADA project structure article</a> for the naming convention design.</p>
+    </div>
+
+    <h2 id="oq-test-cases">OQ Test Cases for Alarm Management</h2>
+    <p>The <a href="isa-18-2-alarm-rationalisation-scada.html">rationalisation article</a> covers the FAT alarm tests. The OQ retests the critical ones in the installed environment, and adds boundary and adversarial tests that FAT doesn't require. Here are the mandatory OQ test cases for alarm management — these should be in every OQ protocol regardless of system type.</p>
+
+    <p><strong>RTN_UNACKNOWLEDGED state test (HIGH risk):</strong> Activate an alarm. Allow the process to return to normal without acknowledging. Verify the alarm remains in the active alarm list with RTN_UNACK status. Verify the audible has stopped (because the alarm condition cleared) but the visual indicator remains. Then acknowledge — verify the alarm closes and the acknowledgement record in the historian includes user ID and timestamp.</p>
+
+    <p><strong>Suppression access control test (HIGH risk — adversarial):</strong> As Operator role, attempt to suppress an active alarm. Must be blocked. As Supervisor, suppress an active non-Critical alarm with a valid reason. Verify the suppressed alarms view, the audit trail entry, and the auto-expiry behaviour. As Supervisor, attempt to suppress a Critical alarm. Must be blocked with a clear message. As Administrator, suppress the Critical alarm — must be permitted.</p>
+
+    <p><strong>Alarm history read-only test (adversarial):</strong> Attempt to modify or delete an alarm history record directly in the historian database. Must be rejected. This mirrors the <a href="audit-trail-implementation-scada.html">audit trail write-once test</a> — the same SQL-level protection that prevents audit trail modification must also cover the alarm history table. The expected result is an explicit SQL permission denied error, not just an absence of change.</p>
+
+    <p><strong>Alarm setpoint boundary test:</strong> For each Critical and High alarm, set the process value to exactly the alarm setpoint. Verify the alarm activates. Apply the configured deadband — verify the alarm does not clear until the value moves below the deadband threshold. This is a boundary test, not a comfortable mid-range test. The deadband verification step is the one most often missed.</p>
+
+    <div class="callout green">
+      <div class="callout-label">In the QLean Framework</div>
+      <p>The SDS-SYS-001 Section 5 documents the full alarm management software design: the ISA-18.2 five-state machine implemented in FB_AlarmManager, the alarm database logger configuration with all required field definitions, and the suppression implementation including Supervisor/Administrator role enforcement, mandatory reason text (10-character minimum), maximum duration (4 hours standard, 8 hours Administrator), and auto-reactivation on expiry. The typ_Alarm_GxP UDT in Section 2.3 defines the data structure for each alarm instance — including the b_Suppressed flag and s_AckReason mandatory field. The FDS Appendix B alarm table provides 25 worked entries covering all process and system alarms for the system type, with priority, setpoint, deadband, and acknowledgement requirements pre-filled. The OQ-SYS-001 test cases OQ-051 (RTN_UNACK state machine) and OQ-052 (suppression boundary with adversarial Operator/Supervisor/Admin role tests and Critical alarm suppression block) are the exact test cases described in this article — structured, expected results defined, with FAT cross-reference and evidence attachment fields.</p>
+    </div>
+
+  </article>
+
+  <aside class="sidebar">
+    <div class="toc-card">
+      <div class="toc-label">In This Article</div>
+      <ul class="toc-list">
+        <li><a href="#configuration-vs-rationalisation" class="active">Config vs Rationalisation</a></li>
+        <li><a href="#priority-configuration">Priority Configuration</a></li>
+        <li><a href="#isa182-state-machine">The Five-State Machine</a></li>
+        <li><a href="#suppression-vs-shelving">Suppression vs Shelving</a></li>
+        <li><a href="#database-configuration">Alarm Database Configuration</a></li>
+        <li><a href="#oq-test-cases">OQ Test Cases</a></li>
+      </ul>
+    </div>
+    <div class="sidebar-cta">
+      <div class="sc-eyebrow">QLean Framework</div>
+      <div class="sc-title">29 production-ready GAMP 5 documents</div>
+      <div class="sc-body">SDS alarm state machine design, FDS Appendix B alarm table with 25 worked entries, OQ-051 and OQ-052 suppression boundary test cases — all included.</div>
+      <a href="../index.html#pricing" class="sc-btn">Get the Framework — €249 →</a>
+      <div class="sc-note">// INSTANT DOWNLOAD · COMPANY-WIDE LICENCE</div>
+    </div>
+    <div class="sidebar-share">
+      <div class="share-label">Share This Article</div>
+      <div class="share-links">
+        <a href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fqleanautomation.com%2Fblog%2Fscada-alarm-management-configuration.html" target="_blank" rel="noopener" class="share-link">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          Share on LinkedIn
+        </a>
+        <a href="https://www.reddit.com/submit?url=https%3A%2F%2Fqleanautomation.com%2Fblog%2Fscada-alarm-management-configuration.html&title=SCADA+Alarm+Management+%E2%80%94+Priorities%2C+Shelving+and+Suppression" target="_blank" rel="noopener" class="share-link">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/></svg>
+          Share on Reddit
+        </a>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<section class="related">
+  <div class="related-inner">
+    <div class="related-label">More Articles</div>
+    <div class="related-grid">
+      <a href="isa-18-2-alarm-rationalisation-scada.html" class="related-card">
+        <div class="rc-tag">🖥️ SCADA Engineering</div>
+        <div class="rc-title">ISA-18.2 Alarm Rationalisation on a Pharma SCADA Project</div>
+        <div class="rc-desc">Before you configure a single setpoint, rationalisation determines what each alarm should be and why. The FDS alarm table is the output — this article covers the process that produces it.</div>
+        <div class="rc-footer"><div class="rc-read">8 MIN READ</div><div class="rc-arrow">→</div></div>
+      </a>
+      <a href="plc-alarm-management-pharma.html" class="related-card">
+        <div class="rc-tag">⚙️ PLC Engineering</div>
+        <div class="rc-title">Implementing Alarm Management on a Pharma PLC</div>
+        <div class="rc-desc">The PLC-side of the same alarm — state machine in the controller, audit trail on every state transition, and how OB35 alarm scan timing affects the detection cycle.</div>
+        <div class="rc-footer"><div class="rc-read">8 MIN READ</div><div class="rc-arrow">→</div></div>
+      </a>
+      <a href="audit-trail-implementation-scada.html" class="related-card">
+        <div class="rc-tag">🖥️ SCADA Engineering</div>
+        <div class="rc-title">Building a Part 11 Audit Trail in Your SCADA System</div>
+        <div class="rc-desc">Alarm acknowledgement records, suppression events, and setpoint changes all feed the same audit trail. Here's how to design the SCADA-side audit trail architecture that covers all of them.</div>
+        <div class="rc-footer"><div class="rc-read">9 MIN READ</div><div class="rc-arrow">→</div></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="../index.html" class="nav-logo">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none" style="flex-shrink:0"><rect width="32" height="32" rx="7" fill="#0d0f12"/><rect x="8" y="7" width="16" height="16" rx="2" stroke="white" stroke-width="2.5" fill="none"/><line x1="20" y1="19" x2="26" y2="25" stroke="#0057FF" stroke-width="3" stroke-linecap="round"/></svg>
+          <span style="font-family:'Epilogue',sans-serif;font-weight:800;font-size:16px;color:#0d0f12;letter-spacing:-.03em;white-space:nowrap">QLean <span style="font-weight:300;color:#5a6172">Automation</span></span>
+        </a>
+        <p>GMP documentation tools for system integrators and automation engineers entering pharmaceutical projects.</p>
+      </div>
+      <div class="footer-col"><h4>Products</h4><ul><li><a href="../index.html#framework">GAMP 5 Framework</a></li><li><a href="../index.html#products">Technical Masterclass</a></li></ul></div>
+      <div class="footer-col"><h4>Knowledge Base</h4><ul>
+        <li><a href="blog-index.html">All Articles</a></li>
+        <li><a href="isa-18-2-alarm-rationalisation-scada.html">ISA-18.2 Rationalisation</a></li>
+        <li><a href="plc-alarm-management-pharma.html">PLC Alarm Management</a></li>
+        <li><a href="audit-trail-implementation-scada.html">Audit Trail Implementation</a></li>
+        <li><a href="scada-project-structure-pharma.html">SCADA Project Structure</a></li>
+        <li><a href="functional-design-specification-guide.html">How to Write an FDS</a></li>
+        <li><a href="iq-oq-pq-guide.html">IQ OQ PQ Guide</a></li>
+      </ul></div>
+      <div class="footer-col"><h4>Company</h4><ul><li><a href="https://www.linkedin.com/company/qlean-automation" target="_blank">LinkedIn</a></li><li><a href="mailto:hello@qleanautomation.com">Contact</a></li><li><a href="../terms.html">Terms</a></li></ul></div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 QLEAN AUTOMATION · QLEANAUTOMATION.COM</p>
+      <div class="compliance-pills"><span class="cp">ISA-18.2</span><span class="cp">IEC 62682</span><span class="cp">EU ANNEX 11</span><span class="cp">GAMP 5</span></div>
+    </div>
+  </div>
+</footer>
+
+<script>
+window.addEventListener('scroll',()=>{const d=document.documentElement;document.getElementById('progress').style.width=(d.scrollTop/(d.scrollHeight-d.clientHeight)*100)+'%'});
+const obs=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting){document.querySelectorAll('.toc-list a').forEach(l=>l.classList.remove('active'));const a=document.querySelector('.toc-list a[href="#'+x.target.id+'"]');if(a)a.classList.add('active')}})  ,{rootMargin:'-20% 0px -70% 0px'});
+document.querySelectorAll('[id]').forEach(s=>obs.observe(s));
+</script>
+</body>
+</html>

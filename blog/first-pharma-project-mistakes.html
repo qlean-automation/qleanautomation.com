@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-JJQ1TXZJX7"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-JJQ1TXZJX7');
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Common Mistakes System Integrators Make on Their First Pharma Project | QLean Automation</title>
+<meta name="description" content="The first pharma project is where most system integrators discover, too late, that the rules are different. Here are the most common mistakes — and how to avoid them before they cost you the contract.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@300;400;500;600;700;800;900&family=Source+Sans+3:ital,wght@0,300;0,400;0,500;1,300&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--white:#ffffff;--off:#f7f8f9;--ink:#0d0f12;--ink2:#1e2128;--ink3:#3d4456;--ink4:#9199a8;--rule:#e2e5ea;--rule2:#c8cdd6;--blue:#0057ff;--blue2:#0044cc;--blue-dim:rgba(0,87,255,0.07);--green:#00875a;--green-dim:rgba(0,135,90,0.08);--amber:#d97706;--amber-dim:rgba(217,119,6,0.08);--red:#c0392b;--red-dim:rgba(192,57,43,0.08);--f-head:'Epilogue',sans-serif;--f-body:'Source Sans 3',sans-serif;--f-mono:'Roboto Mono',monospace;--shadow-sm:0 2px 8px rgba(13,15,18,0.06),0 1px 3px rgba(13,15,18,0.04)}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}body{background:var(--white);color:var(--ink);font-family:var(--f-body);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+nav{position:fixed;top:0;left:0;right:0;z-index:200;height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 6%;background:rgba(255,255,255,0.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--rule)}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;flex-shrink:0}
+.nav-links{display:flex;align-items:center;gap:36px;list-style:none}.nav-links a{font-size:14px;font-weight:400;color:var(--ink3);text-decoration:none;transition:color .2s}.nav-links a:hover{color:var(--ink)}
+.nav-btn{font-family:var(--f-body);font-size:13px;font-weight:500;padding:9px 20px;background:var(--blue);color:white;border:none;border-radius:6px;cursor:pointer;text-decoration:none;white-space:nowrap;flex-shrink:0}.nav-btn:hover{background:var(--blue2)}
+.progress-bar{position:fixed;top:64px;left:0;right:0;height:2px;background:var(--rule);z-index:199}.progress-fill{height:100%;background:var(--blue);width:0%}
+.article-hero{padding:120px 6% 64px;background:var(--white);border-bottom:1px solid var(--rule);position:relative;overflow:hidden}
+.article-hero::before{content:'';position:absolute;top:-80px;right:-80px;width:400px;height:400px;background:radial-gradient(circle,rgba(0,87,255,0.04) 0%,transparent 70%);pointer-events:none}
+.article-hero-inner{max-width:940px;margin:0 auto;position:relative;z-index:1}
+.breadcrumb{display:flex;align-items:center;gap:8px;font-family:var(--f-mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink4);margin-bottom:24px}.breadcrumb a{color:var(--ink4);text-decoration:none}.breadcrumb a:hover{color:var(--blue)}.breadcrumb span{color:var(--rule2)}
+.article-tag{display:inline-flex;align-items:center;gap:6px;font-family:var(--f-mono);font-size:10px;font-weight:500;color:var(--blue);letter-spacing:.1em;text-transform:uppercase;margin-bottom:20px;padding:4px 10px;background:var(--blue-dim);border-radius:4px}
+.article-hero h1{font-family:var(--f-head);font-size:clamp(30px,5vw,52px);font-weight:900;line-height:1.0;letter-spacing:-.04em;color:var(--ink);margin-bottom:20px}.article-hero h1 span{color:var(--blue)}
+.article-intro{font-size:18px;font-weight:400;color:var(--ink2);line-height:1.75;margin-bottom:32px;max-width:800px}
+.article-meta{display:flex;align-items:center;gap:24px;padding-top:24px;border-top:1px solid var(--rule);flex-wrap:wrap}
+.meta-author{display:flex;align-items:center;gap:10px}.author-avatar{width:36px;height:36px;border-radius:50%;background:var(--ink);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.author-name{font-size:13px;font-weight:500;color:var(--ink)}.author-role{font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.04em}
+.meta-divider{width:1px;height:28px;background:var(--rule)}.meta-stat{font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.06em}
+.article-wrap{max-width:1300px;margin:0 auto;padding:64px 6%;display:grid;grid-template-columns:1fr 300px;gap:60px;align-items:start}
+.article-body{min-width:0}
+.article-body h2{font-family:var(--f-head);font-size:26px;font-weight:800;letter-spacing:-.03em;color:var(--ink);margin:56px 0 16px;line-height:1.2}.article-body h2:first-child{margin-top:0}
+.article-body h3{font-family:var(--f-head);font-size:18px;font-weight:700;letter-spacing:-.02em;color:var(--ink);margin:32px 0 12px}
+.article-body p{font-size:16px;font-weight:400;color:var(--ink2);line-height:1.85;margin-bottom:20px}
+.article-body strong{color:var(--ink);font-weight:600}
+.article-body a{color:var(--blue);text-decoration:none;border-bottom:1px solid rgba(0,87,255,.25)}.article-body a:hover{border-color:var(--blue)}
+.callout{padding:20px 24px;border-radius:8px;margin:32px 0;border-left:3px solid}
+.callout.blue{background:var(--blue-dim);border-color:var(--blue)}.callout.amber{background:var(--amber-dim);border-color:var(--amber)}.callout.green{background:var(--green-dim);border-color:var(--green)}.callout.red{background:var(--red-dim);border-color:var(--red)}
+.callout-label{font-family:var(--f-mono);font-size:9px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px}.callout.blue .callout-label{color:var(--blue)}.callout.amber .callout-label{color:var(--amber)}.callout.green .callout-label{color:var(--green)}.callout.red .callout-label{color:var(--red)}
+.callout p{font-size:14px;color:var(--ink2);line-height:1.7;margin:0}.callout strong{color:var(--ink)}
+.article-img{width:100%;border-radius:8px;border:1px solid #1e2535;overflow:hidden;margin:36px 0}
+.article-img figcaption{padding:10px 14px;background:var(--off);font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.04em;border-top:1px solid var(--rule)}
+.checklist{list-style:none;display:flex;flex-direction:column;gap:8px;margin:20px 0 28px}
+.checklist li{display:flex;align-items:flex-start;gap:10px;font-size:15px;color:var(--ink2);line-height:1.6}
+.checklist li::before{content:'';width:16px;height:16px;flex-shrink:0;margin-top:3px;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 14 14' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='7' cy='7' r='6.5' fill='none' stroke='%230057ff' stroke-width='1'/%3E%3Cpath d='M4 7l2 2 4-4' stroke='%230057ff' stroke-width='1.3' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:center;background-size:contain}
+.arrow-list{list-style:none;display:flex;flex-direction:column;gap:8px;margin:20px 0 28px}
+.arrow-list li{display:flex;align-items:flex-start;gap:10px;font-size:15px;color:var(--ink2);line-height:1.6}
+.arrow-list li::before{content:'\2192';color:var(--blue);flex-shrink:0;font-family:var(--f-mono);font-size:13px;margin-top:2px}
+.mistake-block{border:1px solid var(--rule);border-radius:8px;padding:28px;margin:28px 0;background:var(--white);box-shadow:var(--shadow-sm)}
+.mistake-num{font-family:var(--f-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink4);margin-bottom:8px}
+.mistake-title{font-family:var(--f-head);font-size:18px;font-weight:800;letter-spacing:-.02em;color:var(--red);margin-bottom:12px}
+.mistake-fix{margin-top:16px;padding-top:16px;border-top:1px solid var(--rule)}
+.mistake-fix-label{font-family:var(--f-mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--green);margin-bottom:8px}
+.mistake-fix p{font-size:14px;color:var(--ink2);line-height:1.7;margin:0}
+.table-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:28px 0}
+.compare-table{width:100%;border-collapse:collapse;font-size:14px}
+.compare-table th{font-family:var(--f-mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink4);padding:10px 16px;border-bottom:2px solid var(--rule);text-align:left;background:var(--off)}
+.compare-table td{padding:12px 16px;border-bottom:1px solid var(--rule);vertical-align:top;color:var(--ink2);line-height:1.6}
+.compare-table tr:last-child td{border-bottom:none}
+.compare-table td:first-child{font-weight:600;color:var(--ink);font-family:var(--f-mono);font-size:12px}
+.sidebar{position:sticky;top:88px;display:flex;flex-direction:column;gap:16px}
+.toc-card{border:1px solid var(--rule);border-radius:8px;padding:24px;background:var(--white);box-shadow:var(--shadow-sm)}
+.toc-label{font-family:var(--f-mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);margin-bottom:16px}
+.toc-list{list-style:none;display:flex;flex-direction:column;gap:2px}
+.toc-list a{display:block;font-size:13px;color:var(--ink3);text-decoration:none;padding:6px 10px;border-radius:4px;transition:all .15s;border-left:2px solid transparent}
+.toc-list a:hover,.toc-list a.active{color:var(--blue);background:var(--blue-dim);border-left-color:var(--blue)}
+.sidebar-cta{border:1px solid var(--blue);border-radius:8px;padding:24px;background:var(--blue-dim)}
+.sc-eyebrow{font-family:var(--f-mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);margin-bottom:10px}
+.sc-title{font-family:var(--f-head);font-size:17px;font-weight:800;letter-spacing:-.02em;color:var(--ink);margin-bottom:8px;line-height:1.2}
+.sc-body{font-size:13px;color:var(--ink3);line-height:1.6;margin-bottom:16px}
+.sc-btn{display:block;text-align:center;padding:11px 16px;background:var(--blue);color:white;border-radius:6px;font-family:var(--f-body);font-size:13px;font-weight:500;text-decoration:none}.sc-btn:hover{background:var(--blue2)}
+.sc-note{font-family:var(--f-mono);font-size:9px;color:var(--ink4);text-align:center;margin-top:8px;letter-spacing:.04em}
+.sidebar-share{border:1px solid var(--rule);border-radius:8px;padding:20px 24px;background:var(--white)}
+.share-label{font-family:var(--f-mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);margin-bottom:14px}
+.share-links{display:flex;flex-direction:column;gap:8px}
+.share-link{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--ink3);text-decoration:none;padding:9px 12px;border:1px solid var(--rule);border-radius:6px;transition:border-color .2s,color .2s}.share-link:hover{border-color:var(--blue);color:var(--blue)}
+.related{padding:64px 6%;border-top:1px solid var(--rule);background:var(--off)}
+.related-inner{max-width:1100px;margin:0 auto}
+.related-label{font-family:var(--f-mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);margin-bottom:32px;display:flex;align-items:center;gap:10px}
+.related-label::before{content:'';width:20px;height:1px;background:var(--blue)}
+.related-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.related-card{padding:24px;border:1px solid var(--rule);border-radius:8px;background:var(--white);box-shadow:var(--shadow-sm);transition:border-color .2s,transform .2s;text-decoration:none;display:flex;flex-direction:column;gap:12px}.related-card:hover{border-color:var(--blue);transform:translateY(-4px)}
+.rc-tag{font-family:var(--f-mono);font-size:9px;color:var(--blue);letter-spacing:.08em;text-transform:uppercase;padding:3px 8px;background:var(--blue-dim);border-radius:3px;align-self:flex-start}
+.rc-title{font-family:var(--f-head);font-size:16px;font-weight:700;letter-spacing:-.02em;color:var(--ink);line-height:1.25}
+.rc-desc{font-size:13px;color:var(--ink3);line-height:1.6;flex:1}
+.rc-footer{display:flex;align-items:center;justify-content:space-between;padding-top:12px;border-top:1px solid var(--rule)}
+.rc-read{font-family:var(--f-mono);font-size:10px;color:var(--ink4)}.rc-arrow{font-size:14px;color:var(--blue)}
+footer{padding:56px 6% 32px;border-top:1px solid var(--rule);background:var(--white)}
+.footer-inner{max-width:1160px;margin:0 auto}
+.footer-top{display:flex;justify-content:space-between;align-items:flex-start;gap:40px;flex-wrap:wrap;margin-bottom:48px}
+.footer-brand p{font-size:13px;font-weight:300;color:var(--ink3);margin-top:12px;max-width:260px;line-height:1.6}
+.footer-col h4{font-family:var(--f-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink4);margin-bottom:16px}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+.footer-col a{font-size:13px;color:var(--ink3);text-decoration:none}.footer-col a:hover{color:var(--blue)}
+.footer-bottom{padding-top:24px;border-top:1px solid var(--rule);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.footer-bottom p{font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.04em}
+.compliance-pills{display:flex;gap:6px;flex-wrap:wrap}
+.cp{font-family:var(--f-mono);font-size:9px;padding:3px 8px;border:1px solid var(--rule);border-radius:3px;color:var(--ink4);letter-spacing:.06em}
+@media(max-width:900px){.article-wrap{grid-template-columns:1fr;gap:48px}.sidebar{position:static}.related-grid{grid-template-columns:1fr}.table-scroll{margin:20px 0}}
+@media(max-width:900px){.nav-links{display:none}}
+@media(max-width:540px){nav{padding:0 4%}.nav-btn{font-size:12px;padding:8px 14px}}
+</style>
+</head>
+<body>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+<nav>
+  <a href="../index.html" class="nav-logo">
+    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" style="flex-shrink:0"><rect width="32" height="32" rx="7" fill="#0d0f12"/><rect x="8" y="7" width="16" height="16" rx="2" stroke="white" stroke-width="2.5" fill="none"/><line x1="20" y1="19" x2="26" y2="25" stroke="#0057FF" stroke-width="3" stroke-linecap="round"/></svg>
+    <span style="font-family:'Epilogue',sans-serif;font-weight:800;font-size:16px;color:#0d0f12;letter-spacing:-.03em;white-space:nowrap">QLean <span style="font-weight:300;color:#5a6172">Automation</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="../index.html#products">Products</a></li>
+    <li><a href="../index.html#framework">Framework</a></li>
+    <li><a href="blog-index.html">Knowledge Base</a></li>
+    <li><a href="../index.html#pricing">Pricing</a></li>
+    <li><a href="../about.html">About</a></li>
+    <li><a href="../index.html#faq">FAQ</a></li>
+  </ul>
+  <a href="../index.html#pricing" class="nav-btn">Get the Framework &#8594;</a>
+</nav>
+
+<header class="article-hero">
+  <div class="article-hero-inner">
+    <div class="breadcrumb"><a href="../index.html">Home</a><span>/</span><a href="blog-index.html">Knowledge Base</a><span>/</span>First Pharma Project Mistakes</div>
+    <div class="article-tag">&#128203; Project Management</div>
+    <h1>Common Mistakes SIs Make<br><span>on Their First</span><br>Pharma Project</h1>
+    <p class="article-intro">The first pharma automation project looks deceptively familiar. PLC, SCADA, instruments, panels — everything you already know. Then QA walks in and you realise the rules are completely different. These are the mistakes that cost system integrators time, margin, and repeat business — and how to avoid them before they hit you mid-project.</p>
+    <div class="article-meta">
+      <div class="meta-author">
+        <div class="author-avatar"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="7" r="3.5" stroke="white" stroke-width="1.5"/><path d="M2.5 16c0-3.59 2.91-6.5 6.5-6.5s6.5 2.91 6.5 6.5" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+        <div><div class="author-name">QLean Automation</div><div class="author-role">ENGINEERS WHO BUILD SYSTEMS, NOT JUST SIGN THEM</div></div>
+      </div>
+      <div class="meta-divider"></div><div class="meta-stat">7 MIN READ</div>
+      <div class="meta-divider"></div><div class="meta-stat">PROJECT MANAGEMENT &#183; SYSTEM INTEGRATOR &#183; GMP</div>
+    </div>
+  </div>
+</header>
+
+<div class="article-wrap">
+  <article class="article-body">
+
+    <h2 id="why-pharma-is-different">Why Pharma Is Different — and Why That Catches People Off-Guard</h2>
+    <p>Most automation engineers approach their first pharma project with reasonable confidence. The engineering is familiar. The software tools are the same. The site looks like other industrial sites they have worked on. What they are not prepared for is that pharma adds an entire parallel workstream — a validation lifecycle — that runs alongside the engineering and must be managed with the same rigour as the technical delivery itself.</p>
+    <p>In non-pharma industries, documentation is generated as a byproduct of design. You build the system, then write it up. In pharma, documentation is a deliverable in its own right. A <a href="validation-plan-what-it-must-contain.html">Validation Plan</a> must be approved before testing begins. A URS must be frozen before design. Test protocols must be reviewed and approved by QA before execution — not after. Every deviation from expected test results must be formally logged, investigated, and closed. None of this is optional, and none of it is absorbed into the engineering timeline automatically. If you treat it as overhead, it will overwhelm you.</p>
+    <p>The mistakes below are not theoretical. They are patterns that appear on first pharma projects with enough regularity that experienced pharma engineers can predict them by week three of a contract. The good news: every one of them is preventable with the right preparation.</p>
+
+    <figure class="article-img">
+      <svg viewBox="0 0 720 300" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;background:#0d0f12;border-radius:8px 8px 0 0">
+        <text x="360" y="18" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(255,255,255,0.2)" letter-spacing="0.12em">WHERE FIRST PHARMA PROJECTS TYPICALLY BREAK DOWN</text>
+        <!-- Timeline spine -->
+        <line x1="60" y1="155" x2="660" y2="155" stroke="rgba(255,255,255,0.12)" stroke-width="1.5"/>
+        <!-- Phase labels -->
+        <text x="105" y="148" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(255,255,255,0.35)">DESIGN</text>
+        <text x="255" y="148" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(255,255,255,0.35)">BUILD</text>
+        <text x="405" y="148" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(255,255,255,0.35)">TEST</text>
+        <text x="555" y="148" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(255,255,255,0.35)">CLOSEOUT</text>
+        <!-- Phase dividers -->
+        <line x1="180" y1="135" x2="180" y2="175" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+        <line x1="330" y1="135" x2="330" y2="175" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+        <line x1="480" y1="135" x2="480" y2="175" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+        <!-- Mistake markers - above timeline -->
+        <!-- M1 - no VP -->
+        <circle cx="90" cy="105" r="14" fill="rgba(192,57,43,0.2)" stroke="rgba(192,57,43,0.6)" stroke-width="1.5"/>
+        <text x="90" y="110" text-anchor="middle" font-family="Epilogue,sans-serif" font-weight="800" font-size="11" fill="#c02828">1</text>
+        <line x1="90" y1="119" x2="90" y2="140" stroke="rgba(192,57,43,0.4)" stroke-width="1" stroke-dasharray="3,2"/>
+        <text x="90" y="80" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7.5" fill="rgba(200,80,80,0.7)">No VP</text>
+        <!-- M2 - URS too vague -->
+        <circle cx="150" cy="105" r="14" fill="rgba(192,57,43,0.2)" stroke="rgba(192,57,43,0.6)" stroke-width="1.5"/>
+        <text x="150" y="110" text-anchor="middle" font-family="Epilogue,sans-serif" font-weight="800" font-size="11" fill="#c02828">2</text>
+        <line x1="150" y1="119" x2="150" y2="140" stroke="rgba(192,57,43,0.4)" stroke-width="1" stroke-dasharray="3,2"/>
+        <text x="150" y="80" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7.5" fill="rgba(200,80,80,0.7)">Vague URS</text>
+        <!-- M3 - wrong GAMP category -->
+        <circle cx="220" cy="105" r="14" fill="rgba(217,119,6,0.2)" stroke="rgba(217,119,6,0.5)" stroke-width="1.5"/>
+        <text x="220" y="110" text-anchor="middle" font-family="Epilogue,sans-serif" font-weight="800" font-size="11" fill="#d97706">3</text>
+        <line x1="220" y1="119" x2="220" y2="140" stroke="rgba(217,119,6,0.3)" stroke-width="1" stroke-dasharray="3,2"/>
+        <text x="220" y="80" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7.5" fill="rgba(220,140,40,0.7)">GAMP cat.</text>
+        <!-- M4 - no TM -->
+        <circle cx="290" cy="105" r="14" fill="rgba(217,119,6,0.2)" stroke="rgba(217,119,6,0.5)" stroke-width="1.5"/>
+        <text x="290" y="110" text-anchor="middle" font-family="Epilogue,sans-serif" font-weight="800" font-size="11" fill="#d97706">4</text>
+        <line x1="290" y1="119" x2="290" y2="140" stroke="rgba(217,119,6,0.3)" stroke-width="1" stroke-dasharray="3,2"/>
+        <text x="290" y="80" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7.5" fill="rgba(220,140,40,0.7)">No TM</text>
+        <!-- M5 - undocumented changes -->
+        <circle cx="380" cy="105" r="14" fill="rgba(192,57,43,0.2)" stroke="rgba(192,57,43,0.6)" stroke-width="1.5"/>
+        <text x="380" y="110" text-anchor="middle" font-family="Epilogue,sans-serif" font-weight="800" font-size="11" fill="#c02828">5</text>
+        <line x1="380" y1="119" x2="380" y2="140" stroke="rgba(192,57,43,0.4)" stroke-width="1" stroke-dasharray="3,2"/>
+        <text x="380" y="80" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7.5" fill="rgba(200,80,80,0.7)">Ad-hoc changes</text>
+        <!-- M6 - deviations not logged -->
+        <circle cx="450" cy="105" r="14" fill="rgba(192,57,43,0.2)" stroke="rgba(192,57,43,0.6)" stroke-width="1.5"/>
+        <text x="450" y="110" text-anchor="middle" font-family="Epilogue,sans-serif" font-weight="800" font-size="11" fill="#c02828">6</text>
+        <line x1="450" y1="119" x2="450" y2="140" stroke="rgba(192,57,43,0.4)" stroke-width="1" stroke-dasharray="3,2"/>
+        <text x="450" y="80" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7.5" fill="rgba(200,80,80,0.7)">No deviations</text>
+        <!-- M7 - supplier not assessed -->
+        <circle cx="530" cy="105" r="14" fill="rgba(217,119,6,0.2)" stroke="rgba(217,119,6,0.5)" stroke-width="1.5"/>
+        <text x="530" y="110" text-anchor="middle" font-family="Epilogue,sans-serif" font-weight="800" font-size="11" fill="#d97706">7</text>
+        <line x1="530" y1="119" x2="530" y2="140" stroke="rgba(217,119,6,0.3)" stroke-width="1" stroke-dasharray="3,2"/>
+        <text x="530" y="80" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7.5" fill="rgba(220,140,40,0.7)">Supplier audit</text>
+        <!-- M8 - no VSR -->
+        <circle cx="610" cy="105" r="14" fill="rgba(192,57,43,0.2)" stroke="rgba(192,57,43,0.6)" stroke-width="1.5"/>
+        <text x="610" y="110" text-anchor="middle" font-family="Epilogue,sans-serif" font-weight="800" font-size="11" fill="#c02828">8</text>
+        <line x1="610" y1="119" x2="610" y2="140" stroke="rgba(192,57,43,0.4)" stroke-width="1" stroke-dasharray="3,2"/>
+        <text x="610" y="80" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7.5" fill="rgba(200,80,80,0.7)">No VSR</text>
+        <!-- Legend -->
+        <circle cx="200" cy="270" r="7" fill="rgba(192,57,43,0.2)" stroke="rgba(192,57,43,0.6)" stroke-width="1"/>
+        <text x="212" y="274" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(255,255,255,0.4)">HIGH IMPACT</text>
+        <circle cx="360" cy="270" r="7" fill="rgba(217,119,6,0.2)" stroke="rgba(217,119,6,0.5)" stroke-width="1"/>
+        <text x="372" y="274" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(255,255,255,0.4)">MEDIUM IMPACT</text>
+      </svg>
+      <figcaption>FIGURE 1 — The eight most common first-pharma-project failures mapped to the project lifecycle. Red markers indicate failures with direct audit/regulatory risk; amber markers indicate execution and cost risk.</figcaption>
+    </figure>
+
+    <h2 id="mistake-1-no-validation-plan">Mistake 1 — Starting Without a Validation Plan</h2>
+
+    <div class="mistake-block">
+      <div class="mistake-num">Mistake 01 of 08</div>
+      <div class="mistake-title">Jumping straight into design without a signed-off Validation Plan</div>
+      <p style="font-size:15px;color:var(--ink2);line-height:1.7;">The Validation Plan is the governing document for the entire validation effort. It defines scope, roles, document structure, acceptance criteria, and the conditions under which the system will be considered validated. Without it, every subsequent document is produced without an agreed framework — and when QA reviews your IQ protocol two months later, they have no baseline to measure it against.</p>
+      <div class="mistake-fix">
+        <div class="mistake-fix-label">The Fix</div>
+        <p>Draft and get the Validation Plan approved before any design documents are issued. It does not need to be exhaustive — it needs to be agreed. A two-week delay at the start to align the VP is far cheaper than a three-week remediation exercise when QA rejects your IQ because it does not match any pre-approved scope.</p>
+      </div>
+    </div>
+
+    <div class="callout blue">
+      <div class="callout-label">In the QLean Framework</div>
+      <p>VP-SYS-001 includes a phase-gate table covering eight lifecycle phases from Planning through to GMP Lifecycle support, a full deliverable register with approval columns, and a pre-built acceptance criteria table. It gives you the structure to agree upfront — without starting from a blank page.</p>
+    </div>
+
+    <h2 id="mistake-2-vague-urs">Mistake 2 — Treating the URS as a Formality</h2>
+
+    <div class="mistake-block">
+      <div class="mistake-num">Mistake 02 of 08</div>
+      <div class="mistake-title">A URS that describes the system rather than specifying what it must do</div>
+      <p style="font-size:15px;color:var(--ink2);line-height:1.7;">Many first-time pharma SIs produce a URS that reads like a marketing brochure — "the system shall monitor temperature and trigger alarms." This is not a testable requirement. It cannot be traced to a test case. It tells QA nothing about thresholds, response times, alarm priorities, or what happens when the requirement is not met. A URS that cannot be tested is not a URS — it is a wishlist.</p>
+      <div class="mistake-fix">
+        <div class="mistake-fix-label">The Fix</div>
+        <p>Every requirement in the URS must be testable, unambiguous, and traceable. Apply the simple test: could you write a pass/fail test case directly from this sentence? If not, the requirement is not finished. Each requirement needs a unique ID so it can be picked up in the <a href="traceability-matrix-guide.html">Traceability Matrix</a> and linked to its corresponding test case in the IQ, OQ, or PQ.</p>
+      </div>
+    </div>
+
+    <h2 id="mistake-3-wrong-gamp-category">Mistake 3 — Mis-classifying the GAMP Category</h2>
+
+    <div class="mistake-block">
+      <div class="mistake-num">Mistake 03 of 08</div>
+      <div class="mistake-title">Calling a Category 5 custom application a Category 4 configured product</div>
+      <p style="font-size:15px;color:var(--ink2);line-height:1.7;">The <a href="gamp5-categories.html">GAMP 5 software category</a> determines the depth of validation required. Category 4 (configurable commercial software) requires configuration specification and testing. Category 5 (custom software) requires full source code review, software design specification, and unit testing evidence in addition to everything Category 4 requires. Getting this wrong does not just affect documentation — it affects the entire testing scope and can invalidate completed work if QA catches the mis-classification late.</p>
+      <div class="mistake-fix">
+        <div class="mistake-fix-label">The Fix</div>
+        <p>Classify the GAMP category formally in the Validation Plan before design begins, and get QA agreement on it. Any system with bespoke code — custom function blocks, purpose-written scripts, application-specific logic — is Category 5. A standard PLC platform with custom application code is Category 5, not Category 4. When in doubt, apply the stricter category. Downgrading later requires QA justification; upgrading does not.</p>
+      </div>
+    </div>
+
+    <h2 id="mistake-4-no-traceability">Mistake 4 — Building Without a Traceability Matrix</h2>
+
+    <div class="mistake-block">
+      <div class="mistake-num">Mistake 04 of 08</div>
+      <div class="mistake-title">Producing design documents and test protocols as separate silos with no connecting thread</div>
+      <p style="font-size:15px;color:var(--ink2);line-height:1.7;">A validation package without a Traceability Matrix has no way to demonstrate that every user requirement is addressed in design and verified in testing. At audit, the question is always the same: "Show me where this requirement is tested." Without a TM, the answer is a manual trawl through every test protocol hoping to find the relevant test case — an answer that tells the auditor you do not have a controlled validation process.</p>
+      <div class="mistake-fix">
+        <div class="mistake-fix-label">The Fix</div>
+        <p>Start the Traceability Matrix as soon as the URS is baselined and maintain it as a live document throughout the project. Every URS requirement gets a row. As design documents and test protocols are produced, the corresponding design reference and test case ID are added. The TM is not a document you produce at the end — it is the spine that holds the validation package together.</p>
+      </div>
+    </div>
+
+    <div class="callout amber">
+      <div class="callout-label">The Audit Reality</div>
+      <p>An FDA inspector reviewing a validated system will typically start with the URS, then ask to see the TM, then pull a sample of requirements and trace them forward to test evidence. <strong>If the TM does not exist, or if traceability gaps exist, this is an observation — and observations on validated systems can stop production.</strong> It is not bureaucracy. It is the mechanism by which the regulator knows the system does what the client said it would.</p>
+    </div>
+
+    <h2 id="mistake-5-undocumented-changes">Mistake 5 — Making Changes Without Change Control</h2>
+
+    <div class="mistake-block">
+      <div class="mistake-num">Mistake 05 of 08</div>
+      <div class="mistake-title">Modifying the system during build or testing without raising a Change Control Request</div>
+      <p style="font-size:15px;color:var(--ink2);line-height:1.7;">On a conventional automation project, engineering changes are informal. A verbal instruction from the client, a quick programme edit, a revised panel drawing — normal. On a pharma project, any change to a baselined document or to a system that is in or past FAT must go through <a href="change-control-validated-system.html">formal change control</a>. That means a written request, an impact assessment, approval before implementation, and a record of what was changed and when. Ad-hoc changes to validated systems are one of the most common audit findings on pharma sites — not because engineers are being careless, but because they do not know the rules have changed.</p>
+      <div class="mistake-fix">
+        <div class="mistake-fix-label">The Fix</div>
+        <p>Establish the change control threshold at the project kickoff and make sure everyone on site knows it. A practical rule: once the Validation Plan is approved and the URS is baselined, every change to scope or design requires a CCR. Not a conversation. A written, numbered, approved request. This protects you as much as it protects the client — undocumented changes are a commercial liability as well as a regulatory one.</p>
+      </div>
+    </div>
+
+    <h2 id="mistake-6-no-deviation-log">Mistake 6 — Not Logging Test Deviations</h2>
+
+    <div class="mistake-block">
+      <div class="mistake-num">Mistake 06 of 08</div>
+      <div class="mistake-title">Fixing failed test cases on the spot and re-running without formal deviation records</div>
+      <p style="font-size:15px;color:var(--ink2);line-height:1.7;">Test execution on a pharma project is not a trial-and-error process. When a test case fails, you cannot simply fix the underlying issue and re-run the test as if the first attempt did not happen. The failure must be formally logged as a deviation — with a description of what was observed, a root cause investigation, the corrective action taken, and QA approval of the closure. The re-test is then a separate, formally numbered execution. Without this process, the test protocol record is incomplete and the system's validation status is questionable.</p>
+      <div class="mistake-fix">
+        <div class="mistake-fix-label">The Fix</div>
+        <p>Before test execution begins, establish your deviation logging process and make sure the execution team understands it. Every person executing test cases must know: if the result is not as expected, stop and log it before taking any corrective action. The deviation log is not a sign of a bad project — it is evidence that your validation process works. QA expects deviations on complex systems. What they do not expect is a clean test record on a system that was clearly modified during testing.</p>
+      </div>
+    </div>
+
+    <h2 id="mistake-7-supplier-assessment">Mistake 7 — Skipping Supplier Assessment</h2>
+
+    <div class="mistake-block">
+      <div class="mistake-num">Mistake 07 of 08</div>
+      <div class="mistake-title">Selecting sub-suppliers and component vendors without GMP-compliant assessment</div>
+      <p style="font-size:15px;color:var(--ink2);line-height:1.7;">Under GAMP 5, the system integrator is responsible for demonstrating that their sub-suppliers — PLC vendors, SCADA platform providers, instrument manufacturers, control panel builders — operate under a quality management system appropriate to the GMP risk of the supplied product. This is not just about ISO certification. It is about understanding whether the supplier's development processes, change control practices, and software quality controls are adequate for use in a validated system. Skipping this assessment is a gap that will appear in any client audit of your work.</p>
+      <div class="mistake-fix">
+        <div class="mistake-fix-label">The Fix</div>
+        <p>Conduct and document a supplier assessment for every critical supplier before their products enter the validated system. For major platform vendors (PLC, SCADA), a desktop assessment based on documentation review is often sufficient. For custom software or firmware suppliers, a more detailed audit may be required. The output is a Supplier Assessment Report with a formal conclusion — approved, conditionally approved, or rejected.</p>
+      </div>
+    </div>
+
+    <h2 id="mistake-8-no-vsr">Mistake 8 — Handing Over Without a Validation Summary Report</h2>
+
+    <div class="mistake-block">
+      <div class="mistake-num">Mistake 08 of 08</div>
+      <div class="mistake-title">Declaring the system complete without a formal Validation Summary Report</div>
+      <p style="font-size:15px;color:var(--ink2);line-height:1.7;">The Validation Summary Report is the document that closes the validation lifecycle. It summarises all testing completed, all deviations raised and resolved, all outstanding items and their risk assessment, and provides the formal conclusion that the system is validated for its intended use. Without a VSR, the client's system is never formally validated — it is commissioned but not validated. Many first-time pharma SIs finish testing, hand over their test protocols, and consider the job done. The client's QA team does not agree.</p>
+      <div class="mistake-fix">
+        <div class="mistake-fix-label">The Fix</div>
+        <p>Budget time for VSR production in your project plan from the start. The <a href="validation-summary-report-guide.html">Validation Summary Report</a> requires input from all completed test protocols, the deviation log, and the change control log. It cannot be written until testing is complete, which means it often falls in the last two weeks of a project when everyone is under pressure. If it is not planned for, it will be the bottleneck that delays handover. Allow at least three days for drafting, QA review, and approval.</p>
+      </div>
+    </div>
+
+    <h2 id="the-underlying-pattern">The Underlying Pattern</h2>
+    <p>All eight of these mistakes share a root cause: treating the validation lifecycle as something that happens after the engineering, rather than something that runs in parallel with it from day one. The Validation Plan needs to be agreed before design starts. The URS needs to be testable before FAT protocols are written. The Traceability Matrix needs to grow as documents are produced, not assembled retroactively at closeout. The deviation log needs to be active before the first test case is executed.</p>
+    <p>The <a href="v-model-pharma-validation.html">V-Model framework</a> is not an academic model — it is the practical structure that prevents these failures. The left side of the V (design documents) and the right side of the V (test protocols) mirror each other. Every design decision on the left generates a test obligation on the right. When both sides are built in parallel and connected by the Traceability Matrix, none of the eight mistakes above can happen silently.</p>
+
+    <div class="callout green">
+      <div class="callout-label">Before Your First Project Starts</div>
+      <p>The best time to prepare for these mistakes is before the project kicks off, not during delivery. That means having your document templates ready — Validation Plan, URS, Risk Assessment, Traceability Matrix, IQ/OQ/PQ protocols, deviation log, change control log, and VSR — so that when the project starts, the structure already exists. The engineering will fill those templates. <strong>What you cannot afford is to be building the document structure from scratch while the engineering is already running.</strong></p>
+    </div>
+
+    <h2 id="what-experienced-engineers-do-differently">What Experienced Pharma Engineers Do Differently</h2>
+    <p>Engineers who have delivered multiple pharma projects develop a set of default behaviours that prevent these mistakes from occurring. They start every project with a VP kickoff meeting where scope, roles, and document structure are agreed before anything else. They write URS requirements with test cases already in mind — if they cannot imagine the test, the requirement is not finished. They maintain the Traceability Matrix as a shared document that is updated every time a design document or test protocol is issued.</p>
+    <p>They treat the change control threshold as a hard boundary, not a guideline. They log deviations as a matter of professional practice, not reluctantly. They budget validation effort explicitly in project quotes — not as a percentage of engineering cost, but as a separate itemised workstream with its own day count. And they finish every project with a VSR that gives the client's QA team a clean package to file.</p>
+    <p>None of this is mysterious. It is process discipline applied to a regulated environment. The engineering skills transfer directly from non-pharma work. What needs to change is the project management mindset — and the earlier that change happens, the less expensive your learning curve will be.</p>
+
+    <div class="table-scroll">
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th>Mistake</th>
+            <th>When It Hurts</th>
+            <th>Consequence</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>No Validation Plan</td><td>QA review of first protocol</td><td>No agreed baseline — entire package questioned</td></tr>
+          <tr><td>Vague URS</td><td>Traceability Matrix build</td><td>Cannot link requirements to tests — TM gaps</td></tr>
+          <tr><td>Wrong GAMP category</td><td>OQ scope agreement</td><td>Test scope underestimated — rework required</td></tr>
+          <tr><td>No Traceability Matrix</td><td>Audit or QA review</td><td>Cannot demonstrate coverage — observation risk</td></tr>
+          <tr><td>Undocumented changes</td><td>Ongoing — any audit</td><td>System validation status uncertain</td></tr>
+          <tr><td>Deviations not logged</td><td>Test protocol review</td><td>Test records incomplete — re-execution required</td></tr>
+          <tr><td>No supplier assessment</td><td>Client QA audit of SI</td><td>Gap in GMP supply chain documentation</td></tr>
+          <tr><td>No VSR</td><td>Handover</td><td>System never formally validated — no GMP release</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+  </article>
+
+  <aside class="sidebar">
+    <div class="toc-card">
+      <div class="toc-label">In This Article</div>
+      <ul class="toc-list">
+        <li><a href="#why-pharma-is-different">Why Pharma Is Different</a></li>
+        <li><a href="#mistake-1-no-validation-plan">1 — No Validation Plan</a></li>
+        <li><a href="#mistake-2-vague-urs">2 — Vague URS</a></li>
+        <li><a href="#mistake-3-wrong-gamp-category">3 — Wrong GAMP Category</a></li>
+        <li><a href="#mistake-4-no-traceability">4 — No Traceability Matrix</a></li>
+        <li><a href="#mistake-5-undocumented-changes">5 — Undocumented Changes</a></li>
+        <li><a href="#mistake-6-no-deviation-log">6 — No Deviation Log</a></li>
+        <li><a href="#mistake-7-supplier-assessment">7 — Supplier Assessment</a></li>
+        <li><a href="#mistake-8-no-vsr">8 — No VSR</a></li>
+        <li><a href="#the-underlying-pattern">The Underlying Pattern</a></li>
+        <li><a href="#what-experienced-engineers-do-differently">What Experienced Engineers Do</a></li>
+      </ul>
+    </div>
+
+    <div class="sidebar-cta">
+      <div class="sc-eyebrow">QLean Framework</div>
+      <div class="sc-title">29 production-ready GAMP 5 documents</div>
+      <p class="sc-body">Every document referenced in this article — Validation Plan, URS, Traceability Matrix, deviation log, change control log, VSR — ready to adapt for your project.</p>
+      <a href="../index.html#pricing" class="sc-btn">Get the Framework &#8594; &#8364;249</a>
+      <div class="sc-note">INSTANT DOWNLOAD &middot; COMPANY-WIDE LICENCE</div>
+    </div>
+
+    <div class="sidebar-share">
+      <div class="share-label">Share This Article</div>
+      <div class="share-links">
+        <a href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fqleanautomation.com%2Fblog%2Ffirst-pharma-project-mistakes.html" class="share-link" target="_blank" rel="noopener">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+          Share on LinkedIn
+        </a>
+        <a href="https://www.reddit.com/submit?url=https%3A%2F%2Fqleanautomation.com%2Fblog%2Ffirst-pharma-project-mistakes.html&title=Common%20Mistakes%20SIs%20Make%20on%20Their%20First%20Pharma%20Project" class="share-link" target="_blank" rel="noopener">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/></svg>
+          Share on Reddit
+        </a>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<section class="related">
+  <div class="related-inner">
+    <div class="related-label">Continue Reading</div>
+    <div class="related-grid">
+      <a href="v-model-pharma-validation.html" class="related-card">
+        <span class="rc-tag">&#128214; Validation Fundamentals</span>
+        <div class="rc-title">The V-Model in Pharma Validation</div>
+        <div class="rc-desc">How the V-Model maps every design decision to a verification activity — and why it is the structural backbone that prevents validation gaps.</div>
+        <div class="rc-footer"><span class="rc-read">6 MIN READ</span><span class="rc-arrow">&#8594;</span></div>
+      </a>
+      <a href="gamp5-categories.html" class="related-card">
+        <span class="rc-tag">&#128214; GAMP 5</span>
+        <div class="rc-title">GAMP 5 Software Categories Explained</div>
+        <div class="rc-desc">Categories 1 through 5 — what they mean, how to classify your system correctly, and why getting it wrong affects your entire testing scope.</div>
+        <div class="rc-footer"><span class="rc-read">7 MIN READ</span><span class="rc-arrow">&#8594;</span></div>
+      </a>
+      <a href="validation-plan-what-it-must-contain.html" class="related-card">
+        <span class="rc-tag">&#128203; Project Management</span>
+        <div class="rc-title">Validation Plan — What It Must Contain</div>
+        <div class="rc-desc">The VP is the governing document for your entire validation effort. Here is every section it must include and why QA reads it first.</div>
+        <div class="rc-footer"><span class="rc-read">7 MIN READ</span><span class="rc-arrow">&#8594;</span></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="../index.html" class="nav-logo" style="text-decoration:none">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="7" fill="#0d0f12"/><rect x="8" y="7" width="16" height="16" rx="2" stroke="white" stroke-width="2.5" fill="none"/><line x1="20" y1="19" x2="26" y2="25" stroke="#0057FF" stroke-width="3" stroke-linecap="round"/></svg>
+          <span style="font-family:'Epilogue',sans-serif;font-weight:800;font-size:16px;color:#0d0f12;letter-spacing:-.03em">QLean <span style="font-weight:300;color:#5a6172">Automation</span></span>
+        </a>
+        <p>GMP validation documentation tools for automation engineers and system integrators.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Products</h4>
+        <ul>
+          <li><a href="../index.html#products">GAMP 5 Framework Pack</a></li>
+          <li><a href="../index.html#products">Technical Ebook</a></li>
+          <li><a href="../index.html#pricing">Pricing</a></li>
+          <li><a href="../index.html#faq">FAQ</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Knowledge Base</h4>
+        <ul>
+          <li><a href="blog-index.html">All Articles</a></li>
+          <li><a href="cluster-project-mgmt.html">Project Management</a></li>
+          <li><a href="validation-plan-what-it-must-contain.html">Validation Plan</a></li>
+          <li><a href="v-model-pharma-validation.html">V-Model Guide</a></li>
+          <li><a href="gamp5-categories.html">GAMP 5 Categories</a></li>
+          <li><a href="validation-summary-report-guide.html">Validation Summary Report</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="../index.html#framework">Framework</a></li>
+          <li><a href="../terms.html">Terms of Service</a></li>
+          <li><a href="../privacy.html">Privacy Policy</a></li>
+          <li><a href="mailto:hello@qleanautomation.com">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 QLean Automation. All rights reserved.</p>
+      <div class="compliance-pills">
+        <span class="cp">GAMP 5</span>
+        <span class="cp">EU GMP ANNEX 11</span>
+        <span class="cp">21 CFR PART 11</span>
+        <span class="cp">GXP</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+window.addEventListener('scroll',function(){
+  var s=document.getElementById('progress');
+  var h=document.documentElement;
+  var p=(h.scrollTop||document.body.scrollTop)/(h.scrollHeight-h.clientHeight)*100;
+  s.style.width=p+'%';
+});
+var tl=document.querySelectorAll('.toc-list a');
+window.addEventListener('scroll',function(){
+  var headings=document.querySelectorAll('.article-body h2[id]');
+  var scrollY=window.scrollY+120;
+  var current='';
+  headings.forEach(function(h){if(h.offsetTop<=scrollY)current=h.id;});
+  tl.forEach(function(a){
+    a.classList.remove('active');
+    if(a.getAttribute('href')==='#'+current)a.classList.add('active');
+  });
+});
+</script>
+</body>
+</html>

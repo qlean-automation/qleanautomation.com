@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-JJQ1TXZJX7"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-JJQ1TXZJX7');
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calibration Management for Pharma Automation — What IQ Requires | QLean Automation</title>
+<meta name="description" content="What IQ actually checks when it comes to calibration — certificates, intervals, traceability, OOT procedures, and how calibration status feeds into your validation evidence package.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@300;400;500;600;700;800;900&family=Source+Sans+3:ital,wght@0,300;0,400;0,500;1,300&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--white:#ffffff;--off:#f7f8f9;--ink:#0d0f12;--ink2:#1e2128;--ink3:#3d4456;--ink4:#9199a8;--rule:#e2e5ea;--rule2:#c8cdd6;--blue:#0057ff;--blue2:#0044cc;--blue-dim:rgba(0,87,255,0.07);--green:#00875a;--green-dim:rgba(0,135,90,0.08);--amber:#d97706;--amber-dim:rgba(217,119,6,0.08);--red:#c0392b;--red-dim:rgba(192,57,43,0.08);--f-head:'Epilogue',sans-serif;--f-body:'Source Sans 3',sans-serif;--f-mono:'Roboto Mono',monospace;--shadow-sm:0 2px 8px rgba(13,15,18,0.06),0 1px 3px rgba(13,15,18,0.04)}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}body{background:var(--white);color:var(--ink);font-family:var(--f-body);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+nav{position:fixed;top:0;left:0;right:0;z-index:200;height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 6%;background:rgba(255,255,255,0.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--rule)}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;flex-shrink:0}
+.nav-links{display:flex;align-items:center;gap:36px;list-style:none}.nav-links a{font-size:14px;font-weight:400;color:var(--ink3);text-decoration:none;transition:color .2s}.nav-links a:hover{color:var(--ink)}
+.nav-btn{font-family:var(--f-body);font-size:13px;font-weight:500;padding:9px 20px;background:var(--blue);color:white;border:none;border-radius:6px;cursor:pointer;text-decoration:none;white-space:nowrap;flex-shrink:0}.nav-btn:hover{background:var(--blue2)}
+.progress-bar{position:fixed;top:64px;left:0;right:0;height:2px;background:var(--rule);z-index:199}.progress-fill{height:100%;background:var(--blue);width:0%}
+.article-hero{padding:120px 6% 64px;background:var(--white);border-bottom:1px solid var(--rule);position:relative;overflow:hidden}
+.article-hero::before{content:'';position:absolute;top:-80px;right:-80px;width:400px;height:400px;background:radial-gradient(circle,rgba(0,87,255,0.04) 0%,transparent 70%);pointer-events:none}
+.article-hero-inner{max-width:940px;margin:0 auto;position:relative;z-index:1}
+.breadcrumb{display:flex;align-items:center;gap:8px;font-family:var(--f-mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink4);margin-bottom:24px}.breadcrumb a{color:var(--ink4);text-decoration:none}.breadcrumb a:hover{color:var(--blue)}.breadcrumb span{color:var(--rule2)}
+.article-tag{display:inline-flex;align-items:center;gap:6px;font-family:var(--f-mono);font-size:10px;font-weight:500;color:var(--blue);letter-spacing:.1em;text-transform:uppercase;margin-bottom:20px;padding:4px 10px;background:var(--blue-dim);border-radius:4px}
+.article-hero h1{font-family:var(--f-head);font-size:clamp(30px,5vw,52px);font-weight:900;line-height:1.0;letter-spacing:-.04em;color:var(--ink);margin-bottom:20px}.article-hero h1 span{color:var(--blue)}
+.article-intro{font-size:18px;font-weight:400;color:var(--ink2);line-height:1.75;margin-bottom:32px;max-width:800px}
+.article-meta{display:flex;align-items:center;gap:24px;padding-top:24px;border-top:1px solid var(--rule);flex-wrap:wrap}
+.meta-author{display:flex;align-items:center;gap:10px}.author-avatar{width:36px;height:36px;border-radius:50%;background:var(--ink);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.author-name{font-size:13px;font-weight:500;color:var(--ink)}.author-role{font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.04em}
+.meta-divider{width:1px;height:28px;background:var(--rule)}.meta-stat{font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.06em}
+.article-wrap{max-width:1300px;margin:0 auto;padding:64px 6%;display:grid;grid-template-columns:1fr 300px;gap:60px;align-items:start}
+.article-body{min-width:0}
+.article-body h2{font-family:var(--f-head);font-size:26px;font-weight:800;letter-spacing:-.03em;color:var(--ink);margin:56px 0 16px;line-height:1.2}.article-body h2:first-child{margin-top:0}
+.article-body h3{font-family:var(--f-head);font-size:18px;font-weight:700;letter-spacing:-.02em;color:var(--ink);margin:32px 0 12px}
+.article-body p{font-size:16px;font-weight:400;color:var(--ink2);line-height:1.85;margin-bottom:20px}
+.article-body strong{color:var(--ink);font-weight:600}
+.article-body a{color:var(--blue);text-decoration:none;border-bottom:1px solid rgba(0,87,255,.25)}.article-body a:hover{border-color:var(--blue)}
+.callout{padding:20px 24px;border-radius:8px;margin:32px 0;border-left:3px solid}
+.callout.blue{background:var(--blue-dim);border-color:var(--blue)}.callout.amber{background:var(--amber-dim);border-color:var(--amber)}.callout.green{background:var(--green-dim);border-color:var(--green)}.callout.red{background:var(--red-dim);border-color:var(--red)}
+.callout-label{font-family:var(--f-mono);font-size:9px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px}.callout.blue .callout-label{color:var(--blue)}.callout.amber .callout-label{color:var(--amber)}.callout.green .callout-label{color:var(--green)}.callout.red .callout-label{color:var(--red)}
+.callout p{font-size:14px;color:var(--ink2);line-height:1.7;margin:0}.callout strong{color:var(--ink)}
+.article-img{width:100%;border-radius:8px;border:1px solid #1e2535;overflow:hidden;margin:36px 0}
+.article-img figcaption{padding:10px 14px;background:var(--off);font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.04em;border-top:1px solid var(--rule)}
+.checklist{list-style:none;display:flex;flex-direction:column;gap:8px;margin:20px 0 28px}
+.checklist li{display:flex;align-items:flex-start;gap:10px;font-size:15px;color:var(--ink2);line-height:1.6}
+.checklist li::before{content:'';width:16px;height:16px;flex-shrink:0;margin-top:3px;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 14 14' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='7' cy='7' r='6.5' fill='none' stroke='%230057ff' stroke-width='1'/%3E%3Cpath d='M4 7l2 2 4-4' stroke='%230057ff' stroke-width='1.3' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:center;background-size:contain}
+.arrow-list{list-style:none;display:flex;flex-direction:column;gap:8px;margin:20px 0 28px}
+.arrow-list li{display:flex;align-items:flex-start;gap:10px;font-size:15px;color:var(--ink2);line-height:1.6}
+.arrow-list li::before{content:'\2192';color:var(--blue);flex-shrink:0;font-family:var(--f-mono);font-size:13px;margin-top:2px}
+.table-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:28px 0}
+.compare-table{width:100%;border-collapse:collapse;font-size:14px}
+.compare-table th{font-family:var(--f-mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink4);padding:10px 16px;border-bottom:2px solid var(--rule);text-align:left;background:var(--off)}
+.compare-table td{padding:12px 16px;border-bottom:1px solid var(--rule);vertical-align:top;color:var(--ink2);line-height:1.6}
+.compare-table tr:last-child td{border-bottom:none}
+.compare-table td:first-child{font-weight:600;color:var(--ink);font-family:var(--f-mono);font-size:12px}
+.sidebar{position:sticky;top:88px;display:flex;flex-direction:column;gap:16px}
+.toc-card{border:1px solid var(--rule);border-radius:8px;padding:24px;background:var(--white);box-shadow:var(--shadow-sm)}
+.toc-label{font-family:var(--f-mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);margin-bottom:16px}
+.toc-list{list-style:none;display:flex;flex-direction:column;gap:2px}
+.toc-list a{display:block;font-size:13px;color:var(--ink3);text-decoration:none;padding:6px 10px;border-radius:4px;transition:all .15s;border-left:2px solid transparent}
+.toc-list a:hover,.toc-list a.active{color:var(--blue);background:var(--blue-dim);border-left-color:var(--blue)}
+.sidebar-cta{border:1px solid var(--blue);border-radius:8px;padding:24px;background:var(--blue-dim)}
+.sc-eyebrow{font-family:var(--f-mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);margin-bottom:10px}
+.sc-title{font-family:var(--f-head);font-size:17px;font-weight:800;letter-spacing:-.02em;color:var(--ink);margin-bottom:8px;line-height:1.2}
+.sc-body{font-size:13px;color:var(--ink3);line-height:1.6;margin-bottom:16px}
+.sc-btn{display:block;text-align:center;padding:11px 16px;background:var(--blue);color:white;border-radius:6px;font-family:var(--f-body);font-size:13px;font-weight:500;text-decoration:none}.sc-btn:hover{background:var(--blue2)}
+.sc-note{font-family:var(--f-mono);font-size:9px;color:var(--ink4);text-align:center;margin-top:8px;letter-spacing:.04em}
+.sidebar-share{border:1px solid var(--rule);border-radius:8px;padding:20px 24px;background:var(--white)}
+.share-label{font-family:var(--f-mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);margin-bottom:14px}
+.share-links{display:flex;flex-direction:column;gap:8px}
+.share-link{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--ink3);text-decoration:none;padding:9px 12px;border:1px solid var(--rule);border-radius:6px;transition:border-color .2s,color .2s}.share-link:hover{border-color:var(--blue);color:var(--blue)}
+.related{padding:64px 6%;border-top:1px solid var(--rule);background:var(--off)}
+.related-inner{max-width:1100px;margin:0 auto}
+.related-label{font-family:var(--f-mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);margin-bottom:32px;display:flex;align-items:center;gap:10px}
+.related-label::before{content:'';width:20px;height:1px;background:var(--blue)}
+.related-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.related-card{padding:24px;border:1px solid var(--rule);border-radius:8px;background:var(--white);box-shadow:var(--shadow-sm);transition:border-color .2s,transform .2s;text-decoration:none;display:flex;flex-direction:column;gap:12px}.related-card:hover{border-color:var(--blue);transform:translateY(-4px)}
+.rc-tag{font-family:var(--f-mono);font-size:9px;color:var(--blue);letter-spacing:.08em;text-transform:uppercase;padding:3px 8px;background:var(--blue-dim);border-radius:3px;align-self:flex-start}
+.rc-title{font-family:var(--f-head);font-size:16px;font-weight:700;letter-spacing:-.02em;color:var(--ink);line-height:1.25}
+.rc-desc{font-size:13px;color:var(--ink3);line-height:1.6;flex:1}
+.rc-footer{display:flex;align-items:center;justify-content:space-between;padding-top:12px;border-top:1px solid var(--rule)}
+.rc-read{font-family:var(--f-mono);font-size:10px;color:var(--ink4)}.rc-arrow{font-size:14px;color:var(--blue)}
+footer{padding:56px 6% 32px;border-top:1px solid var(--rule);background:var(--white)}
+.footer-inner{max-width:1160px;margin:0 auto}
+.footer-top{display:flex;justify-content:space-between;align-items:flex-start;gap:40px;flex-wrap:wrap;margin-bottom:48px}
+.footer-brand p{font-size:13px;font-weight:300;color:var(--ink3);margin-top:12px;max-width:260px;line-height:1.6}
+.footer-col h4{font-family:var(--f-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink4);margin-bottom:16px}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+.footer-col a{font-size:13px;color:var(--ink3);text-decoration:none}.footer-col a:hover{color:var(--blue)}
+.footer-bottom{padding-top:24px;border-top:1px solid var(--rule);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.footer-bottom p{font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.04em}
+.compliance-pills{display:flex;gap:6px;flex-wrap:wrap}
+.cp{font-family:var(--f-mono);font-size:9px;padding:3px 8px;border:1px solid var(--rule);border-radius:3px;color:var(--ink4);letter-spacing:.06em}
+@media(max-width:900px){.article-wrap{grid-template-columns:1fr;gap:48px}.sidebar{position:static}.related-grid{grid-template-columns:1fr}.table-scroll{margin:20px 0}}
+@media(max-width:900px){.nav-links{display:none}}
+@media(max-width:540px){nav{padding:0 4%}.nav-btn{font-size:12px;padding:8px 14px}}
+</style>
+</head>
+<body>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+<nav>
+  <a href="../index.html" class="nav-logo">
+    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" style="flex-shrink:0"><rect width="32" height="32" rx="7" fill="#0d0f12"/><rect x="8" y="7" width="16" height="16" rx="2" stroke="white" stroke-width="2.5" fill="none"/><line x1="20" y1="19" x2="26" y2="25" stroke="#0057FF" stroke-width="3" stroke-linecap="round"/></svg>
+    <span style="font-family:'Epilogue',sans-serif;font-weight:800;font-size:16px;color:#0d0f12;letter-spacing:-.03em;white-space:nowrap">QLean <span style="font-weight:300;color:#5a6172">Automation</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="../index.html#products">Products</a></li>
+    <li><a href="../index.html#framework">Framework</a></li>
+    <li><a href="blog-index.html">Knowledge Base</a></li>
+    <li><a href="../index.html#pricing">Pricing</a></li>
+    <li><a href="../about.html">About</a></li>
+    <li><a href="../index.html#faq">FAQ</a></li>
+  </ul>
+  <a href="../index.html#pricing" class="nav-btn">Get the Framework &#8594;</a>
+</nav>
+
+<header class="article-hero">
+  <div class="article-hero-inner">
+    <div class="breadcrumb"><a href="../index.html">Home</a><span>/</span><a href="blog-index.html">Knowledge Base</a><span>/</span>Calibration Management for Pharma Automation</div>
+    <div class="article-tag">&#128207; Instrumentation &amp; Calibration</div>
+    <h1>Calibration Management<br><span>for Pharma Automation</span><br>What IQ Actually Requires</h1>
+    <p class="article-intro">Every GMP-critical instrument in your system needs a valid calibration certificate before IQ can close. But calibration management in pharma is more than collecting paperwork — it is defining intervals, establishing traceability chains, building an out-of-tolerance procedure, and documenting how the system tracks due dates. Here is what the IQ team verifies, what your Control Philosophy must specify, and what happens when an instrument fails calibration after the validated system is live.</p>
+    <div class="article-meta">
+      <div class="meta-author">
+        <div class="author-avatar"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="7" r="3.5" stroke="white" stroke-width="1.5"/><path d="M2.5 16c0-3.59 2.91-6.5 6.5-6.5s6.5 2.91 6.5 6.5" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+        <div><div class="author-name">QLean Automation</div><div class="author-role">ENGINEERS WHO BUILD SYSTEMS, NOT JUST SIGN THEM</div></div>
+      </div>
+      <div class="meta-divider"></div><div class="meta-stat">7 MIN READ</div>
+      <div class="meta-divider"></div><div class="meta-stat">CALIBRATION &#183; IQ &#183; GMP INSTRUMENTS</div>
+    </div>
+  </div>
+</header>
+
+<div class="article-wrap">
+  <article class="article-body">
+
+    <h2 id="calibration-as-iq-prerequisite">Calibration as an IQ Prerequisite</h2>
+    <p>IQ for a pharma automation system does not just verify that instruments are installed in the right location with the correct tag numbers. It verifies that every GMP-critical instrument is currently calibrated, that the calibration was performed using a traceable reference standard, and that the certificate is available and legible at the time of IQ execution.</p>
+    <p>If an instrument's calibration certificate is expired, missing, or not traceable to a national or international metrology standard, that instrument cannot be released to IQ execution. The test step fails as a nonconformance. You log it to the <a href="site-acceptance-test-pharma-guide.html">Master Deviation Ledger</a>, obtain the missing certificate or repeat the calibration, and re-execute the step before the IQ protocol can be signed off.</p>
+
+    <div class="callout amber">
+      <div class="callout-label">The Most Common IQ Failure Mode</div>
+      <p>The instrument was calibrated at the factory six months ago. The certificate was filed somewhere. Nobody verified the calibration due date. On IQ day the certificate is expired. The instrument is flagged as a nonconformance, IQ is paused for that loop, the site team spends a week chasing a calibration lab. <strong>Build a calibration due-date tracker before IQ begins — not during it.</strong></p>
+    </div>
+
+    <h2 id="gmp-critical-vs-non-gmp">GMP-Critical vs Non-GMP Instruments</h2>
+    <p>Not every sensor on a pharma automation system requires the same calibration rigour. The distinction is whether the instrument's output directly influences a GMP-critical decision — a product quality parameter, a process release criterion, a regulatory record.</p>
+
+    <div class="table-scroll">
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th>Category</th>
+            <th>Examples</th>
+            <th>IQ Calibration Requirement</th>
+            <th>Typical Interval</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Critical — Primary Quality</td>
+            <td>Conductivity sensors, TOC analysers, pH transmitters</td>
+            <td>Valid cert, national standard traceability, current at IQ execution</td>
+            <td>3–6 months</td>
+          </tr>
+          <tr>
+            <td>Critical — Process Control</td>
+            <td>Temperature transmitters (distribution), pressure transmitters, flow meters on clean utilities</td>
+            <td>Valid cert, national standard traceability, current at IQ execution</td>
+            <td>6–12 months</td>
+          </tr>
+          <tr>
+            <td>Important — Monitoring</td>
+            <td>Level transmitters, differential pressure across filters, HVAC sensors</td>
+            <td>Valid cert, traceable standard, current at IQ execution</td>
+            <td>12 months</td>
+          </tr>
+          <tr>
+            <td>Non-GMP — Indicative</td>
+            <td>Local pressure gauges, non-GMP temperature indicators</td>
+            <td>Calibration recommended but not an IQ hard prerequisite</td>
+            <td>24 months</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>The classification of each instrument — and the calibration interval assigned to it — must be documented in the Control Philosophy or the <a href="iq-oq-pq-guide.html">IQ protocol</a> instrument register before IQ begins. Ad-hoc decisions on the day are not acceptable; the IQ verifier needs a specification to check against.</p>
+
+    <h2 id="what-makes-a-certificate-valid">What Makes a Calibration Certificate Valid for GMP</h2>
+    <p>A calibration certificate is a document making a traceability claim. The IQ team checks several specific things on every certificate — a certificate that is missing any of these items is not valid GMP evidence, regardless of who issued it.</p>
+
+    <ul class="checklist">
+      <li><strong>Instrument identification:</strong> tag number, manufacturer, model, serial number — these must match the instrument physically installed, not a generic model description</li>
+      <li><strong>Calibration date and next due date:</strong> both must be present; the due date must not have passed at the time of IQ execution</li>
+      <li><strong>Reference standard used:</strong> the calibration standard applied to the instrument — make, model, serial, its own calibration certificate reference</li>
+      <li><strong>Traceability statement:</strong> explicit statement that the reference standard is traceable to a national or international metrology standard (NIST, UKAS, DAkkS, PTB, INTA, or equivalent)</li>
+      <li><strong>As-found and as-left readings:</strong> the measured error before and after adjustment — if the instrument was within tolerance as-found, this confirms no adjustment was needed; if adjustment was made, both readings are required</li>
+      <li><strong>Pass/fail determination:</strong> explicit statement that the instrument passed calibration within the specified tolerance band</li>
+      <li><strong>Authorised signature:</strong> signed by the calibration technician; accredited lab certificates also carry the lab's accreditation number</li>
+    </ul>
+
+    <p>For more detail on what makes calibration certificates GMP-acceptable, see the dedicated article on <a href="calibration-certificates-gmp-requirements.html">calibration certificate requirements for GMP</a>.</p>
+
+    <h2 id="traceability-chain">The Traceability Chain — What It Means and Why It Matters</h2>
+    <p>Metrological traceability means that every calibration result can be linked, through an unbroken chain of comparisons, to a national or international measurement standard. The chain typically looks like this:</p>
+
+    <figure class="article-img">
+      <svg viewBox="0 0 720 300" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;background:#0d0f12;border-radius:8px 8px 0 0">
+        <text x="360" y="18" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(255,255,255,0.2)" letter-spacing="0.12em">METROLOGICAL TRACEABILITY CHAIN — GMP REQUIREMENT</text>
+
+        <!-- Level 1: National Standard -->
+        <rect x="230" y="34" width="260" height="48" rx="5" fill="rgba(0,87,255,0.15)" stroke="rgba(0,87,255,0.6)" stroke-width="1.5"/>
+        <text x="360" y="55" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(100,160,255,0.9)" letter-spacing="0.06em">NATIONAL METROLOGY INSTITUTE</text>
+        <text x="360" y="70" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(100,160,255,0.6)">NIST / UKAS / DAkkS / PTB / INTA — primary standards</text>
+
+        <!-- Arrow down -->
+        <line x1="360" y1="82" x2="360" y2="106" stroke="rgba(0,87,255,0.5)" stroke-width="1.5" stroke-dasharray="4,3"/>
+        <polygon points="356,103 360,112 364,103" fill="rgba(0,87,255,0.6)"/>
+
+        <!-- Level 2: Accredited Lab -->
+        <rect x="210" y="114" width="300" height="48" rx="5" fill="rgba(0,87,255,0.10)" stroke="rgba(0,87,255,0.4)" stroke-width="1.5"/>
+        <text x="360" y="135" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(100,160,255,0.8)" letter-spacing="0.06em">ACCREDITED CALIBRATION LABORATORY</text>
+        <text x="360" y="150" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(100,160,255,0.5)">ISO/IEC 17025 accredited &#183; transfer standards</text>
+
+        <!-- Arrow down -->
+        <line x1="360" y1="162" x2="360" y2="186" stroke="rgba(0,87,255,0.5)" stroke-width="1.5" stroke-dasharray="4,3"/>
+        <polygon points="356,183 360,192 364,183" fill="rgba(0,87,255,0.6)"/>
+
+        <!-- Level 3: Working Standard -->
+        <rect x="220" y="194" width="280" height="48" rx="5" fill="rgba(0,87,255,0.07)" stroke="rgba(0,87,255,0.3)" stroke-width="1.5"/>
+        <text x="360" y="215" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(100,160,255,0.7)" letter-spacing="0.06em">WORKING / REFERENCE STANDARD</text>
+        <text x="360" y="230" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(100,160,255,0.4)">Calibrated by lab &#183; used in the field by calibration technician</text>
+
+        <!-- Arrow down -->
+        <line x1="360" y1="242" x2="360" y2="262" stroke="rgba(0,87,255,0.5)" stroke-width="1.5" stroke-dasharray="4,3"/>
+        <polygon points="356,259 360,268 364,259" fill="rgba(0,87,255,0.6)"/>
+
+        <!-- Level 4: Process Instrument -->
+        <rect x="170" y="270" width="380" height="22" rx="4" fill="rgba(255,255,255,0.04)" stroke="rgba(100,160,255,0.2)" stroke-width="1"/>
+        <text x="360" y="284" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(100,160,255,0.5)" letter-spacing="0.06em">GMP PROCESS INSTRUMENT — TT-001, PT-002, AIC-001...</text>
+      </svg>
+      <figcaption>METROLOGICAL TRACEABILITY CHAIN — EACH LINK MUST BE DOCUMENTED IN THE CALIBRATION CERTIFICATE</figcaption>
+    </figure>
+
+    <p>When the IQ team reviews a calibration certificate, they are verifying that the chain is intact — that the reference standard used to calibrate the process instrument was itself calibrated by an accredited laboratory, whose standards trace back to a national institute. A certificate that just says "calibrated using calibrated equipment" without identifying that equipment is not sufficient. The reference standard must be named, with its own certificate reference number visible on the calibration certificate.</p>
+
+    <h2 id="calibration-intervals">Calibration Intervals — How to Set Them</h2>
+    <p>Calibration intervals are not arbitrary. They must be risk-based, documented in the Control Philosophy, and reviewed periodically. The risk factors that drive a shorter interval include: the criticality of the measurement to product quality, the historical drift behaviour of the instrument type, the harshness of the process environment (temperature cycling, vibration, CIP exposure), and regulatory expectations for the specific parameter.</p>
+
+    <p>A common practical approach for a first-time validation is to start with the instrument manufacturer's recommended calibration interval, then adjust based on your risk classification. Document this reasoning in the Control Philosophy — "initial interval of 6 months based on manufacturer recommendation and Critical-Process Control classification; interval to be reviewed after first calibration cycle based on as-found data." This shows the regulator that your intervals are deliberate, not default.</p>
+
+    <div class="callout blue">
+      <div class="callout-label">Interval Review Using As-Found Data</div>
+      <p>Every time a GMP-critical instrument is calibrated, the as-found reading tells you how much it drifted since the last calibration. If an instrument consistently comes back well within tolerance at its 6-month interval, you have data to justify extending to 12 months. If it is frequently close to or outside tolerance at 12 months, you need to shorten the interval. <strong>As-found drift data is the evidence base for interval decisions</strong> — keep it in your calibration database and review it annually. This is covered in the dedicated article on <a href="calibration-intervals-oot-procedures.html">calibration intervals and out-of-tolerance procedures</a>.</p>
+    </div>
+
+    <h2 id="oot-procedure">The Out-of-Tolerance Procedure — A GMP Hard Requirement</h2>
+    <p>When a GMP-critical instrument fails calibration — meaning it is found outside its specified tolerance band before adjustment — that is not just a maintenance event. It is a potential data integrity incident. The measurements that instrument produced between the last passed calibration and the current OOT finding are all suspect. The OOT procedure defines exactly what happens next, and it must exist before the system goes live — not be improvised when the first OOT finding occurs.</p>
+
+    <h3>The Six Steps of an OOT Response</h3>
+    <ul class="arrow-list">
+      <li><strong>Remove from GMP service immediately.</strong> Do not continue using the instrument's readings for any quality decision until the OOT status is resolved. Tag it physically if possible.</li>
+      <li><strong>Establish the suspect data window.</strong> When did this instrument last pass calibration? All GMP data produced between that date and the OOT finding is potentially unreliable.</li>
+      <li><strong>Conduct an impact assessment.</strong> What GMP records or product quality decisions were based on this instrument's data during the suspect window? Were any batch release decisions made? Were any process limits calculated from this data?</li>
+      <li><strong>Raise a deviation.</strong> Log the OOT finding in the site deviation management system, referencing the instrument tag, the OOT magnitude, the suspect data window dates, and the impact assessment outcome. Reference the Master Deviation Ledger entry.</li>
+      <li><strong>Adjust and re-calibrate.</strong> The calibration lab adjusts the instrument and issues a new certificate with as-found and as-left readings. The OOT magnitude (the as-found error) is recorded — this is the key data for your interval review.</li>
+      <li><strong>Return to service with documentation.</strong> Update the calibration record, update the due date in the calibration tracking system, close the deviation with the impact assessment conclusion, and notify QA of the resolution.</li>
+    </ul>
+
+    <p>The Control Philosophy in the QLean Framework includes a calibration section that defines the OOT procedure, the instrument category classification table with calibration intervals, and the requirement for the system's calibration dashboard to display due date status for GMP-critical instruments. The IQ protocol includes calibration certificate verification steps for every critical instrument in the system register — with explicit columns for certificate reference, calibration date, next due date, and traceability standard.</p>
+
+    <h2 id="system-calibration-dashboard">The Calibration Dashboard — What the System Must Track</h2>
+    <p>In a modern pharma automation system, the SCADA or process management layer typically provides a calibration status dashboard. This is not a validation requirement per se — you can manage calibration with a spreadsheet — but it is an expected feature on any professionally designed system. What matters to the IQ team is that whatever tracking mechanism you use produces an accurate, current record that is accessible and auditable.</p>
+
+    <p>A calibration dashboard should display, at minimum:</p>
+
+    <ul class="checklist">
+      <li>Tag number, description, and physical location for every GMP-critical instrument</li>
+      <li>Last calibration date and calibration due date</li>
+      <li>Status indicator: In calibration / Due within 30 days / Overdue</li>
+      <li>Certificate reference number for the current active calibration</li>
+      <li>Historical calibration log — last N calibration events with dates and outcome</li>
+    </ul>
+
+    <p>The 30-day advisory threshold and the overdue alarm threshold should be defined in the Control Philosophy and verified during IQ. The IQ protocol step is simple: manipulate a test instrument record to simulate an overdue status and verify the system generates the expected alert. Then restore the correct data. This is a functional test that confirms the tracking mechanism works before the system goes live.</p>
+
+    <div class="callout green">
+      <div class="callout-label">In the QLean Framework</div>
+      <p>The Control Philosophy (CP-SYS-001) includes Section 8 — Maintenance and Calibration Philosophy, which defines the instrument category classification table, calibration intervals by category, the 30-day advisory threshold and overdue alarm threshold, the out-of-tolerance procedure, and the calibration certificate requirements. The IQ protocol (IQ-SYS-001) includes Section 7 — Instrument Calibration Verification, with a pre-populated instrument register table covering conductivity sensors, TOC analyser, temperature transmitters, pressure transmitters, level transmitters, and differential pressure transmitters. Each row has columns for certificate reference, calibration date, next due date, traceability standard, and sign-off. <strong>These are the actual documents in the framework</strong> — the IQ instrument register is your pre-built calibration evidence table, ready to populate with your site's certificate data before IQ execution begins.</p>
+    </div>
+
+    <h2 id="calibration-before-fat-sat-iq">Calibration at FAT, SAT, and IQ — Same Rule, Different Location</h2>
+    <p>One point that catches people out: the calibration requirement applies at every testing phase, not just IQ. At <a href="pharma-fat-guide.html">FAT</a>, instruments used to verify performance — reference thermometers, pressure gauges, flow measurement equipment — must themselves be calibrated and traceable. At <a href="site-acceptance-test-pharma-guide.html">SAT</a>, any test equipment the SAT team brings to site needs valid calibration certificates. At IQ, the process instruments permanently installed in the system need valid certificates.</p>
+
+    <p>This is a three-layer requirement: the instruments being tested, and the instruments doing the testing, must both be calibrated. If the SAT team uses a reference thermometer to verify that TT-001 reads correctly, the SAT report must record both TT-001's certificate and the reference thermometer's certificate. Missing one layer invalidates the test result as GMP evidence.</p>
+
+    <figure class="article-img">
+      <svg viewBox="0 0 720 200" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;background:#0d0f12;border-radius:8px 8px 0 0">
+        <text x="360" y="18" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(255,255,255,0.2)" letter-spacing="0.12em">CALIBRATION EVIDENCE REQUIRED AT EACH PHASE</text>
+
+        <!-- FAT -->
+        <rect x="30" y="34" width="180" height="140" rx="6" fill="rgba(0,87,255,0.08)" stroke="rgba(0,87,255,0.3)" stroke-width="1.5"/>
+        <text x="120" y="56" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(100,160,255,0.8)" letter-spacing="0.08em">FAT</text>
+        <line x1="50" y1="64" x2="190" y2="64" stroke="rgba(0,87,255,0.2)" stroke-width="1"/>
+        <text x="120" y="84" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="11" fill="rgba(200,210,230,0.7)">Test equipment</text>
+        <text x="120" y="100" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="11" fill="rgba(200,210,230,0.7)">certificates required</text>
+        <text x="120" y="122" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(100,160,255,0.5)">Reference standards</text>
+        <text x="120" y="138" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(100,160,255,0.5)">used in simulated</text>
+        <text x="120" y="154" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(100,160,255,0.5)">loop testing</text>
+
+        <!-- SAT -->
+        <rect x="270" y="34" width="180" height="140" rx="6" fill="rgba(0,87,255,0.08)" stroke="rgba(0,87,255,0.3)" stroke-width="1.5"/>
+        <text x="360" y="56" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(100,160,255,0.8)" letter-spacing="0.08em">SAT</text>
+        <line x1="290" y1="64" x2="430" y2="64" stroke="rgba(0,87,255,0.2)" stroke-width="1"/>
+        <text x="360" y="84" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="11" fill="rgba(200,210,230,0.7)">Test equipment +</text>
+        <text x="360" y="100" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="11" fill="rgba(200,210,230,0.7)">process instruments</text>
+        <text x="360" y="122" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(100,160,255,0.5)">Both reference and</text>
+        <text x="360" y="138" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(100,160,255,0.5)">installed instruments</text>
+        <text x="360" y="154" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(100,160,255,0.5)">need valid certs</text>
+
+        <!-- IQ -->
+        <rect x="510" y="34" width="180" height="140" rx="6" fill="rgba(0,87,255,0.12)" stroke="rgba(0,87,255,0.5)" stroke-width="1.5"/>
+        <text x="600" y="56" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(100,160,255,0.9)" letter-spacing="0.08em">IQ</text>
+        <line x1="530" y1="64" x2="670" y2="64" stroke="rgba(0,87,255,0.3)" stroke-width="1"/>
+        <text x="600" y="84" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="11" fill="rgba(200,210,230,0.8)">Process instruments</text>
+        <text x="600" y="100" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="11" fill="rgba(200,210,230,0.8)">verified in situ</text>
+        <text x="600" y="122" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(100,160,255,0.6)">IQ instrument register</text>
+        <text x="600" y="138" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(100,160,255,0.6)">completed + certs</text>
+        <text x="600" y="154" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(100,160,255,0.6)">attached as evidence</text>
+      </svg>
+      <figcaption>CALIBRATION CERTIFICATE REQUIREMENTS APPLY AT FAT, SAT, AND IQ — MISSING CERTIFICATES AT ANY PHASE CREATE TEST EVIDENCE GAPS</figcaption>
+    </figure>
+
+    <h2 id="calibration-after-golive">Calibration After Go-Live — Maintaining the Validated State</h2>
+    <p>Once the system is validated, calibration management becomes a routine quality activity — but one with formal change control implications. If an instrument fails calibration during a routine check, the OOT procedure applies. If an instrument needs to be replaced (because it is beyond repair or obsolete), the replacement is a change to the validated system — it requires a change control record, an assessment of whether the replacement affects the validated state, and partial re-IQ for the affected loop.</p>
+
+    <p>You cannot simply swap a failed transmitter for an identical model without change control. Even a "like for like" replacement has a different serial number, which means the IQ instrument register is no longer accurate. The register must be updated, the new instrument's calibration certificate must be filed, and the change must be closed in <a href="change-control-validated-system.html">change control</a> before the instrument is returned to GMP service.</p>
+
+    <p>This is not bureaucracy for its own sake. It ensures that the calibration evidence package always reflects the actual instruments installed — which is what an inspector will verify if they audit the facility. A calibration register listing instruments that are no longer physically present, or missing instruments that were added after IQ, is a data integrity finding.</p>
+
+    <h2 id="building-the-calibration-register">Building the Calibration Register Before IQ</h2>
+    <p>The calibration register is the master list of every GMP-critical instrument, its classification, its current certificate reference, and its calibration due date. It is the document the IQ team works from. Building it correctly before IQ begins saves significant time and avoids the last-minute certificate scramble that derails IQ schedules.</p>
+
+    <p>The practical sequence is straightforward:</p>
+
+    <ul class="arrow-list">
+      <li>Extract the instrument list from the engineering lists (tag number, description, P&ID reference, manufacturer, model, serial number)</li>
+      <li>Classify each instrument using the category table in the Control Philosophy</li>
+      <li>For each GMP-critical instrument, obtain the calibration certificate and verify it against the GMP requirements above (traceability statement, as-found/as-left data, expiry date)</li>
+      <li>Record the certificate reference and due date in the register</li>
+      <li>Flag any instruments where the certificate is missing, expired, or does not meet the traceability requirements — these are pre-IQ actions that must be resolved before IQ execution begins</li>
+      <li>Attach the calibration certificates to the IQ evidence package</li>
+    </ul>
+
+    <p>If you are working with the QLean Framework, the IQ protocol includes a pre-built instrument calibration table that covers the instrumentation in the water for injection and distribution system template. You populate the certificate reference, calibration date, next due date, and traceability standard for each instrument tag listed. The structure is already there — you are filling in your site-specific certificate data, not building the table from scratch.</p>
+
+  </article>
+
+  <aside class="sidebar">
+    <div class="toc-card">
+      <div class="toc-label">On This Page</div>
+      <ul class="toc-list">
+        <li><a href="#calibration-as-iq-prerequisite">Calibration as IQ Prerequisite</a></li>
+        <li><a href="#gmp-critical-vs-non-gmp">GMP-Critical vs Non-GMP</a></li>
+        <li><a href="#what-makes-a-certificate-valid">What Makes a Certificate Valid</a></li>
+        <li><a href="#traceability-chain">The Traceability Chain</a></li>
+        <li><a href="#calibration-intervals">Calibration Intervals</a></li>
+        <li><a href="#oot-procedure">The OOT Procedure</a></li>
+        <li><a href="#system-calibration-dashboard">The Calibration Dashboard</a></li>
+        <li><a href="#calibration-before-fat-sat-iq">FAT, SAT, and IQ</a></li>
+        <li><a href="#calibration-after-golive">After Go-Live</a></li>
+        <li><a href="#building-the-calibration-register">Building the Register</a></li>
+      </ul>
+    </div>
+
+    <div class="sidebar-cta">
+      <div class="sc-eyebrow">QLean Framework</div>
+      <div class="sc-title">29 production-ready GAMP 5 documents</div>
+      <p class="sc-body">Every document referenced in this article — Control Philosophy with calibration section, IQ protocol with instrument calibration register, FAT and SAT protocols — ready to adapt for your project.</p>
+      <a href="../index.html#pricing" class="sc-btn">Get the Framework &#8594;</a>
+      <div class="sc-note">COMPANY-WIDE LICENCE &#183; NO PER-SEAT FEES</div>
+    </div>
+
+    <div class="sidebar-share">
+      <div class="share-label">Share This Article</div>
+      <div class="share-links">
+        <a href="https://www.linkedin.com/sharing/share-offsite/?url=https://qleanautomation.com/blog/calibration-management-pharma-iq.html" target="_blank" rel="noopener" class="share-link">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          Share on LinkedIn
+        </a>
+        <a href="https://reddit.com/submit?url=https://qleanautomation.com/blog/calibration-management-pharma-iq.html&title=Calibration%20Management%20for%20Pharma%20Automation%20%E2%80%94%20What%20IQ%20Requires" target="_blank" rel="noopener" class="share-link">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/></svg>
+          Share on Reddit
+        </a>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<section class="related">
+  <div class="related-inner">
+    <div class="related-label">Continue Reading</div>
+    <div class="related-grid">
+      <a href="iq-oq-pq-guide.html" class="related-card">
+        <span class="rc-tag">&#9989; GAMP 5</span>
+        <div class="rc-title">IQ OQ PQ Explained: A Practical Guide</div>
+        <div class="rc-desc">How IQ, OQ, and PQ fit together — and why calibration evidence is a formal prerequisite before IQ execution can begin on any GMP system.</div>
+        <div class="rc-footer"><span class="rc-read">7 MIN READ</span><span class="rc-arrow">&#8594;</span></div>
+      </a>
+      <a href="site-acceptance-test-pharma-guide.html" class="related-card">
+        <span class="rc-tag">&#9989; GAMP 5</span>
+        <div class="rc-title">Site Acceptance Test — What Pharma Engineers Need to Know</div>
+        <div class="rc-desc">How the SAT calibration requirement differs from IQ — and why test equipment certificates are as important as process instrument certificates at site acceptance.</div>
+        <div class="rc-footer"><span class="rc-read">7 MIN READ</span><span class="rc-arrow">&#8594;</span></div>
+      </a>
+      <a href="calibration-intervals-oot-procedures.html" class="related-card">
+        <span class="rc-tag">&#128207; Instrumentation</span>
+        <div class="rc-title">Calibration Intervals and Out-of-Tolerance Procedures</div>
+        <div class="rc-desc">How to set risk-based calibration intervals, use as-found drift data to review them, and manage the full OOT response process when an instrument fails.</div>
+        <div class="rc-footer"><span class="rc-read">7 MIN READ</span><span class="rc-arrow">&#8594;</span></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="../index.html" class="nav-logo" style="text-decoration:none">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="7" fill="#0d0f12"/><rect x="8" y="7" width="16" height="16" rx="2" stroke="white" stroke-width="2.5" fill="none"/><line x1="20" y1="19" x2="26" y2="25" stroke="#0057FF" stroke-width="3" stroke-linecap="round"/></svg>
+          <span style="font-family:'Epilogue',sans-serif;font-weight:800;font-size:16px;color:#0d0f12;letter-spacing:-.03em">QLean <span style="font-weight:300;color:#5a6172">Automation</span></span>
+        </a>
+        <p>GMP validation documentation tools for automation engineers and system integrators.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Products</h4>
+        <ul>
+          <li><a href="../index.html#products">GAMP 5 Framework Pack</a></li>
+          <li><a href="../index.html#products">Technical Ebook</a></li>
+          <li><a href="../index.html#pricing">Pricing</a></li>
+          <li><a href="../index.html#faq">FAQ</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Knowledge Base</h4>
+        <ul>
+          <li><a href="blog-index.html">All Articles</a></li>
+          <li><a href="cluster-instrumentation.html">Instrumentation &amp; Calibration</a></li>
+          <li><a href="iq-oq-pq-guide.html">IQ OQ PQ Guide</a></li>
+          <li><a href="site-acceptance-test-pharma-guide.html">Site Acceptance Test</a></li>
+          <li><a href="calibration-intervals-oot-procedures.html">Calibration Intervals</a></li>
+          <li><a href="field-instrumentation-iq-documentation.html">Field Instrumentation IQ</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="../index.html#framework">Framework</a></li>
+          <li><a href="../terms.html">Terms of Service</a></li>
+          <li><a href="../privacy.html">Privacy Policy</a></li>
+          <li><a href="mailto:hello@qleanautomation.com">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 QLean Automation. All rights reserved.</p>
+      <div class="compliance-pills">
+        <span class="cp">GAMP 5</span>
+        <span class="cp">EU GMP ANNEX 11</span>
+        <span class="cp">21 CFR PART 11</span>
+        <span class="cp">ISO/IEC 17025</span>
+        <span class="cp">GXP</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+window.addEventListener('scroll',function(){
+  var s=document.getElementById('progress');
+  var h=document.documentElement;
+  var p=(h.scrollTop||document.body.scrollTop)/(h.scrollHeight-h.clientHeight)*100;
+  s.style.width=p+'%';
+});
+var tl=document.querySelectorAll('.toc-list a');
+window.addEventListener('scroll',function(){
+  var headings=document.querySelectorAll('.article-body h2[id]');
+  var scrollY=window.scrollY+120;
+  var current='';
+  headings.forEach(function(h){if(h.offsetTop<=scrollY)current=h.id;});
+  tl.forEach(function(a){
+    a.classList.remove('active');
+    if(a.getAttribute('href')==='#'+current)a.classList.add('active');
+  });
+});
+</script>
+</body>
+</html>

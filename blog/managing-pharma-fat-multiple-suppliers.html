@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-JJQ1TXZJX7"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-JJQ1TXZJX7');
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Managing a Pharma FAT With Multiple Suppliers | QLean Automation</title>
+<meta name="description" content="When the PLC comes from one supplier, the SCADA from another, and the mechanical skid from a third, a single FAT protocol is not enough. Here is how to structure, coordinate, and execute a multi-supplier FAT that produces coherent GMP evidence.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@300;400;500;600;700;800;900&family=Source+Sans+3:ital,wght@0,300;0,400;0,500;1,300&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--white:#ffffff;--off:#f7f8f9;--ink:#0d0f12;--ink2:#1e2128;--ink3:#3d4456;--ink4:#9199a8;--rule:#e2e5ea;--rule2:#c8cdd6;--blue:#0057ff;--blue2:#0044cc;--blue-dim:rgba(0,87,255,0.07);--green:#00875a;--green-dim:rgba(0,135,90,0.08);--amber:#d97706;--amber-dim:rgba(217,119,6,0.08);--red:#c0392b;--red-dim:rgba(192,57,43,0.08);--f-head:'Epilogue',sans-serif;--f-body:'Source Sans 3',sans-serif;--f-mono:'Roboto Mono',monospace;--shadow-sm:0 2px 8px rgba(13,15,18,0.06),0 1px 3px rgba(13,15,18,0.04)}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}body{background:var(--white);color:var(--ink);font-family:var(--f-body);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+nav{position:fixed;top:0;left:0;right:0;z-index:200;height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 6%;background:rgba(255,255,255,0.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--rule)}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;flex-shrink:0}
+.nav-links{display:flex;align-items:center;gap:36px;list-style:none}.nav-links a{font-size:14px;font-weight:400;color:var(--ink3);text-decoration:none;transition:color .2s}.nav-links a:hover{color:var(--ink)}
+.nav-btn{font-family:var(--f-body);font-size:13px;font-weight:500;padding:9px 20px;background:var(--blue);color:white;border:none;border-radius:6px;cursor:pointer;text-decoration:none;white-space:nowrap;flex-shrink:0}.nav-btn:hover{background:var(--blue2)}
+.progress-bar{position:fixed;top:64px;left:0;right:0;height:2px;background:var(--rule);z-index:199}.progress-fill{height:100%;background:var(--blue);width:0%}
+.article-hero{padding:120px 6% 64px;background:var(--white);border-bottom:1px solid var(--rule);position:relative;overflow:hidden}
+.article-hero::before{content:'';position:absolute;top:-80px;right:-80px;width:400px;height:400px;background:radial-gradient(circle,rgba(0,87,255,0.04) 0%,transparent 70%);pointer-events:none}
+.article-hero-inner{max-width:940px;margin:0 auto;position:relative;z-index:1}
+.breadcrumb{display:flex;align-items:center;gap:8px;font-family:var(--f-mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink4);margin-bottom:24px}.breadcrumb a{color:var(--ink4);text-decoration:none}.breadcrumb a:hover{color:var(--blue)}.breadcrumb span{color:var(--rule2)}
+.article-tag{display:inline-flex;align-items:center;gap:6px;font-family:var(--f-mono);font-size:10px;font-weight:500;color:var(--blue);letter-spacing:.1em;text-transform:uppercase;margin-bottom:20px;padding:4px 10px;background:var(--blue-dim);border-radius:4px}
+.article-hero h1{font-family:var(--f-head);font-size:clamp(30px,5vw,52px);font-weight:900;line-height:1.0;letter-spacing:-.04em;color:var(--ink);margin-bottom:20px}.article-hero h1 span{color:var(--blue)}
+.article-intro{font-size:18px;font-weight:400;color:var(--ink2);line-height:1.75;margin-bottom:32px;max-width:800px}
+.article-meta{display:flex;align-items:center;gap:24px;padding-top:24px;border-top:1px solid var(--rule);flex-wrap:wrap}
+.meta-author{display:flex;align-items:center;gap:10px}.author-avatar{width:36px;height:36px;border-radius:50%;background:var(--ink);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.author-name{font-size:13px;font-weight:500;color:var(--ink)}.author-role{font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.04em}
+.meta-divider{width:1px;height:28px;background:var(--rule)}.meta-stat{font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.06em}
+.article-wrap{max-width:1300px;margin:0 auto;padding:64px 6%;display:grid;grid-template-columns:1fr 300px;gap:60px;align-items:start}
+.article-body{min-width:0}
+.article-body h2{font-family:var(--f-head);font-size:26px;font-weight:800;letter-spacing:-.03em;color:var(--ink);margin:56px 0 16px;line-height:1.2}.article-body h2:first-child{margin-top:0}
+.article-body h3{font-family:var(--f-head);font-size:18px;font-weight:700;letter-spacing:-.02em;color:var(--ink);margin:32px 0 12px}
+.article-body p{font-size:16px;font-weight:400;color:var(--ink2);line-height:1.85;margin-bottom:20px}
+.article-body strong{color:var(--ink);font-weight:600}
+.article-body a{color:var(--blue);text-decoration:none;border-bottom:1px solid rgba(0,87,255,.25)}.article-body a:hover{border-color:var(--blue)}
+.callout{padding:20px 24px;border-radius:8px;margin:32px 0;border-left:3px solid}
+.callout.blue{background:var(--blue-dim);border-color:var(--blue)}.callout.amber{background:var(--amber-dim);border-color:var(--amber)}.callout.green{background:var(--green-dim);border-color:var(--green)}.callout.red{background:var(--red-dim);border-color:var(--red)}
+.callout-label{font-family:var(--f-mono);font-size:9px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px}.callout.blue .callout-label{color:var(--blue)}.callout.amber .callout-label{color:var(--amber)}.callout.green .callout-label{color:var(--green)}.callout.red .callout-label{color:var(--red)}
+.callout p{font-size:14px;color:var(--ink2);line-height:1.7;margin:0}.callout strong{color:var(--ink)}
+.article-img{width:100%;border-radius:8px;border:1px solid #1e2535;overflow:hidden;margin:36px 0}
+.article-img figcaption{padding:10px 14px;background:var(--off);font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.04em;border-top:1px solid var(--rule)}
+.checklist{list-style:none;display:flex;flex-direction:column;gap:8px;margin:20px 0 28px}
+.checklist li{display:flex;align-items:flex-start;gap:10px;font-size:15px;color:var(--ink2);line-height:1.6}
+.checklist li::before{content:'';width:16px;height:16px;flex-shrink:0;margin-top:3px;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 14 14' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='7' cy='7' r='6.5' fill='none' stroke='%230057ff' stroke-width='1'/%3E%3Cpath d='M4 7l2 2 4-4' stroke='%230057ff' stroke-width='1.3' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:center;background-size:contain}
+.arrow-list{list-style:none;display:flex;flex-direction:column;gap:8px;margin:20px 0 28px}
+.arrow-list li{display:flex;align-items:flex-start;gap:10px;font-size:15px;color:var(--ink2);line-height:1.6}
+.arrow-list li::before{content:'\2192';color:var(--blue);flex-shrink:0;font-family:var(--f-mono);font-size:13px;margin-top:2px}
+.table-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:28px 0}
+.compare-table{width:100%;border-collapse:collapse;font-size:14px}
+.compare-table th{font-family:var(--f-mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink4);padding:10px 16px;border-bottom:2px solid var(--rule);text-align:left;background:var(--off)}
+.compare-table td{padding:12px 16px;border-bottom:1px solid var(--rule);vertical-align:top;color:var(--ink2);line-height:1.6}
+.compare-table tr:last-child td{border-bottom:none}
+.compare-table td:first-child{font-weight:600;color:var(--ink);font-family:var(--f-mono);font-size:12px}
+.sidebar{position:sticky;top:88px;display:flex;flex-direction:column;gap:16px}
+.toc-card{border:1px solid var(--rule);border-radius:8px;padding:24px;background:var(--white);box-shadow:var(--shadow-sm)}
+.toc-label{font-family:var(--f-mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);margin-bottom:16px}
+.toc-list{list-style:none;display:flex;flex-direction:column;gap:2px}
+.toc-list a{display:block;font-size:13px;color:var(--ink3);text-decoration:none;padding:6px 10px;border-radius:4px;transition:all .15s;border-left:2px solid transparent}
+.toc-list a:hover,.toc-list a.active{color:var(--blue);background:var(--blue-dim);border-left-color:var(--blue)}
+.sidebar-cta{border:1px solid var(--blue);border-radius:8px;padding:24px;background:var(--blue-dim)}
+.sc-eyebrow{font-family:var(--f-mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);margin-bottom:10px}
+.sc-title{font-family:var(--f-head);font-size:17px;font-weight:800;letter-spacing:-.02em;color:var(--ink);margin-bottom:8px;line-height:1.2}
+.sc-body{font-size:13px;color:var(--ink3);line-height:1.6;margin-bottom:16px}
+.sc-btn{display:block;text-align:center;padding:11px 16px;background:var(--blue);color:white;border-radius:6px;font-family:var(--f-body);font-size:13px;font-weight:500;text-decoration:none}.sc-btn:hover{background:var(--blue2)}
+.sc-note{font-family:var(--f-mono);font-size:9px;color:var(--ink4);text-align:center;margin-top:8px;letter-spacing:.04em}
+.sidebar-share{border:1px solid var(--rule);border-radius:8px;padding:20px 24px;background:var(--white)}
+.share-label{font-family:var(--f-mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);margin-bottom:14px}
+.share-links{display:flex;flex-direction:column;gap:8px}
+.share-link{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--ink3);text-decoration:none;padding:9px 12px;border:1px solid var(--rule);border-radius:6px;transition:border-color .2s,color .2s}.share-link:hover{border-color:var(--blue);color:var(--blue)}
+.related{padding:64px 6%;border-top:1px solid var(--rule);background:var(--off)}
+.related-inner{max-width:1100px;margin:0 auto}
+.related-label{font-family:var(--f-mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);margin-bottom:32px;display:flex;align-items:center;gap:10px}
+.related-label::before{content:'';width:20px;height:1px;background:var(--blue)}
+.related-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.related-card{padding:24px;border:1px solid var(--rule);border-radius:8px;background:var(--white);box-shadow:var(--shadow-sm);transition:border-color .2s,transform .2s;text-decoration:none;display:flex;flex-direction:column;gap:12px}.related-card:hover{border-color:var(--blue);transform:translateY(-4px)}
+.rc-tag{font-family:var(--f-mono);font-size:9px;color:var(--blue);letter-spacing:.08em;text-transform:uppercase;padding:3px 8px;background:var(--blue-dim);border-radius:3px;align-self:flex-start}
+.rc-title{font-family:var(--f-head);font-size:16px;font-weight:700;letter-spacing:-.02em;color:var(--ink);line-height:1.25}
+.rc-desc{font-size:13px;color:var(--ink3);line-height:1.6;flex:1}
+.rc-footer{display:flex;align-items:center;justify-content:space-between;padding-top:12px;border-top:1px solid var(--rule)}
+.rc-read{font-family:var(--f-mono);font-size:10px;color:var(--ink4)}.rc-arrow{font-size:14px;color:var(--blue)}
+footer{padding:56px 6% 32px;border-top:1px solid var(--rule);background:var(--white)}
+.footer-inner{max-width:1160px;margin:0 auto}
+.footer-top{display:flex;justify-content:space-between;align-items:flex-start;gap:40px;flex-wrap:wrap;margin-bottom:48px}
+.footer-brand p{font-size:13px;font-weight:300;color:var(--ink3);margin-top:12px;max-width:260px;line-height:1.6}
+.footer-col h4{font-family:var(--f-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink4);margin-bottom:16px}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+.footer-col a{font-size:13px;color:var(--ink3);text-decoration:none}.footer-col a:hover{color:var(--blue)}
+.footer-bottom{padding-top:24px;border-top:1px solid var(--rule);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.footer-bottom p{font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.04em}
+.compliance-pills{display:flex;gap:6px;flex-wrap:wrap}
+.cp{font-family:var(--f-mono);font-size:9px;padding:3px 8px;border:1px solid var(--rule);border-radius:3px;color:var(--ink4);letter-spacing:.06em}
+@media(max-width:900px){.article-wrap{grid-template-columns:1fr;gap:48px}.sidebar{position:static}.related-grid{grid-template-columns:1fr}.table-scroll{margin:20px 0}}
+@media(max-width:900px){.nav-links{display:none}}
+@media(max-width:540px){nav{padding:0 4%}.nav-btn{font-size:12px;padding:8px 14px}}
+</style>
+</head>
+<body>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+<nav>
+  <a href="../index.html" class="nav-logo">
+    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" style="flex-shrink:0"><rect width="32" height="32" rx="7" fill="#0d0f12"/><rect x="8" y="7" width="16" height="16" rx="2" stroke="white" stroke-width="2.5" fill="none"/><line x1="20" y1="19" x2="26" y2="25" stroke="#0057FF" stroke-width="3" stroke-linecap="round"/></svg>
+    <span style="font-family:'Epilogue',sans-serif;font-weight:800;font-size:16px;color:#0d0f12;letter-spacing:-.03em;white-space:nowrap">QLean <span style="font-weight:300;color:#5a6172">Automation</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="../index.html#products">Products</a></li>
+    <li><a href="../index.html#framework">Framework</a></li>
+    <li><a href="blog-index.html">Knowledge Base</a></li>
+    <li><a href="../index.html#pricing">Pricing</a></li>
+    <li><a href="../about.html">About</a></li>
+    <li><a href="../index.html#faq">FAQ</a></li>
+  </ul>
+  <a href="../index.html#pricing" class="nav-btn">Get the Framework &#8594;</a>
+</nav>
+
+<header class="article-hero">
+  <div class="article-hero-inner">
+    <div class="breadcrumb"><a href="../index.html">Home</a><span>/</span><a href="blog-index.html">Knowledge Base</a><span>/</span>Managing a Pharma FAT With Multiple Suppliers</div>
+    <div class="article-tag">&#128203; Project Management</div>
+    <h1>Managing a Pharma FAT<br><span>With Multiple</span><br>Suppliers</h1>
+    <p class="article-intro">Most pharma automation projects involve more than one supplier. The control panel comes from the SI, the SCADA server from the IT integrator, the mechanical skid from the OEM, and the field instruments from whoever the site procurement team approved. A single FAT protocol designed for one supplier does not survive this reality. Here is how to structure, coordinate, and execute a multi-supplier FAT that generates coherent GMP evidence — not a patchwork of individually approved documents that nobody can trace back to a unified qualified state.</p>
+    <div class="article-meta">
+      <div class="meta-author">
+        <div class="author-avatar"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="7" r="3.5" stroke="white" stroke-width="1.5"/><path d="M2.5 16c0-3.59 2.91-6.5 6.5-6.5s6.5 2.91 6.5 6.5" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+        <div><div class="author-name">QLean Automation</div><div class="author-role">ENGINEERS WHO BUILD SYSTEMS, NOT JUST SIGN THEM</div></div>
+      </div>
+      <div class="meta-divider"></div><div class="meta-stat">7 MIN READ</div>
+      <div class="meta-divider"></div><div class="meta-stat">FAT &#183; MULTI-SUPPLIER &#183; PROJECT MANAGEMENT</div>
+    </div>
+  </div>
+</header>
+
+<div class="article-wrap">
+  <article class="article-body">
+
+    <h2 id="the-problem-with-multiple-fat-protocols">The Problem With Multiple Independent FAT Protocols</h2>
+    <p>When a project involves multiple suppliers, the natural tendency is for each supplier to produce their own FAT protocol, run their own FAT at their own facility, and hand over their own FAT report. On the surface this looks organised — each supplier is responsible for their scope. In practice it creates a structural gap in the GMP evidence package.</p>
+    <p>The IQ that follows the FAT is executed against the <em>integrated</em> system — the PLC communicating with the SCADA, the SCADA writing to the historian, the historian feeding the reports. If the FAT evidence is fragmented across three supplier reports, none of which tested the integrated interfaces, the IQ team arrives on site to qualify an integrated system that has never been formally tested as a system. Every interface issue discovered during IQ is a deviation that traces back to an integration gap the fragmented FAT structure allowed to exist.</p>
+
+    <div class="callout amber">
+      <div class="callout-label">The Interface Gap</div>
+      <p>The most common source of multi-supplier FAT deviations is not individual system failures — it is interface failures. The PLC passes its own FAT. The SCADA passes its own FAT. When you connect them, the OPC communication drops under load, the alarm handshaking doesn't work as designed, and the historian tags have different engineering units to what the PLC is outputting. <strong>None of these failures are visible in a fragmented FAT structure. They all appear as deviations at IQ — on site, under QA witness, at full project day-rate cost.</strong></p>
+    </div>
+
+    <h2 id="three-models-for-multi-supplier-fat-structure">Three Models for Multi-Supplier FAT Structure</h2>
+    <p>There are three practical models for structuring FAT evidence on a multi-supplier project, each suited to different project configurations and risk profiles.</p>
+
+    <figure class="article-img">
+      <svg viewBox="0 0 720 280" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;background:#0d0f12;border-radius:8px 8px 0 0">
+        <text x="360" y="18" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(255,255,255,0.2)" letter-spacing="0.12em">MULTI-SUPPLIER FAT — THREE STRUCTURAL MODELS</text>
+
+        <!-- Model 1: Integrated FAT -->
+        <rect x="10" y="30" width="220" height="220" rx="5" fill="rgba(0,87,255,0.05)" stroke="rgba(0,87,255,0.25)" stroke-width="1"/>
+        <text x="120" y="50" text-anchor="middle" font-family="Epilogue,sans-serif" font-weight="800" font-size="11" fill="rgba(0,135,255,0.9)">MODEL 1</text>
+        <text x="120" y="64" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(100,160,255,0.7)">INTEGRATED FAT</text>
+        <line x1="20" y1="72" x2="220" y2="72" stroke="rgba(0,87,255,0.15)" stroke-width="1"/>
+        <text x="120" y="92" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="11" fill="rgba(200,215,235,0.8)">One protocol.</text>
+        <text x="120" y="108" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="11" fill="rgba(200,215,235,0.8)">One location.</text>
+        <text x="120" y="124" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="11" fill="rgba(200,215,235,0.8)">All suppliers present.</text>
+        <text x="120" y="148" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7" fill="rgba(0,200,100,0.7)">&#10003; Tests integration</text>
+        <text x="120" y="162" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7" fill="rgba(0,200,100,0.7)">&#10003; Single GMP record</text>
+        <text x="120" y="176" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7" fill="rgba(0,200,100,0.7)">&#10003; Clear accountability</text>
+        <text x="120" y="196" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7" fill="rgba(217,119,6,0.7)">&#8757; Logistics complexity</text>
+        <text x="120" y="210" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7" fill="rgba(217,119,6,0.7)">&#8757; All must be ready together</text>
+        <text x="120" y="232" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(0,135,255,0.5)">Best for: medium projects</text>
+        <text x="120" y="244" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(0,135,255,0.5)">with co-located suppliers</text>
+
+        <!-- Model 2: Staged + Combined -->
+        <rect x="250" y="30" width="220" height="220" rx="5" fill="rgba(0,87,255,0.04)" stroke="rgba(0,87,255,0.2)" stroke-width="1"/>
+        <text x="360" y="50" text-anchor="middle" font-family="Epilogue,sans-serif" font-weight="800" font-size="11" fill="rgba(0,135,255,0.85)">MODEL 2</text>
+        <text x="360" y="64" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(100,160,255,0.65)">STAGED + INTEGRATION FAT</text>
+        <line x1="260" y1="72" x2="460" y2="72" stroke="rgba(0,87,255,0.12)" stroke-width="1"/>
+        <text x="360" y="92" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="11" fill="rgba(200,215,235,0.8)">Component FATs first.</text>
+        <text x="360" y="108" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="11" fill="rgba(200,215,235,0.8)">Integration FAT second.</text>
+        <text x="360" y="124" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="11" fill="rgba(200,215,235,0.8)">Lead SI owns integration.</text>
+        <text x="360" y="148" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7" fill="rgba(0,200,100,0.7)">&#10003; Flexible scheduling</text>
+        <text x="360" y="162" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7" fill="rgba(0,200,100,0.7)">&#10003; Tests integration formally</text>
+        <text x="360" y="176" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7" fill="rgba(0,200,100,0.7)">&#10003; Most practical model</text>
+        <text x="360" y="196" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7" fill="rgba(217,119,6,0.7)">&#8757; Two FAT events to manage</text>
+        <text x="360" y="210" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7" fill="rgba(217,119,6,0.7)">&#8757; Protocol relationship must be clear</text>
+        <text x="360" y="232" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(0,135,255,0.5)">Best for: most multi-supplier</text>
+        <text x="360" y="244" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(0,135,255,0.5)">pharma automation projects</text>
+
+        <!-- Model 3: Separate FATs + IQ compensates -->
+        <rect x="490" y="30" width="220" height="220" rx="5" fill="rgba(192,57,43,0.04)" stroke="rgba(192,57,43,0.2)" stroke-width="1"/>
+        <text x="600" y="50" text-anchor="middle" font-family="Epilogue,sans-serif" font-weight="800" font-size="11" fill="rgba(220,80,60,0.85)">MODEL 3</text>
+        <text x="600" y="64" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(220,120,100,0.65)">SEPARATE FATs ONLY</text>
+        <line x1="500" y1="72" x2="700" y2="72" stroke="rgba(192,57,43,0.12)" stroke-width="1"/>
+        <text x="600" y="92" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="11" fill="rgba(200,215,235,0.8)">Each supplier runs</text>
+        <text x="600" y="108" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="11" fill="rgba(200,215,235,0.8)">their own FAT independently.</text>
+        <text x="600" y="124" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="11" fill="rgba(200,215,235,0.8)">No integration testing.</text>
+        <text x="600" y="148" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7" fill="rgba(0,200,100,0.7)">&#10003; Easiest to coordinate</text>
+        <text x="600" y="162" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7" fill="rgba(0,200,100,0.7)">&#10003; Minimal supplier dependency</text>
+        <text x="600" y="180" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7" fill="rgba(192,57,43,0.8)">&#10007; Interface gaps not tested</text>
+        <text x="600" y="194" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7" fill="rgba(192,57,43,0.8)">&#10007; IQ absorbs integration risk</text>
+        <text x="600" y="208" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7" fill="rgba(192,57,43,0.8)">&#10007; Poor GMP evidence quality</text>
+        <text x="600" y="232" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(192,57,43,0.5)">Avoid on complex systems</text>
+        <text x="600" y="244" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(192,57,43,0.5)">with critical interfaces</text>
+      </svg>
+      <figcaption>FIGURE 1 — Three structural models for multi-supplier FAT evidence. Model 2 (staged component FATs followed by a formal integration FAT) is the recommended approach for most multi-supplier pharma automation projects.</figcaption>
+    </figure>
+
+    <h3>Model 1 — Integrated FAT at a Single Location</h3>
+    <p>All suppliers bring their components to a single location, integrate the system, and execute one protocol under one set of QA witnesses. This produces the cleanest GMP evidence — one FAT report covering the complete integrated system — and is the approach the Validation Plan typically assumes when it says "FAT at supplier facility."</p>
+    <p>The challenge is logistics. All suppliers must be ready simultaneously. If the SCADA supplier is two weeks behind the panel builder, the integrated FAT slips two weeks. For projects where the control panel, SCADA application, and server hardware all come from the same SI, this model is straightforward. When they come from different companies with different project schedules, coordination risk is high.</p>
+
+    <h3>Model 2 — Component FATs Followed by Integration FAT</h3>
+    <p>Each supplier runs a component-level FAT covering their own scope. The lead SI then runs a separate integration FAT — typically at the lead SI's facility or the SCADA supplier's facility — that tests the interfaces between components with all parties present. The integration FAT protocol explicitly references the component FAT reports as prerequisites, confirms their outcomes, and then tests the integrated behaviours that were not testable in isolation.</p>
+    <p>This is the most practical model for most multi-supplier pharma projects and is the recommended approach when components come from different locations. The key governance requirement is that the relationship between the component FAT protocols and the integration FAT protocol is explicit — each document references the others, and the overall FAT scope coverage across all documents is traceable to the URS and FDS requirements.</p>
+
+    <h3>Model 3 — Separate Independent FATs</h3>
+    <p>Each supplier runs and approves their own FAT independently, with no integration testing phase. This model is acceptable only when the interfaces between supplier scopes are genuinely trivial — for example, where the only interface is a hardwired discrete signal that will be verified during the SAT loop check. For systems with OPC-DA/UA communication, historian integration, SCADA-to-PLC data exchange, or any software-to-software interface, this model defers all integration risk to site — where it becomes deviation risk.</p>
+
+    <h2 id="who-owns-the-integration-fat">Who Owns the Integration FAT</h2>
+    <p>On a multi-supplier project, someone must be accountable for the integration FAT — the document, the execution, and the report. This accountability should be defined in the <a href="validation-project-plan-system-integrator.html">Validation Plan and RACI matrix</a> before the project starts, not decided informally when integration FAT week arrives.</p>
+    <p>The natural owner is the lead SI — the supplier responsible for the primary control system that all other components integrate into. If the PLC and SCADA come from the same SI, that SI owns the integration FAT. If they come from different suppliers, the client's Validation Lead typically needs to designate an integration lead, because neither supplier will naturally take ownership of testing the other's interface behaviour.</p>
+    <p>The integration FAT owner is responsible for: writing the integration FAT protocol and obtaining QA approval; coordinating all supplier participation; maintaining the single deviation log for integration-phase deviations; and producing the integration FAT report. Sub-supplier component FAT reports are referenced as supporting evidence, not absorbed into the integration FAT report.</p>
+
+    <div class="callout blue">
+      <div class="callout-label">The Deviation Log Boundary</div>
+      <p>Each FAT produces its own deviation log. A deviation found during the integration FAT that is caused by a fault in a sub-supplier's component is still logged in the integration FAT deviation log — because it was discovered during the integration FAT. The root cause investigation may conclude it originated in the sub-supplier's scope, but the deviation record lives in the document where the failure was observed. <strong>Do not transfer deviations between protocol deviation logs retroactively — it creates a document integrity issue.</strong></p>
+    </div>
+
+    <h2 id="scoping-each-suppliers-fat-protocol">Scoping Each Supplier's FAT Protocol</h2>
+    <p>Under Model 2, each supplier's component FAT protocol must have an explicit scope boundary that makes clear what it covers and — equally important — what it explicitly excludes. The exclusions are the interface points that will be tested in the integration FAT.</p>
+    <p>A typical scope boundary for a PLC/panel FAT in a multi-supplier project includes: all PLC application logic, all I/O signal simulation with forced inputs and signal generators, power failure and recovery, safety interlock sequences, and alarm generation at the PLC level. It explicitly excludes: OPC communication to SCADA (interface), historian tag writing (interface), and SCADA alarm display and acknowledgement (SCADA scope).</p>
+    <p>The SCADA FAT covers: all HMI screens and navigation, user management and access control, alarm display and acknowledgement at the SCADA layer, trend historisation with locally injected test data, and report generation. It explicitly excludes: live OPC data from PLC (not available at SCADA-only FAT), end-to-end loop signal accuracy (requires PLC connection).</p>
+    <p>The integration FAT then covers everything that requires both systems active: OPC tag connectivity verification, end-to-end signal flow from simulated field through PLC through SCADA to historian, alarm origination in PLC and display in SCADA, write-back commands from SCADA to PLC, and power failure scenarios with both systems present.</p>
+
+    <h2 id="managing-the-shared-deviation-log">Managing the Shared Deviation Log During Multi-Supplier FAT</h2>
+    <p>The <a href="deviation-management-pharma-validation.html">Master Deviation Ledger</a> is a project-level document. During a multi-supplier FAT, deviations from all FAT events — component and integration — are logged in the project MDL. The MDL reference numbers are sequential across all events. This is important because the phase gate condition for proceeding from FAT to IQ requires zero open Category A deviations across all FAT activities — not just the integration FAT.</p>
+    <p>Practically, one person should own the MDL during FAT weeks — typically the Validation Lead or the integration FAT lead. Sub-supplier engineers should not have direct edit access to the master MDL; they raise deviations verbally or in writing to the MDL owner who records them formally. This preserves the integrity of the deviation record and prevents duplicate entries, numbering gaps, or deviations that were verbally agreed as closed but never formally recorded.</p>
+
+    <h2 id="software-version-control-across-suppliers">Software Version Control Across Suppliers</h2>
+    <p>One of the most important FAT phase gate conditions is that the software version tested at FAT is the version that will be delivered to site. On a single-supplier project this is straightforward. On a multi-supplier project, there are multiple software version baselines to manage — PLC application version, SCADA application version, historian configuration version, server OS baseline, and potentially a mechanical control system version from the OEM skid supplier.</p>
+    <p>Each FAT protocol should document and hash the software version it tested. The integration FAT should document all component versions present during integration testing and verify that these match the versions documented in the respective component FAT reports. Any version increment between component FAT and integration FAT — even a minor patch — requires a change note explaining what changed and why re-testing is or is not required for the changed components.</p>
+    <p>The integration FAT sign-off page should include version confirmation fields for every software component in scope. This creates a single record of the integrated software baseline that was witnessed at FAT and will be shipped to site. The <a href="site-acceptance-test-pharma-guide.html">SAT and IQ</a> then verify that this exact baseline arrived and was installed.</p>
+
+    <div class="callout green">
+      <div class="callout-label">In the QLean Framework</div>
+      <p>The FAT template (FAT-SYS-001) includes a software version and hash documentation section, a force table clearance record, and a structured deviation log — designed for a single-supplier FAT but easily extended for multi-supplier use by adding supplier scope columns to the scope table and adding version confirmation rows for each supplier's software baseline. The deviation management structure in the MDL (MDLSYS001) handles deviations from any project phase in a single sequential register. <strong>The framework gives you the document architecture; the multi-supplier coordination structure described in this article is what you add on top for complex project configurations.</strong></p>
+    </div>
+
+  </article>
+
+  <aside class="sidebar">
+    <div class="toc-card">
+      <div class="toc-label">In This Article</div>
+      <ul class="toc-list">
+        <li><a href="#the-problem-with-multiple-fat-protocols" class="active">The Problem With Multiple FATs</a></li>
+        <li><a href="#three-models-for-multi-supplier-fat-structure">Three Structural Models</a></li>
+        <li><a href="#who-owns-the-integration-fat">Who Owns the Integration FAT</a></li>
+        <li><a href="#scoping-each-suppliers-fat-protocol">Scoping Each Supplier's FAT</a></li>
+        <li><a href="#managing-the-shared-deviation-log">Managing the Deviation Log</a></li>
+        <li><a href="#software-version-control-across-suppliers">Software Version Control</a></li>
+      </ul>
+    </div>
+
+    <div class="sidebar-cta">
+      <div class="sc-eyebrow">QLean Framework</div>
+      <div class="sc-title">29 production-ready GAMP 5 documents</div>
+      <div class="sc-body">FAT protocol with software version hash, force table clearance, and structured deviation log. MDL for cross-phase deviation tracking. Ready to adapt for multi-supplier configurations.</div>
+      <a href="../index.html#pricing" class="sc-btn">Get the Framework &#8212; &#8364;249 &#8594;</a>
+      <div class="sc-note">// INSTANT DOWNLOAD &middot; COMPANY-WIDE LICENCE</div>
+    </div>
+
+    <div class="sidebar-share">
+      <div class="share-label">Share This Article</div>
+      <div class="share-links">
+        <a href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fqleanautomation.com%2Fblog%2Fmanaging-pharma-fat-multiple-suppliers.html" target="_blank" rel="noopener" class="share-link">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          Share on LinkedIn
+        </a>
+        <a href="https://www.reddit.com/submit?url=https%3A%2F%2Fqleanautomation.com%2Fblog%2Fmanaging-pharma-fat-multiple-suppliers.html&title=Managing+a+Pharma+FAT+With+Multiple+Suppliers" target="_blank" rel="noopener" class="share-link">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/></svg>
+          Share on Reddit
+        </a>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<section class="related">
+  <div class="related-inner">
+    <div class="related-label">Continue Reading</div>
+    <div class="related-grid">
+      <a href="pharma-fat-guide.html" class="related-card">
+        <span class="rc-tag">&#128203; Project Management</span>
+        <div class="rc-title">The Pharma FAT — A Practical Guide</div>
+        <div class="rc-desc">Everything a single-supplier FAT requires — protocol structure, deviation handling, force audit, software version documentation, and the QA witness process.</div>
+        <div class="rc-footer"><span class="rc-read">6 MIN READ</span><span class="rc-arrow">&#8594;</span></div>
+      </a>
+      <a href="site-acceptance-test-pharma-guide.html" class="related-card">
+        <span class="rc-tag">&#128203; Project Management</span>
+        <div class="rc-title">Site Acceptance Test — Pharma Guide</div>
+        <div class="rc-desc">The SAT is where FAT evidence meets live field devices. Here is what the SAT must verify, how it differs from the FAT, and what must be true before IQ can start.</div>
+        <div class="rc-footer"><span class="rc-read">7 MIN READ</span><span class="rc-arrow">&#8594;</span></div>
+      </a>
+      <a href="supplier-assessment-gamp5.html" class="related-card">
+        <span class="rc-tag">&#128203; Project Management</span>
+        <div class="rc-title">Supplier Assessment Under GAMP 5</div>
+        <div class="rc-desc">Before a supplier can participate in a pharma FAT, they need to be assessed. Here is what the SAQ and SAR cover and what the pharma client is looking for.</div>
+        <div class="rc-footer"><span class="rc-read">7 MIN READ</span><span class="rc-arrow">&#8594;</span></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="../index.html" class="nav-logo" style="text-decoration:none">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="7" fill="#0d0f12"/><rect x="8" y="7" width="16" height="16" rx="2" stroke="white" stroke-width="2.5" fill="none"/><line x1="20" y1="19" x2="26" y2="25" stroke="#0057FF" stroke-width="3" stroke-linecap="round"/></svg>
+          <span style="font-family:'Epilogue',sans-serif;font-weight:800;font-size:16px;color:#0d0f12;letter-spacing:-.03em">QLean <span style="font-weight:300;color:#5a6172">Automation</span></span>
+        </a>
+        <p>GMP validation documentation tools for automation engineers and system integrators.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Products</h4>
+        <ul>
+          <li><a href="../index.html#products">GAMP 5 Framework Pack</a></li>
+          <li><a href="../index.html#products">Technical Ebook</a></li>
+          <li><a href="../index.html#pricing">Pricing</a></li>
+          <li><a href="../index.html#faq">FAQ</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Knowledge Base</h4>
+        <ul>
+          <li><a href="blog-index.html">All Articles</a></li>
+          <li><a href="cluster-project-mgmt.html">Project Management</a></li>
+          <li><a href="pharma-fat-guide.html">Pharma FAT Guide</a></li>
+          <li><a href="site-acceptance-test-pharma-guide.html">Site Acceptance Test</a></li>
+          <li><a href="supplier-assessment-gamp5.html">Supplier Assessment</a></li>
+          <li><a href="validation-project-plan-system-integrator.html">Validation Project Plan</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="../index.html#framework">Framework</a></li>
+          <li><a href="../terms.html">Terms of Service</a></li>
+          <li><a href="../privacy.html">Privacy Policy</a></li>
+          <li><a href="mailto:hello@qleanautomation.com">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 QLean Automation. All rights reserved.</p>
+      <div class="compliance-pills">
+        <span class="cp">GAMP 5</span>
+        <span class="cp">EU GMP ANNEX 11</span>
+        <span class="cp">21 CFR PART 11</span>
+        <span class="cp">GXP</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+window.addEventListener('scroll',function(){
+  var s=document.getElementById('progress');
+  var h=document.documentElement;
+  var p=(h.scrollTop||document.body.scrollTop)/(h.scrollHeight-h.clientHeight)*100;
+  s.style.width=p+'%';
+});
+var tl=document.querySelectorAll('.toc-list a');
+window.addEventListener('scroll',function(){
+  var headings=document.querySelectorAll('.article-body h2[id]');
+  var scrollY=window.scrollY+120;
+  var current='';
+  headings.forEach(function(h){if(h.offsetTop<=scrollY)current=h.id;});
+  tl.forEach(function(a){
+    a.classList.remove('active');
+    if(a.getAttribute('href')==='#'+current)a.classList.add('active');
+  });
+});
+</script>
+</body>
+</html>

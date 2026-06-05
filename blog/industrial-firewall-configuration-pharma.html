@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-JJQ1TXZJX7"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-JJQ1TXZJX7');
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Industrial Firewall Configuration for Pharma OT — What IQ Checks | QLean Automation</title>
+<meta name="description" content="The pharma OT firewall does not just block traffic — it is a validated system component with a specific configuration the IQ team checks line by line. Here is what every rule must specify, what IQ evidence is required, and how to avoid the most common findings.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@300;400;500;600;700;800;900&family=Source+Sans+3:ital,wght@0,300;0,400;0,500;1,300&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--white:#ffffff;--off:#f7f8f9;--ink:#0d0f12;--ink2:#1e2128;--ink3:#3d4456;--ink4:#9199a8;--rule:#e2e5ea;--rule2:#c8cdd6;--blue:#0057ff;--blue2:#0044cc;--blue-dim:rgba(0,87,255,0.07);--green:#00875a;--green-dim:rgba(0,135,90,0.08);--amber:#d97706;--amber-dim:rgba(217,119,6,0.08);--red:#c0392b;--red-dim:rgba(192,57,43,0.08);--f-head:'Epilogue',sans-serif;--f-body:'Source Sans 3',sans-serif;--f-mono:'Roboto Mono',monospace;--shadow-sm:0 2px 8px rgba(13,15,18,0.06),0 1px 3px rgba(13,15,18,0.04)}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}body{background:var(--white);color:var(--ink);font-family:var(--f-body);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+nav{position:fixed;top:0;left:0;right:0;z-index:200;height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 6%;background:rgba(255,255,255,0.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--rule)}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;flex-shrink:0}
+.nav-links{display:flex;align-items:center;gap:36px;list-style:none}.nav-links a{font-size:14px;font-weight:400;color:var(--ink3);text-decoration:none;transition:color .2s}.nav-links a:hover{color:var(--ink)}
+.nav-btn{font-family:var(--f-body);font-size:13px;font-weight:500;padding:9px 20px;background:var(--blue);color:white;border:none;border-radius:6px;cursor:pointer;text-decoration:none;white-space:nowrap;flex-shrink:0}.nav-btn:hover{background:var(--blue2)}
+.progress-bar{position:fixed;top:64px;left:0;right:0;height:2px;background:var(--rule);z-index:199}.progress-fill{height:100%;background:var(--blue);width:0%}
+.article-hero{padding:120px 6% 64px;background:var(--white);border-bottom:1px solid var(--rule);position:relative;overflow:hidden}
+.article-hero::before{content:'';position:absolute;top:-80px;right:-80px;width:400px;height:400px;background:radial-gradient(circle,rgba(0,87,255,0.04) 0%,transparent 70%);pointer-events:none}
+.article-hero-inner{max-width:940px;margin:0 auto;position:relative;z-index:1}
+.breadcrumb{display:flex;align-items:center;gap:8px;font-family:var(--f-mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink4);margin-bottom:24px}.breadcrumb a{color:var(--ink4);text-decoration:none}.breadcrumb a:hover{color:var(--blue)}.breadcrumb span{color:var(--rule2)}
+.article-tag{display:inline-flex;align-items:center;gap:6px;font-family:var(--f-mono);font-size:10px;font-weight:500;color:var(--blue);letter-spacing:.1em;text-transform:uppercase;margin-bottom:20px;padding:4px 10px;background:var(--blue-dim);border-radius:4px}
+.article-hero h1{font-family:var(--f-head);font-size:clamp(30px,5vw,52px);font-weight:900;line-height:1.0;letter-spacing:-.04em;color:var(--ink);margin-bottom:20px}.article-hero h1 span{color:var(--blue)}
+.article-intro{font-size:18px;font-weight:400;color:var(--ink2);line-height:1.75;margin-bottom:32px;max-width:800px}
+.article-meta{display:flex;align-items:center;gap:24px;padding-top:24px;border-top:1px solid var(--rule);flex-wrap:wrap}
+.meta-author{display:flex;align-items:center;gap:10px}.author-avatar{width:36px;height:36px;border-radius:50%;background:var(--ink);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.author-name{font-size:13px;font-weight:500;color:var(--ink)}.author-role{font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.04em}
+.meta-divider{width:1px;height:28px;background:var(--rule)}.meta-stat{font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.06em}
+.article-wrap{max-width:1300px;margin:0 auto;padding:64px 6%;display:grid;grid-template-columns:1fr 300px;gap:60px;align-items:start}
+.article-body{min-width:0}
+.article-body h2{font-family:var(--f-head);font-size:26px;font-weight:800;letter-spacing:-.03em;color:var(--ink);margin:56px 0 16px;line-height:1.2}.article-body h2:first-child{margin-top:0}
+.article-body h3{font-family:var(--f-head);font-size:18px;font-weight:700;letter-spacing:-.02em;color:var(--ink);margin:32px 0 12px}
+.article-body p{font-size:16px;font-weight:400;color:var(--ink2);line-height:1.85;margin-bottom:20px}
+.article-body strong{color:var(--ink);font-weight:600}
+.article-body a{color:var(--blue);text-decoration:none;border-bottom:1px solid rgba(0,87,255,.25)}.article-body a:hover{border-color:var(--blue)}
+.callout{padding:20px 24px;border-radius:8px;margin:32px 0;border-left:3px solid}
+.callout.blue{background:var(--blue-dim);border-color:var(--blue)}.callout.amber{background:var(--amber-dim);border-color:var(--amber)}.callout.green{background:var(--green-dim);border-color:var(--green)}.callout.red{background:var(--red-dim);border-color:var(--red)}
+.callout-label{font-family:var(--f-mono);font-size:9px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px}.callout.blue .callout-label{color:var(--blue)}.callout.amber .callout-label{color:var(--amber)}.callout.green .callout-label{color:var(--green)}.callout.red .callout-label{color:var(--red)}
+.callout p{font-size:14px;color:var(--ink2);line-height:1.7;margin:0}.callout strong{color:var(--ink)}
+.article-img{width:100%;border-radius:8px;border:1px solid #1e2535;overflow:hidden;margin:36px 0}
+.article-img figcaption{padding:10px 14px;background:var(--off);font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.04em;border-top:1px solid var(--rule)}
+.table-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:28px 0}
+.compare-table{width:100%;border-collapse:collapse;font-size:14px}
+.compare-table th{font-family:var(--f-mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink4);padding:10px 16px;border-bottom:2px solid var(--rule);text-align:left;background:var(--off)}
+.compare-table td{padding:12px 16px;border-bottom:1px solid var(--rule);vertical-align:top;color:var(--ink2);line-height:1.6}
+.compare-table tr:last-child td{border-bottom:none}
+.compare-table td:first-child{font-weight:600;color:var(--ink);font-family:var(--f-mono);font-size:12px}
+.permit{color:var(--green);font-weight:600}.deny{color:var(--red);font-weight:600}
+.sidebar{position:sticky;top:88px;display:flex;flex-direction:column;gap:16px}
+.toc-card{border:1px solid var(--rule);border-radius:8px;padding:24px;background:var(--white);box-shadow:var(--shadow-sm)}
+.toc-label{font-family:var(--f-mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);margin-bottom:16px}
+.toc-list{list-style:none;display:flex;flex-direction:column;gap:2px}
+.toc-list a{display:block;font-size:13px;color:var(--ink3);text-decoration:none;padding:6px 10px;border-radius:4px;transition:all .15s;border-left:2px solid transparent}
+.toc-list a:hover,.toc-list a.active{color:var(--blue);background:var(--blue-dim);border-left-color:var(--blue)}
+.sidebar-cta{border:1px solid var(--blue);border-radius:8px;padding:24px;background:var(--blue-dim)}
+.sc-eyebrow{font-family:var(--f-mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);margin-bottom:10px}
+.sc-title{font-family:var(--f-head);font-size:17px;font-weight:800;letter-spacing:-.02em;color:var(--ink);margin-bottom:8px;line-height:1.2}
+.sc-body{font-size:13px;color:var(--ink3);line-height:1.6;margin-bottom:16px}
+.sc-btn{display:block;text-align:center;padding:11px 16px;background:var(--blue);color:white;border-radius:6px;font-family:var(--f-body);font-size:13px;font-weight:500;text-decoration:none}.sc-btn:hover{background:var(--blue2)}
+.sc-note{font-family:var(--f-mono);font-size:9px;color:var(--ink4);text-align:center;margin-top:8px;letter-spacing:.04em}
+.sidebar-share{border:1px solid var(--rule);border-radius:8px;padding:20px 24px;background:var(--white)}
+.share-label{font-family:var(--f-mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);margin-bottom:14px}
+.share-links{display:flex;flex-direction:column;gap:8px}
+.share-link{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--ink3);text-decoration:none;padding:9px 12px;border:1px solid var(--rule);border-radius:6px;transition:border-color .2s,color .2s}.share-link:hover{border-color:var(--blue);color:var(--blue)}
+.related{padding:64px 6%;border-top:1px solid var(--rule);background:var(--off)}
+.related-inner{max-width:1100px;margin:0 auto}
+.related-label{font-family:var(--f-mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);margin-bottom:32px;display:flex;align-items:center;gap:10px}
+.related-label::before{content:'';width:20px;height:1px;background:var(--blue)}
+.related-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.related-card{padding:24px;border:1px solid var(--rule);border-radius:8px;background:var(--white);box-shadow:var(--shadow-sm);transition:border-color .2s,transform .2s;text-decoration:none;display:flex;flex-direction:column;gap:12px}.related-card:hover{border-color:var(--blue);transform:translateY(-4px)}
+.rc-tag{font-family:var(--f-mono);font-size:9px;color:var(--blue);letter-spacing:.08em;text-transform:uppercase;padding:3px 8px;background:var(--blue-dim);border-radius:3px;align-self:flex-start}
+.rc-title{font-family:var(--f-head);font-size:16px;font-weight:700;letter-spacing:-.02em;color:var(--ink);line-height:1.25}
+.rc-desc{font-size:13px;color:var(--ink3);line-height:1.6;flex:1}
+.rc-footer{display:flex;align-items:center;justify-content:space-between;padding-top:12px;border-top:1px solid var(--rule)}
+.rc-read{font-family:var(--f-mono);font-size:10px;color:var(--ink4)}.rc-arrow{font-size:14px;color:var(--blue)}
+footer{padding:56px 6% 32px;border-top:1px solid var(--rule);background:var(--white)}
+.footer-inner{max-width:1160px;margin:0 auto}
+.footer-top{display:flex;justify-content:space-between;align-items:flex-start;gap:40px;flex-wrap:wrap;margin-bottom:48px}
+.footer-brand p{font-size:13px;font-weight:300;color:var(--ink3);margin-top:12px;max-width:260px;line-height:1.6}
+.footer-col h4{font-family:var(--f-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink4);margin-bottom:16px}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+.footer-col a{font-size:13px;color:var(--ink3);text-decoration:none}.footer-col a:hover{color:var(--blue)}
+.footer-bottom{padding-top:24px;border-top:1px solid var(--rule);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.footer-bottom p{font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.04em}
+.compliance-pills{display:flex;gap:6px;flex-wrap:wrap}
+.cp{font-family:var(--f-mono);font-size:9px;padding:3px 8px;border:1px solid var(--rule);border-radius:3px;color:var(--ink4);letter-spacing:.06em}
+@media(max-width:900px){.article-wrap{grid-template-columns:1fr;gap:48px}.sidebar{position:static}.related-grid{grid-template-columns:1fr}.table-scroll{margin:20px 0}}
+@media(max-width:900px){.nav-links{display:none}}
+@media(max-width:540px){nav{padding:0 4%}.nav-btn{font-size:12px;padding:8px 14px}}
+</style>
+</head>
+<body>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+<nav>
+  <a href="../index.html" class="nav-logo">
+    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" style="flex-shrink:0"><rect width="32" height="32" rx="7" fill="#0d0f12"/><rect x="8" y="7" width="16" height="16" rx="2" stroke="white" stroke-width="2.5" fill="none"/><line x1="20" y1="19" x2="26" y2="25" stroke="#0057FF" stroke-width="3" stroke-linecap="round"/></svg>
+    <span style="font-family:'Epilogue',sans-serif;font-weight:800;font-size:16px;color:#0d0f12;letter-spacing:-.03em;white-space:nowrap">QLean <span style="font-weight:300;color:#5a6172">Automation</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="../index.html#products">Products</a></li>
+    <li><a href="../index.html#framework">Framework</a></li>
+    <li><a href="blog-index.html">Knowledge Base</a></li>
+    <li><a href="../index.html#pricing">Pricing</a></li>
+    <li><a href="../about.html">About</a></li>
+    <li><a href="../index.html#faq">FAQ</a></li>
+  </ul>
+  <a href="../index.html#pricing" class="nav-btn">Get the Framework &#8594;</a>
+</nav>
+
+<header class="article-hero">
+  <div class="article-hero-inner">
+    <div class="breadcrumb"><a href="../index.html">Home</a><span>/</span><a href="blog-index.html">Knowledge Base</a><span>/</span>Industrial Firewall Configuration for Pharma OT</div>
+    <div class="article-tag">&#128225; Network &amp; Infrastructure</div>
+    <h1>Industrial Firewall Configuration<br><span>for Pharma OT</span><br>What IQ Checks</h1>
+    <p class="article-intro">The firewall is the device that makes your zone architecture real. It is also the device the IQ team spends the most time on during the cybersecurity verification section. They will compare your live rule base against HDS Section 7.3 line by line, run active connectivity tests against the critical deny rules, and check the audit log configuration. Here is exactly what they look for — and what a complete, IQ-ready firewall rule set looks like.</p>
+    <div class="article-meta">
+      <div class="meta-author">
+        <div class="author-avatar"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="7" r="3.5" stroke="white" stroke-width="1.5"/><path d="M2.5 16c0-3.59 2.91-6.5 6.5-6.5s6.5 2.91 6.5 6.5" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+        <div><div class="author-name">QLean Automation</div><div class="author-role">ENGINEERS WHO BUILD SYSTEMS, NOT JUST SIGN THEM</div></div>
+      </div>
+      <div class="meta-divider"></div><div class="meta-stat">7 MIN READ</div>
+      <div class="meta-divider"></div><div class="meta-stat">FIREWALL &#183; IQ VERIFICATION &#183; IEC 62443 &#183; ANNEX 11</div>
+    </div>
+  </div>
+</header>
+
+<div class="article-wrap">
+  <article class="article-body">
+
+    <h2 id="the-firewall-as-validated-component">The Firewall as a Validated Component</h2>
+    <p>The firewall in a pharma OT system is not managed by the IT department as a routine infrastructure device. It is a GAMP Category 1 hardware component in the validated system boundary — its model, firmware version, and configuration are all documented in HDS Section 1.3 and Section 7.3, and any change to the firewall configuration after IQ is a change to a validated system requiring formal change control. This is the same principle that applies to the managed switch, the SCADA server OS, and the PLC firmware.</p>
+    <p>The IQ-CYB section (cybersecurity installation verification) is Section 9 of the IQ protocol. It covers four areas: network segregation and firewall rule verification (IQ-CYB-001 to 005), default credential changes (IQ-CYB-010 to 014), VPN and remote access (IQ-CYB-015 to 017), and physical security. The firewall rule verification steps — IQ-CYB-002 to IQ-CYB-004 — are the most technically demanding steps in the entire IQ protocol, and they are the ones most likely to produce findings if the HDS was not written with sufficient specificity.</p>
+
+    <div class="callout blue">
+      <div class="callout-label">The IQ Firewall Standard</div>
+      <p>IQ-CYB-002 requires the IQ team to compare the installed firewall rule base against HDS Section 7.3 rule by rule. The acceptance criterion is: <strong>all rules in the HDS are present in the firewall with the correct action, and no rules are present in the firewall that are absent from the HDS.</strong> An undocumented rule — even a permit rule that was added during commissioning for a legitimate reason — is a nonconformance. The firewall configuration attached as IQ-ATT-FW-001 is a GMP record; it must match the HDS exactly before the IQ can pass.</p>
+    </div>
+
+    <h2 id="the-complete-rule-set-structure">The Complete Rule Set — What HDS Section 7.3 Must Contain</h2>
+    <p>A complete pharma OT firewall rule set follows a defined pattern: specific permit rules for documented conduits, explicit deny rules for the most critical paths, and a default deny-all rule as the last rule. The rules below represent the full rule set from a typical pharma SCADA/PLC system — this is the structure documented in HDS-SYS-001 Section 7.3 in the QLean Framework.</p>
+
+    <div class="table-scroll">
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th>Rule ID</th>
+            <th>Source Zone</th>
+            <th>Dest. Zone</th>
+            <th>Protocol / Port</th>
+            <th>Action</th>
+            <th>Purpose / Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>FW-001</td>
+            <td>Zone 2 (OT-SUP)</td>
+            <td>Zone 1 (OT-CTRL)</td>
+            <td>S7 TCP 102</td>
+            <td><span class="permit">PERMIT</span></td>
+            <td>SCADA to PLC — data read/write. Specific source IP: 192.168.20.10. Specific dest IP: 192.168.10.5.</td>
+          </tr>
+          <tr>
+            <td>FW-002</td>
+            <td>Zone 1 (OT-CTRL)</td>
+            <td>Zone 2 (OT-SUP)</td>
+            <td>S7 TCP 102</td>
+            <td><span class="permit">PERMIT</span></td>
+            <td>PLC to SCADA — alarm and event notifications. Specific source and dest IPs only.</td>
+          </tr>
+          <tr>
+            <td>FW-003</td>
+            <td>Zone 2 (OT-SUP)</td>
+            <td>Zone 3 (DMZ)</td>
+            <td>TCP 1433 (SQL)</td>
+            <td><span class="permit">PERMIT</span></td>
+            <td>Historian replication to DMZ data transfer server. OT-initiated outbound push only. Read-only on DMZ side.</td>
+          </tr>
+          <tr>
+            <td>FW-004</td>
+            <td>Zone 3 (DMZ)</td>
+            <td>Zone 4 (Corp IT)</td>
+            <td>TCP 443 (HTTPS)</td>
+            <td><span class="permit">PERMIT</span></td>
+            <td>DMZ web service to LIMS — data push only. Specific destination IP/hostname required.</td>
+          </tr>
+          <tr>
+            <td>FW-005</td>
+            <td>Zone 4 (Corp IT)</td>
+            <td>Zone 2 (OT-SUP)</td>
+            <td>ANY</td>
+            <td><span class="deny">DENY</span></td>
+            <td>Corporate IT to OT Supervision — explicit deny. No inbound connections from IT to OT. Logged.</td>
+          </tr>
+          <tr>
+            <td>FW-006</td>
+            <td>Zone 4 (Corp IT)</td>
+            <td>Zone 1 (OT-CTRL)</td>
+            <td>ANY</td>
+            <td><span class="deny">DENY</span></td>
+            <td>Corporate IT to OT Control — absolute deny, no exceptions. Logged.</td>
+          </tr>
+          <tr>
+            <td>FW-007</td>
+            <td>VPN (External)</td>
+            <td>Zone 2 (OT-SUP)</td>
+            <td>SSL/TLS VPN + MFA</td>
+            <td><span class="permit">PERMIT</span></td>
+            <td>Authenticated vendor remote access to OT-SUP only. Time-limited. All sessions logged in jump host.</td>
+          </tr>
+          <tr>
+            <td>FW-008</td>
+            <td>VPN (External)</td>
+            <td>Zone 1 (OT-CTRL)</td>
+            <td>ANY</td>
+            <td><span class="deny">DENY</span></td>
+            <td>External access to OT Control zone prohibited at all times — no exceptions.</td>
+          </tr>
+          <tr>
+            <td>FW-009</td>
+            <td>ANY</td>
+            <td>ANY</td>
+            <td>ALL</td>
+            <td><span class="deny">DENY</span></td>
+            <td>Implicit deny-all — all traffic not explicitly permitted is denied and logged. This rule must be last.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>Every rule in this table generates a corresponding IQ verification step. FW-001 and FW-002 are verified by a positive connectivity test (SCADA can reach the PLC on the permitted protocol). FW-005 and FW-006 are verified by a negative connectivity test — a corporate device attempts to reach the OT network and is blocked. FW-009 (the implicit deny) is verified by confirming the firewall policy ends with a deny-all rule and that any traffic not in the permit rules is logged.</p>
+
+    <h2 id="the-iq-connectivity-tests">The IQ Connectivity Tests — Active Verification</h2>
+    <p>Rule table comparison is necessary but not sufficient. The IQ team must also run active tests that confirm the rules behave as documented. These tests are the IQ-CYB-003 and IQ-CYB-004 steps — they are functional tests performed during the IQ, not the OQ, because they verify the static installed configuration rather than application-layer behaviour.</p>
+
+    <figure class="article-img">
+      <svg viewBox="0 0 720 230" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;background:#0d0f12;border-radius:8px 8px 0 0">
+        <text x="360" y="16" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(255,255,255,0.2)" letter-spacing="0.12em">IQ-CYB ACTIVE CONNECTIVITY TESTS — VERIFICATION MAP</text>
+        <defs><marker id="arrf" markerWidth="5" markerHeight="5" refX="2.5" refY="2.5" orient="auto"><path d="M0,0 L5,2.5 L0,5 Z" fill="rgba(0,87,255,0.5)"/></marker><marker id="arrfr" markerWidth="5" markerHeight="5" refX="2.5" refY="2.5" orient="auto"><path d="M0,0 L5,2.5 L0,5 Z" fill="rgba(192,57,43,0.6)"/></marker><marker id="arrfg" markerWidth="5" markerHeight="5" refX="2.5" refY="2.5" orient="auto"><path d="M0,0 L5,2.5 L0,5 Z" fill="rgba(0,180,100,0.6)"/></marker></defs>
+
+        <!-- Corp LAN -->
+        <rect x="12" y="36" width="110" height="36" rx="3" fill="rgba(100,100,100,0.07)" stroke="rgba(150,150,150,0.2)" stroke-width="1"/>
+        <text x="67" y="52" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(200,200,200,0.5)">CORP LAPTOP</text>
+        <text x="67" y="63" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="8" fill="rgba(200,200,200,0.35)">172.16.x.x</text>
+
+        <!-- Firewall box -->
+        <rect x="300" y="28" width="120" height="170" rx="4" fill="rgba(0,87,255,0.1)" stroke="rgba(0,87,255,0.4)" stroke-width="1.5"/>
+        <text x="360" y="52" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(100,160,255,0.8)">FIREWALL</text>
+        <text x="360" y="64" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="8" fill="rgba(100,160,255,0.5)">FW-OT-01</text>
+        <line x1="300" y1="80" x2="420" y2="80" stroke="rgba(0,87,255,0.15)" stroke-width="1"/>
+        <text x="360" y="96" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7" fill="rgba(192,57,43,0.6)">FW-005: DENY</text>
+        <text x="360" y="108" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7" fill="rgba(192,57,43,0.6)">FW-006: DENY</text>
+        <line x1="300" y1="120" x2="420" y2="120" stroke="rgba(0,87,255,0.15)" stroke-width="1"/>
+        <text x="360" y="136" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7" fill="rgba(0,200,120,0.6)">FW-001: PERMIT</text>
+        <text x="360" y="148" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7" fill="rgba(0,200,120,0.6)">FW-002: PERMIT</text>
+        <line x1="300" y1="160" x2="420" y2="160" stroke="rgba(0,87,255,0.15)" stroke-width="1"/>
+        <text x="360" y="176" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7" fill="rgba(200,200,200,0.35)">FW-009: DENY-ALL</text>
+
+        <!-- OT-SUP -->
+        <rect x="470" y="26" width="110" height="76" rx="3" fill="rgba(0,180,100,0.07)" stroke="rgba(0,180,100,0.25)" stroke-width="1"/>
+        <text x="525" y="42" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7" fill="rgba(0,200,120,0.5)">OT-SUP</text>
+        <text x="525" y="56" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(0,200,120,0.7)">SCADA</text>
+        <text x="525" y="68" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="8" fill="rgba(0,200,120,0.5)">192.168.20.10</text>
+        <text x="525" y="88" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(0,200,120,0.7)">HISTORIAN</text>
+        <text x="525" y="100" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="8" fill="rgba(0,200,120,0.5)">192.168.20.20</text>
+
+        <!-- OT-CTRL -->
+        <rect x="470" y="120" width="110" height="60" rx="3" fill="rgba(192,57,43,0.07)" stroke="rgba(192,57,43,0.2)" stroke-width="1"/>
+        <text x="525" y="136" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7" fill="rgba(220,80,80,0.5)">OT-CTRL</text>
+        <text x="525" y="150" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(220,80,80,0.7)">PLC-CPU-01</text>
+        <text x="525" y="163" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="8" fill="rgba(220,80,80,0.5)">192.168.10.5</text>
+
+        <!-- Test arrows -->
+        <!-- DENIED ping Corp to OT-CTRL -->
+        <line x1="122" y1="54" x2="300" y2="100" stroke="rgba(192,57,43,0.5)" stroke-width="1.5" stroke-dasharray="5 3" marker-end="url(#arrfr)"/>
+        <text x="195" y="68" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7" fill="rgba(220,80,80,0.5)">IQ-CYB-003</text>
+        <text x="195" y="78" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7" fill="rgba(220,80,80,0.4)">Ping → BLOCKED ✓</text>
+
+        <!-- DENIED Corp to OT-SUP -->
+        <line x1="122" y1="54" x2="300" y2="90" stroke="rgba(192,57,43,0.4)" stroke-width="1" stroke-dasharray="3 3" marker-end="url(#arrfr)"/>
+
+        <!-- DENIED ping OT to internet -->
+        <line x1="470" y1="64" x2="420" y2="175" stroke="rgba(192,57,43,0.4)" stroke-width="1.5" stroke-dasharray="5 3" marker-end="url(#arrfr)"/>
+        <text x="465" y="195" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7" fill="rgba(220,80,80,0.5)">IQ-CYB-004</text>
+        <text x="465" y="205" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7" fill="rgba(220,80,80,0.4)">OT→Internet BLOCKED ✓</text>
+
+        <!-- PERMITTED SCADA to PLC -->
+        <line x1="525" y1="102" x2="525" y2="120" stroke="rgba(0,180,100,0.4)" stroke-width="1.5" marker-end="url(#arrfg)"/>
+        <text x="600" y="115" font-family="Roboto Mono,monospace" font-size="7" fill="rgba(0,200,120,0.4)">FW-001/002 PASS ✓</text>
+
+        <!-- Rule export label -->
+        <rect x="12" y="185" width="270" height="30" rx="3" fill="rgba(0,87,255,0.05)" stroke="rgba(0,87,255,0.15)" stroke-width="1"/>
+        <text x="147" y="198" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7" fill="rgba(0,87,255,0.5)">IQ-CYB-002: FIREWALL RULE EXPORT → IQ-ATT-FW-001</text>
+        <text x="147" y="210" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="9" fill="rgba(0,87,255,0.35)">Compare live rule base vs HDS Section 7.3 — every rule, every parameter</text>
+      </svg>
+      <figcaption>IQ-CYB CONNECTIVITY TESTS &#183; IQ-CYB-003: corporate ping to OT-CTRL must be blocked. IQ-CYB-004: OT device ping to internet must be blocked. SCADA-to-PLC connectivity confirmed as a positive test. Firewall rule export attached as IQ-ATT-FW-001.</figcaption>
+    </figure>
+
+    <h2 id="the-implicit-deny-rule">The Implicit Deny — Why FW-009 Is Not Optional</h2>
+    <p>The last rule in every pharma OT firewall policy must be an explicit deny-all rule. Many firewall platforms have an implicit deny-all that is not visible in the rule base — but from an IQ documentation perspective, an implicit rule that cannot be inspected creates a documentation gap. The IQ verifier must be able to confirm that the default deny exists, and the cleanest way to do this is to have it as a visible, numbered rule in the HDS rule table and in the exported rule base.</p>
+    <p>Without a documented default deny, a security auditor or inspector cannot be certain that traffic not covered by the permit rules is actually blocked. The argument "the firewall vendor implements implicit deny" is technically correct but does not satisfy the IQ verification requirement. Write it as FW-009, document it in the HDS table, and confirm it in the IQ rule export. The one-line entry in the HDS is worth it for the clarity it provides during every IQ and every subsequent inspection.</p>
+
+    <h2 id="firewall-logging-as-gmp-evidence">Firewall Logging as GMP Evidence</h2>
+    <p>Annex 11 §12 requires that access control events are logged. For a pharma OT firewall, this means the firewall must be configured to log all denied connections and all permitted connections on security-relevant rules (VPN authentication, access to OT zones). The firewall event log is a GMP record — it must be retained, protected from modification, and accessible for inspection.</p>
+    <p>The IQ must verify the logging configuration is enabled and that log retention meets the GMP record retention requirement. The log must be stored in a location that is backed up and protected. If the firewall forwards logs to a SIEM (Security Information and Event Management) system, the IQ must document the SIEM as a GMP record system for this log data. This connects to the broader <a href="cybersecurity-pharma-ot-iec62443.html">IEC 62443 cybersecurity framework</a> requirement for timely response to events (FR-6) — a log that no one reviews is not a security control.</p>
+
+    <h2 id="os-hardening-and-the-hds-section-74">OS Hardening — HDS Section 7.4</h2>
+    <p>The firewall is only part of the security configuration the IQ verifies. HDS Section 7.4 (OS and Software Hardening Baseline) documents the security configuration applied to all Windows-based OT components — SCADA server and HMI workstations. The IQ-SW-020 to IQ-SW-024 steps verify this baseline: Windows Firewall rules (only required application ports open), unnecessary services disabled (Print Spooler, Remote Registry, Bluetooth), USB removable media blocked via Group Policy, autorun disabled, and antivirus/EDR deployed.</p>
+    <p>Every item in HDS Section 7.4 generates an IQ verification step. The USB block test (IQ-SW-023) is one of the most consistently failed — a USB drive is inserted into the SCADA server and each HMI workstation, and the result must be that access is blocked. A single workstation where USB is not blocked by Group Policy is an IQ nonconformance, even if it was intended to be covered by the same policy as the others. The IQ is device-by-device, not policy-by-assumption.</p>
+
+    <div class="callout green">
+      <div class="callout-label">In the QLean Framework</div>
+      <p>HDS-SYS-001 Section 7.3 contains the complete numbered firewall rule set in the format shown in this article — FW-001 through FW-009 with source zone, destination zone, protocol/port, action, and justification for every rule. Section 7.4 contains the OS hardening baseline table with the IQ verification method for each item. IQ-SYS-001 Section 9 (Cybersecurity Installation Verification) contains steps IQ-CYB-001 through IQ-CYB-017 that map directly to every item in HDS Sections 7.3 and 7.4. The IQ evidence attachment IQ-ATT-FW-001 (firewall rule export) is pre-defined in the IQ Appendix A evidence list — the IQ team knows exactly what to attach and where before they walk on-site.</p>
+    </div>
+
+  </article>
+
+  <aside class="sidebar">
+    <div class="toc-card">
+      <div class="toc-label">In This Article</div>
+      <ul class="toc-list">
+        <li><a href="#the-firewall-as-validated-component">Firewall as Validated Component</a></li>
+        <li><a href="#the-complete-rule-set-structure">Complete Rule Set Structure</a></li>
+        <li><a href="#the-iq-connectivity-tests">IQ Connectivity Tests</a></li>
+        <li><a href="#the-implicit-deny-rule">The Implicit Deny Rule</a></li>
+        <li><a href="#firewall-logging-as-gmp-evidence">Firewall Logging as GMP Evidence</a></li>
+        <li><a href="#os-hardening-and-the-hds-section-74">OS Hardening — HDS Section 7.4</a></li>
+      </ul>
+    </div>
+
+    <div class="sidebar-cta">
+      <div class="sc-eyebrow">QLean Framework</div>
+      <div class="sc-title">29 production-ready GAMP 5 documents</div>
+      <div class="sc-body">HDS Section 7.3 includes the complete numbered firewall rule table. HDS Section 7.4 contains the OS hardening baseline. IQ Section 9 includes IQ-CYB-001 through IQ-CYB-017 — all pre-mapped to their HDS specifications.</div>
+      <a href="../index.html#pricing" class="sc-btn">Get the Framework &#8594;</a>
+      <div class="sc-note">SINGLE LICENCE &#183; IMMEDIATE DOWNLOAD</div>
+    </div>
+
+    <div class="sidebar-share">
+      <div class="share-label">Share This Article</div>
+      <div class="share-links">
+        <a href="https://www.linkedin.com/sharing/share-offsite/?url=https://qleanautomation.com/blog/industrial-firewall-configuration-pharma.html" target="_blank" rel="noopener" class="share-link">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          Share on LinkedIn
+        </a>
+        <a href="https://reddit.com/submit?url=https://qleanautomation.com/blog/industrial-firewall-configuration-pharma.html&title=Industrial%20Firewall%20Configuration%20for%20Pharma%20OT%20%E2%80%94%20What%20IQ%20Checks" target="_blank" rel="noopener" class="share-link">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/></svg>
+          Share on Reddit
+        </a>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<section class="related">
+  <div class="related-inner">
+    <div class="related-label">Continue Reading</div>
+    <div class="related-grid">
+      <a href="network-segmentation-pharma-scada.html" class="related-card">
+        <span class="rc-tag">&#128225; Network</span>
+        <div class="rc-title">Network Segmentation for Pharma SCADA — DMZ and Firewalls</div>
+        <div class="rc-desc">How to design the DMZ architecture and build the firewall rule set — the design phase work that produces the HDS Section 7.3 this article's IQ steps verify.</div>
+        <div class="rc-footer"><span class="rc-read">8 MIN READ</span><span class="rc-arrow">&#8594;</span></div>
+      </a>
+      <a href="cybersecurity-pharma-ot-iec62443.html" class="related-card">
+        <span class="rc-tag">&#128225; Network</span>
+        <div class="rc-title">Cybersecurity in Pharma OT — IEC 62443 and GAMP 5</div>
+        <div class="rc-desc">The IEC 62443 framework that maps each firewall rule to a Foundational Requirement — and why FR-5 (Restricted Data Flow) is the direct driver for your firewall rule set.</div>
+        <div class="rc-footer"><span class="rc-read">9 MIN READ</span><span class="rc-arrow">&#8594;</span></div>
+      </a>
+      <a href="ot-network-iq-documentation.html" class="related-card">
+        <span class="rc-tag">&#128225; Network</span>
+        <div class="rc-title">How to Document a Pharma OT Network for IQ</div>
+        <div class="rc-desc">The full six-document network IQ package — the firewall rule set is one component of a complete documentation set that the IQ team needs to execute the cybersecurity section.</div>
+        <div class="rc-footer"><span class="rc-read">7 MIN READ</span><span class="rc-arrow">&#8594;</span></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="../index.html" class="nav-logo" style="text-decoration:none">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="7" fill="#0d0f12"/><rect x="8" y="7" width="16" height="16" rx="2" stroke="white" stroke-width="2.5" fill="none"/><line x1="20" y1="19" x2="26" y2="25" stroke="#0057FF" stroke-width="3" stroke-linecap="round"/></svg>
+          <span style="font-family:'Epilogue',sans-serif;font-weight:800;font-size:16px;color:#0d0f12;letter-spacing:-.03em">QLean <span style="font-weight:300;color:#5a6172">Automation</span></span>
+        </a>
+        <p>GMP validation documentation tools for automation engineers and system integrators.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Products</h4>
+        <ul>
+          <li><a href="../index.html#products">GAMP 5 Framework Pack</a></li>
+          <li><a href="../index.html#products">Technical Ebook</a></li>
+          <li><a href="../index.html#pricing">Pricing</a></li>
+          <li><a href="../index.html#faq">FAQ</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Knowledge Base</h4>
+        <ul>
+          <li><a href="blog-index.html">All Articles</a></li>
+          <li><a href="cluster-network.html">Network &amp; Infrastructure</a></li>
+          <li><a href="network-segmentation-pharma-scada.html">Network Segmentation</a></li>
+          <li><a href="cybersecurity-pharma-ot-iec62443.html">Cybersecurity OT</a></li>
+          <li><a href="ot-network-iq-documentation.html">Network IQ Documentation</a></li>
+          <li><a href="network-switch-configuration-pharma-iq.html">Switch Config IQ</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="../index.html#framework">Framework</a></li>
+          <li><a href="../terms.html">Terms of Service</a></li>
+          <li><a href="../privacy.html">Privacy Policy</a></li>
+          <li><a href="mailto:hello@qleanautomation.com">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 QLean Automation. All rights reserved.</p>
+      <div class="compliance-pills">
+        <span class="cp">GAMP 5</span>
+        <span class="cp">EU GMP ANNEX 11</span>
+        <span class="cp">21 CFR PART 11</span>
+        <span class="cp">IEC 62443</span>
+        <span class="cp">ICH Q9(R1)</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+window.addEventListener('scroll',function(){
+  var s=document.getElementById('progress');
+  var h=document.documentElement;
+  var p=(h.scrollTop||document.body.scrollTop)/(h.scrollHeight-h.clientHeight)*100;
+  s.style.width=p+'%';
+});
+var tl=document.querySelectorAll('.toc-list a');
+window.addEventListener('scroll',function(){
+  var headings=document.querySelectorAll('.article-body h2[id]');
+  var scrollY=window.scrollY+120;
+  var current='';
+  headings.forEach(function(h){if(h.offsetTop<=scrollY)current=h.id;});
+  tl.forEach(function(a){
+    a.classList.remove('active');
+    if(a.getAttribute('href')==='#'+current)a.classList.add('active');
+  });
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-JJQ1TXZJX7"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-JJQ1TXZJX7');
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Delivering Validation Documentation to a Pharma Client | QLean Automation</title>
+<meta name="description" content="How you hand over the validation package matters as much as what is in it. File naming, folder structure, version control, format, and the transmittal letter — here is what a professional documentation handover looks like and why it protects you.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@300;400;500;600;700;800;900&family=Source+Sans+3:ital,wght@0,300;0,400;0,500;1,300&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--white:#ffffff;--off:#f7f8f9;--ink:#0d0f12;--ink2:#1e2128;--ink3:#3d4456;--ink4:#9199a8;--rule:#e2e5ea;--rule2:#c8cdd6;--blue:#0057ff;--blue2:#0044cc;--blue-dim:rgba(0,87,255,0.07);--green:#00875a;--green-dim:rgba(0,135,90,0.08);--amber:#d97706;--amber-dim:rgba(217,119,6,0.08);--red:#c0392b;--red-dim:rgba(192,57,43,0.08);--f-head:'Epilogue',sans-serif;--f-body:'Source Sans 3',sans-serif;--f-mono:'Roboto Mono',monospace;--shadow-sm:0 2px 8px rgba(13,15,18,0.06),0 1px 3px rgba(13,15,18,0.04)}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}body{background:var(--white);color:var(--ink);font-family:var(--f-body);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+nav{position:fixed;top:0;left:0;right:0;z-index:200;height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 6%;background:rgba(255,255,255,0.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--rule)}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;flex-shrink:0}
+.nav-links{display:flex;align-items:center;gap:36px;list-style:none}.nav-links a{font-size:14px;font-weight:400;color:var(--ink3);text-decoration:none;transition:color .2s}.nav-links a:hover{color:var(--ink)}
+.nav-btn{font-family:var(--f-body);font-size:13px;font-weight:500;padding:9px 20px;background:var(--blue);color:white;border:none;border-radius:6px;cursor:pointer;text-decoration:none;white-space:nowrap;flex-shrink:0}.nav-btn:hover{background:var(--blue2)}
+.progress-bar{position:fixed;top:64px;left:0;right:0;height:2px;background:var(--rule);z-index:199}.progress-fill{height:100%;background:var(--blue);width:0%}
+.article-hero{padding:120px 6% 64px;background:var(--white);border-bottom:1px solid var(--rule);position:relative;overflow:hidden}
+.article-hero::before{content:'';position:absolute;top:-80px;right:-80px;width:400px;height:400px;background:radial-gradient(circle,rgba(0,87,255,0.04) 0%,transparent 70%);pointer-events:none}
+.article-hero-inner{max-width:940px;margin:0 auto;position:relative;z-index:1}
+.breadcrumb{display:flex;align-items:center;gap:8px;font-family:var(--f-mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink4);margin-bottom:24px}.breadcrumb a{color:var(--ink4);text-decoration:none}.breadcrumb a:hover{color:var(--blue)}.breadcrumb span{color:var(--rule2)}
+.article-tag{display:inline-flex;align-items:center;gap:6px;font-family:var(--f-mono);font-size:10px;font-weight:500;color:var(--blue);letter-spacing:.1em;text-transform:uppercase;margin-bottom:20px;padding:4px 10px;background:var(--blue-dim);border-radius:4px}
+.article-hero h1{font-family:var(--f-head);font-size:clamp(30px,5vw,52px);font-weight:900;line-height:1.0;letter-spacing:-.04em;color:var(--ink);margin-bottom:20px}.article-hero h1 span{color:var(--blue)}
+.article-intro{font-size:18px;font-weight:400;color:var(--ink2);line-height:1.75;margin-bottom:32px;max-width:800px}
+.article-meta{display:flex;align-items:center;gap:24px;padding-top:24px;border-top:1px solid var(--rule);flex-wrap:wrap}
+.meta-author{display:flex;align-items:center;gap:10px}.author-avatar{width:36px;height:36px;border-radius:50%;background:var(--ink);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.author-name{font-size:13px;font-weight:500;color:var(--ink)}.author-role{font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.04em}
+.meta-divider{width:1px;height:28px;background:var(--rule)}.meta-stat{font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.06em}
+.article-wrap{max-width:1300px;margin:0 auto;padding:64px 6%;display:grid;grid-template-columns:1fr 300px;gap:60px;align-items:start}
+.article-body{min-width:0}
+.article-body h2{font-family:var(--f-head);font-size:26px;font-weight:800;letter-spacing:-.03em;color:var(--ink);margin:56px 0 16px;line-height:1.2}.article-body h2:first-child{margin-top:0}
+.article-body h3{font-family:var(--f-head);font-size:18px;font-weight:700;letter-spacing:-.02em;color:var(--ink);margin:32px 0 12px}
+.article-body p{font-size:16px;font-weight:400;color:var(--ink2);line-height:1.85;margin-bottom:20px}
+.article-body strong{color:var(--ink);font-weight:600}
+.article-body a{color:var(--blue);text-decoration:none;border-bottom:1px solid rgba(0,87,255,.25)}.article-body a:hover{border-color:var(--blue)}
+.callout{padding:20px 24px;border-radius:8px;margin:32px 0;border-left:3px solid}
+.callout.blue{background:var(--blue-dim);border-color:var(--blue)}.callout.amber{background:var(--amber-dim);border-color:var(--amber)}.callout.green{background:var(--green-dim);border-color:var(--green)}.callout.red{background:var(--red-dim);border-color:var(--red)}
+.callout-label{font-family:var(--f-mono);font-size:9px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px}.callout.blue .callout-label{color:var(--blue)}.callout.amber .callout-label{color:var(--amber)}.callout.green .callout-label{color:var(--green)}.callout.red .callout-label{color:var(--red)}
+.callout p{font-size:14px;color:var(--ink2);line-height:1.7;margin:0}.callout strong{color:var(--ink)}
+.article-img{width:100%;border-radius:8px;border:1px solid #1e2535;overflow:hidden;margin:36px 0}
+.article-img figcaption{padding:10px 14px;background:var(--off);font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.04em;border-top:1px solid var(--rule)}
+.checklist{list-style:none;display:flex;flex-direction:column;gap:8px;margin:20px 0 28px}
+.checklist li{display:flex;align-items:flex-start;gap:10px;font-size:15px;color:var(--ink2);line-height:1.6}
+.checklist li::before{content:'';width:16px;height:16px;flex-shrink:0;margin-top:3px;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 14 14' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='7' cy='7' r='6.5' fill='none' stroke='%230057ff' stroke-width='1'/%3E%3Cpath d='M4 7l2 2 4-4' stroke='%230057ff' stroke-width='1.3' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:center;background-size:contain}
+.arrow-list{list-style:none;display:flex;flex-direction:column;gap:8px;margin:20px 0 28px}
+.arrow-list li{display:flex;align-items:flex-start;gap:10px;font-size:15px;color:var(--ink2);line-height:1.6}
+.arrow-list li::before{content:'\2192';color:var(--blue);flex-shrink:0;font-family:var(--f-mono);font-size:13px;margin-top:2px}
+.table-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:28px 0}
+.compare-table{width:100%;border-collapse:collapse;font-size:14px}
+.compare-table th{font-family:var(--f-mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink4);padding:10px 16px;border-bottom:2px solid var(--rule);text-align:left;background:var(--off)}
+.compare-table td{padding:12px 16px;border-bottom:1px solid var(--rule);vertical-align:top;color:var(--ink2);line-height:1.6}
+.compare-table tr:last-child td{border-bottom:none}
+.compare-table td:first-child{font-weight:600;color:var(--ink);font-family:var(--f-mono);font-size:12px}
+.sidebar{position:sticky;top:88px;display:flex;flex-direction:column;gap:16px}
+.toc-card{border:1px solid var(--rule);border-radius:8px;padding:24px;background:var(--white);box-shadow:var(--shadow-sm)}
+.toc-label{font-family:var(--f-mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);margin-bottom:16px}
+.toc-list{list-style:none;display:flex;flex-direction:column;gap:2px}
+.toc-list a{display:block;font-size:13px;color:var(--ink3);text-decoration:none;padding:6px 10px;border-radius:4px;transition:all .15s;border-left:2px solid transparent}
+.toc-list a:hover,.toc-list a.active{color:var(--blue);background:var(--blue-dim);border-left-color:var(--blue)}
+.sidebar-cta{border:1px solid var(--blue);border-radius:8px;padding:24px;background:var(--blue-dim)}
+.sc-eyebrow{font-family:var(--f-mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);margin-bottom:10px}
+.sc-title{font-family:var(--f-head);font-size:17px;font-weight:800;letter-spacing:-.02em;color:var(--ink);margin-bottom:8px;line-height:1.2}
+.sc-body{font-size:13px;color:var(--ink3);line-height:1.6;margin-bottom:16px}
+.sc-btn{display:block;text-align:center;padding:11px 16px;background:var(--blue);color:white;border-radius:6px;font-family:var(--f-body);font-size:13px;font-weight:500;text-decoration:none}.sc-btn:hover{background:var(--blue2)}
+.sc-note{font-family:var(--f-mono);font-size:9px;color:var(--ink4);text-align:center;margin-top:8px;letter-spacing:.04em}
+.sidebar-share{border:1px solid var(--rule);border-radius:8px;padding:20px 24px;background:var(--white)}
+.share-label{font-family:var(--f-mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);margin-bottom:14px}
+.share-links{display:flex;flex-direction:column;gap:8px}
+.share-link{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--ink3);text-decoration:none;padding:9px 12px;border:1px solid var(--rule);border-radius:6px;transition:border-color .2s,color .2s}.share-link:hover{border-color:var(--blue);color:var(--blue)}
+.related{padding:64px 6%;border-top:1px solid var(--rule);background:var(--off)}
+.related-inner{max-width:1100px;margin:0 auto}
+.related-label{font-family:var(--f-mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);margin-bottom:32px;display:flex;align-items:center;gap:10px}
+.related-label::before{content:'';width:20px;height:1px;background:var(--blue)}
+.related-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.related-card{padding:24px;border:1px solid var(--rule);border-radius:8px;background:var(--white);box-shadow:var(--shadow-sm);transition:border-color .2s,transform .2s;text-decoration:none;display:flex;flex-direction:column;gap:12px}.related-card:hover{border-color:var(--blue);transform:translateY(-4px)}
+.rc-tag{font-family:var(--f-mono);font-size:9px;color:var(--blue);letter-spacing:.08em;text-transform:uppercase;padding:3px 8px;background:var(--blue-dim);border-radius:3px;align-self:flex-start}
+.rc-title{font-family:var(--f-head);font-size:16px;font-weight:700;letter-spacing:-.02em;color:var(--ink);line-height:1.25}
+.rc-desc{font-size:13px;color:var(--ink3);line-height:1.6;flex:1}
+.rc-footer{display:flex;align-items:center;justify-content:space-between;padding-top:12px;border-top:1px solid var(--rule)}
+.rc-read{font-family:var(--f-mono);font-size:10px;color:var(--ink4)}.rc-arrow{font-size:14px;color:var(--blue)}
+footer{padding:56px 6% 32px;border-top:1px solid var(--rule);background:var(--white)}
+.footer-inner{max-width:1160px;margin:0 auto}
+.footer-top{display:flex;justify-content:space-between;align-items:flex-start;gap:40px;flex-wrap:wrap;margin-bottom:48px}
+.footer-brand p{font-size:13px;font-weight:300;color:var(--ink3);margin-top:12px;max-width:260px;line-height:1.6}
+.footer-col h4{font-family:var(--f-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink4);margin-bottom:16px}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+.footer-col a{font-size:13px;color:var(--ink3);text-decoration:none}.footer-col a:hover{color:var(--blue)}
+.footer-bottom{padding-top:24px;border-top:1px solid var(--rule);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.footer-bottom p{font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.04em}
+.compliance-pills{display:flex;gap:6px;flex-wrap:wrap}
+.cp{font-family:var(--f-mono);font-size:9px;padding:3px 8px;border:1px solid var(--rule);border-radius:3px;color:var(--ink4);letter-spacing:.06em}
+@media(max-width:900px){.article-wrap{grid-template-columns:1fr;gap:48px}.sidebar{position:static}.related-grid{grid-template-columns:1fr}.table-scroll{margin:20px 0}}
+@media(max-width:900px){.nav-links{display:none}}
+@media(max-width:540px){nav{padding:0 4%}.nav-btn{font-size:12px;padding:8px 14px}}
+</style>
+</head>
+<body>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+<nav>
+  <a href="../index.html" class="nav-logo">
+    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" style="flex-shrink:0"><rect width="32" height="32" rx="7" fill="#0d0f12"/><rect x="8" y="7" width="16" height="16" rx="2" stroke="white" stroke-width="2.5" fill="none"/><line x1="20" y1="19" x2="26" y2="25" stroke="#0057FF" stroke-width="3" stroke-linecap="round"/></svg>
+    <span style="font-family:'Epilogue',sans-serif;font-weight:800;font-size:16px;color:#0d0f12;letter-spacing:-.03em;white-space:nowrap">QLean <span style="font-weight:300;color:#5a6172">Automation</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="../index.html#products">Products</a></li>
+    <li><a href="../index.html#framework">Framework</a></li>
+    <li><a href="blog-index.html">Knowledge Base</a></li>
+    <li><a href="../index.html#pricing">Pricing</a></li>
+    <li><a href="../about.html">About</a></li>
+    <li><a href="../index.html#faq">FAQ</a></li>
+  </ul>
+  <a href="../index.html#pricing" class="nav-btn">Get the Framework &#8594;</a>
+</nav>
+
+<header class="article-hero">
+  <div class="article-hero-inner">
+    <div class="breadcrumb"><a href="../index.html">Home</a><span>/</span><a href="blog-index.html">Knowledge Base</a><span>/</span>Delivering Validation Documentation to a Pharma Client</div>
+    <div class="article-tag">&#128203; Project Management</div>
+    <h1>Delivering Validation<br><span>Documentation</span><br>to a Pharma Client</h1>
+    <p class="article-intro">How you hand over the validation package matters as much as what is in it. An approved VSR dropped into a shared folder with inconsistent file names, missing a transmittal record, alongside superseded document revisions, does not look like a controlled handover — even if every document inside it is excellent. Here is what a professional documentation handover looks like, why the structure protects you contractually, and what happens to documentation after it changes hands.</p>
+    <div class="article-meta">
+      <div class="meta-author">
+        <div class="author-avatar"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="7" r="3.5" stroke="white" stroke-width="1.5"/><path d="M2.5 16c0-3.59 2.91-6.5 6.5-6.5s6.5 2.91 6.5 6.5" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+        <div><div class="author-name">QLean Automation</div><div class="author-role">ENGINEERS WHO BUILD SYSTEMS, NOT JUST SIGN THEM</div></div>
+      </div>
+      <div class="meta-divider"></div><div class="meta-stat">6 MIN READ</div>
+      <div class="meta-divider"></div><div class="meta-stat">PROJECT MANAGEMENT &#183; DOCUMENTATION &#183; HANDOVER</div>
+    </div>
+  </div>
+</header>
+
+<div class="article-wrap">
+  <article class="article-body">
+
+    <h2 id="why-the-handover-matters-as-much-as-the-content">Why the Handover Matters as Much as the Content</h2>
+    <p>There is a specific moment in every pharma automation project when the SI's relationship with the validation package changes fundamentally: the moment it is handed over to the client. Before handover, the documents are the SI's working materials — they can be revised, updated, and improved. After handover, they are the client's GMP controlled records. The handover is not just a file transfer; it is a formal transfer of custody over controlled documents that will live in the client's quality management system for the retention period required by regulation.</p>
+    <p>A QA manager receiving a validation package for a system that will now be under their site's quality system has a legitimate expectation that the package arrives in a controlled, complete, and navigable state. If they receive a ZIP file named "FINAL_docs_v3_ACTUAL_FINAL.zip" containing a mix of approved, draft, and superseded documents with inconsistent naming conventions, their first action will be to send it back — and their second will be to question whether the project was managed to the same standard as the documents suggest.</p>
+
+    <div class="callout blue">
+      <div class="callout-label">The Professional Benchmark</div>
+      <p>The validation package handover is one of the clearest signals a client receives about the SI's quality culture. An SI who hands over a well-structured, complete, clearly named package with a transmittal record demonstrates that they manage documentation with the same rigour as they manage engineering. <strong>This impression outlasts the project — it is what gets you recalled for the next one.</strong></p>
+    </div>
+
+    <h2 id="what-goes-into-the-handover-package">What Goes Into the Handover Package</h2>
+    <p>The handover package is not the same as the validation package. The validation package is everything produced during the project. The handover package is the defined, version-controlled, approved subset that transfers to the client as GMP records. Understanding the distinction matters because the handover package must not contain draft documents, superseded revisions, working files, or internal SI communications. It contains only approved final documents.</p>
+    <p>A complete handover package for a typical PLC/SCADA pharma project contains the following categories:</p>
+
+    <figure class="article-img">
+      <svg viewBox="0 0 720 300" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;background:#0d0f12;border-radius:8px 8px 0 0">
+        <text x="360" y="18" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(255,255,255,0.2)" letter-spacing="0.12em">VALIDATION PACKAGE HANDOVER — DOCUMENT CATEGORIES AND CONTENTS</text>
+
+        <!-- Category 1: Planning -->
+        <rect x="10" y="30" width="168" height="240" rx="4" fill="rgba(0,87,255,0.06)" stroke="rgba(0,87,255,0.22)" stroke-width="1"/>
+        <text x="94" y="48" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(0,135,255,0.7)" letter-spacing="0.06em">PLANNING</text>
+        <line x1="20" y1="55" x2="168" y2="55" stroke="rgba(0,87,255,0.12)" stroke-width="1"/>
+        <text x="94" y="70" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(180,200,230,0.75)">VP-SYS-001</text>
+        <text x="94" y="84" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(180,200,230,0.75)">PQP-SYS-001</text>
+        <text x="94" y="98" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(180,200,230,0.75)">RMP-SYS-001</text>
+        <text x="94" y="112" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(180,200,230,0.75)">SAQ-SYS-001</text>
+        <text x="94" y="126" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(180,200,230,0.75)">SAR-SYS-001</text>
+
+        <!-- Category 2: Design -->
+        <rect x="188" y="30" width="168" height="240" rx="4" fill="rgba(0,87,255,0.05)" stroke="rgba(0,87,255,0.2)" stroke-width="1"/>
+        <text x="272" y="48" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(0,135,255,0.65)" letter-spacing="0.06em">DESIGN</text>
+        <line x1="198" y1="55" x2="346" y2="55" stroke="rgba(0,87,255,0.1)" stroke-width="1"/>
+        <text x="272" y="70" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(180,200,230,0.75)">URS-SYS-001</text>
+        <text x="272" y="84" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(180,200,230,0.75)">FDS-SYS-001</text>
+        <text x="272" y="98" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(180,200,230,0.75)">HDS-SYS-001</text>
+        <text x="272" y="112" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(180,200,230,0.75)">SDS-SYS-001</text>
+        <text x="272" y="126" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(180,200,230,0.75)">CP-SYS-001</text>
+        <text x="272" y="140" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(180,200,230,0.75)">RA-SYS-001</text>
+        <text x="272" y="154" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(180,200,230,0.75)">TM-SYS-001</text>
+
+        <!-- Category 3: Testing -->
+        <rect x="366" y="30" width="168" height="240" rx="4" fill="rgba(0,87,255,0.05)" stroke="rgba(0,87,255,0.2)" stroke-width="1"/>
+        <text x="450" y="48" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(0,135,255,0.65)" letter-spacing="0.06em">TESTING</text>
+        <line x1="376" y1="55" x2="524" y2="55" stroke="rgba(0,87,255,0.1)" stroke-width="1"/>
+        <text x="450" y="70" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(180,200,230,0.75)">FAT-SYS-001 (exec.)</text>
+        <text x="450" y="84" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(180,200,230,0.75)">SAT-SYS-001 (exec.)</text>
+        <text x="450" y="98" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(180,200,230,0.75)">IQ-SYS-001 (exec.)</text>
+        <text x="450" y="112" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(180,200,230,0.75)">OQ-SYS-001 (exec.)</text>
+        <text x="450" y="126" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(180,200,230,0.75)">PQ-SYS-001 (exec.)</text>
+        <text x="450" y="140" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(180,200,230,0.75)">MDL-SYS-001</text>
+
+        <!-- Category 4: Closeout + Evidence -->
+        <rect x="544" y="30" width="166" height="240" rx="4" fill="rgba(0,135,90,0.06)" stroke="rgba(0,135,90,0.2)" stroke-width="1"/>
+        <text x="627" y="48" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(0,175,100,0.7)" letter-spacing="0.06em">CLOSEOUT + EVIDENCE</text>
+        <line x1="554" y1="55" x2="700" y2="55" stroke="rgba(0,135,90,0.12)" stroke-width="1"/>
+        <text x="627" y="70" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(180,200,230,0.75)">VSR-SYS-001</text>
+        <text x="627" y="84" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(180,200,230,0.75)">TRF-SYS-001 (all)</text>
+        <text x="627" y="98" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(180,200,230,0.75)">Calibration certs</text>
+        <text x="627" y="112" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(180,200,230,0.75)">As-built drawings</text>
+        <text x="627" y="126" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(180,200,230,0.75)">SOPs (approved)</text>
+        <text x="627" y="140" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(180,200,230,0.75)">CCR log</text>
+        <text x="627" y="154" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(180,200,230,0.75)">Transmittal record</text>
+
+        <!-- Phase gate note at bottom -->
+        <rect x="10" y="280" width="700" height="12" rx="2" fill="rgba(0,87,255,0.04)"/>
+        <text x="360" y="290" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7" fill="rgba(255,255,255,0.25)">All documents at final approved revision only — no drafts, no superseded versions, no working files</text>
+      </svg>
+      <figcaption>FIGURE 1 — The four document categories in a complete validation package handover. Executed protocols (FAT, IQ, OQ) are the wet-signed originals or certified true copies, not the blank templates they were produced from.</figcaption>
+    </figure>
+
+    <h2 id="file-naming-and-folder-structure">File Naming and Folder Structure</h2>
+    <p>File naming is the single easiest aspect of a documentation handover to get right, and the one most commonly handled carelessly. The correct approach is the one that allows any document to be located within ten seconds, by someone who has never seen the package before, using only the document number or document type.</p>
+    <p>The naming convention for controlled documents in the handover package should follow the pattern: <strong>[Document Number]_[Document Type]_[Revision]</strong> — for example, <code>VP-SYS-001_Validation_Plan_RevA.docx</code>. For executed protocols that have physical signatures: <code>IQ-SYS-001_Installation_Qualification_Executed_RevA.pdf</code>. The PDF format for executed and approved documents prevents accidental editing after signature — never hand over wet-signed protocols in editable Word format.</p>
+    <p>The folder structure should mirror the project lifecycle phases: a Planning folder, a Design folder, a Testing folder, and a Closeout folder. Calibration certificates and as-built drawings can sit within the Testing folder or in a Supporting Evidence subfolder. The critical rule is that there is only one version of each document in the package — the approved final version. If a client opens the package and finds both VP-SYS-001_RevA and VP-SYS-001_RevB, they have a document control problem to resolve before they can accept the package.</p>
+
+    <h2 id="the-transmittal-record">The Transmittal Record</h2>
+    <p>The transmittal record is the document that formally lists every item in the handover package, with its document number, title, revision, and status. It is signed by the SI and acknowledged by the client. Its purpose is to create a formal, dated record of exactly what was handed over and when — which protects both parties.</p>
+    <p>From the SI's perspective, the transmittal record documents that a complete, approved package was delivered. If a client later claims a document was missing or that an earlier revision was provided, the signed transmittal record is the evidence that the correct package was delivered on the stated date. From the client's perspective, it is the formal acceptance record that triggers the transition of document ownership to their quality system.</p>
+
+    <div class="callout amber">
+      <div class="callout-label">Without a Transmittal Record</div>
+      <p>Without a transmittal record, documentation disputes are resolved by email chains, memory, and shared drive timestamps — none of which constitute controlled evidence. An SI who delivers documentation without a transmittal record has no formal evidence of what was delivered, when, or in what state. <strong>A one-page transmittal list, signed by both parties, eliminates this risk entirely at negligible cost.</strong></p>
+    </div>
+
+    <h2 id="format-requirements-for-executed-protocols">Format Requirements for Executed Protocols</h2>
+    <p>Executed protocols — FAT, SAT, IQ, OQ, PQ — occupy a special category in the handover package. They are not just approved documents; they are witnessed records of physical testing. The handover format for executed protocols has specific requirements that differ from planning and design documents.</p>
+    <p>The preferred format for executed protocols in the handover package is scanned PDF of the wet-signed original. All handwritten entries, initials, signatures, and deviation references must be legible in the scan. A 300 DPI scan minimum is required for text to remain readable when a reviewer prints the document. If the executed protocol contains attached evidence — photographs, printouts, oscilloscope traces, historian data exports — these should be included as appendices within the same PDF, not as separate files that can become separated from the protocol they evidence.</p>
+    <p>If the client uses an electronic quality management system that requires document import, confirm the required format before finalising the package. Some EQMS platforms require specific PDF/A archival format. Delivering standard PDF when PDF/A is required means the client's document control team must convert every file before import — a friction point that reflects poorly on the handover.</p>
+
+    <h2 id="what-happens-after-handover">What Happens After Handover — Your Retained Copy</h2>
+    <p>After the validation package transfers to the client's quality system, the SI should maintain their own retained copy of everything in the handover package. This is not a quality requirement — it is a commercial and legal protection. The retained copy is what you refer to if a dispute arises about what was delivered, what the system was designed to do, or what test evidence exists for a specific requirement.</p>
+    <p>The retained copy should be stored in the SI's document management system under the project reference, with access restricted to appropriate personnel. It should not be modified after handover — it represents the exact state of the package at the point of transfer. Any subsequent changes to documents (following a post-handover change control, for example) should be stored as separate revision records alongside the original, not as overwrites.</p>
+    <p>The SI's obligation to the handover package does not end at delivery. If the client identifies a documentation error after handover — a wrong revision referenced in the traceability matrix, a calibration certificate filed against the wrong tag number — the professional response is to raise a change control, correct the document, and issue a revised handover transmittal for the corrected document. What is not acceptable is to email a corrected file without formal documentation of what changed and why.</p>
+
+    <div class="callout green">
+      <div class="callout-label">In the QLean Framework</div>
+      <p>The Validation Summary Report (VSR-SYS-001) serves as the primary closeout document that lists all validation activities completed, all deviations closed, and the system's declared validated state — it is the anchor document of the handover package. The framework's document numbering system (VP-SYS-001 through PRR-SYS-001) provides the consistent naming convention that makes a handover package immediately navigable. <strong>The 29 controlled documents in the framework are structured to be handed over as a coherent package — not assembled from miscellaneous outputs at project end.</strong></p>
+    </div>
+
+  </article>
+
+  <aside class="sidebar">
+    <div class="toc-card">
+      <div class="toc-label">In This Article</div>
+      <ul class="toc-list">
+        <li><a href="#why-the-handover-matters-as-much-as-the-content" class="active">Why Handover Matters</a></li>
+        <li><a href="#what-goes-into-the-handover-package">What Goes Into the Package</a></li>
+        <li><a href="#file-naming-and-folder-structure">File Naming and Structure</a></li>
+        <li><a href="#the-transmittal-record">The Transmittal Record</a></li>
+        <li><a href="#format-requirements-for-executed-protocols">Executed Protocol Formats</a></li>
+        <li><a href="#what-happens-after-handover">After Handover</a></li>
+      </ul>
+    </div>
+
+    <div class="sidebar-cta">
+      <div class="sc-eyebrow">QLean Framework</div>
+      <div class="sc-title">29 production-ready GAMP 5 documents</div>
+      <div class="sc-body">Every document in this article — VP, URS, FDS, IQ, OQ, VSR, MDL, TRF — pre-built with consistent numbering, ready to assemble into a professional handover package.</div>
+      <a href="../index.html#pricing" class="sc-btn">Get the Framework &#8212; &#8364;249 &#8594;</a>
+      <div class="sc-note">// INSTANT DOWNLOAD &middot; COMPANY-WIDE LICENCE</div>
+    </div>
+
+    <div class="sidebar-share">
+      <div class="share-label">Share This Article</div>
+      <div class="share-links">
+        <a href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fqleanautomation.com%2Fblog%2Fdelivering-validation-docs-pharma-client.html" target="_blank" rel="noopener" class="share-link">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          Share on LinkedIn
+        </a>
+        <a href="https://www.reddit.com/submit?url=https%3A%2F%2Fqleanautomation.com%2Fblog%2Fdelivering-validation-docs-pharma-client.html&title=Delivering+Validation+Documentation+to+a+Pharma+Client" target="_blank" rel="noopener" class="share-link">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/></svg>
+          Share on Reddit
+        </a>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<section class="related">
+  <div class="related-inner">
+    <div class="related-label">Continue Reading</div>
+    <div class="related-grid">
+      <a href="validation-summary-report-guide.html" class="related-card">
+        <span class="rc-tag">&#128203; Project Management</span>
+        <div class="rc-title">Validation Summary Report — What It Must Contain</div>
+        <div class="rc-desc">The VSR is the anchor document of the handover package — it declares the validated state and summarises every activity. Here is what every section must cover.</div>
+        <div class="rc-footer"><span class="rc-read">7 MIN READ</span><span class="rc-arrow">&#8594;</span></div>
+      </a>
+      <a href="traceability-matrix-guide.html" class="related-card">
+        <span class="rc-tag">&#128196; GAMP 5 Theory</span>
+        <div class="rc-title">Traceability Matrix — How to Build and Maintain It</div>
+        <div class="rc-desc">One of the most scrutinised documents in the handover package. Here is how to build a TM that is complete, consistent, and navigable without manual cross-referencing.</div>
+        <div class="rc-footer"><span class="rc-read">7 MIN READ</span><span class="rc-arrow">&#8594;</span></div>
+      </a>
+      <a href="validation-documentation-pack-what-it-contains.html" class="related-card">
+        <span class="rc-tag">&#128203; Project Management</span>
+        <div class="rc-title">The Validation Documentation Pack — What It Contains</div>
+        <div class="rc-desc">A complete list of every document in a GAMP 5 validation package, its purpose, and where it sits in the V-model lifecycle — the full picture before you assemble the handover.</div>
+        <div class="rc-footer"><span class="rc-read">6 MIN READ</span><span class="rc-arrow">&#8594;</span></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="../index.html" class="nav-logo" style="text-decoration:none">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="7" fill="#0d0f12"/><rect x="8" y="7" width="16" height="16" rx="2" stroke="white" stroke-width="2.5" fill="none"/><line x1="20" y1="19" x2="26" y2="25" stroke="#0057FF" stroke-width="3" stroke-linecap="round"/></svg>
+          <span style="font-family:'Epilogue',sans-serif;font-weight:800;font-size:16px;color:#0d0f12;letter-spacing:-.03em">QLean <span style="font-weight:300;color:#5a6172">Automation</span></span>
+        </a>
+        <p>GMP validation documentation tools for automation engineers and system integrators.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Products</h4>
+        <ul>
+          <li><a href="../index.html#products">GAMP 5 Framework Pack</a></li>
+          <li><a href="../index.html#products">Technical Ebook</a></li>
+          <li><a href="../index.html#pricing">Pricing</a></li>
+          <li><a href="../index.html#faq">FAQ</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Knowledge Base</h4>
+        <ul>
+          <li><a href="blog-index.html">All Articles</a></li>
+          <li><a href="cluster-project-mgmt.html">Project Management</a></li>
+          <li><a href="validation-summary-report-guide.html">Validation Summary Report</a></li>
+          <li><a href="traceability-matrix-guide.html">Traceability Matrix</a></li>
+          <li><a href="qa-audit-system-integrator.html">QA Audit Guide</a></li>
+          <li><a href="validation-project-plan-system-integrator.html">Validation Project Plan</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="../index.html#framework">Framework</a></li>
+          <li><a href="../terms.html">Terms of Service</a></li>
+          <li><a href="../privacy.html">Privacy Policy</a></li>
+          <li><a href="mailto:hello@qleanautomation.com">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 QLean Automation. All rights reserved.</p>
+      <div class="compliance-pills">
+        <span class="cp">GAMP 5</span>
+        <span class="cp">EU GMP ANNEX 11</span>
+        <span class="cp">21 CFR PART 11</span>
+        <span class="cp">GXP</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+window.addEventListener('scroll',function(){
+  var s=document.getElementById('progress');
+  var h=document.documentElement;
+  var p=(h.scrollTop||document.body.scrollTop)/(h.scrollHeight-h.clientHeight)*100;
+  s.style.width=p+'%';
+});
+var tl=document.querySelectorAll('.toc-list a');
+window.addEventListener('scroll',function(){
+  var headings=document.querySelectorAll('.article-body h2[id]');
+  var scrollY=window.scrollY+120;
+  var current='';
+  headings.forEach(function(h){if(h.offsetTop<=scrollY)current=h.id;});
+  tl.forEach(function(a){
+    a.classList.remove('active');
+    if(a.getAttribute('href')==='#'+current)a.classList.add('active');
+  });
+});
+</script>
+</body>
+</html>

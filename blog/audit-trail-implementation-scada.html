@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-JJQ1TXZJX7"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-JJQ1TXZJX7');
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Building a Part 11 Audit Trail in Your SCADA System | QLean Automation</title>
+<meta name="description" content="A Part 11 audit trail is not a log file. It is a write-once, immutable record with specific required fields, verified by an adversarial SQL test in OQ. Here is how to design, implement, and test one that survives an FDA inspection.">
+<link rel="canonical" href="https://qleanautomation.com/blog/audit-trail-implementation-scada.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@300;400;500;600;700;800;900&family=Source+Sans+3:ital,wght@0,300;0,400;0,500;1,300&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--white:#ffffff;--off:#f7f8f9;--ink:#0d0f12;--ink2:#1e2128;--ink3:#3d4456;--ink4:#9199a8;--rule:#e2e5ea;--rule2:#c8cdd6;--blue:#0057ff;--blue2:#0044cc;--blue-dim:rgba(0,87,255,0.07);--green:#00875a;--green-dim:rgba(0,135,90,0.08);--amber:#d97706;--amber-dim:rgba(217,119,6,0.08);--red:#c0392b;--red-dim:rgba(192,57,43,0.08);--f-head:'Epilogue',sans-serif;--f-body:'Source Sans 3',sans-serif;--f-mono:'Roboto Mono',monospace;--shadow-sm:0 2px 8px rgba(13,15,18,0.06),0 1px 3px rgba(13,15,18,0.04)}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}body{background:var(--white);color:var(--ink);font-family:var(--f-body);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+nav{position:fixed;top:0;left:0;right:0;z-index:200;height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 6%;background:rgba(255,255,255,0.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--rule)}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;flex-shrink:0}
+.nav-links{display:flex;align-items:center;gap:36px;list-style:none}.nav-links a{font-size:14px;font-weight:400;color:var(--ink3);text-decoration:none;transition:color .2s}.nav-links a:hover{color:var(--ink)}
+.nav-btn{font-family:var(--f-body);font-size:13px;font-weight:500;padding:9px 20px;background:var(--blue);color:white;border:none;border-radius:6px;cursor:pointer;text-decoration:none;white-space:nowrap;flex-shrink:0}.nav-btn:hover{background:var(--blue2)}
+.progress-bar{position:fixed;top:64px;left:0;right:0;height:2px;background:var(--rule);z-index:199}.progress-fill{height:100%;background:var(--blue);width:0%}
+.article-hero{padding:120px 6% 64px;background:var(--white);border-bottom:1px solid var(--rule);position:relative;overflow:hidden}
+.article-hero::before{content:'';position:absolute;top:-80px;right:-80px;width:400px;height:400px;background:radial-gradient(circle,rgba(0,87,255,0.04) 0%,transparent 70%);pointer-events:none}
+.article-hero-inner{max-width:940px;margin:0 auto;position:relative;z-index:1}
+.breadcrumb{display:flex;align-items:center;gap:8px;font-family:var(--f-mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink4);margin-bottom:24px}.breadcrumb a{color:var(--ink4);text-decoration:none}.breadcrumb a:hover{color:var(--blue)}.breadcrumb span{color:var(--rule2)}
+.article-tag{display:inline-flex;align-items:center;gap:6px;font-family:var(--f-mono);font-size:10px;font-weight:500;color:var(--blue);letter-spacing:.1em;text-transform:uppercase;margin-bottom:20px;padding:4px 10px;background:var(--blue-dim);border-radius:4px}
+.article-hero h1{font-family:var(--f-head);font-size:clamp(30px,5vw,52px);font-weight:900;line-height:1.0;letter-spacing:-.04em;color:var(--ink);margin-bottom:20px}.article-hero h1 span{color:var(--blue)}
+.article-intro{font-size:18px;font-weight:400;color:var(--ink2);line-height:1.75;margin-bottom:32px;max-width:800px}
+.article-meta{display:flex;align-items:center;gap:24px;padding-top:24px;border-top:1px solid var(--rule);flex-wrap:wrap}
+.meta-author{display:flex;align-items:center;gap:10px}.author-avatar{width:36px;height:36px;border-radius:50%;background:var(--ink);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.author-name{font-size:13px;font-weight:500;color:var(--ink)}.author-role{font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.04em}
+.meta-divider{width:1px;height:28px;background:var(--rule)}.meta-stat{font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.06em}
+.article-wrap{max-width:1300px;margin:0 auto;padding:64px 6%;display:grid;grid-template-columns:1fr 300px;gap:60px;align-items:start}
+.article-body{min-width:0}
+.article-body h2{font-family:var(--f-head);font-size:26px;font-weight:800;letter-spacing:-.03em;color:var(--ink);margin:56px 0 16px;line-height:1.2}.article-body h2:first-child{margin-top:0}
+.article-body h3{font-family:var(--f-head);font-size:18px;font-weight:700;letter-spacing:-.02em;color:var(--ink);margin:32px 0 12px}
+.article-body p{font-size:16px;font-weight:400;color:var(--ink2);line-height:1.85;margin-bottom:20px}
+.article-body strong{color:var(--ink);font-weight:600}
+.article-body a{color:var(--blue);text-decoration:none;border-bottom:1px solid rgba(0,87,255,.25)}.article-body a:hover{border-color:var(--blue)}
+.callout{padding:20px 24px;border-radius:8px;margin:32px 0;border-left:3px solid}
+.callout.blue{background:var(--blue-dim);border-color:var(--blue)}.callout.amber{background:var(--amber-dim);border-color:var(--amber)}.callout.green{background:var(--green-dim);border-color:var(--green)}.callout.red{background:var(--red-dim);border-color:var(--red)}
+.callout-label{font-family:var(--f-mono);font-size:9px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px}.callout.blue .callout-label{color:var(--blue)}.callout.amber .callout-label{color:var(--amber)}.callout.green .callout-label{color:var(--green)}.callout.red .callout-label{color:var(--red)}
+.callout p{font-size:14px;color:var(--ink2);line-height:1.7;margin:0}.callout strong{color:var(--ink)}
+.article-img{width:100%;border-radius:8px;border:1px solid #1e2535;overflow:hidden;margin:36px 0}
+.article-img figcaption{padding:10px 14px;background:var(--off);font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.04em;border-top:1px solid var(--rule)}
+.arrow-list{list-style:none;display:flex;flex-direction:column;gap:8px;margin:16px 0 24px}
+.arrow-list li{display:flex;align-items:flex-start;gap:10px;font-size:15px;color:var(--ink2);line-height:1.6}
+.arrow-list li::before{content:'\2192';color:var(--blue);flex-shrink:0;font-size:12px;margin-top:3px}
+.checklist{list-style:none;display:flex;flex-direction:column;gap:8px;margin:20px 0 28px}
+.checklist li{display:flex;align-items:flex-start;gap:10px;font-size:15px;color:var(--ink2);line-height:1.6}
+.checklist li::before{content:'';width:16px;height:16px;flex-shrink:0;margin-top:3px;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 14 14' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='7' cy='7' r='6.5' fill='none' stroke='%230057ff' stroke-width='1'/%3E%3Cpath d='M4 7l2 2 4-4' stroke='%230057ff' stroke-width='1.3' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:center;background-size:contain}
+.table-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:28px 0}
+.compare-table{width:100%;border-collapse:collapse;font-size:14px}
+.compare-table th{font-family:var(--f-mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink4);padding:10px 16px;border-bottom:2px solid var(--rule);text-align:left;background:var(--off)}
+.compare-table td{padding:12px 16px;border-bottom:1px solid var(--rule);vertical-align:top;color:var(--ink2);line-height:1.6}
+.compare-table tr:last-child td{border-bottom:none}
+.compare-table td:first-child{font-weight:600;color:var(--ink);font-family:var(--f-mono);font-size:12px}
+.code-block{background:#0d0f12;border:1px solid #1e2535;border-radius:6px;padding:16px 20px;margin:20px 0;font-family:var(--f-mono);font-size:13px;line-height:1.6;color:rgba(255,255,255,0.7);overflow-x:auto}
+.code-block .comment{color:rgba(255,255,255,0.3)}
+.code-block .keyword{color:#6699ff}
+.code-block .string{color:#00c97a}
+.code-block .error{color:rgba(220,80,80,0.9)}
+.sidebar{position:sticky;top:88px;display:flex;flex-direction:column;gap:16px}
+.toc-card{border:1px solid var(--rule);border-radius:8px;padding:24px;background:var(--white);box-shadow:var(--shadow-sm)}
+.toc-label{font-family:var(--f-mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);margin-bottom:16px}
+.toc-list{list-style:none;display:flex;flex-direction:column;gap:2px}
+.toc-list a{display:block;font-size:13px;color:var(--ink3);text-decoration:none;padding:6px 10px;border-radius:4px;transition:all .15s;border-left:2px solid transparent}
+.toc-list a:hover,.toc-list a.active{color:var(--blue);background:var(--blue-dim);border-left-color:var(--blue)}
+.sidebar-cta{border:1px solid var(--blue);border-radius:8px;padding:24px;background:var(--blue-dim)}
+.sc-eyebrow{font-family:var(--f-mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);margin-bottom:10px}
+.sc-title{font-family:var(--f-head);font-size:17px;font-weight:800;letter-spacing:-.02em;color:var(--ink);margin-bottom:8px;line-height:1.2}
+.sc-body{font-size:13px;color:var(--ink3);line-height:1.6;margin-bottom:16px}
+.sc-btn{display:block;text-align:center;padding:11px 16px;background:var(--blue);color:white;border-radius:6px;font-family:var(--f-body);font-size:13px;font-weight:500;text-decoration:none}.sc-btn:hover{background:var(--blue2)}
+.sc-note{font-family:var(--f-mono);font-size:9px;color:var(--ink4);text-align:center;margin-top:8px;letter-spacing:.04em}
+.sidebar-share{border:1px solid var(--rule);border-radius:8px;padding:20px 24px;background:var(--white)}
+.share-label{font-family:var(--f-mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);margin-bottom:14px}
+.share-links{display:flex;flex-direction:column;gap:8px}
+.share-link{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--ink3);text-decoration:none;padding:9px 12px;border:1px solid var(--rule);border-radius:6px;transition:border-color .2s,color .2s}.share-link:hover{border-color:var(--blue);color:var(--blue)}
+.related{padding:64px 6%;border-top:1px solid var(--rule);background:var(--off)}
+.related-inner{max-width:1100px;margin:0 auto}
+.related-label{font-family:var(--f-mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);margin-bottom:32px;display:flex;align-items:center;gap:10px}
+.related-label::before{content:'';width:20px;height:1px;background:var(--blue)}
+.related-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.related-card{padding:24px;border:1px solid var(--rule);border-radius:8px;background:var(--white);box-shadow:var(--shadow-sm);transition:border-color .2s,transform .2s;text-decoration:none;display:flex;flex-direction:column;gap:12px}.related-card:hover{border-color:var(--blue);transform:translateY(-4px)}
+.rc-tag{font-family:var(--f-mono);font-size:9px;color:var(--blue);letter-spacing:.08em;text-transform:uppercase;padding:3px 8px;background:var(--blue-dim);border-radius:3px;align-self:flex-start}
+.rc-title{font-family:var(--f-head);font-size:16px;font-weight:700;letter-spacing:-.02em;color:var(--ink);line-height:1.25}
+.rc-desc{font-size:13px;color:var(--ink3);line-height:1.6;flex:1}
+.rc-footer{display:flex;align-items:center;justify-content:space-between;padding-top:12px;border-top:1px solid var(--rule)}
+.rc-read{font-family:var(--f-mono);font-size:10px;color:var(--ink4)}.rc-arrow{font-size:14px;color:var(--blue)}
+footer{padding:56px 6% 32px;border-top:1px solid var(--rule);background:var(--white)}
+.footer-inner{max-width:1160px;margin:0 auto}
+.footer-top{display:flex;justify-content:space-between;align-items:flex-start;gap:40px;flex-wrap:wrap;margin-bottom:48px}
+.footer-brand p{font-size:13px;font-weight:300;color:var(--ink3);margin-top:12px;max-width:260px;line-height:1.6}
+.footer-col h4{font-family:var(--f-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink4);margin-bottom:16px}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+.footer-col a{font-size:13px;color:var(--ink3);text-decoration:none}.footer-col a:hover{color:var(--blue)}
+.footer-bottom{padding-top:24px;border-top:1px solid var(--rule);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.footer-bottom p{font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.04em}
+.compliance-pills{display:flex;gap:6px;flex-wrap:wrap}
+.cp{font-family:var(--f-mono);font-size:9px;padding:3px 8px;border:1px solid var(--rule);border-radius:3px;color:var(--ink4);letter-spacing:.06em}
+@media(max-width:900px){.article-wrap{grid-template-columns:1fr;gap:48px}.sidebar{position:static}.related-grid{grid-template-columns:1fr}.table-scroll{margin:20px 0}}
+@media(max-width:900px){.nav-links{display:none}}
+@media(max-width:540px){nav{padding:0 4%}.nav-btn{font-size:12px;padding:8px 14px}}
+</style>
+</head>
+<body>
+
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+
+<nav>
+  <a href="../index.html" class="nav-logo">
+    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" style="flex-shrink:0"><rect width="32" height="32" rx="7" fill="#0d0f12"/><rect x="8" y="7" width="16" height="16" rx="2" stroke="white" stroke-width="2.5" fill="none"/><line x1="20" y1="19" x2="26" y2="25" stroke="#0057FF" stroke-width="3" stroke-linecap="round"/></svg>
+    <span style="font-family:'Epilogue',sans-serif;font-weight:800;font-size:16px;color:#0d0f12;letter-spacing:-.03em;white-space:nowrap">QLean <span style="font-weight:300;color:#5a6172">Automation</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="../index.html#products">Products</a></li>
+    <li><a href="../index.html#framework">Framework</a></li>
+    <li><a href="blog-index.html">Knowledge Base</a></li>
+    <li><a href="../index.html#pricing">Pricing</a></li>
+    <li><a href="../about.html">About</a></li>
+    <li><a href="../index.html#faq">FAQ</a></li>
+  </ul>
+  <a href="../index.html#pricing" class="nav-btn">Get the Framework &#8594;</a>
+</nav>
+
+<header class="article-hero">
+  <div class="article-hero-inner">
+    <div class="breadcrumb"><a href="../index.html">Home</a><span>/</span><a href="blog-index.html">Knowledge Base</a><span>/</span>Audit Trail Implementation in SCADA</div>
+    <div class="article-tag">&#128205; SCADA Engineering</div>
+    <h1>Building a Part 11 Audit Trail<br><span>in Your SCADA System</span></h1>
+    <p class="article-intro">A Part 11 audit trail is not a log file — it is a write-once, immutable record attributed to specific individuals, with an NTP-synchronised timestamp on every entry, verified in OQ by an adversarial SQL test that proves no one can alter it. Here is how to design, implement, and qualify one correctly.</p>
+    <div class="article-meta">
+      <div class="meta-author">
+        <div class="author-avatar"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="7" r="3.5" stroke="white" stroke-width="1.5"/><path d="M2.5 16c0-3.59 2.91-6.5 6.5-6.5s6.5 2.91 6.5 6.5" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+        <div><div class="author-name">QLean Automation</div><div class="author-role">ENGINEERS WHO BUILD SYSTEMS, NOT JUST SIGN THEM</div></div>
+      </div>
+      <div class="meta-divider"></div><div class="meta-stat">9 MIN READ</div>
+      <div class="meta-divider"></div><div class="meta-stat">21 CFR PART 11 &#183; SCADA &#183; DATA INTEGRITY</div>
+    </div>
+  </div>
+</header>
+
+<div class="article-wrap">
+  <article class="article-body">
+
+    <h2 id="what-makes-it-part11">What Makes an Audit Trail a Part 11 Audit Trail</h2>
+    <p>Most SCADA platforms generate some form of change log by default. InTouch, WinCC, Ignition, FactoryTalk — they all have built-in event logging. The gap between that default logging and a Part 11 compliant audit trail is wider than engineers usually expect, and getting it wrong at the design stage means rework after the FAT or deviations during the OQ.</p>
+    <p>21 CFR Part 11 §11.10(e) requires that audit trails be computer-generated, use secure, date and time-stamped entries that record operator actions, and that they be retained for a period at least as long as required for the associated electronic records. The word "secure" carries weight: it means the audit trail must be protected from modification after the fact — including by system administrators. A log file that an admin can edit, overwrite, or delete is not a Part 11 audit trail regardless of how comprehensive its contents are.</p>
+    <p>The design requirements flow from this: write-once architecture enforced at the database level, NTP-synchronised timestamps on every entry, individual user attribution on every entry, complete field capture for every GMP-critical action, and seven-year retention. Each of these must be specified in the FDS, implemented in the software as described in the SDS, and proven by specific OQ test cases. This article covers how to do each one.</p>
+
+    <h2 id="alcoa-plus">ALCOA+ — The Design Checklist</h2>
+    <p>The ALCOA+ framework is the cleanest way to structure the audit trail design requirements because it maps directly to Part 11 and Annex 11 obligations, and it gives the FDS author a specific function to describe for each principle. The <a href="21-cfr-part-11-audit-trail-checklist.html">full audit trail checklist</a> covers all requirements in detail; here we focus on the implementation.</p>
+
+    <div class="table-scroll">
+      <table class="compare-table">
+        <thead>
+          <tr><th>ALCOA+ Principle</th><th>Design Requirement</th><th>FDS Function</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Attributable</td><td>Every GMP action attributed to the authenticated individual who performed it — not a role, not a workstation, a named person</td><td>FUNC-DI-001 — unique accounts, user ID in every audit entry</td></tr>
+          <tr><td>Legible</td><td>Records stored in engineering units with labels — no raw A/D counts; exports preserve all fields including units and timestamps</td><td>FUNC-DI-003 — EGU labels, certified copy export format</td></tr>
+          <tr><td>Contemporaneous</td><td>NTP-synchronised timestamps ±30 seconds; NTP loss alarm within 60 seconds; parameter changes locked on sync loss</td><td>FUNC-DI-004 — NTP sync, drift lock, manual change controls</td></tr>
+          <tr><td>Original</td><td>Write-once SQL architecture — INSERT-only permission on AuditTrail table; no UPDATE or DELETE permitted by any account; no clear function in HMI</td><td>FUNC-DI-002 — write-once architecture, separate from process tables</td></tr>
+          <tr><td>Accurate</td><td>Calibrated instruments with traceable certificates; sensor cross-validation for critical measurements; calibration due date management</td><td>FUNC-DI-006 — calibration controls, OOT procedure</td></tr>
+          <tr><td>Complete</td><td>No data gaps; PLC buffer during historian outage; gap detection alarm; UPS power continuity</td><td>FUNC-DI-005 — data buffering, gap detection, backup integrity</td></tr>
+          <tr><td>Consistent</td><td>All timestamps from same NTP-synchronised source; all records use same field structure; same engineering units throughout</td><td>FUNC-DI-004 + typ_AuditEntry_GxP UDT enforces consistent structure</td></tr>
+          <tr><td>Enduring and Available</td><td>7-year total retention; online for 2 years; archived with full query capability; export function with no field omission</td><td>FUNC-DI-007 — retention, accessibility, export</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2 id="required-fields">The Six Required Fields — No Exceptions</h2>
+    <p>Every audit trail entry for a GMP-critical action must contain exactly six fields. This is not arbitrary — these six fields are what a QA reviewer or FDA inspector will look for when they query the audit trail during an inspection. A record missing any one of them is an incomplete record.</p>
+    <ul class="arrow-list">
+      <li><strong>User ID</strong> — the authenticated individual's unique identifier, not their role and not a generic account name. This is what "attributable" means in practice. If the user ID is "Operator" rather than "jsmith," the record is non-attributable.</li>
+      <li><strong>NTP-synchronised timestamp</strong> — in DD-MMM-YYYY HH:MM:SS format, generated by the system at the moment of the action, from the NTP-synchronised clock. Not user-entered. Not the workstation clock that may drift. From the server time source that is verified during qualification.</li>
+      <li><strong>Tag or parameter name</strong> — which specific parameter, setpoint, or system function was acted upon. "Conductivity High alarm setpoint" is a parameter name. "Setpoint" is not.</li>
+      <li><strong>Old value</strong> — the value before the change, in engineering units. This is what enables a reviewer to reconstruct the history of a parameter without cross-referencing other systems.</li>
+      <li><strong>New value</strong> — the value after the change, in engineering units with the unit label.</li>
+      <li><strong>Reason</strong> — for setpoint changes and other high-impact actions, a mandatory free-text entry by the user explaining why the change was made. The system must enforce this field — not optional, not skippable. Minimum character count (10 characters) enforced at the software level to prevent one-character placeholder entries.</li>
+    </ul>
+    <p>The six-field requirement is verified in OQ. The test case makes a setpoint change and then exports the audit trail entry for that change. The verifier confirms all six fields are present with the correct values. This is not a visual check — the exported data is attached as OQ evidence and each field is explicitly verified in the test record.</p>
+
+    <h2 id="write-once-architecture">Write-Once Architecture — How It Actually Works</h2>
+    <p>The "write-once" requirement is the one most likely to be misunderstood and most likely to generate a finding. A log file on disk is not write-once. A SCADA event log that an Administrator can clear is not write-once. Even a database table with no user-facing delete button is not write-once if an administrator can execute a DELETE query via a SQL client.</p>
+    <p>Write-once means enforced at the database engine level by SQL permissions. The SCADA application service account — the database user that the SCADA software uses to connect to the historian — has INSERT-only permission on the AuditTrail table. It can write new records. It cannot execute UPDATE or DELETE on existing records. No account that the SCADA application uses can alter a record after it has been written. Even the Database Administrator account on the SQL Server should not routinely have modification access to the GMP audit trail table — if that level of access is ever needed for legitimate maintenance, it requires a deviation, QA approval, and a complete audit trail of the access itself.</p>
+
+    <figure class="article-img">
+      <svg viewBox="0 0 720 230" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;background:#0d0f12;border-radius:8px 8px 0 0">
+        <text x="360" y="20" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(255,255,255,0.2)" letter-spacing="0.12em">WRITE-ONCE ARCHITECTURE &#8212; SQL PERMISSION MODEL</text>
+
+        <!-- SCADA App -->
+        <rect x="30" y="36" width="160" height="60" rx="6" fill="rgba(0,87,255,0.1)" stroke="rgba(0,87,255,0.35)" stroke-width="1.5"/>
+        <text x="110" y="60" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="10" fill="#6699ff">SCADA APPLICATION</text>
+        <text x="110" y="76" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10.5" fill="rgba(255,255,255,0.45)">Service account</text>
+        <text x="110" y="90" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10.5" fill="rgba(255,255,255,0.45)">(INSERT only)</text>
+
+        <!-- Arrow: SCADA → DB -->
+        <line x1="190" y1="66" x2="255" y2="66" stroke="#0057ff" stroke-width="1.5" marker-end="url(#a1)"/>
+        <defs><marker id="a1" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 Z" fill="#0057ff"/></marker></defs>
+        <text x="222" y="58" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(0,200,120,0.7)">INSERT &#10003;</text>
+
+        <!-- AuditTrail table -->
+        <rect x="256" y="30" width="200" height="136" rx="6" fill="rgba(0,135,90,0.08)" stroke="rgba(0,135,90,0.35)" stroke-width="1.5"/>
+        <rect x="256" y="30" width="200" height="24" rx="6" fill="rgba(0,135,90,0.2)"/>
+        <rect x="256" y="42" width="200" height="12" rx="0" fill="rgba(0,135,90,0.2)"/>
+        <text x="356" y="46" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="#00c97a">AuditTrail TABLE</text>
+        <text x="356" y="66" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8.5" fill="rgba(255,255,255,0.4)">UserID | Timestamp | Tag</text>
+        <text x="356" y="81" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8.5" fill="rgba(255,255,255,0.4)">OldVal | NewVal | Reason</text>
+        <line x1="272" y1="92" x2="440" y2="92" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+        <text x="356" y="108" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(0,200,120,0.6)">GRANT INSERT TO scada_svc</text>
+        <text x="356" y="122" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(192,57,43,0.6)">DENY UPDATE TO scada_svc</text>
+        <text x="356" y="136" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(192,57,43,0.6)">DENY DELETE TO scada_svc</text>
+        <text x="356" y="150" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(192,57,43,0.6)">DENY ALTER  TO scada_svc</text>
+
+        <!-- Blocked update attempt -->
+        <rect x="500" y="36" width="190" height="60" rx="6" fill="rgba(192,57,43,0.08)" stroke="rgba(192,57,43,0.3)" stroke-width="1.5"/>
+        <text x="595" y="56" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(220,80,80,0.8)">OQ ADVERSARIAL TEST</text>
+        <text x="595" y="72" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10.5" fill="rgba(255,255,255,0.45)">SQL UPDATE attempt</text>
+        <text x="595" y="86" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10.5" fill="rgba(255,255,255,0.45)">via SSMS &#8594; ERROR</text>
+
+        <!-- Arrow: attempt blocked -->
+        <line x1="500" y1="66" x2="458" y2="66" stroke="rgba(192,57,43,0.6)" stroke-width="1.5" marker-end="url(#a2)"/>
+        <defs><marker id="a2" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 Z" fill="rgba(192,57,43,0.8)"/></marker></defs>
+        <text x="480" y="58" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(192,57,43,0.7)">DENIED &#10007;</text>
+
+        <!-- No HMI delete -->
+        <rect x="30" y="136" width="160" height="50" rx="6" fill="rgba(217,119,6,0.07)" stroke="rgba(217,119,6,0.25)" stroke-width="1.5"/>
+        <text x="110" y="157" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(240,160,40,0.8)">SCADA HMI</text>
+        <text x="110" y="172" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10.5" fill="rgba(255,255,255,0.4)">No clear / delete</text>
+        <text x="110" y="184" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10.5" fill="rgba(255,255,255,0.4)">function for any role</text>
+
+        <!-- Retention -->
+        <rect x="256" y="180" width="200" height="40" rx="6" fill="rgba(0,87,255,0.06)" stroke="rgba(0,87,255,0.2)" stroke-width="1"/>
+        <text x="356" y="196" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8.5" fill="#6699ff">RETENTION: 2 YR ONLINE &#183; 7 YR TOTAL</text>
+        <text x="356" y="212" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8.5" fill="rgba(255,255,255,0.3)">Retained with associated process records</text>
+      </svg>
+      <figcaption>// WRITE-ONCE IS ENFORCED AT THE SQL PERMISSION LEVEL &#8212; NOT BY POLICY OR BY THE ABSENCE OF A UI BUTTON. THE OQ ADVERSARIAL TEST PROVES IT BY ATTEMPTING AN UPDATE AND CONFIRMING THE PERMISSION ERROR.</figcaption>
+    </figure>
+
+    <h2 id="what-to-capture">What Actions Must Generate Audit Trail Entries</h2>
+    <p>The FDS must explicitly list every action category that generates an audit trail entry. "All GMP-critical actions" is not a specification — it is an invitation for gaps. The following categories must be explicitly listed:</p>
+    <ul class="arrow-list">
+      <li><strong>Setpoint changes</strong> — every modification to any GMP-critical setpoint, with old value, new value, tag name, user ID, timestamp, and mandatory reason.</li>
+      <li><strong>Mode changes</strong> — transitions between Auto, Manual, and Maintenance modes, with reason.</li>
+      <li><strong>Sequence initiations</strong> — sanitization start, divert release, any operator-initiated automated sequence, with initiating user and reason.</li>
+      <li><strong>Alarm acknowledgements</strong> — every alarm acknowledgement, recording which alarm, who acknowledged it, and when.</li>
+      <li><strong>Alarm suppression</strong> — suppression activation and expiry, with suppressing user, reason, alarm tag, and suppression duration.</li>
+      <li><strong>User session events</strong> — login, logout, session timeout, failed login attempt, concurrent login block, account lockout.</li>
+      <li><strong>User account management</strong> — account creation, modification, role change, deletion, unlock.</li>
+      <li><strong>I/O force activation and removal</strong> — any PLC force applied, with the tag forced, forced value, applying user. Forces must clear before OQ closure.</li>
+      <li><strong>System events</strong> — NTP sync loss and restoration, backup failure, historian communication loss and recovery, CPU restart.</li>
+      <li><strong>Blocked actions</strong> — denied attempts must also be audit-trailed. An Operator attempting to modify a setpoint generates an audit trail entry recording the attempt, the denial, and the Operator's user ID. This is evidence that role enforcement is working.</li>
+    </ul>
+
+    <h2 id="the-adversarial-oq-test">The Adversarial OQ Test — Why It Matters</h2>
+    <p>The write-once architecture must be proven, not assumed. The OQ includes a mandatory adversarial test that most engineers have not encountered before their first pharma qualification: connect to the historian database using SQL Server Management Studio, identify a specific audit trail record created during earlier OQ testing, and attempt to modify it with a SQL UPDATE command.</p>
+    <p>The expected result is a permission error. The SQL UPDATE command fails. The record is unchanged. The test evidence is a screenshot of the error message and a screenshot confirming the record is unmodified.</p>
+
+    <div class="code-block">
+<span class="comment">-- OQ-021: Adversarial write-once test</span>
+<span class="comment">-- Connect as SCADA service account (INSERT-only permission)</span>
+<span class="keyword">UPDATE</span> AuditTrail
+<span class="keyword">SET</span> NewValue = <span class="string">'999'</span>
+<span class="keyword">WHERE</span> RecordID = [record from OQ-020]
+
+<span class="comment">-- Expected result:</span>
+<span class="error">Msg 229, Level 14, State 5
+The UPDATE permission was denied on the object 'AuditTrail'</span>
+
+<span class="comment">-- Confirm: original record unchanged</span>
+<span class="keyword">SELECT</span> * <span class="keyword">FROM</span> AuditTrail <span class="keyword">WHERE</span> RecordID = [same record]
+<span class="comment">-- NewValue must still show original value from OQ-020</span>
+    </div>
+
+    <p>The OQ also verifies that no clear or delete function exists in the SCADA HMI for any user role — including Administrator. The verifier navigates through all Administration screens while logged in as Administrator and confirms there is no "Clear Audit Trail," "Delete Records," or "Archive and Delete" button. The absence of this function is documented with screenshots of the Administrator screens. This closes the loop: write protection is enforced at both the database level (SQL permissions) and the application level (no delete UI for any role).</p>
+
+    <h2 id="separation-from-process-data">Separation from Process Data — A Critical Design Decision</h2>
+    <p>The audit trail must be stored in a separate database table from the process data historian. This is not a nice-to-have — it is an architectural requirement that prevents several failure modes.</p>
+    <p>If the audit trail records are interleaved with process historian records in the same table, a legitimate operation on the historian data — archiving old process data, purging records beyond the online retention window — could inadvertently affect audit trail records for the same time period. Keeping them separate means: process data can be managed according to its retention and archiving policy; audit trail records are subject to their own retention policy and can never be deleted as a side effect of process data management operations.</p>
+    <p>The SDS must explicitly state that the AuditTrail table is separate from the ProcessHistory table, define the separate SQL permission sets for each, and document that the retention management procedures (automated purge, archive) operate on ProcessHistory only and never touch AuditTrail.</p>
+
+    <h2 id="historian-vs-event-log">The Historian vs Windows Event Log — Where Records Live</h2>
+    <p>A common architectural mistake is to route security events — failed logins, account lockouts — to the Windows Event Log rather than the GMP historian. Windows Event Log is not a validated record store. It is not subject to the same retention requirements. It can be cleared by an Administrator. It is not queried by the same tools that QA uses to review audit trail data. And critically, it is typically on a different retention cycle from the GMP audit trail.</p>
+    <p>All security events — logins, failed logins, account lockouts, role changes — must be written to the same immutable GMP historian that captures setpoint changes and alarm acknowledgements. They should be queryable by the same interface, subject to the same seven-year retention, and protected by the same write-once architecture. The SDS must specify this explicitly; "security events are logged to Windows Event Log" is not an acceptable design for a Part 11 system.</p>
+
+    <div class="callout green">
+      <div class="callout-label">In the QLean Framework</div>
+      <p>The FDS (FDS-SYS-001) Section 9 maps all seven ALCOA+ principles to specific functional descriptions (FUNC-DI-001 through FUNC-DI-007). FUNC-DI-002 specifies the audit trail architecture: computer-generated, write-once, separate from process data tables, with the six required fields defined. The SDS (SDS-SYS-001) Section 7 specifies the SQL permission model for the SCADA service account (INSERT-only on AuditTrail) and the typ_AuditEntry_GxP UDT enforcing a consistent eight-field record structure including NTP-synchronised timestamp, user ID, tag name, old value, new value, engineering units, reason text, and event type. The OQ (OQ-SYS-001) contains OQ-020 (audit trail complete event capture — five distinct actions with all six fields verified) and OQ-021 (write-once adversarial test — SQL UPDATE attempt generating permission error, plus Administrator HMI screen verification confirming no delete function exists). Both are classified High risk. The historian tag configuration specifies that AuditTrail records are retained for the full seven-year period and are excluded from the automated process data purge job.</p>
+    </div>
+
+  </article>
+
+  <aside class="sidebar">
+    <div class="toc-card">
+      <div class="toc-label">In This Article</div>
+      <ul class="toc-list">
+        <li><a href="#what-makes-it-part11" class="active">What makes it a Part 11 audit trail</a></li>
+        <li><a href="#alcoa-plus">ALCOA+ design checklist</a></li>
+        <li><a href="#required-fields">The six required fields</a></li>
+        <li><a href="#write-once-architecture">Write-once architecture</a></li>
+        <li><a href="#what-to-capture">What actions must be captured</a></li>
+        <li><a href="#the-adversarial-oq-test">The adversarial OQ test</a></li>
+        <li><a href="#separation-from-process-data">Separation from process data</a></li>
+        <li><a href="#historian-vs-event-log">Historian vs Windows Event Log</a></li>
+      </ul>
+    </div>
+    <div class="sidebar-cta">
+      <div class="sc-eyebrow">QLean Framework</div>
+      <div class="sc-title">29 production-ready GAMP 5 documents</div>
+      <div class="sc-body">FDS ALCOA+ functional descriptions, SDS audit trail UDT with 8-field structure, and OQ-020/021 adversarial test cases — all included.</div>
+      <a href="../index.html#pricing" class="sc-btn">Get the Framework &#8212; &#8364;249 &#8594;</a>
+      <div class="sc-note">// INSTANT DOWNLOAD &#183; COMPANY-WIDE LICENCE</div>
+    </div>
+    <div class="sidebar-share">
+      <div class="share-label">Share This Article</div>
+      <div class="share-links">
+        <a href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fqleanautomation.com%2Fblog%2Faudit-trail-implementation-scada.html" target="_blank" rel="noopener" class="share-link">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          Share on LinkedIn
+        </a>
+        <a href="https://www.reddit.com/submit?url=https%3A%2F%2Fqleanautomation.com%2Fblog%2Faudit-trail-implementation-scada.html&title=Building+a+Part+11+Audit+Trail+in+Your+SCADA+System" target="_blank" rel="noopener" class="share-link">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/></svg>
+          Share on Reddit
+        </a>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<section class="related">
+  <div class="related-inner">
+    <div class="related-label">More Articles</div>
+    <div class="related-grid">
+      <a href="21-cfr-part-11-audit-trail-checklist.html" class="related-card">
+        <div class="rc-tag">&#128203; 21 CFR Part 11</div>
+        <div class="rc-title">Audit Trail Checklist for 21 CFR Part 11</div>
+        <div class="rc-desc">The full compliance checklist for every element of a Part 11 audit trail — structured as a pre-OQ review tool for your SCADA implementation.</div>
+        <div class="rc-footer"><div class="rc-read">7 MIN READ</div><div class="rc-arrow">&#8594;</div></div>
+      </a>
+      <a href="scada-user-management-part11.html" class="related-card">
+        <div class="rc-tag">&#128205; SCADA Engineering</div>
+        <div class="rc-title">SCADA User Management for 21 CFR Part 11</div>
+        <div class="rc-desc">The audit trail is only as good as the user attribution behind it. Here is how to design unique accounts, RBAC, and password policy so every audit entry is truly attributable.</div>
+        <div class="rc-footer"><div class="rc-read">7 MIN READ</div><div class="rc-arrow">&#8594;</div></div>
+      </a>
+      <a href="scada-historian-gmp-configuration.html" class="related-card">
+        <div class="rc-tag">&#128205; SCADA Engineering</div>
+        <div class="rc-title">SCADA Historian Configuration for GMP</div>
+        <div class="rc-desc">The historian is where the audit trail lives. Here is how to configure scan rates, retention policies, and data buffering so the audit trail stays complete.</div>
+        <div class="rc-footer"><div class="rc-read">8 MIN READ</div><div class="rc-arrow">&#8594;</div></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="../index.html" class="nav-logo">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none" style="flex-shrink:0"><rect width="32" height="32" rx="7" fill="#0d0f12"/><rect x="8" y="7" width="16" height="16" rx="2" stroke="white" stroke-width="2.5" fill="none"/><line x1="20" y1="19" x2="26" y2="25" stroke="#0057FF" stroke-width="3" stroke-linecap="round"/></svg>
+          <span style="font-family:'Epilogue',sans-serif;font-weight:800;font-size:16px;color:#0d0f12;letter-spacing:-.03em;white-space:nowrap">QLean <span style="font-weight:300;color:#5a6172">Automation</span></span>
+        </a>
+        <p>GMP documentation tools for system integrators and automation engineers entering pharmaceutical projects.</p>
+      </div>
+      <div class="footer-col"><h4>Products</h4><ul><li><a href="../index.html#framework">GAMP 5 Framework</a></li><li><a href="../index.html#products">Technical Masterclass</a></li></ul></div>
+      <div class="footer-col"><h4>Knowledge Base</h4><ul>
+        <li><a href="blog-index.html">All Articles</a></li>
+        <li><a href="21-cfr-part-11-audit-trail-checklist.html">Audit Trail Checklist</a></li>
+        <li><a href="21-cfr-part-11.html">21 CFR Part 11</a></li>
+        <li><a href="scada-user-management-part11.html">SCADA User Management</a></li>
+        <li><a href="scada-historian-gmp-configuration.html">SCADA Historian Config</a></li>
+        <li><a href="ntp-synchronisation-plc-part11.html">NTP for Part 11</a></li>
+        <li><a href="change-control-validated-system.html">Change Control</a></li>
+      </ul></div>
+      <div class="footer-col"><h4>Company</h4><ul><li><a href="https://www.linkedin.com/company/qlean-automation" target="_blank">LinkedIn</a></li><li><a href="mailto:hello@qleanautomation.com">Contact</a></li><li><a href="../terms.html">Terms</a></li></ul></div>
+    </div>
+    <div class="footer-bottom">
+      <p>&#169; 2026 QLEAN AUTOMATION &#183; QLEANAUTOMATION.COM</p>
+      <div class="compliance-pills"><span class="cp">21 CFR PART 11</span><span class="cp">EU ANNEX 11</span><span class="cp">ALCOA+</span><span class="cp">GAMP 5</span></div>
+    </div>
+  </div>
+</footer>
+
+<script>
+window.addEventListener('scroll',()=>{const d=document.documentElement;document.getElementById('progress').style.width=(d.scrollTop/(d.scrollHeight-d.clientHeight)*100)+'%'});
+const obs=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting){document.querySelectorAll('.toc-list a').forEach(l=>l.classList.remove('active'));const a=document.querySelector('.toc-list a[href="#'+x.target.id+'"]');if(a)a.classList.add('active')}})  ,{rootMargin:'-20% 0px -70% 0px'});
+document.querySelectorAll('[id]').forEach(s=>obs.observe(s));
+</script>
+</body>
+</html>

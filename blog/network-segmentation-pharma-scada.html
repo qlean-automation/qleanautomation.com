@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-JJQ1TXZJX7"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-JJQ1TXZJX7');
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Network Segmentation for Pharma SCADA — DMZ and Firewalls | QLean Automation</title>
+<meta name="description" content="Network segmentation on a pharma SCADA project means more than a VLAN. Here's how to design and document the DMZ, build a firewall rule set that satisfies IQ, and avoid the architecture mistakes that fail cybersecurity audits.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@300;400;500;600;700;800;900&family=Source+Sans+3:ital,wght@0,300;0,400;0,500;1,300&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--white:#ffffff;--off:#f7f8f9;--ink:#0d0f12;--ink2:#1e2128;--ink3:#3d4456;--ink4:#9199a8;--rule:#e2e5ea;--rule2:#c8cdd6;--blue:#0057ff;--blue2:#0044cc;--blue-dim:rgba(0,87,255,0.07);--green:#00875a;--green-dim:rgba(0,135,90,0.08);--amber:#d97706;--amber-dim:rgba(217,119,6,0.08);--red:#c0392b;--red-dim:rgba(192,57,43,0.08);--f-head:'Epilogue',sans-serif;--f-body:'Source Sans 3',sans-serif;--f-mono:'Roboto Mono',monospace;--shadow-sm:0 2px 8px rgba(13,15,18,0.06),0 1px 3px rgba(13,15,18,0.04)}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}body{background:var(--white);color:var(--ink);font-family:var(--f-body);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+nav{position:fixed;top:0;left:0;right:0;z-index:200;height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 6%;background:rgba(255,255,255,0.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--rule)}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;flex-shrink:0}
+.nav-links{display:flex;align-items:center;gap:36px;list-style:none}.nav-links a{font-size:14px;font-weight:400;color:var(--ink3);text-decoration:none;transition:color .2s}.nav-links a:hover{color:var(--ink)}
+.nav-btn{font-family:var(--f-body);font-size:13px;font-weight:500;padding:9px 20px;background:var(--blue);color:white;border:none;border-radius:6px;cursor:pointer;text-decoration:none;white-space:nowrap;flex-shrink:0}.nav-btn:hover{background:var(--blue2)}
+.progress-bar{position:fixed;top:64px;left:0;right:0;height:2px;background:var(--rule);z-index:199}.progress-fill{height:100%;background:var(--blue);width:0%}
+.article-hero{padding:120px 6% 64px;background:var(--white);border-bottom:1px solid var(--rule);position:relative;overflow:hidden}
+.article-hero::before{content:'';position:absolute;top:-80px;right:-80px;width:400px;height:400px;background:radial-gradient(circle,rgba(0,87,255,0.04) 0%,transparent 70%);pointer-events:none}
+.article-hero-inner{max-width:940px;margin:0 auto;position:relative;z-index:1}
+.breadcrumb{display:flex;align-items:center;gap:8px;font-family:var(--f-mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink4);margin-bottom:24px}.breadcrumb a{color:var(--ink4);text-decoration:none}.breadcrumb a:hover{color:var(--blue)}.breadcrumb span{color:var(--rule2)}
+.article-tag{display:inline-flex;align-items:center;gap:6px;font-family:var(--f-mono);font-size:10px;font-weight:500;color:var(--blue);letter-spacing:.1em;text-transform:uppercase;margin-bottom:20px;padding:4px 10px;background:var(--blue-dim);border-radius:4px}
+.article-hero h1{font-family:var(--f-head);font-size:clamp(30px,5vw,52px);font-weight:900;line-height:1.0;letter-spacing:-.04em;color:var(--ink);margin-bottom:20px}.article-hero h1 span{color:var(--blue)}
+.article-intro{font-size:18px;font-weight:400;color:var(--ink2);line-height:1.75;margin-bottom:32px;max-width:800px}
+.article-meta{display:flex;align-items:center;gap:24px;padding-top:24px;border-top:1px solid var(--rule);flex-wrap:wrap}
+.meta-author{display:flex;align-items:center;gap:10px}.author-avatar{width:36px;height:36px;border-radius:50%;background:var(--ink);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.author-name{font-size:13px;font-weight:500;color:var(--ink)}.author-role{font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.04em}
+.meta-divider{width:1px;height:28px;background:var(--rule)}.meta-stat{font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.06em}
+.article-wrap{max-width:1300px;margin:0 auto;padding:64px 6%;display:grid;grid-template-columns:1fr 300px;gap:60px;align-items:start}
+.article-body{min-width:0}
+.article-body h2{font-family:var(--f-head);font-size:26px;font-weight:800;letter-spacing:-.03em;color:var(--ink);margin:56px 0 16px;line-height:1.2}.article-body h2:first-child{margin-top:0}
+.article-body h3{font-family:var(--f-head);font-size:18px;font-weight:700;letter-spacing:-.02em;color:var(--ink);margin:32px 0 12px}
+.article-body p{font-size:16px;font-weight:400;color:var(--ink2);line-height:1.85;margin-bottom:20px}
+.article-body strong{color:var(--ink);font-weight:600}
+.article-body a{color:var(--blue);text-decoration:none;border-bottom:1px solid rgba(0,87,255,.25)}.article-body a:hover{border-color:var(--blue)}
+.callout{padding:20px 24px;border-radius:8px;margin:32px 0;border-left:3px solid}
+.callout.blue{background:var(--blue-dim);border-color:var(--blue)}.callout.amber{background:var(--amber-dim);border-color:var(--amber)}.callout.green{background:var(--green-dim);border-color:var(--green)}.callout.red{background:var(--red-dim);border-color:var(--red)}
+.callout-label{font-family:var(--f-mono);font-size:9px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px}.callout.blue .callout-label{color:var(--blue)}.callout.amber .callout-label{color:var(--amber)}.callout.green .callout-label{color:var(--green)}.callout.red .callout-label{color:var(--red)}
+.callout p{font-size:14px;color:var(--ink2);line-height:1.7;margin:0}.callout strong{color:var(--ink)}
+.article-img{width:100%;border-radius:8px;border:1px solid #1e2535;overflow:hidden;margin:36px 0}
+.article-img figcaption{padding:10px 14px;background:var(--off);font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.04em;border-top:1px solid var(--rule)}
+.arrow-list{list-style:none;display:flex;flex-direction:column;gap:8px;margin:16px 0 24px}
+.arrow-list li{display:flex;align-items:flex-start;gap:10px;font-size:15px;color:var(--ink2);line-height:1.6}
+.arrow-list li::before{content:'\2192';color:var(--blue);flex-shrink:0;font-size:12px;margin-top:3px}
+.checklist{list-style:none;display:flex;flex-direction:column;gap:8px;margin:20px 0 28px}
+.checklist li{display:flex;align-items:flex-start;gap:10px;font-size:15px;color:var(--ink2);line-height:1.6}
+.checklist li::before{content:'';width:16px;height:16px;flex-shrink:0;margin-top:3px;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 14 14' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='7' cy='7' r='6.5' fill='none' stroke='%230057ff' stroke-width='1'/%3E%3Cpath d='M4 7l2 2 4-4' stroke='%230057ff' stroke-width='1.3' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:center;background-size:contain}
+.table-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:28px 0}
+.compare-table{width:100%;border-collapse:collapse;font-size:14px}
+.compare-table th{font-family:var(--f-mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink4);padding:10px 16px;border-bottom:2px solid var(--rule);text-align:left;background:var(--off)}
+.compare-table td{padding:12px 16px;border-bottom:1px solid var(--rule);vertical-align:top;color:var(--ink2);line-height:1.6}
+.compare-table tr:last-child td{border-bottom:none}
+.compare-table td:first-child{font-weight:600;color:var(--ink);font-family:var(--f-mono);font-size:12px}
+.sidebar{position:sticky;top:88px;display:flex;flex-direction:column;gap:16px}
+.toc-card{border:1px solid var(--rule);border-radius:8px;padding:24px;background:var(--white);box-shadow:var(--shadow-sm)}
+.toc-label{font-family:var(--f-mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);margin-bottom:16px}
+.toc-list{list-style:none;display:flex;flex-direction:column;gap:2px}
+.toc-list a{display:block;font-size:13px;color:var(--ink3);text-decoration:none;padding:6px 10px;border-radius:4px;transition:all .15s;border-left:2px solid transparent}
+.toc-list a:hover,.toc-list a.active{color:var(--blue);background:var(--blue-dim);border-left-color:var(--blue)}
+.sidebar-cta{border:1px solid var(--blue);border-radius:8px;padding:24px;background:var(--blue-dim)}
+.sc-eyebrow{font-family:var(--f-mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);margin-bottom:10px}
+.sc-title{font-family:var(--f-head);font-size:17px;font-weight:800;letter-spacing:-.02em;color:var(--ink);margin-bottom:8px;line-height:1.2}
+.sc-body{font-size:13px;color:var(--ink3);line-height:1.6;margin-bottom:16px}
+.sc-btn{display:block;text-align:center;padding:11px 16px;background:var(--blue);color:white;border-radius:6px;font-family:var(--f-body);font-size:13px;font-weight:500;text-decoration:none}.sc-btn:hover{background:var(--blue2)}
+.sc-note{font-family:var(--f-mono);font-size:9px;color:var(--ink4);text-align:center;margin-top:8px;letter-spacing:.04em}
+.sidebar-share{border:1px solid var(--rule);border-radius:8px;padding:20px 24px;background:var(--white)}
+.share-label{font-family:var(--f-mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);margin-bottom:14px}
+.share-links{display:flex;flex-direction:column;gap:8px}
+.share-link{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--ink3);text-decoration:none;padding:9px 12px;border:1px solid var(--rule);border-radius:6px;transition:border-color .2s,color .2s}.share-link:hover{border-color:var(--blue);color:var(--blue)}
+.related{padding:64px 6%;border-top:1px solid var(--rule);background:var(--off)}
+.related-inner{max-width:1100px;margin:0 auto}
+.related-label{font-family:var(--f-mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);margin-bottom:32px;display:flex;align-items:center;gap:10px}
+.related-label::before{content:'';width:20px;height:1px;background:var(--blue)}
+.related-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.related-card{padding:24px;border:1px solid var(--rule);border-radius:8px;background:var(--white);box-shadow:var(--shadow-sm);transition:border-color .2s,transform .2s;text-decoration:none;display:flex;flex-direction:column;gap:12px}.related-card:hover{border-color:var(--blue);transform:translateY(-4px)}
+.rc-tag{font-family:var(--f-mono);font-size:9px;color:var(--blue);letter-spacing:.08em;text-transform:uppercase;padding:3px 8px;background:var(--blue-dim);border-radius:3px;align-self:flex-start}
+.rc-title{font-family:var(--f-head);font-size:16px;font-weight:700;letter-spacing:-.02em;color:var(--ink);line-height:1.25}
+.rc-desc{font-size:13px;color:var(--ink3);line-height:1.6;flex:1}
+.rc-footer{display:flex;align-items:center;justify-content:space-between;padding-top:12px;border-top:1px solid var(--rule)}
+.rc-read{font-family:var(--f-mono);font-size:10px;color:var(--ink4)}.rc-arrow{font-size:14px;color:var(--blue)}
+footer{padding:56px 6% 32px;border-top:1px solid var(--rule);background:var(--white)}
+.footer-inner{max-width:1160px;margin:0 auto}
+.footer-top{display:flex;justify-content:space-between;align-items:flex-start;gap:40px;flex-wrap:wrap;margin-bottom:48px}
+.footer-brand p{font-size:13px;font-weight:300;color:var(--ink3);margin-top:12px;max-width:260px;line-height:1.6}
+.footer-col h4{font-family:var(--f-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink4);margin-bottom:16px}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+.footer-col a{font-size:13px;color:var(--ink3);text-decoration:none}.footer-col a:hover{color:var(--blue)}
+.footer-bottom{padding-top:24px;border-top:1px solid var(--rule);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.footer-bottom p{font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.04em}
+.compliance-pills{display:flex;gap:6px;flex-wrap:wrap}
+.cp{font-family:var(--f-mono);font-size:9px;padding:3px 8px;border:1px solid var(--rule);border-radius:3px;color:var(--ink4);letter-spacing:.06em}
+@media(max-width:900px){.article-wrap{grid-template-columns:1fr;gap:48px}.sidebar{position:static}.related-grid{grid-template-columns:1fr}.table-scroll{margin:20px 0}}
+@media(max-width:900px){.nav-links{display:none}}
+@media(max-width:540px){nav{padding:0 4%}.nav-btn{font-size:12px;padding:8px 14px}}
+</style>
+</head>
+<body>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+<nav>
+  <a href="../index.html" class="nav-logo">
+    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" style="flex-shrink:0"><rect width="32" height="32" rx="7" fill="#0d0f12"/><rect x="8" y="7" width="16" height="16" rx="2" stroke="white" stroke-width="2.5" fill="none"/><line x1="20" y1="19" x2="26" y2="25" stroke="#0057FF" stroke-width="3" stroke-linecap="round"/></svg>
+    <span style="font-family:'Epilogue',sans-serif;font-weight:800;font-size:16px;color:#0d0f12;letter-spacing:-.03em;white-space:nowrap">QLean <span style="font-weight:300;color:#5a6172">Automation</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="../index.html#products">Products</a></li>
+    <li><a href="../index.html#framework">Framework</a></li>
+    <li><a href="blog-index.html">Knowledge Base</a></li>
+    <li><a href="../index.html#pricing">Pricing</a></li>
+    <li><a href="../about.html">About</a></li>
+    <li><a href="../index.html#faq">FAQ</a></li>
+  </ul>
+  <a href="../index.html#pricing" class="nav-btn">Get the Framework &#8594;</a>
+</nav>
+
+<header class="article-hero">
+  <div class="article-hero-inner">
+    <div class="breadcrumb"><a href="../index.html">Home</a><span>/</span><a href="blog-index.html">Knowledge Base</a><span>/</span>Network Segmentation for Pharma SCADA</div>
+    <div class="article-tag">&#128225; Network &amp; Infrastructure</div>
+    <h1>Network Segmentation<br><span>for Pharma SCADA</span><br>DMZ and Firewalls</h1>
+    <p class="article-intro">A VLAN on a switch is not network segmentation — it is a starting point. Proper segmentation for a pharma SCADA means a DMZ between the OT and IT worlds, a firewall rule set specific enough for an IQ team to verify line by line, and a documented architecture that a cybersecurity auditor can trace from the URS requirement to the as-built configuration. Here is how to design and document it.</p>
+    <div class="article-meta">
+      <div class="meta-author">
+        <div class="author-avatar"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="7" r="3.5" stroke="white" stroke-width="1.5"/><path d="M2.5 16c0-3.59 2.91-6.5 6.5-6.5s6.5 2.91 6.5 6.5" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+        <div><div class="author-name">QLean Automation</div><div class="author-role">ENGINEERS WHO BUILD SYSTEMS, NOT JUST SIGN THEM</div></div>
+      </div>
+      <div class="meta-divider"></div><div class="meta-stat">8 MIN READ</div>
+      <div class="meta-divider"></div><div class="meta-stat">NETWORK &#183; FIREWALL &#183; DMZ &#183; IEC 62443</div>
+    </div>
+  </div>
+</header>
+
+<div class="article-wrap">
+  <article class="article-body">
+
+    <h2 id="segmentation-vs-isolation">Segmentation vs Isolation — The Right Goal</h2>
+    <p>The goal of network segmentation on a pharma SCADA project is not to make the OT network completely unreachable from the outside world — that is isolation, and it is rarely achievable or even desirable. The goal is <strong>controlled connectivity</strong>: every communication path between the OT network and any other network is explicitly defined, approved, documented, and verified. Anything not explicitly permitted is blocked by default. That is the principle that Annex 11 §12 requires and that IEC 62443 formalises as the zone-and-conduit model.</p>
+    <p>In practice this means your pharma SCADA project needs to answer three questions with engineering documentation: What zones exist and what is in each zone? What conduits — approved communication paths — exist between zones? What is the mechanism that enforces those conduits and blocks everything else? The answers live in the HDS, and they are verified at IQ. If you cannot answer all three questions with specific, verifiable statements, your segmentation design is not complete.</p>
+
+    <div class="callout blue">
+      <div class="callout-label">Zone and Conduit — The IEC 62443 Language</div>
+      <p>IEC 62443-3-2 defines a <strong>zone</strong> as a grouping of assets with common security requirements, and a <strong>conduit</strong> as a communication path between zones. For a pharma project: your OT supervision zone (SCADA, historian) and your OT control zone (PLC) are two separate zones. The OPC-UA connection between the SCADA server and the PLC is a conduit. That conduit has a specific source, destination, protocol, port, and direction — and those specifics are what the firewall rule set implements and the IQ verifies. GAMP 5 2nd Edition explicitly references IEC 62443 as the recommended cybersecurity framework for computerised systems in GMP environments.</p>
+    </div>
+
+    <h2 id="dmz-architecture">DMZ Architecture — Two Firewalls, One Buffer Zone</h2>
+    <p>A DMZ (demilitarised zone) is a network segment that sits between two firewalls — an outer firewall facing the corporate IT network and an inner firewall protecting the OT network. Devices in the DMZ can communicate (in a controlled way) with both sides, but a device on the corporate network cannot pass directly through the DMZ into the OT network. It must stop at the DMZ boundary.</p>
+    <p>This two-firewall architecture is the minimum standard for pharma OT systems that have any connectivity to corporate IT — which includes practically every system that reports data to LIMS, ERP, or a remote monitoring platform. A single firewall between OT and IT is not sufficient because a misconfiguration or compromise of that single device gives an attacker direct access to the OT network.</p>
+
+    <figure class="article-img">
+      <svg viewBox="0 0 720 320" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;background:#0d0f12;border-radius:8px 8px 0 0">
+        <text x="360" y="18" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(255,255,255,0.2)" letter-spacing="0.12em">DMZ ARCHITECTURE — TWO-FIREWALL MODEL</text>
+
+        <!-- Corporate IT -->
+        <rect x="12" y="28" width="148" height="270" rx="4" fill="rgba(100,100,100,0.06)" stroke="rgba(150,150,150,0.2)" stroke-width="1" stroke-dasharray="4 3"/>
+        <text x="86" y="46" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(200,200,200,0.35)" letter-spacing="0.08em">CORPORATE IT</text>
+        <rect x="26" y="58" width="120" height="24" rx="3" fill="rgba(100,100,100,0.1)" stroke="rgba(150,150,150,0.2)" stroke-width="1"/>
+        <text x="86" y="74" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(200,200,200,0.5)">Corporate LAN</text>
+        <rect x="26" y="90" width="120" height="24" rx="3" fill="rgba(100,100,100,0.1)" stroke="rgba(150,150,150,0.2)" stroke-width="1"/>
+        <text x="86" y="106" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(200,200,200,0.5)">ERP / LIMS clients</text>
+        <rect x="26" y="122" width="120" height="24" rx="3" fill="rgba(100,100,100,0.1)" stroke="rgba(150,150,150,0.2)" stroke-width="1"/>
+        <text x="86" y="138" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(200,200,200,0.5)">Remote users</text>
+
+        <!-- Outer Firewall -->
+        <rect x="172" y="90" width="72" height="120" rx="4" fill="rgba(0,87,255,0.12)" stroke="rgba(0,87,255,0.5)" stroke-width="1.5"/>
+        <text x="208" y="144" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(0,87,255,0.9)" letter-spacing="0.06em" writing-mode="tb" transform="rotate(-90,208,150)">OUTER FIREWALL</text>
+        <text x="208" y="195" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7" fill="rgba(0,87,255,0.5)">FW-EXT</text>
+
+        <!-- Arrow IT to FW -->
+        <line x1="160" y1="163" x2="172" y2="163" stroke="rgba(0,87,255,0.4)" stroke-width="1.5" marker-end="url(#arr)"/>
+
+        <!-- DMZ -->
+        <rect x="256" y="28" width="208" height="270" rx="4" fill="rgba(0,87,255,0.05)" stroke="rgba(0,87,255,0.25)" stroke-width="1.5"/>
+        <text x="360" y="46" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(0,87,255,0.5)" letter-spacing="0.1em">DMZ ZONE</text>
+        <rect x="272" y="60" width="176" height="28" rx="3" fill="rgba(0,87,255,0.08)" stroke="rgba(0,87,255,0.25)" stroke-width="1"/>
+        <text x="360" y="78" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(100,160,255,0.8)">Data Replication Server</text>
+        <rect x="272" y="96" width="176" height="28" rx="3" fill="rgba(0,87,255,0.08)" stroke="rgba(0,87,255,0.25)" stroke-width="1"/>
+        <text x="360" y="114" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(100,160,255,0.8)">VPN / Jump Host</text>
+        <rect x="272" y="132" width="176" height="28" rx="3" fill="rgba(0,87,255,0.08)" stroke="rgba(0,87,255,0.25)" stroke-width="1"/>
+        <text x="360" y="150" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(100,160,255,0.8)">Patch Distribution Server</text>
+        <rect x="272" y="168" width="176" height="28" rx="3" fill="rgba(0,87,255,0.08)" stroke="rgba(0,87,255,0.25)" stroke-width="1"/>
+        <text x="360" y="186" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(100,160,255,0.8)">LIMS / ERP Interface</text>
+
+        <!-- Inner Firewall -->
+        <rect x="476" y="90" width="72" height="120" rx="4" fill="rgba(0,87,255,0.12)" stroke="rgba(0,87,255,0.5)" stroke-width="1.5"/>
+        <text x="512" y="144" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(0,87,255,0.9)" letter-spacing="0.06em" writing-mode="tb" transform="rotate(-90,512,150)">INNER FIREWALL</text>
+        <text x="512" y="195" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7" fill="rgba(0,87,255,0.5)">FW-OT</text>
+
+        <!-- OT Zone -->
+        <rect x="560" y="28" width="148" height="270" rx="4" fill="rgba(0,180,100,0.06)" stroke="rgba(0,180,100,0.3)" stroke-width="1.5"/>
+        <text x="634" y="46" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(0,200,120,0.5)" letter-spacing="0.08em">OT ZONE</text>
+        <rect x="574" y="58" width="120" height="24" rx="3" fill="rgba(0,180,100,0.08)" stroke="rgba(0,180,100,0.2)" stroke-width="1"/>
+        <text x="634" y="74" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(0,200,120,0.6)">SCADA Server</text>
+        <rect x="574" y="90" width="120" height="24" rx="3" fill="rgba(0,180,100,0.08)" stroke="rgba(0,180,100,0.2)" stroke-width="1"/>
+        <text x="634" y="106" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(0,200,120,0.6)">Historian</text>
+        <rect x="574" y="122" width="120" height="24" rx="3" fill="rgba(0,180,100,0.08)" stroke="rgba(0,180,100,0.2)" stroke-width="1"/>
+        <text x="634" y="138" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(0,200,120,0.6)">HMI Stations</text>
+        <rect x="574" y="154" width="120" height="24" rx="3" fill="rgba(192,57,43,0.08)" stroke="rgba(192,57,43,0.25)" stroke-width="1"/>
+        <text x="634" y="170" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(220,80,80,0.6)">PLC (ctrl VLAN)</text>
+
+        <!-- Connection arrows -->
+        <defs><marker id="arr" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="rgba(0,87,255,0.5)"/></marker></defs>
+        <line x1="244" y1="150" x2="256" y2="150" stroke="rgba(0,87,255,0.4)" stroke-width="1.5" marker-end="url(#arr)"/>
+        <line x1="464" y1="150" x2="476" y2="150" stroke="rgba(0,87,255,0.4)" stroke-width="1.5" marker-end="url(#arr)"/>
+        <line x1="548" y1="150" x2="560" y2="150" stroke="rgba(0,87,255,0.4)" stroke-width="1.5" marker-end="url(#arr)"/>
+
+        <!-- Direction labels -->
+        <text x="360" y="255" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(0,87,255,0.4)" letter-spacing="0.08em">READ-ONLY / OUTBOUND PUSH ONLY</text>
+        <text x="360" y="270" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(200,200,200,0.3)">DMZ devices never initiate connections INTO the OT zone</text>
+
+        <!-- Two-firewall label -->
+        <rect x="165" y="272" width="390" height="18" rx="3" fill="rgba(0,87,255,0.06)" stroke="rgba(0,87,255,0.2)" stroke-width="1"/>
+        <text x="360" y="284" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7" fill="rgba(0,87,255,0.5)" letter-spacing="0.08em">TWO SEPARATE PHYSICAL FIREWALL APPLIANCES — DIFFERENT VENDORS PREFERRED</text>
+      </svg>
+      <figcaption>TWO-FIREWALL DMZ ARCHITECTURE &#183; The outer firewall controls IT-to-DMZ access. The inner firewall controls DMZ-to-OT access. No direct path from corporate IT to OT zone exists.</figcaption>
+    </figure>
+
+    <h2 id="what-lives-in-the-dmz">What Lives in the DMZ — and What Does Not</h2>
+    <p>The DMZ is not a dumping ground for anything that needs to talk to both networks. Every device placed in the DMZ increases the attack surface and requires its own firewall rules. The devices that belong in a pharma OT DMZ are specific and their function is well-defined.</p>
+
+    <p><strong>Data replication / historian mirror server.</strong> This server receives read-only process data pushed from the OT historian and makes it available to the corporate LIMS or reporting systems. The keyword is push — the OT historian initiates the outbound connection into the DMZ; the DMZ server never reaches into the OT network to pull data. This is a fundamental security principle: OT-initiated outbound connections to a DMZ buffer are acceptable; IT-initiated inbound connections to OT are not.</p>
+
+    <p><strong>VPN concentrator / jump host for remote access.</strong> All remote access to the OT network must route through a jump host in the DMZ. No direct VPN tunnel from a corporate or external network into the OT zone. The jump host authenticates the remote user, logs the session start and end, and provides a controlled gateway. The <a href="remote-access-pharma-scada.html">remote access implementation for pharma SCADA</a> requires this architecture to satisfy Annex 11 §12.</p>
+
+    <p><strong>Patch distribution server.</strong> Operating system and antivirus patches for OT workstations are pulled from this DMZ server rather than from the internet or corporate patch management infrastructure. The OT workstations initiate the connection outbound to the DMZ patch server — they never connect to the internet or corporate network directly.</p>
+
+    <p>What does <em>not</em> belong in the DMZ: production databases, historian primary servers, SCADA application servers, engineering workstations. If a device holds GMP data or can modify control system configuration, it belongs in the OT zone, not the DMZ.</p>
+
+    <h2 id="building-the-firewall-rule-set">Building the Firewall Rule Set for IQ</h2>
+    <p>The firewall rule set is the document that turns network architecture intent into verifiable engineering. On a pharma project, the rule set is part of the HDS — specifically HDS Section 7.3 — and every rule must be specific enough for an IQ verifier to check it against the live firewall configuration. A rule that says "permit OPC-UA traffic" is not verifiable. A rule that says "FW-RULE-007: TCP 4840 inbound from 192.168.20.10 (SCADA server) to 192.168.10.5 (PLC), permitted" is verifiable.</p>
+
+    <div class="table-scroll">
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th>Rule ID</th>
+            <th>Direction</th>
+            <th>Source</th>
+            <th>Destination</th>
+            <th>Protocol / Port</th>
+            <th>Action</th>
+            <th>Justification</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>FW-RULE-001</td>
+            <td>OT &#8594; DMZ</td>
+            <td>Historian (192.168.20.20)</td>
+            <td>DMZ Replication Server</td>
+            <td>TCP 1433</td>
+            <td>PERMIT</td>
+            <td>Historian data push to LIMS mirror — outbound OT initiated</td>
+          </tr>
+          <tr>
+            <td>FW-RULE-002</td>
+            <td>DMZ &#8594; OT</td>
+            <td>Any DMZ device</td>
+            <td>OT Supervision VLAN</td>
+            <td>Any</td>
+            <td>DENY</td>
+            <td>Default deny — DMZ never initiates inbound to OT</td>
+          </tr>
+          <tr>
+            <td>FW-RULE-003</td>
+            <td>OT &#8594; DMZ</td>
+            <td>OT-SUP VLAN</td>
+            <td>DMZ Patch Server</td>
+            <td>TCP 8530</td>
+            <td>PERMIT</td>
+            <td>WSUS patch pull — OT workstations initiate outbound</td>
+          </tr>
+          <tr>
+            <td>FW-RULE-004</td>
+            <td>DMZ &#8594; OT</td>
+            <td>Jump Host (DMZ)</td>
+            <td>Eng. Workstation (OT-MGMT VLAN)</td>
+            <td>TCP 3389 (RDP)</td>
+            <td>PERMIT</td>
+            <td>Remote access via approved jump host only — logged sessions</td>
+          </tr>
+          <tr>
+            <td>FW-RULE-005</td>
+            <td>Corp IT &#8594; DMZ</td>
+            <td>Corporate LAN</td>
+            <td>DMZ Replication Server</td>
+            <td>TCP 1433</td>
+            <td>PERMIT</td>
+            <td>LIMS read access to historian mirror — read-only</td>
+          </tr>
+          <tr>
+            <td>FW-RULE-006</td>
+            <td>Corp IT &#8594; OT</td>
+            <td>Any corporate device</td>
+            <td>Any OT device</td>
+            <td>Any</td>
+            <td>DENY</td>
+            <td>Default deny — no direct corporate-to-OT path</td>
+          </tr>
+          <tr>
+            <td>FW-RULE-007</td>
+            <td>OT Internal</td>
+            <td>SCADA Server (OT-SUP)</td>
+            <td>PLC (OT-CTRL VLAN)</td>
+            <td>TCP 4840 (OPC-UA)</td>
+            <td>PERMIT</td>
+            <td>SCADA-PLC communication — specific host pair only</td>
+          </tr>
+          <tr>
+            <td>FW-RULE-008</td>
+            <td>OT Internal</td>
+            <td>OT-CTRL VLAN</td>
+            <td>OT-SUP VLAN</td>
+            <td>Any except TCP 4840</td>
+            <td>DENY</td>
+            <td>Default deny on inter-VLAN — only permitted OPC-UA conduit allowed</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>The table above shows the pattern. Every rule has a reference ID that appears in both the HDS and the IQ verification protocol. The IQ verifier matches each rule ID to the live firewall configuration and records the result. FW-RULE-006 and FW-RULE-002 are the critical deny rules — they are what make the segmentation meaningful. Without explicit default-deny rules, permitted rules alone are not sufficient.</p>
+
+    <h2 id="default-deny-principle">The Default-Deny Principle</h2>
+    <p>Every firewall managing OT network boundaries must be configured on a default-deny basis: everything is blocked unless explicitly permitted. This is not the default configuration on most firewalls — many ship with permissive defaults. On a pharma project the IQ must verify that the firewall policy base ends with an explicit deny-all rule and that this rule is documented in the HDS.</p>
+    <p>The practical implication is that when a new interface is required between systems — say the site decides to add a data connection from the historian to a new reporting platform — that connection cannot be enabled by reconfiguring the application. It requires a change control that produces a new firewall rule, an updated HDS, and an IQ reverification of the firewall configuration. This is intentional friction — it makes every new network path a deliberate, documented decision rather than an ad-hoc IT configuration change. The <a href="change-control-validated-system.html">change control process for validated systems</a> must explicitly address network topology changes as requiring HDS amendment and partial re-IQ.</p>
+
+    <div class="callout amber">
+      <div class="callout-label">What Auditors Check First</div>
+      <p>During an Annex 11 cybersecurity inspection, the first network questions are typically: Can you show me a network diagram? Can you show me the firewall rule set? Can you show me the IQ evidence that the segmentation was verified? If the network diagram is outdated, the firewall rules are undocumented, or the IQ evidence shows a connectivity test that was never performed — those are findings. The most common finding is a network that was correctly designed and correctly built but never formally verified against the design documentation. The IQ is the verification step, and it must be executed, not assumed.</p>
+    </div>
+
+    <h2 id="open-closed-systems-connection">Connection to Open vs Closed Systems</h2>
+    <p>The segmentation architecture you choose directly determines your <a href="21-cfr-part-11-open-vs-closed-systems.html">21 CFR Part 11 open vs closed system classification</a>. A closed system is one where access is controlled by the system owners — typically a system where all users are employees of the operating company and the network is not reachable from outside the controlled environment. An open system is one where system access is not so controlled — typically any system with external network connectivity.</p>
+    <p>If your pharma SCADA has a DMZ connection to a LIMS that is accessible from outside the facility, you may have an open system classification under 21 CFR Part 11, which carries additional requirements. The network architecture documentation needs to be clear about which systems are on which side of which boundary, because the Part 11 classification drives your access control and audit trail requirements.</p>
+
+    <h2 id="what-iq-connectivity-tests-look-like">What IQ Connectivity Tests Look Like</h2>
+    <p>The IQ network verification is not just reviewing documentation — it involves active testing. The IQ team must demonstrate that the firewall rules work as documented. For each critical deny rule, a test must be performed: a device on the source side attempts a connection to the destination side, and the result (blocked) is recorded with the source IP, destination IP, port, and timestamp.</p>
+
+    <ul class="checklist">
+      <li>Corporate laptop pings SCADA server IP — result must be: no response / destination host unreachable</li>
+      <li>Corporate laptop attempts TCP port 4840 to PLC IP — result must be: connection refused or timed out</li>
+      <li>DMZ replication server attempts inbound SQL connection to historian primary — result must be: blocked at inner firewall</li>
+      <li>SCADA server attempts OPC-UA connection to PLC — result must be: connection established (permitted conduit positive test)</li>
+      <li>Firewall rule base exported and compared to HDS Section 7.3 rule table — all rules present, no additional undocumented rules</li>
+    </ul>
+
+    <p>That last check — verifying there are no undocumented rules — is important. Firewall rule bases accumulate temporary rules, test rules, and legacy permits over time. At IQ the rule base must match the HDS exactly. Any rule present in the firewall but absent from the HDS is an undocumented conduit and a potential finding.</p>
+
+    <div class="callout green">
+      <div class="callout-label">In the QLean Framework</div>
+      <p>HDS-SYS-001 Section 7 contains the complete network security architecture, including Section 7.1 (Network Topology Summary with zone table and segregation mechanisms) and Section 7.3 (Firewall Rule Set — a numbered table with rule ID, direction, source zone, destination zone, protocol, port, action, and justification for every rule). The IQ-SYS-001 protocol references these rules by ID in the cybersecurity verification section. Each firewall rule in HDS Section 7.3 has a corresponding IQ test step that records the as-found configuration against the HDS specification.</p>
+    </div>
+
+    <h2 id="segmentation-and-the-scada-historian">Segmentation and the SCADA Historian — The Data Path</h2>
+    <p>Understanding the data path through the segmented network is essential for getting the firewall rules right. When you <a href="scada-historian-gmp-configuration.html">configure the SCADA historian for GMP</a>, the historian server lives in the OT supervision zone. The data it holds is the source of truth for audit trails and batch records. Any connection path that allows a corporate-side device to write to the historian database is a data integrity risk.</p>
+    <p>The correct architecture is: historian primary in the OT zone (read-write, protected); historian mirror or replication target in the DMZ (read-only replica, refreshed by push from OT); LIMS and ERP connect to the DMZ mirror only, never to the OT primary. This means the firewall rules for historian access always permit outbound push from OT to DMZ and deny inbound connections from DMZ to the OT historian. If your firewall rule set does not reflect this pattern, your historian primary is reachable from the corporate network and your data integrity controls are incomplete.</p>
+
+  </article>
+
+  <aside class="sidebar">
+    <div class="toc-card">
+      <div class="toc-label">In This Article</div>
+      <ul class="toc-list">
+        <li><a href="#segmentation-vs-isolation">Segmentation vs Isolation</a></li>
+        <li><a href="#dmz-architecture">DMZ Architecture</a></li>
+        <li><a href="#what-lives-in-the-dmz">What Lives in the DMZ</a></li>
+        <li><a href="#building-the-firewall-rule-set">Building the Firewall Rule Set</a></li>
+        <li><a href="#default-deny-principle">The Default-Deny Principle</a></li>
+        <li><a href="#open-closed-systems-connection">Open vs Closed Systems</a></li>
+        <li><a href="#what-iq-connectivity-tests-look-like">IQ Connectivity Tests</a></li>
+        <li><a href="#segmentation-and-the-scada-historian">Segmentation and the Historian</a></li>
+      </ul>
+    </div>
+
+    <div class="sidebar-cta">
+      <div class="sc-eyebrow">QLean Framework</div>
+      <div class="sc-title">29 production-ready GAMP 5 documents</div>
+      <div class="sc-body">HDS-SYS-001 includes the firewall rule set template with numbered rules, zone table, and conduit definitions — structured so every rule maps directly to an IQ verification step.</div>
+      <a href="../index.html#pricing" class="sc-btn">Get the Framework &#8594;</a>
+      <div class="sc-note">SINGLE LICENCE &#183; IMMEDIATE DOWNLOAD</div>
+    </div>
+
+    <div class="sidebar-share">
+      <div class="share-label">Share This Article</div>
+      <div class="share-links">
+        <a href="https://www.linkedin.com/sharing/share-offsite/?url=https://qleanautomation.com/blog/network-segmentation-pharma-scada.html" target="_blank" rel="noopener" class="share-link">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          Share on LinkedIn
+        </a>
+        <a href="https://reddit.com/submit?url=https://qleanautomation.com/blog/network-segmentation-pharma-scada.html&title=Network%20Segmentation%20for%20Pharma%20SCADA%20%E2%80%94%20DMZ%20and%20Firewalls" target="_blank" rel="noopener" class="share-link">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/></svg>
+          Share on Reddit
+        </a>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<section class="related">
+  <div class="related-inner">
+    <div class="related-label">Continue Reading</div>
+    <div class="related-grid">
+      <a href="ot-network-architecture-pharma.html" class="related-card">
+        <span class="rc-tag">&#128225; Network</span>
+        <div class="rc-title">OT Network Architecture for Pharma — The Purdue Model in Practice</div>
+        <div class="rc-desc">How the Purdue Model maps to real hardware, what zones and VLAN assignments look like in the HDS, and what the IQ team verifies on-site.</div>
+        <div class="rc-footer"><span class="rc-read">8 MIN READ</span><span class="rc-arrow">&#8594;</span></div>
+      </a>
+      <a href="cybersecurity-pharma-ot-iec62443.html" class="related-card">
+        <span class="rc-tag">&#128225; Network</span>
+        <div class="rc-title">Cybersecurity in Pharma OT — IEC 62443 and GAMP 5</div>
+        <div class="rc-desc">How IEC 62443 and GAMP 5 2nd Edition align on cybersecurity for pharma OT systems, and what the zone-and-conduit model means for your risk assessment and IQ.</div>
+        <div class="rc-footer"><span class="rc-read">9 MIN READ</span><span class="rc-arrow">&#8594;</span></div>
+      </a>
+      <a href="21-cfr-part-11-open-vs-closed-systems.html" class="related-card">
+        <span class="rc-tag">&#9878;&#65039; 21 CFR Part 11</span>
+        <div class="rc-title">21 CFR Part 11 Open vs Closed Systems</div>
+        <div class="rc-desc">How your network architecture determines whether your system is classified as open or closed under Part 11, and what the classification changes about your compliance requirements.</div>
+        <div class="rc-footer"><span class="rc-read">7 MIN READ</span><span class="rc-arrow">&#8594;</span></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="../index.html" class="nav-logo" style="text-decoration:none">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="7" fill="#0d0f12"/><rect x="8" y="7" width="16" height="16" rx="2" stroke="white" stroke-width="2.5" fill="none"/><line x1="20" y1="19" x2="26" y2="25" stroke="#0057FF" stroke-width="3" stroke-linecap="round"/></svg>
+          <span style="font-family:'Epilogue',sans-serif;font-weight:800;font-size:16px;color:#0d0f12;letter-spacing:-.03em">QLean <span style="font-weight:300;color:#5a6172">Automation</span></span>
+        </a>
+        <p>GMP validation documentation tools for automation engineers and system integrators.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Products</h4>
+        <ul>
+          <li><a href="../index.html#products">GAMP 5 Framework Pack</a></li>
+          <li><a href="../index.html#products">Technical Ebook</a></li>
+          <li><a href="../index.html#pricing">Pricing</a></li>
+          <li><a href="../index.html#faq">FAQ</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Knowledge Base</h4>
+        <ul>
+          <li><a href="blog-index.html">All Articles</a></li>
+          <li><a href="cluster-network.html">Network &amp; Infrastructure</a></li>
+          <li><a href="ot-network-architecture-pharma.html">OT Network Architecture</a></li>
+          <li><a href="cybersecurity-pharma-ot-iec62443.html">Cybersecurity OT</a></li>
+          <li><a href="ot-network-iq-documentation.html">Network IQ Documentation</a></li>
+          <li><a href="industrial-firewall-configuration-pharma.html">Industrial Firewall Config</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="../index.html#framework">Framework</a></li>
+          <li><a href="../terms.html">Terms of Service</a></li>
+          <li><a href="../privacy.html">Privacy Policy</a></li>
+          <li><a href="mailto:hello@qleanautomation.com">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 QLean Automation. All rights reserved.</p>
+      <div class="compliance-pills">
+        <span class="cp">GAMP 5</span>
+        <span class="cp">EU GMP ANNEX 11</span>
+        <span class="cp">21 CFR PART 11</span>
+        <span class="cp">IEC 62443</span>
+        <span class="cp">ICH Q9(R1)</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+window.addEventListener('scroll',function(){
+  var s=document.getElementById('progress');
+  var h=document.documentElement;
+  var p=(h.scrollTop||document.body.scrollTop)/(h.scrollHeight-h.clientHeight)*100;
+  s.style.width=p+'%';
+});
+var tl=document.querySelectorAll('.toc-list a');
+window.addEventListener('scroll',function(){
+  var headings=document.querySelectorAll('.article-body h2[id]');
+  var scrollY=window.scrollY+120;
+  var current='';
+  headings.forEach(function(h){if(h.offsetTop<=scrollY)current=h.id;});
+  tl.forEach(function(a){
+    a.classList.remove('active');
+    if(a.getAttribute('href')==='#'+current)a.classList.add('active');
+  });
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-JJQ1TXZJX7"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-JJQ1TXZJX7');
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Writing GMP-Compliant PLC Code in IEC 61131-3 | QLean Automation</title>
+<meta name="description" content="IEC 61131-3 defines five PLC programming languages. GMP compliance doesn't mandate which one you use — but it does mandate how you use it. Here's what makes PLC code reviewable, traceable, and defensible in a pharma qualification.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@300;400;500;600;700;800;900&family=Source+Sans+3:ital,wght@0,300;0,400;0,500;1,300&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--white:#ffffff;--off:#f7f8f9;--ink:#0d0f12;--ink2:#1e2128;--ink3:#3d4456;--ink4:#9199a8;--rule:#e2e5ea;--rule2:#c8cdd6;--blue:#0057ff;--blue2:#0044cc;--blue-dim:rgba(0,87,255,0.07);--green:#00875a;--green-dim:rgba(0,135,90,0.08);--amber:#d97706;--amber-dim:rgba(217,119,6,0.08);--f-head:'Epilogue',sans-serif;--f-body:'Source Sans 3',sans-serif;--f-mono:'Roboto Mono',monospace;--shadow-sm:0 2px 8px rgba(13,15,18,0.06),0 1px 3px rgba(13,15,18,0.04)}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}body{background:var(--white);color:var(--ink);font-family:var(--f-body);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+nav{position:fixed;top:0;left:0;right:0;z-index:200;height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 6%;background:rgba(255,255,255,0.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--rule)}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;flex-shrink:0}
+.nav-links{display:flex;align-items:center;gap:36px;list-style:none}.nav-links a{font-size:14px;font-weight:400;color:var(--ink3);text-decoration:none;transition:color .2s}.nav-links a:hover{color:var(--ink)}
+.nav-btn{font-family:var(--f-body);font-size:13px;font-weight:500;padding:9px 20px;background:var(--blue);color:white;border:none;border-radius:6px;cursor:pointer;text-decoration:none;white-space:nowrap;flex-shrink:0}.nav-btn:hover{background:var(--blue2)}
+.progress-bar{position:fixed;top:64px;left:0;right:0;height:2px;background:var(--rule);z-index:199}.progress-fill{height:100%;background:var(--blue);width:0%}
+.article-hero{padding:120px 6% 64px;background:var(--white);border-bottom:1px solid var(--rule);position:relative;overflow:hidden}
+.article-hero::before{content:'';position:absolute;top:-80px;right:-80px;width:400px;height:400px;background:radial-gradient(circle,rgba(0,87,255,0.04) 0%,transparent 70%);pointer-events:none}
+.article-hero-inner{max-width:940px;margin:0 auto;position:relative;z-index:1}
+.breadcrumb{display:flex;align-items:center;gap:8px;font-family:var(--f-mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink4);margin-bottom:24px}.breadcrumb a{color:var(--ink4);text-decoration:none}.breadcrumb a:hover{color:var(--blue)}.breadcrumb span{color:var(--rule2)}
+.article-tag{display:inline-flex;align-items:center;gap:6px;font-family:var(--f-mono);font-size:10px;font-weight:500;color:var(--blue);letter-spacing:.1em;text-transform:uppercase;margin-bottom:20px;padding:4px 10px;background:var(--blue-dim);border-radius:4px}
+.article-hero h1{font-family:var(--f-head);font-size:clamp(30px,5vw,52px);font-weight:900;line-height:1.0;letter-spacing:-.04em;color:var(--ink);margin-bottom:20px}.article-hero h1 span{color:var(--blue)}
+.article-intro{font-size:18px;font-weight:400;color:var(--ink2);line-height:1.75;margin-bottom:32px;max-width:800px}
+.article-meta{display:flex;align-items:center;gap:24px;padding-top:24px;border-top:1px solid var(--rule);flex-wrap:wrap}
+.meta-author{display:flex;align-items:center;gap:10px}.author-avatar{width:36px;height:36px;border-radius:50%;background:var(--ink);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.author-name{font-size:13px;font-weight:500;color:var(--ink)}.author-role{font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.04em}
+.meta-divider{width:1px;height:28px;background:var(--rule)}.meta-stat{font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.06em}
+.article-wrap{max-width:1300px;margin:0 auto;padding:64px 6%;display:grid;grid-template-columns:1fr 300px;gap:60px;align-items:start}
+.article-body{min-width:0}
+.article-body h2{font-family:var(--f-head);font-size:26px;font-weight:800;letter-spacing:-.03em;color:var(--ink);margin:56px 0 16px;line-height:1.2}.article-body h2:first-child{margin-top:0}
+.article-body h3{font-family:var(--f-head);font-size:18px;font-weight:700;letter-spacing:-.02em;color:var(--ink);margin:32px 0 12px}
+.article-body p{font-size:16px;font-weight:400;color:var(--ink2);line-height:1.85;margin-bottom:20px}
+.article-body strong{color:var(--ink);font-weight:600}
+.article-body a{color:var(--blue);text-decoration:none;border-bottom:1px solid rgba(0,87,255,.25)}.article-body a:hover{border-color:var(--blue)}
+.callout{padding:20px 24px;border-radius:8px;margin:32px 0;border-left:3px solid}
+.callout.blue{background:var(--blue-dim);border-color:var(--blue)}.callout.amber{background:var(--amber-dim);border-color:var(--amber)}.callout.green{background:var(--green-dim);border-color:var(--green)}
+.callout-label{font-family:var(--f-mono);font-size:9px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px}.callout.blue .callout-label{color:var(--blue)}.callout.amber .callout-label{color:var(--amber)}.callout.green .callout-label{color:var(--green)}
+.callout p{font-size:14px;color:var(--ink2);line-height:1.7;margin:0}.callout strong{color:var(--ink)}
+.article-img{width:100%;border-radius:8px;border:1px solid #1e2535;overflow:hidden;margin:36px 0}
+.article-img figcaption{padding:10px 14px;background:var(--off);font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.04em;border-top:1px solid var(--rule)}
+.arrow-list{list-style:none;display:flex;flex-direction:column;gap:8px;margin:16px 0 24px}
+.arrow-list li{display:flex;align-items:flex-start;gap:10px;font-size:15px;color:var(--ink2);line-height:1.6}
+.arrow-list li::before{content:'\2192';color:var(--blue);flex-shrink:0;font-size:12px;margin-top:3px}
+.checklist{list-style:none;display:flex;flex-direction:column;gap:8px;margin:20px 0 28px}
+.checklist li{display:flex;align-items:flex-start;gap:10px;font-size:15px;color:var(--ink2);line-height:1.6}
+.checklist li::before{content:'';width:16px;height:16px;flex-shrink:0;margin-top:3px;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 14 14' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='7' cy='7' r='6.5' fill='none' stroke='%230057ff' stroke-width='1'/%3E%3Cpath d='M4 7l2 2 4-4' stroke='%230057ff' stroke-width='1.3' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:center;background-size:contain}
+.mono-block{background:var(--ink);border-radius:8px;padding:20px 24px;margin:24px 0;font-family:var(--f-mono);font-size:12px;color:rgba(255,255,255,.85);line-height:1.8;overflow-x:auto}
+.mono-block .label{color:rgba(255,255,255,.35);font-size:10px;letter-spacing:.1em;margin-bottom:10px;display:block}
+.mono-block .hi{color:#6699ff}.mono-block .val{color:#33cc80}.mono-block .dim{color:rgba(255,255,255,.5)}.mono-block .warn{color:rgba(217,119,6,0.9)}
+.table-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:28px 0}
+.compare-table{width:100%;border-collapse:collapse;font-size:14px}
+.compare-table th{font-family:var(--f-mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink4);padding:10px 16px;border-bottom:2px solid var(--rule);text-align:left;background:var(--off)}
+.compare-table td{padding:12px 16px;border-bottom:1px solid var(--rule);vertical-align:top;color:var(--ink2);line-height:1.6}
+.compare-table tr:last-child td{border-bottom:none}
+.compare-table td:first-child{font-weight:600;color:var(--ink);font-family:var(--f-mono);font-size:12px}
+.sidebar{position:sticky;top:88px;display:flex;flex-direction:column;gap:16px}
+.toc-card{border:1px solid var(--rule);border-radius:8px;padding:24px;background:var(--white);box-shadow:var(--shadow-sm)}
+.toc-label{font-family:var(--f-mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);margin-bottom:16px}
+.toc-list{list-style:none;display:flex;flex-direction:column;gap:2px}
+.toc-list a{display:block;font-size:13px;color:var(--ink3);text-decoration:none;padding:6px 10px;border-radius:4px;transition:all .15s;border-left:2px solid transparent}
+.toc-list a:hover,.toc-list a.active{color:var(--blue);background:var(--blue-dim);border-left-color:var(--blue)}
+.sidebar-cta{border:1px solid var(--blue);border-radius:8px;padding:24px;background:var(--blue-dim)}
+.sc-eyebrow{font-family:var(--f-mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);margin-bottom:10px}
+.sc-title{font-family:var(--f-head);font-size:17px;font-weight:800;letter-spacing:-.02em;color:var(--ink);margin-bottom:8px;line-height:1.2}
+.sc-body{font-size:13px;color:var(--ink3);line-height:1.6;margin-bottom:16px}
+.sc-btn{display:block;text-align:center;padding:11px 16px;background:var(--blue);color:white;border-radius:6px;font-family:var(--f-body);font-size:13px;font-weight:500;text-decoration:none}.sc-btn:hover{background:var(--blue2)}
+.sc-note{font-family:var(--f-mono);font-size:9px;color:var(--ink4);text-align:center;margin-top:8px;letter-spacing:.04em}
+.sidebar-share{border:1px solid var(--rule);border-radius:8px;padding:20px 24px;background:var(--white)}
+.share-label{font-family:var(--f-mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);margin-bottom:14px}
+.share-links{display:flex;flex-direction:column;gap:8px}
+.share-link{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--ink3);text-decoration:none;padding:9px 12px;border:1px solid var(--rule);border-radius:6px;transition:border-color .2s,color .2s}.share-link:hover{border-color:var(--blue);color:var(--blue)}
+.related{padding:64px 6%;border-top:1px solid var(--rule);background:var(--off)}
+.related-inner{max-width:1100px;margin:0 auto}
+.related-label{font-family:var(--f-mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);margin-bottom:32px;display:flex;align-items:center;gap:10px}
+.related-label::before{content:'';width:20px;height:1px;background:var(--blue)}
+.related-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.related-card{padding:24px;border:1px solid var(--rule);border-radius:8px;background:var(--white);box-shadow:var(--shadow-sm);transition:border-color .2s,transform .2s;text-decoration:none;display:flex;flex-direction:column;gap:12px}.related-card:hover{border-color:var(--blue);transform:translateY(-4px)}
+.rc-tag{font-family:var(--f-mono);font-size:9px;color:var(--blue);letter-spacing:.08em;text-transform:uppercase;padding:3px 8px;background:var(--blue-dim);border-radius:3px;align-self:flex-start}
+.rc-title{font-family:var(--f-head);font-size:16px;font-weight:700;letter-spacing:-.02em;color:var(--ink);line-height:1.25}
+.rc-desc{font-size:13px;color:var(--ink3);line-height:1.6;flex:1}
+.rc-footer{display:flex;align-items:center;justify-content:space-between;padding-top:12px;border-top:1px solid var(--rule)}
+.rc-read{font-family:var(--f-mono);font-size:10px;color:var(--ink4)}.rc-arrow{font-size:14px;color:var(--blue)}
+footer{padding:56px 6% 32px;border-top:1px solid var(--rule);background:var(--white)}
+.footer-inner{max-width:1160px;margin:0 auto}
+.footer-top{display:flex;justify-content:space-between;align-items:flex-start;gap:40px;flex-wrap:wrap;margin-bottom:48px}
+.footer-brand p{font-size:13px;font-weight:300;color:var(--ink3);margin-top:12px;max-width:260px;line-height:1.6}
+.footer-col h4{font-family:var(--f-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink4);margin-bottom:16px}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+.footer-col a{font-size:13px;color:var(--ink3);text-decoration:none}.footer-col a:hover{color:var(--blue)}
+.footer-bottom{padding-top:24px;border-top:1px solid var(--rule);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.footer-bottom p{font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.04em}
+.compliance-pills{display:flex;gap:6px;flex-wrap:wrap}
+.cp{font-family:var(--f-mono);font-size:9px;padding:3px 8px;border:1px solid var(--rule);border-radius:3px;color:var(--ink4);letter-spacing:.06em}
+@media(max-width:900px){.article-wrap{grid-template-columns:1fr;gap:48px}.sidebar{position:static}.related-grid{grid-template-columns:1fr}.table-scroll{margin:20px 0}}
+@media(max-width:900px){.nav-links{display:none}}
+@media(max-width:540px){nav{padding:0 4%}.nav-btn{font-size:12px;padding:8px 14px}}
+</style>
+</head>
+<body>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+<nav>
+  <a href="../index.html" class="nav-logo">
+    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" style="flex-shrink:0"><rect width="32" height="32" rx="7" fill="#0d0f12"/><rect x="8" y="7" width="16" height="16" rx="2" stroke="white" stroke-width="2.5" fill="none"/><line x1="20" y1="19" x2="26" y2="25" stroke="#0057FF" stroke-width="3" stroke-linecap="round"/></svg>
+    <span style="font-family:'Epilogue',sans-serif;font-weight:800;font-size:16px;color:#0d0f12;letter-spacing:-.03em;white-space:nowrap">QLean <span style="font-weight:300;color:#5a6172">Automation</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="../index.html#products">Products</a></li>
+    <li><a href="../index.html#framework">Framework</a></li>
+    <li><a href="blog-index.html">Knowledge Base</a></li>
+    <li><a href="../index.html#pricing">Pricing</a></li>
+    <li><a href="../about.html">About</a></li>
+    <li><a href="../index.html#faq">FAQ</a></li>
+  </ul>
+  <a href="../index.html#pricing" class="nav-btn">Get the Framework →</a>
+</nav>
+
+<header class="article-hero">
+  <div class="article-hero-inner">
+    <div class="breadcrumb"><a href="../index.html">Home</a><span>/</span><a href="blog-index.html">Knowledge Base</a><span>/</span>IEC 61131-3 for GMP</div>
+    <div class="article-tag">⚙️ PLC Engineering</div>
+    <h1>Writing GMP-Compliant<br><span>PLC Code in IEC 61131-3</span></h1>
+    <p class="article-intro">IEC 61131-3 defines five programming languages for PLCs. GMP compliance doesn't mandate which one you use — but it does mandate how you use it. The difference between code that passes a pharma code review and code that generates ten findings isn't the language. It's the discipline applied to structure, documentation, and the specific practices that make logic reviewable and testable.</p>
+    <div class="article-meta">
+      <div class="meta-author">
+        <div class="author-avatar"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="7" r="3.5" stroke="white" stroke-width="1.5"/><path d="M2.5 16c0-3.59 2.91-6.5 6.5-6.5s6.5 2.91 6.5 6.5" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+        <div><div class="author-name">QLean Automation</div><div class="author-role">ENGINEERS WHO BUILD SYSTEMS, NOT JUST SIGN THEM</div></div>
+      </div>
+      <div class="meta-divider"></div><div class="meta-stat">8 MIN READ</div>
+      <div class="meta-divider"></div><div class="meta-stat">PLC · IEC 61131-3 · GAMP 5</div>
+    </div>
+  </div>
+</header>
+
+<div class="article-wrap">
+  <article class="article-body">
+
+    <h2 id="what-gmp-adds">What GMP Adds to Normal Coding Practice</h2>
+    <p>IEC 61131-3 is a manufacturing standard — it defines syntax, semantics, and programming models for PLC languages, but says nothing about pharmaceutical compliance. GAMP 5 is a validation framework — it defines what evidence you need to demonstrate a system is fit for its intended use, but doesn't specify how you write a function block. GMP-compliant PLC code sits at the intersection: it must satisfy the programming discipline that IEC 61131-3 enables and the evidential requirements that GAMP 5 demands.</p>
+    <p>In practice, GMP adds four requirements on top of normal good coding practice:</p>
+    <ul class="arrow-list">
+      <li><strong>Traceability</strong> — every function block and every piece of logic must be linkable back to a requirement in the FDS. Code that cannot be traced to a requirement is either scope creep or a gap in the FDS, and either is a finding.</li>
+      <li><strong>Reviewability</strong> — the code must be structured and commented such that a reviewer who did not write it can verify, rung by rung or block by block, that it implements the FDS correctly. Terse, uncommented code fails the review regardless of whether it works.</li>
+      <li><strong>Testability</strong> — every GxP-critical function must be individually testable, which means isolatable. Logic that is deeply entangled — where a single rung affects three different process outcomes — cannot be cleanly tested against a specific acceptance criterion.</li>
+      <li><strong>Change safety</strong> — the code must be structured such that a future change through <a href="change-control-validated-system.html">change control</a> can be made with bounded, predictable impact. Spaghetti logic where changing one thing has unpredictable effects elsewhere is a long-term validation liability.</li>
+    </ul>
+
+    <h2 id="language-selection">Language Selection — The GMP Perspective</h2>
+    <p>IEC 61131-3 defines five languages: Ladder Diagram (LD), Function Block Diagram (FBD), Structured Text (ST), Instruction List (IL — deprecated in the 3rd edition), and Sequential Function Chart (SFC). On most modern platforms — TIA Portal, Studio 5000, Codesys — you can mix languages within a project, using each for the type of logic it is best suited to. That is also the GMP-preferred approach, because it aligns each language with its reviewability advantage.</p>
+
+    <figure class="article-img">
+      <svg viewBox="0 0 720 230" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;background:#0d0f12;border-radius:8px 8px 0 0">
+        <text x="360" y="18" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(255,255,255,0.2)" letter-spacing="0.12em">IEC 61131-3 LANGUAGE SELECTION FOR GMP</text>
+
+        <!-- LD -->
+        <rect x="12" y="28" width="134" height="185" rx="4" fill="rgba(0,87,255,0.08)" stroke="rgba(0,87,255,0.3)" stroke-width="1.5"/>
+        <text x="79" y="48" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="#6699ff" letter-spacing="0.06em">LADDER (LD)</text>
+        <rect x="22" y="58" width="114" height="1" fill="rgba(255,255,255,0.08)"/>
+        <text x="79" y="74" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="11" fill="rgba(0,160,255,0.8)">Best for:</text>
+        <text x="79" y="90" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10.5" fill="rgba(255,255,255,0.55)">Discrete I/O logic</text>
+        <text x="79" y="106" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10.5" fill="rgba(255,255,255,0.55)">Interlocks</text>
+        <text x="79" y="122" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10.5" fill="rgba(255,255,255,0.55)">Motor/valve control</text>
+        <text x="79" y="142" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10.5" fill="rgba(0,201,122,0.7)">QA-familiar</text>
+        <text x="79" y="158" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10.5" fill="rgba(0,201,122,0.7)">Visual logic flow</text>
+        <text x="79" y="178" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(0,201,122,0.5)">PREFERRED FOR</text>
+        <text x="79" y="192" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(0,201,122,0.5)">INTERLOCK REVIEW</text>
+
+        <!-- FBD -->
+        <rect x="155" y="28" width="134" height="185" rx="4" fill="rgba(0,87,255,0.05)" stroke="rgba(0,87,255,0.2)" stroke-width="1"/>
+        <text x="222" y="48" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="#6699ff" letter-spacing="0.06em">FBD</text>
+        <rect x="165" y="58" width="114" height="1" fill="rgba(255,255,255,0.08)"/>
+        <text x="222" y="74" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="11" fill="rgba(0,160,255,0.8)">Best for:</text>
+        <text x="222" y="90" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10.5" fill="rgba(255,255,255,0.55)">Signal processing</text>
+        <text x="222" y="106" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10.5" fill="rgba(255,255,255,0.55)">PID loops</text>
+        <text x="222" y="122" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10.5" fill="rgba(255,255,255,0.55)">FB interconnections</text>
+        <text x="222" y="142" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10.5" fill="rgba(255,255,255,0.45)">Data flow visible</text>
+        <text x="222" y="158" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10.5" fill="rgba(255,255,255,0.45)">Hardware engineers</text>
+        <text x="222" y="178" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(255,255,255,0.25)">CONTROL LOOP</text>
+        <text x="222" y="192" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(255,255,255,0.25)">ARCHITECTURE</text>
+
+        <!-- ST -->
+        <rect x="298" y="28" width="134" height="185" rx="4" fill="rgba(0,87,255,0.08)" stroke="rgba(0,87,255,0.3)" stroke-width="1.5"/>
+        <text x="365" y="48" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="#6699ff" letter-spacing="0.06em">STRUCTURED TEXT (ST)</text>
+        <rect x="308" y="58" width="114" height="1" fill="rgba(255,255,255,0.08)"/>
+        <text x="365" y="74" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="11" fill="rgba(0,160,255,0.8)">Best for:</text>
+        <text x="365" y="90" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10.5" fill="rgba(255,255,255,0.55)">Complex calculations</text>
+        <text x="365" y="106" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10.5" fill="rgba(255,255,255,0.55)">Audit trail logic</text>
+        <text x="365" y="122" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10.5" fill="rgba(255,255,255,0.55)">String handling</text>
+        <text x="365" y="142" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10.5" fill="rgba(0,201,122,0.7)">Git-diffable</text>
+        <text x="365" y="158" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10.5" fill="rgba(0,201,122,0.7)">Version-control friendly</text>
+        <text x="365" y="178" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(0,201,122,0.5)">PREFERRED FOR</text>
+        <text x="365" y="192" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(0,201,122,0.5)">AUDIT TRAIL FBs</text>
+
+        <!-- SFC -->
+        <rect x="441" y="28" width="134" height="185" rx="4" fill="rgba(0,87,255,0.08)" stroke="rgba(0,87,255,0.3)" stroke-width="1.5"/>
+        <text x="508" y="48" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="#6699ff" letter-spacing="0.06em">SFC</text>
+        <rect x="451" y="58" width="114" height="1" fill="rgba(255,255,255,0.08)"/>
+        <text x="508" y="74" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="11" fill="rgba(0,160,255,0.8)">Best for:</text>
+        <text x="508" y="90" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10.5" fill="rgba(255,255,255,0.55)">Batch sequences</text>
+        <text x="508" y="106" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10.5" fill="rgba(255,255,255,0.55)">CIP/SIP phases</text>
+        <text x="508" y="122" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10.5" fill="rgba(255,255,255,0.55)">Multi-step processes</text>
+        <text x="508" y="142" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10.5" fill="rgba(0,201,122,0.7)">Maps to URS steps</text>
+        <text x="508" y="158" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10.5" fill="rgba(0,201,122,0.7)">State visible in test</text>
+        <text x="508" y="178" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(0,201,122,0.5)">PREFERRED FOR</text>
+        <text x="508" y="192" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(0,201,122,0.5)">BATCH SEQUENCES</text>
+
+        <!-- IL deprecated -->
+        <rect x="584" y="28" width="126" height="185" rx="4" fill="rgba(255,255,255,0.02)" stroke="rgba(255,255,255,0.08)" stroke-width="1" stroke-dasharray="4,3"/>
+        <text x="647" y="48" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(255,255,255,0.25)" letter-spacing="0.06em">IL (DEPRECATED)</text>
+        <rect x="594" y="58" width="106" height="1" fill="rgba(255,255,255,0.06)"/>
+        <text x="647" y="90" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10.5" fill="rgba(255,255,255,0.25)">Assembly-like</text>
+        <text x="647" y="106" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10.5" fill="rgba(255,255,255,0.25)">Low readability</text>
+        <text x="647" y="140" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(200,40,40,0.5)">AVOID ON NEW</text>
+        <text x="647" y="156" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(200,40,40,0.5)">PHARMA PROJECTS</text>
+        <text x="647" y="178" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(255,255,255,0.2)">Removed from</text>
+        <text x="647" y="192" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(255,255,255,0.2)">3rd edition 2013</text>
+      </svg>
+      <figcaption>// USE EACH LANGUAGE FOR WHAT IT IS BEST AT. LD FOR INTERLOCKS, ST FOR AUDIT TRAIL AND CALCULATIONS, SFC FOR SEQUENCES. AVOID IL ENTIRELY ON NEW PHARMA PROJECTS — LOW READABILITY MEANS LOW REVIEWABILITY.</figcaption>
+    </figure>
+
+    <p>Ladder Diagram remains the most QA-familiar language — it maps visually to relay logic that electrical engineers and validation specialists recognise. For this reason, interlock logic is often best written in LD even on projects where the rest of the code uses ST, because the code review will include QA reviewers who are not ST-literate. A QA reviewer can follow a rung that says "pump runs AND level is above 20% AND no fault active, therefore start permissive is true." They may not be able to follow the same logic written as nested conditions in Structured Text.</p>
+    <p>Structured Text has the significant advantage for pharma of being text-based, which means it can be tracked in Git and diffed between versions — you can see exactly which lines of logic changed between v2.1 and v3.0. For audit trail function blocks, string handling, and complex calculation logic, ST is the right choice. It is also more concise than LD for complex conditional expressions, which reduces the visual noise that obscures logic during review.</p>
+    <p>Sequential Function Chart is the natural language for batch sequences and CIP/SIP phases because the states and transitions are visually explicit. An OQ tester can follow the sequence on screen as it executes and verify that the actual state transitions match the FDS description. For any process that has defined phases — fill, heat, hold, cool, drain — SFC makes both the design and the testing significantly cleaner than the equivalent LD implementation.</p>
+
+    <h2 id="fb-header-comments">Function Block Headers — The Code Review Anchor</h2>
+    <p>Every Function Block in a GMP PLC project must have a header comment that makes it self-documenting. The header is not optional and is not a nice-to-have — it is what the code reviewer reads first to understand what the block is supposed to do before verifying that it actually does it. Without a header, the reviewer must infer intent from the code itself, which is slower and more error-prone.</p>
+    <p>The minimum required header content for a pharma FB:</p>
+
+    <div class="mono-block">
+      <span class="label">FUNCTION BLOCK HEADER — MINIMUM REQUIRED CONTENT</span>
+      <span class="hi">(* ============================================================</span>
+      <span class="hi">   FB_PID_GxP — GxP PID Control Loop</span>
+      <span class="dim">   Purpose  : Implements a PID control loop for GxP-critical</span>
+      <span class="dim">              process variables. Includes audit trail logging on</span>
+      <span class="dim">              setpoint change, mode change, and output limit change.</span>
+      <span class="dim">   FDS Ref  : FDS-SYS-001, Section 3.1 — PID Control Loops</span>
+      <span class="dim">   URS Ref  : URS-FUN-001 through URS-FUN-005</span>
+      <span class="dim">   Author   : [Automation Engineer], [Company]</span>
+      <span class="dim">   Rev 1.0  : [Date] — Original issue</span>
+      <span class="dim">   Rev 1.1  : [Date] — CCR-007: Added manual output clamp</span>
+      <span class="dim">   Rev 2.0  : [Date] — CCR-012: Extended audit trail to output %</span>
+      <span class="hi">   ============================================================ *)</span>
+    </div>
+
+    <p>The FDS and URS references in the header are what allow the code reviewer to locate the design intent without searching. When the reviewer is checking that FB_PID_GxP correctly implements FDS Section 3.1, they need both the code and the FDS open — the header reference makes that navigation automatic. The revision history in the header must also match the version control tags: if CCR-007 is in the header, v1.1_CCR-007 must exist in the version archive.</p>
+
+    <h2 id="inline-comments">Inline Comments — What Must Be Explained</h2>
+    <p>Not every line of code needs a comment. Commenting <code>b_PumpRun := TRUE;</code> with "set pump run to true" adds noise without adding clarity. The standard for inline comments in a GMP context is: <strong>comment every non-obvious logic decision, every interlock condition, and every GxP-critical state transition.</strong></p>
+
+    <div class="mono-block">
+      <span class="label">INLINE COMMENT STANDARD — EXAMPLES</span>
+      <span class="dim">// INTERLOCK: IL_004 — Pump start permissive requires level above 20%</span>
+      <span class="dim">// Ref: CP-SYS-001 Section 4.2, URS-SAF-003</span>
+      <span class="hi">b_StartPermissive := (r_LevelPV > r_LevelMinStart)</span>
+      <span class="hi">                   AND NOT b_FaultActive</span>
+      <span class="hi">                   AND NOT b_ESDActive;</span>
+      <span class="val"></span>
+      <span class="dim">// AUDIT TRAIL: Log setpoint change with old/new value and user ID</span>
+      <span class="dim">// Required per FDS FUNC-DI-002 — any GxP parameter change must be logged</span>
+      <span class="hi">IF r_SetpointNew &lt;&gt; r_SetpointPrev THEN</span>
+      <span class="hi">    FB_AuditTrail(s_Param   := 'TIC101_SP',</span>
+      <span class="hi">                  r_OldVal  := r_SetpointPrev,</span>
+      <span class="hi">                  r_NewVal  := r_SetpointNew,</span>
+      <span class="hi">                  s_User    := s_ActiveUser,</span>
+      <span class="hi">                  dt_Time   := dt_SystemTime);</span>
+      <span class="hi">    r_SetpointPrev := r_SetpointNew;</span>
+      <span class="hi">END_IF;</span>
+      <span class="val"></span>
+      <span class="warn">// WARNING: Do NOT add Set/Reset latches for b_SterilComplete</span>
+      <span class="warn">// State managed by FB_SterilizationSeq — single point of control</span>
+      <span class="warn">// See SDS Section 2.2 Expert Principles and code review checklist item 4</span>
+    </div>
+
+    <p>The interlock comment referencing <code>IL_004</code> and <code>CP-SYS-001</code> is not decoration — it is what allows the code reviewer to cross-reference the implemented logic against the interlock register. If the comment says IL_004 but the interlock register in the SDS appendix doesn't contain IL_004, that is a gap found during review. The comment creates the traceability link that makes the finding possible.</p>
+
+    <h2 id="prohibited-patterns">GMP-Prohibited Coding Patterns</h2>
+    <p>Several common PLC coding patterns that work fine in industrial automation are explicitly problematic in pharma. Understanding why helps avoid them systematically rather than just memorising a list of rules.</p>
+
+    <h3>Set/Reset Latches on Critical Process States</h3>
+    <p>An SR latch that holds a "batch complete" or "sterilisation done" state is untestable in isolation. To verify the state is correct, you must trace every Set instruction that could have asserted it and every Reset instruction that could have cleared it — across potentially multiple function blocks and OBs. More critically, a latch can retain a state across a CPU restart if the data block is retentive, which means a retained "batch complete" flag from a previous run could affect the next batch in ways that are difficult to detect. Use explicit state machines with defined entry and exit conditions instead.</p>
+
+    <h3>Hardcoded Process Values</h3>
+    <p>A temperature setpoint, alarm limit, or timer value hardcoded directly into a rung rather than referenced from a configurable data block cannot be changed through change control without a code change. On a validated system, that means a change control every time an operational parameter needs adjustment — even if the change is within the validated operating range. Configurable parameters must be in data blocks with appropriate access control. The <a href="urs-acceptance-criteria-guide.html">URS acceptance criterion</a> for that parameter should define the configurable range, and the OQ should verify that changes within the range are handled correctly and logged.</p>
+
+    <h3>Multiple Write Points for the Same Physical Output</h3>
+    <p>If a physical output — a valve command, a heater enable, a pump start — can be driven from multiple locations in the programme (from OB1, from OB35, from a safety interlock, and from a manual override), then there is no single authoritative source for that output state. Testing the output in an OQ test case verifies which write "won" at that moment, not that the system behaves consistently. Every physical output must have exactly one assignment instruction, in exactly one location, driven by virtual memory bits that aggregate all the conditions. All other logic writes to virtual bits. OB1 maps virtual bits to physical I/O at the end of each scan.</p>
+
+    <h3>Commented-Out Production Code</h3>
+    <p>Code that has been commented out and left in the programme creates confusion during code review — the reviewer cannot tell whether the commented section represents an intentional design decision, an abandoned approach, or a mistake. On a validated system, commented-out code that was once active is a change that should have gone through change control. Remove it, commit the removal as a tagged version referencing the relevant CCR, and the question is closed. Left in, it is a perpetual source of review questions.</p>
+
+    <div class="callout amber">
+      <div class="callout-label">The Code Review Will Find These</div>
+      <p>These four patterns — SR latches on critical states, hardcoded process values, multiple write points, commented-out code — appear on virtually every code review checklist for pharma PLC projects. They are not obscure requirements. If your code contains any of them, expect code review findings. Fixing them before the code review saves time; fixing them during the review creates additional documentation overhead and may require re-verification of the affected test cases.</p>
+    </div>
+
+    <h2 id="testability">Writing for Testability — Acceptance Criteria to Code</h2>
+    <p>The <a href="gamp5-risk-assessment-how-to-score.html">risk assessment</a> determines which functions need to be tested and at what depth. High-risk functions need to be tested against specific, measurable acceptance criteria. The code structure determines whether those test cases can actually be executed cleanly.</p>
+    <p>A test case for a temperature interlock might say: "Apply a simulated temperature value of 91°C to TT_R01_101. Verify that alarm HH_TT_101 activates within 1 second, the heater output HT_R01_001 de-energises immediately, and the audit trail records the alarm event with timestamp and process value." For that test to be executable, the code must:</p>
+    <ul class="checklist">
+      <li>Have the simulation bit on TT_R01_101's UDT that allows a simulated value to be injected without live process input</li>
+      <li>Have the alarm evaluation running in a fixed-interval OB so the 1-second response time is deterministic and testable</li>
+      <li>Have a single write point for HT_R01_001 so that de-energisation is unambiguous</li>
+      <li>Have FB_AuditTrail called in the alarm evaluation logic so the audit trail entry is generated at the point of alarm activation, not asynchronously</li>
+    </ul>
+    <p>If any of those structural elements are missing, the test case cannot be executed as written. The choice is to rewrite the test case (weakening the validation evidence) or fix the code (which may require re-review if caught late). <a href="plc-project-structure-pharma-validation.html">Structuring the project correctly from the start</a> is what prevents that choice from arising.</p>
+
+    <div class="callout green">
+      <div class="callout-label">In the QLean Framework</div>
+      <p>The SDS template includes a Coding Standards appendix that documents all the standards described in this article as a controlled, project-specific reference. The code review checklist references each standard by appendix item, so the review is structured around the standards rather than relying on the reviewer's memory. The FAT and OQ protocol templates pre-include test cases for the GxP-critical code patterns — simulation bit injection, audit trail verification, setpoint change logging — so the testability requirements are built into the protocol structure from the start.</p>
+    </div>
+
+  </article>
+
+  <aside class="sidebar">
+    <div class="toc-card">
+      <div class="toc-label">In This Article</div>
+      <ul class="toc-list">
+        <li><a href="#what-gmp-adds" class="active">What GMP Adds</a></li>
+        <li><a href="#language-selection">Language Selection</a></li>
+        <li><a href="#fb-header-comments">FB Header Comments</a></li>
+        <li><a href="#inline-comments">Inline Comments</a></li>
+        <li><a href="#prohibited-patterns">Prohibited Patterns</a></li>
+        <li><a href="#testability">Writing for Testability</a></li>
+      </ul>
+    </div>
+    <div class="sidebar-cta">
+      <div class="sc-eyebrow">QLean Framework</div>
+      <div class="sc-title">29 production-ready GAMP 5 documents</div>
+      <div class="sc-body">Every document referenced in this article — templates, protocols, and registers — ready to adapt for your project.</div>
+      <a href="../index.html#pricing" class="sc-btn">Get the Framework — €249 →</a>
+      <div class="sc-note">// INSTANT DOWNLOAD · COMPANY-WIDE LICENCE</div>
+    </div>
+    <div class="sidebar-share">
+      <div class="share-label">Share This Article</div>
+      <div class="share-links">
+        <a href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fqleanautomation.com%2Fblog%2Fiec-61131-3-pharma-compliant-code.html" target="_blank" rel="noopener" class="share-link">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          Share on LinkedIn
+        </a>
+        <a href="https://www.reddit.com/submit?url=https%3A%2F%2Fqleanautomation.com%2Fblog%2Fiec-61131-3-pharma-compliant-code.html&title=Writing+GMP-Compliant+PLC+Code+in+IEC+61131-3" target="_blank" rel="noopener" class="share-link">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/></svg>
+          Share on Reddit
+        </a>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<section class="related">
+  <div class="related-inner">
+    <div class="related-label">More Articles</div>
+    <div class="related-grid">
+      <a href="plc-project-structure-pharma-validation.html" class="related-card">
+        <div class="rc-tag">⚙️ PLC Engineering</div>
+        <div class="rc-title">How to Structure a PLC Project for Pharma Validation</div>
+        <div class="rc-desc">Programme structure — OB assignment, FB library, UDT design — is what makes GMP-compliant code possible. Start here before writing a single rung.</div>
+        <div class="rc-footer"><div class="rc-read">8 MIN READ</div><div class="rc-arrow">→</div></div>
+      </a>
+      <a href="plc-version-control-validated-systems.html" class="related-card">
+        <div class="rc-tag">⚙️ PLC Engineering</div>
+        <div class="rc-title">PLC Program Version Control on Validated Systems</div>
+        <div class="rc-desc">The FB header revision history must match the version control archive. Here's how to keep them aligned through the full validation lifecycle.</div>
+        <div class="rc-footer"><div class="rc-read">7 MIN READ</div><div class="rc-arrow">→</div></div>
+      </a>
+      <a href="gamp5-risk-assessment-how-to-score.html" class="related-card">
+        <div class="rc-tag">⚖️ Risk Assessment</div>
+        <div class="rc-title">GAMP 5 Risk Assessment: How to Score It Correctly</div>
+        <div class="rc-desc">The risk assessment determines which functions need code-level testing and how deep the OQ test cases need to go.</div>
+        <div class="rc-footer"><div class="rc-read">7 MIN READ</div><div class="rc-arrow">→</div></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="../index.html" class="nav-logo">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none" style="flex-shrink:0"><rect width="32" height="32" rx="7" fill="#0d0f12"/><rect x="8" y="7" width="16" height="16" rx="2" stroke="white" stroke-width="2.5" fill="none"/><line x1="20" y1="19" x2="26" y2="25" stroke="#0057FF" stroke-width="3" stroke-linecap="round"/></svg>
+          <span style="font-family:'Epilogue',sans-serif;font-weight:800;font-size:16px;color:#0d0f12;letter-spacing:-.03em;white-space:nowrap">QLean <span style="font-weight:300;color:#5a6172">Automation</span></span>
+        </a>
+        <p>GMP documentation tools for system integrators and automation engineers entering pharmaceutical projects.</p>
+      </div>
+      <div class="footer-col"><h4>Products</h4><ul><li><a href="../index.html#framework">GAMP 5 Framework</a></li><li><a href="../index.html#products">Technical Masterclass</a></li></ul></div>
+      <div class="footer-col"><h4>Knowledge Base</h4><ul>
+        <li><a href="blog-index.html">All Articles</a></li>
+        <li><a href="plc-project-structure-pharma-validation.html">PLC Project Structure</a></li>
+        <li><a href="plc-version-control-validated-systems.html">PLC Version Control</a></li>
+        <li><a href="functional-design-specification-guide.html">How to Write an FDS</a></li>
+        <li><a href="gamp5-risk-assessment-how-to-score.html">GAMP 5 Risk Assessment</a></li>
+        <li><a href="21-cfr-part-11.html">21 CFR Part 11</a></li>
+        <li><a href="change-control-validated-system.html">Change Control</a></li>
+      </ul></div>
+      <div class="footer-col"><h4>Company</h4><ul><li><a href="https://www.linkedin.com/company/qlean-automation" target="_blank">LinkedIn</a></li><li><a href="mailto:hello@qleanautomation.com">Contact</a></li><li><a href="../terms.html">Terms</a></li></ul></div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 QLEAN AUTOMATION · QLEANAUTOMATION.COM</p>
+      <div class="compliance-pills"><span class="cp">GAMP 5</span><span class="cp">IEC 61131-3</span><span class="cp">EU ANNEX 11</span><span class="cp">21 CFR PART 11</span></div>
+    </div>
+  </div>
+</footer>
+
+<script>
+window.addEventListener('scroll',()=>{const d=document.documentElement;document.getElementById('progress').style.width=(d.scrollTop/(d.scrollHeight-d.clientHeight)*100)+'%'});
+const obs=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting){document.querySelectorAll('.toc-list a').forEach(l=>l.classList.remove('active'));const a=document.querySelector('.toc-list a[href="#'+x.target.id+'"]');if(a)a.classList.add('active')}})  ,{rootMargin:'-20% 0px -70% 0px'});
+document.querySelectorAll('[id]').forEach(s=>obs.observe(s));
+</script>
+</body>
+</html>

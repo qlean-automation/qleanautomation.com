@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-JJQ1TXZJX7"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-JJQ1TXZJX7');
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The GAMP 5 Validation Lifecycle: Every Phase Explained | QLean Automation</title>
+<meta name="description" content="From planning through periodic review — a complete walkthrough of the GAMP 5 validation lifecycle for PLC and SCADA systems. Every phase, every document, every gate entry criterion.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@300;400;500;600;700;800;900&family=Source+Sans+3:ital,wght@0,300;0,400;0,500;1,300&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --white:#ffffff;--off:#f7f8f9;--off2:#f0f2f4;--ink:#0d0f12;--ink2:#1e2128;--ink3:#3d4456;--ink4:#9199a8;
+  --rule:#e2e5ea;--rule2:#c8cdd6;--blue:#0057ff;--blue2:#0044cc;--blue-dim:rgba(0,87,255,0.07);
+  --blue-glow:rgba(0,87,255,0.15);--green:#00875a;--green-dim:rgba(0,135,90,0.08);
+  --amber:#d97706;--amber-dim:rgba(217,119,6,0.08);--f-head:'Epilogue',sans-serif;
+  --f-body:'Source Sans 3',sans-serif;--f-mono:'Roboto Mono',monospace;
+  --shadow-sm:0 2px 8px rgba(13,15,18,0.06),0 1px 3px rgba(13,15,18,0.04);
+  --shadow-md:0 4px 16px rgba(13,15,18,0.08),0 2px 6px rgba(13,15,18,0.05);
+  --shadow-lg:0 8px 32px rgba(13,15,18,0.10),0 3px 10px rgba(13,15,18,0.06);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;font-size:16px}
+body{background:var(--white);color:var(--ink);font-family:var(--f-body);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+nav{position:fixed;top:0;left:0;right:0;z-index:200;height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 6%;background:rgba(255,255,255,0.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--rule)}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+.nav-links{display:flex;align-items:center;gap:36px;list-style:none}
+.nav-links a{font-size:14px;font-weight:400;color:var(--ink3);text-decoration:none;transition:color .2s}
+.nav-links a:hover{color:var(--ink)}
+.nav-btn{font-family:var(--f-body);font-size:13px;font-weight:500;padding:9px 20px;background:var(--blue);color:white;border:none;border-radius:6px;cursor:pointer;text-decoration:none;transition:background .2s,transform .15s;white-space:nowrap;flex-shrink:0}
+.nav-btn:hover{background:var(--blue2);transform:translateY(-1px)}
+.article-hero{padding:120px 6% 64px;background:var(--white);border-bottom:1px solid var(--rule);position:relative;overflow:hidden}
+.article-hero::before{content:'';position:absolute;top:-80px;right:-80px;width:400px;height:400px;background:radial-gradient(circle,rgba(0,87,255,0.04) 0%,transparent 70%);pointer-events:none}
+.article-hero-inner{max-width:940px;margin:0 auto;position:relative;z-index:1}
+.breadcrumb{display:flex;align-items:center;gap:8px;font-family:var(--f-mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink4);margin-bottom:24px}
+.breadcrumb a{color:var(--ink4);text-decoration:none;transition:color .2s}
+.breadcrumb a:hover{color:var(--blue)}
+.breadcrumb span{color:var(--rule2)}
+.article-tag{display:inline-flex;align-items:center;gap:6px;font-family:var(--f-mono);font-size:10px;font-weight:500;color:var(--blue);letter-spacing:.1em;text-transform:uppercase;margin-bottom:20px;padding:4px 10px;background:var(--blue-dim);border-radius:4px}
+.article-hero h1{font-family:var(--f-head);font-size:clamp(32px,5vw,54px);font-weight:900;line-height:1.0;letter-spacing:-.04em;color:var(--ink);margin-bottom:20px}
+.article-hero h1 span{color:var(--blue)}
+.article-intro{font-size:18px;font-weight:400;color:var(--ink2);line-height:1.75;margin-bottom:32px;max-width:800px}
+.article-meta{display:flex;align-items:center;gap:24px;padding-top:24px;border-top:1px solid var(--rule);flex-wrap:wrap}
+.meta-author{display:flex;align-items:center;gap:10px}
+.author-avatar{width:36px;height:36px;border-radius:50%;background:var(--ink);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.author-name{font-size:13px;font-weight:500;color:var(--ink)}
+.author-role{font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.04em}
+.meta-divider{width:1px;height:28px;background:var(--rule)}
+.meta-stat{font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.06em}
+.article-wrap{max-width:1300px;margin:0 auto;padding:64px 6%;display:grid;grid-template-columns:1fr 300px;gap:60px;align-items:start}
+.article-body{min-width:0}
+.article-body h2{font-family:var(--f-head);font-size:26px;font-weight:800;letter-spacing:-.03em;color:var(--ink);margin:56px 0 16px;line-height:1.2}
+.article-body h2:first-child{margin-top:0}
+.article-body h3{font-family:var(--f-head);font-size:18px;font-weight:700;letter-spacing:-.02em;color:var(--ink);margin:32px 0 12px}
+.article-body p{font-size:16px;font-weight:400;color:var(--ink2);line-height:1.85;margin-bottom:20px}
+.article-body strong{color:var(--ink);font-weight:600}
+.article-body a{color:var(--blue);text-decoration:none;border-bottom:1px solid rgba(0,87,255,.25);transition:border-color .2s}
+.article-body a:hover{border-color:var(--blue)}
+.callout{padding:20px 24px;border-radius:8px;margin:32px 0;border-left:3px solid}
+.callout.blue{background:var(--blue-dim);border-color:var(--blue)}
+.callout.amber{background:var(--amber-dim);border-color:var(--amber)}
+.callout.green{background:var(--green-dim);border-color:var(--green)}
+.callout-label{font-family:var(--f-mono);font-size:9px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px}
+.callout.blue .callout-label{color:var(--blue)}
+.callout.amber .callout-label{color:var(--amber)}
+.callout.green .callout-label{color:var(--green)}
+.callout p{font-size:14px;color:var(--ink2);line-height:1.7;margin:0}
+.callout strong{color:var(--ink)}
+/* Phase timeline */
+.phase-timeline{display:flex;flex-direction:column;gap:0;margin:32px 0}
+.pt-item{display:grid;grid-template-columns:56px 1fr;gap:0;position:relative}
+.pt-item:not(:last-child)::before{content:'';position:absolute;left:27px;top:52px;bottom:0;width:2px;background:var(--rule);z-index:0}
+.pt-num{width:56px;display:flex;flex-direction:column;align-items:center;padding-top:16px;position:relative;z-index:1}
+.pt-circle{width:36px;height:36px;border-radius:50%;background:var(--blue);display:flex;align-items:center;justify-content:center;font-family:var(--f-mono);font-size:11px;font-weight:500;color:white;flex-shrink:0}
+.pt-circle.green{background:var(--green)}
+.pt-circle.grey{background:var(--ink3)}
+.pt-body{padding:12px 0 36px 20px}
+.pt-phase-label{font-family:var(--f-mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink4);margin-bottom:6px}
+.pt-title{font-family:var(--f-head);font-size:17px;font-weight:800;letter-spacing:-.02em;color:var(--ink);margin-bottom:10px}
+.pt-gate{font-size:13px;color:var(--ink3);line-height:1.6;margin-bottom:12px;padding:10px 14px;background:var(--off);border-radius:6px;border-left:2px solid var(--blue)}
+.pt-gate strong{color:var(--blue);display:block;font-family:var(--f-mono);font-size:9px;letter-spacing:.08em;text-transform:uppercase;margin-bottom:4px}
+.pt-text{font-size:14px;color:var(--ink3);line-height:1.7;margin-bottom:10px}
+.pt-text a{color:var(--blue);text-decoration:none;border-bottom:1px solid rgba(0,87,255,.2)}
+.pt-docs{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.pt-doc{font-family:var(--f-mono);font-size:9px;padding:3px 8px;background:var(--blue-dim);border:1px solid rgba(0,87,255,0.15);border-radius:3px;color:var(--ink3);letter-spacing:.04em}
+/* SVG figure */
+.article-img{width:100%;border-radius:8px;border:1px solid var(--rule);overflow:hidden;margin:36px 0}
+.svg-fig{border:1px solid #1e2535}
+.svg-fig figcaption{padding:10px 14px;background:#0d0f12;font-family:var(--f-mono);font-size:10px;color:rgba(255,255,255,0.25);letter-spacing:.06em;border-top:1px solid #1e2535;border-radius:0 0 8px 8px}
+/* Sidebar */
+.sidebar{position:sticky;top:88px;display:flex;flex-direction:column;gap:16px}
+.toc-card{border:1px solid var(--rule);border-radius:8px;padding:24px;background:var(--white);box-shadow:var(--shadow-sm)}
+.toc-label{font-family:var(--f-mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);margin-bottom:16px}
+.toc-list{list-style:none;display:flex;flex-direction:column;gap:2px}
+.toc-list a{display:block;font-size:13px;color:var(--ink3);text-decoration:none;padding:6px 10px;border-radius:4px;transition:all .15s;border-left:2px solid transparent}
+.toc-list a:hover,.toc-list a.active{color:var(--blue);background:var(--blue-dim);border-left-color:var(--blue)}
+.sidebar-cta{border:1px solid var(--blue);border-radius:8px;padding:24px;background:var(--blue-dim)}
+.sc-eyebrow{font-family:var(--f-mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);margin-bottom:10px}
+.sc-title{font-family:var(--f-head);font-size:17px;font-weight:800;letter-spacing:-.02em;color:var(--ink);margin-bottom:8px;line-height:1.2}
+.sc-body{font-size:13px;color:var(--ink3);line-height:1.6;margin-bottom:16px}
+.sc-btn{display:block;text-align:center;padding:11px 16px;background:var(--blue);color:white;border-radius:6px;font-family:var(--f-body);font-size:13px;font-weight:500;text-decoration:none;transition:background .2s,transform .15s}
+.sc-btn:hover{background:var(--blue2);transform:translateY(-1px)}
+.sc-note{font-family:var(--f-mono);font-size:9px;color:var(--ink4);text-align:center;margin-top:8px;letter-spacing:.04em}
+.sidebar-share{border:1px solid var(--rule);border-radius:8px;padding:20px 24px;background:var(--white)}
+.share-label{font-family:var(--f-mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);margin-bottom:12px}
+.share-links{display:flex;flex-direction:column;gap:6px}
+.share-link{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--ink3);text-decoration:none;padding:8px 10px;border-radius:4px;border:1px solid var(--rule);transition:all .15s}
+.share-link:hover{border-color:var(--blue);color:var(--blue);background:var(--blue-dim)}
+/* Related */
+.related{padding:64px 6%;border-top:1px solid var(--rule);background:var(--off)}
+.related-inner{max-width:1100px;margin:0 auto}
+.related-label{font-family:var(--f-mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);margin-bottom:32px;display:flex;align-items:center;gap:10px}
+.related-label::before{content:'';width:20px;height:1px;background:var(--blue)}
+.related-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.related-card{padding:24px;border:1px solid var(--rule);border-radius:8px;background:var(--white);box-shadow:var(--shadow-sm);transition:border-color .2s,transform .2s,box-shadow .2s;text-decoration:none;display:flex;flex-direction:column;gap:12px}
+.related-card:hover{border-color:var(--blue);transform:translateY(-4px);box-shadow:var(--shadow-lg)}
+.rc-tag{font-family:var(--f-mono);font-size:9px;color:var(--blue);letter-spacing:.08em;text-transform:uppercase;padding:3px 8px;background:var(--blue-dim);border-radius:3px;align-self:flex-start}
+.rc-title{font-family:var(--f-head);font-size:16px;font-weight:700;letter-spacing:-.02em;color:var(--ink);line-height:1.25}
+.rc-desc{font-size:13px;color:var(--ink3);line-height:1.6;flex:1}
+.rc-footer{display:flex;align-items:center;justify-content:space-between;padding-top:12px;border-top:1px solid var(--rule)}
+.rc-read{font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.04em}
+.rc-arrow{font-size:14px;color:var(--blue)}
+/* Footer */
+footer{padding:56px 6% 32px;border-top:1px solid var(--rule);background:var(--white)}
+.footer-inner{max-width:1160px;margin:0 auto}
+.footer-top{display:flex;justify-content:space-between;align-items:flex-start;gap:40px;flex-wrap:wrap;margin-bottom:48px}
+.footer-brand p{font-size:13px;font-weight:300;color:var(--ink3);margin-top:12px;max-width:260px;line-height:1.6}
+.footer-col h4{font-family:var(--f-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink4);margin-bottom:16px}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+.footer-col a{font-size:13px;color:var(--ink3);text-decoration:none;transition:color .2s}
+.footer-col a:hover{color:var(--blue)}
+.footer-bottom{padding-top:24px;border-top:1px solid var(--rule);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.footer-bottom p{font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.04em}
+.compliance-pills{display:flex;gap:6px;flex-wrap:wrap}
+.cp{font-family:var(--f-mono);font-size:9px;padding:3px 8px;border:1px solid var(--rule);border-radius:3px;color:var(--ink4);letter-spacing:.06em}
+.progress-bar{position:fixed;top:64px;left:0;right:0;height:2px;background:var(--rule);z-index:199}
+.progress-fill{height:100%;background:var(--blue);width:0%;transition:width .1s linear}
+@media(max-width:900px){
+  .article-wrap{grid-template-columns:1fr;gap:48px}
+  .sidebar{position:static}
+  .related-grid{grid-template-columns:1fr}
+  nav .nav-links{display:none}
+}
+@media(max-width:540px){nav{padding:0 4%}.nav-btn{font-size:12px;padding:8px 14px}}
+</style>
+</head>
+<body>
+
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+
+<nav>
+  <a href="../index.html" class="nav-logo">
+    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" style="flex-shrink:0">
+      <rect width="32" height="32" rx="7" fill="#0d0f12"/>
+      <rect x="8" y="7" width="16" height="16" rx="2" stroke="white" stroke-width="2.5" fill="none"/>
+      <line x1="20" y1="19" x2="26" y2="25" stroke="#0057FF" stroke-width="3" stroke-linecap="round"/>
+    </svg>
+    <span style="font-family:'Epilogue',sans-serif;font-weight:800;font-size:16px;color:#0d0f12;letter-spacing:-.03em;white-space:nowrap">QLean <span style="font-weight:300;color:#5a6172">Automation</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="../index.html#products">Products</a></li>
+    <li><a href="../index.html#framework">Framework</a></li>
+    <li><a href="blog-index.html">Knowledge Base</a></li>
+    <li><a href="../index.html#pricing">Pricing</a></li>
+    <li><a href="../about.html">About</a></li>
+    <li><a href="../index.html#faq">FAQ</a></li>
+  </ul>
+  <a href="../index.html#pricing" class="nav-btn">Get the Framework &#8594;</a>
+</nav>
+
+<header class="article-hero">
+  <div class="article-hero-inner">
+    <div class="breadcrumb">
+      <a href="../index.html">Home</a><span>/</span>
+      <a href="blog-index.html">Knowledge Base</a><span>/</span>
+      GAMP 5 Validation Lifecycle
+    </div>
+    <div class="article-tag">&#128216; GAMP 5</div>
+    <h1>The GAMP 5<br><span>Validation Lifecycle:</span><br>Every Phase Explained</h1>
+    <p class="article-intro">Validation is not a test phase at the end of a project. It is a structured lifecycle that starts before the URS is written and does not end until the system is decommissioned. Here is what every phase involves, what documents it produces, and what you need before you can move to the next one.</p>
+    <div class="article-meta">
+      <div class="meta-author">
+        <div class="author-avatar">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="7" r="3.5" stroke="white" stroke-width="1.5"/><path d="M2.5 16c0-3.59 2.91-6.5 6.5-6.5s6.5 2.91 6.5 6.5" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </div>
+        <div>
+          <div class="author-name">QLean Automation</div>
+          <div class="author-role">ENGINEERS WHO BUILD SYSTEMS, NOT JUST SIGN THEM</div>
+        </div>
+      </div>
+      <div class="meta-divider"></div>
+      <div class="meta-stat">8 MIN READ</div>
+      <div class="meta-divider"></div>
+      <div class="meta-stat">GAMP 5 &#183; VALIDATION LIFECYCLE</div>
+    </div>
+  </div>
+</header>
+
+<div class="article-wrap">
+  <article class="article-body">
+
+    <h2 id="what-is-lifecycle">Lifecycle, Not Event</h2>
+    <p>The most common misconception about pharmaceutical validation is that it is a project phase &#8212; something that happens after the engineering is done. It is not. Validation is a <strong>lifecycle</strong> that runs in parallel with, and in many phases ahead of, the engineering work.</p>
+    <p>GAMP 5 defines this lifecycle using two complementary structures: the <strong>V-model</strong>, which maps design documents to qualification tests, and the <strong>phase-gate approach</strong>, which defines the formal checkpoints at which a project must confirm completion of one phase before beginning the next. Together they ensure the validation package is coherent, traceable, and complete.</p>
+    <p>This article walks through all eight phases of the GAMP 5 validation lifecycle as defined in a well-structured Validation Plan &#8212; from initial planning through to ongoing lifecycle management. For each phase we cover the gate entry criteria, the key documents produced, and the most common failure modes.</p>
+
+    <div class="callout blue">
+      <div class="callout-label">Phase Gates Are Enforced</div>
+      <p>A phase gate is not a review meeting &#8212; it is a <strong>documented hold point</strong>. The next phase cannot begin until the gate entry criteria are met and confirmation is on file. An auditor finding that OQ began before IQ was approved is a serious observation. Phase gate discipline is non-negotiable on a well-run GMP project.</p>
+    </div>
+
+    <figure class="article-img svg-fig">
+      <svg viewBox="0 0 720 190" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;background:#0d0f12;border-radius:8px 8px 0 0">
+        <defs>
+          <marker id="arr23" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+            <path d="M0,0.5 L5,3 L0,5.5" fill="none" stroke="#0057ff" stroke-width="1.2"/>
+          </marker>
+          <marker id="arr23g" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+            <path d="M0,0.5 L5,3 L0,5.5" fill="none" stroke="#00875a" stroke-width="1.2"/>
+          </marker>
+        </defs>
+        <text x="36" y="26" font-family="Epilogue,sans-serif" font-weight="700" font-size="10" fill="rgba(255,255,255,0.35)" letter-spacing="0.1em">GAMP 5 VALIDATION LIFECYCLE &#8212; 8 PHASES</text>
+        <!-- Ph1 -->
+        <rect x="18" y="40" width="72" height="42" rx="5" fill="rgba(0,87,255,0.16)" stroke="#0057ff" stroke-width="1"/>
+        <text x="54" y="55" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7.5" fill="rgba(255,255,255,0.35)" letter-spacing="0.06em">PH 1</text>
+        <text x="54" y="72" text-anchor="middle" font-family="Epilogue,sans-serif" font-weight="700" font-size="10" fill="rgba(255,255,255,0.8)">Planning</text>
+        <line x1="90" y1="61" x2="100" y2="61" stroke="#0057ff" stroke-width="1.5" marker-end="url(#arr23)"/>
+        <!-- Ph2 -->
+        <rect x="100" y="40" width="82" height="42" rx="5" fill="rgba(0,87,255,0.16)" stroke="#0057ff" stroke-width="1"/>
+        <text x="141" y="55" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7.5" fill="rgba(255,255,255,0.35)" letter-spacing="0.06em">PH 2</text>
+        <text x="141" y="72" text-anchor="middle" font-family="Epilogue,sans-serif" font-weight="700" font-size="10" fill="rgba(255,255,255,0.8)">Specification</text>
+        <line x1="182" y1="61" x2="192" y2="61" stroke="#0057ff" stroke-width="1.5" marker-end="url(#arr23)"/>
+        <!-- Ph3 -->
+        <rect x="192" y="40" width="72" height="42" rx="5" fill="rgba(0,87,255,0.16)" stroke="#0057ff" stroke-width="1"/>
+        <text x="228" y="55" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7.5" fill="rgba(255,255,255,0.35)" letter-spacing="0.06em">PH 3</text>
+        <text x="228" y="72" text-anchor="middle" font-family="Epilogue,sans-serif" font-weight="700" font-size="10" fill="rgba(255,255,255,0.8)">FAT / SAT</text>
+        <line x1="264" y1="61" x2="274" y2="61" stroke="#0057ff" stroke-width="1.5" marker-end="url(#arr23)"/>
+        <!-- Ph4 IQ -->
+        <rect x="274" y="36" width="62" height="50" rx="5" fill="rgba(0,87,255,0.28)" stroke="#0057ff" stroke-width="2"/>
+        <text x="305" y="53" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7.5" fill="rgba(255,255,255,0.4)" letter-spacing="0.06em">PH 4</text>
+        <text x="305" y="72" text-anchor="middle" font-family="Epilogue,sans-serif" font-weight="800" font-size="13" fill="white">IQ</text>
+        <line x1="336" y1="61" x2="346" y2="61" stroke="#0057ff" stroke-width="1.5" marker-end="url(#arr23)"/>
+        <!-- Ph5 OQ -->
+        <rect x="346" y="36" width="62" height="50" rx="5" fill="rgba(0,87,255,0.28)" stroke="#0057ff" stroke-width="2"/>
+        <text x="377" y="53" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7.5" fill="rgba(255,255,255,0.4)" letter-spacing="0.06em">PH 5</text>
+        <text x="377" y="72" text-anchor="middle" font-family="Epilogue,sans-serif" font-weight="800" font-size="13" fill="white">OQ</text>
+        <line x1="408" y1="61" x2="418" y2="61" stroke="#0057ff" stroke-width="1.5" marker-end="url(#arr23)"/>
+        <!-- Ph6 PQ -->
+        <rect x="418" y="36" width="62" height="50" rx="5" fill="rgba(0,87,255,0.28)" stroke="#0057ff" stroke-width="2"/>
+        <text x="449" y="53" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7.5" fill="rgba(255,255,255,0.4)" letter-spacing="0.06em">PH 6</text>
+        <text x="449" y="72" text-anchor="middle" font-family="Epilogue,sans-serif" font-weight="800" font-size="13" fill="white">PQ</text>
+        <line x1="480" y1="61" x2="490" y2="61" stroke="#00875a" stroke-width="1.5" marker-end="url(#arr23g)"/>
+        <!-- Ph7 GMP Release -->
+        <rect x="490" y="40" width="82" height="42" rx="5" fill="rgba(0,135,90,0.18)" stroke="#00875a" stroke-width="1.5"/>
+        <text x="531" y="55" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7.5" fill="rgba(255,255,255,0.35)" letter-spacing="0.06em">PH 7</text>
+        <text x="531" y="72" text-anchor="middle" font-family="Epilogue,sans-serif" font-weight="700" font-size="10" fill="#00c97a">GMP Release</text>
+        <line x1="572" y1="61" x2="582" y2="61" stroke="#00875a" stroke-width="1.5" marker-end="url(#arr23g)"/>
+        <!-- Ph8 Lifecycle -->
+        <rect x="582" y="40" width="118" height="42" rx="5" fill="rgba(0,135,90,0.08)" stroke="rgba(0,135,90,0.4)" stroke-width="1"/>
+        <text x="641" y="55" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7.5" fill="rgba(255,255,255,0.35)" letter-spacing="0.06em">PH 8</text>
+        <text x="641" y="72" text-anchor="middle" font-family="Epilogue,sans-serif" font-weight="700" font-size="10" fill="rgba(255,255,255,0.6)">Lifecycle Mgmt</text>
+        <!-- doc labels -->
+        <text x="54" y="100" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="6.5" fill="rgba(255,255,255,0.18)">VP &#183; RMP &#183; PQP</text>
+        <text x="141" y="100" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="6.5" fill="rgba(255,255,255,0.18)">URS &#183; FDS &#183; HDS &#183; SDS</text>
+        <text x="228" y="100" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="6.5" fill="rgba(255,255,255,0.18)">FAT &#183; SAT</text>
+        <text x="305" y="100" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="6.5" fill="rgba(255,255,255,0.18)">IQ protocol</text>
+        <text x="377" y="100" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="6.5" fill="rgba(255,255,255,0.18)">OQ protocol</text>
+        <text x="449" y="100" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="6.5" fill="rgba(255,255,255,0.18)">PQ protocol</text>
+        <text x="531" y="100" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="6.5" fill="rgba(255,255,255,0.18)">VSR &#183; TM &#183; MDL</text>
+        <text x="641" y="100" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="6.5" fill="rgba(255,255,255,0.18)">CC &#183; Periodic Review</text>
+        <!-- Qualification bracket -->
+        <line x1="274" y1="120" x2="480" y2="120" stroke="rgba(0,87,255,0.35)" stroke-width="1"/>
+        <line x1="274" y1="116" x2="274" y2="124" stroke="rgba(0,87,255,0.35)" stroke-width="1"/>
+        <line x1="480" y1="116" x2="480" y2="124" stroke="rgba(0,87,255,0.35)" stroke-width="1"/>
+        <text x="377" y="136" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7.5" fill="rgba(0,87,255,0.5)" letter-spacing="0.06em">QUALIFICATION PHASES</text>
+        <!-- V-model bracket -->
+        <line x1="100" y1="155" x2="572" y2="155" stroke="rgba(255,255,255,0.07)" stroke-width="1"/>
+        <line x1="100" y1="151" x2="100" y2="159" stroke="rgba(255,255,255,0.07)" stroke-width="1"/>
+        <line x1="572" y1="151" x2="572" y2="159" stroke="rgba(255,255,255,0.07)" stroke-width="1"/>
+        <text x="336" y="170" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7" fill="rgba(255,255,255,0.12)" letter-spacing="0.06em">V-MODEL SCOPE (PH 2&#8211;7)</text>
+      </svg>
+      <figcaption>// GAMP 5 VALIDATION LIFECYCLE &#8212; 8 PHASES. PHASE GATES ARE DOCUMENTED HOLD POINTS, NOT REVIEW MEETINGS. EACH PHASE BUILDS ON THE APPROVED EVIDENCE OF THE PREVIOUS ONE.</figcaption>
+    </figure>
+
+    <h2 id="phases">The Eight Phases</h2>
+
+    <div class="phase-timeline">
+
+      <div class="pt-item">
+        <div class="pt-num"><div class="pt-circle">1</div></div>
+        <div class="pt-body">
+          <div class="pt-phase-label">Phase 01</div>
+          <div class="pt-title">Planning</div>
+          <div class="pt-gate"><strong>Gate Entry Criteria</strong>Business case approved; project team assembled; regulatory framework confirmed.</div>
+          <p class="pt-text">Planning is where the validation framework is established before any engineering begins. The three core documents produced here &#8212; the <strong>Validation Plan (VP)</strong>, the <strong>Project Quality Plan (PQP)</strong>, and the <strong>Risk Management Plan (RMP)</strong> &#8212; define the rules that every subsequent document must follow.</p>
+          <p class="pt-text">The VP is the governing document. It defines the GAMP 5 category, the V-model lifecycle, all deliverable documents, phase gate criteria, roles and responsibilities, and the testing strategy. <strong>No validation activity can commence without an approved VP</strong> &#8212; and the VP must be approved before the URS is finalised, because the URS must be written within the framework the VP defines.</p>
+          <p class="pt-text">The supplier assessment (SAQ/SAR) also typically occurs during planning &#8212; qualifying the system integrator and any major sub-suppliers before design work begins.</p>
+          <div class="pt-docs">
+            <span class="pt-doc">VP-SYS-001</span><span class="pt-doc">PQP-SYS-001</span><span class="pt-doc">RMP-SYS-001</span><span class="pt-doc">SAQ-SYS-001</span><span class="pt-doc">SAR-SYS-001</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="pt-item">
+        <div class="pt-num"><div class="pt-circle">2</div></div>
+        <div class="pt-body">
+          <div class="pt-phase-label">Phase 02</div>
+          <div class="pt-title">Specification &amp; Design</div>
+          <div class="pt-gate"><strong>Gate Entry Criteria</strong>VP and PQP approved; supplier qualified; URS approved before design documents begin.</div>
+          <p class="pt-text">This is the left side of the <a href="v-model-pharma-validation.html">V-model</a> &#8212; where the system is defined on paper before it is built. The URS defines what the system must do from the user&#8217;s perspective. The FDS defines what it does functionally from an engineering perspective. The HDS defines the hardware architecture. The SDS defines the software implementation for Category 5 components.</p>
+          <p class="pt-text">The Risk Assessment is also completed here and drives test coverage decisions for Phases 3&#8211;6. The Traceability Matrix begins in this phase, tracing every URS requirement through the design hierarchy to the test cases that will eventually verify it. By Phase 7, every row must show a PASSED status.</p>
+          <div class="pt-docs">
+            <span class="pt-doc">URS-SYS-001</span><span class="pt-doc">CP-SYS-001</span><span class="pt-doc">FDS-SYS-001</span><span class="pt-doc">HDS-SYS-001</span><span class="pt-doc">SDS-SYS-001</span><span class="pt-doc">RA-SYS-001</span><span class="pt-doc">TM-SYS-001</span><span class="pt-doc">EL-SYS-001</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="pt-item">
+        <div class="pt-num"><div class="pt-circle">3</div></div>
+        <div class="pt-body">
+          <div class="pt-phase-label">Phase 03</div>
+          <div class="pt-title">FAT / SAT</div>
+          <div class="pt-gate"><strong>Gate Entry Criteria</strong>All design specifications approved; FAT protocol approved; supplier qualified.</div>
+          <p class="pt-text">The Factory Acceptance Test (FAT) is executed at the supplier&#8217;s works before the system ships to site. It tests the PLC and SCADA application against the approved FDS and SDS &#8212; proving the system functions as designed before the cost and disruption of site installation. The software version is frozen and a hash/checksum is documented before the system leaves the supplier&#8217;s facility.</p>
+          <p class="pt-text">The Site Acceptance Test (SAT) follows installation &#8212; confirming the system survived transport and that site-specific integration (I/O connections, network, historian) is functioning. FAT and SAT evidence carries forward into IQ and OQ. The Master Deviation Ledger opens at this phase to track all deviations from FAT onwards.</p>
+          <div class="pt-docs">
+            <span class="pt-doc">FAT-SYS-001</span><span class="pt-doc">SAT-SYS-001</span><span class="pt-doc">MDL-SYS-001 (opens)</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="pt-item">
+        <div class="pt-num"><div class="pt-circle">4</div></div>
+        <div class="pt-body">
+          <div class="pt-phase-label">Phase 04</div>
+          <div class="pt-title">Installation Qualification (IQ)</div>
+          <div class="pt-gate"><strong>Gate Entry Criteria</strong>SAT approved; system installed on site; all instruments calibrated.</div>
+          <p class="pt-text">The IQ verifies that the system was <em>installed as designed</em>. Every hardware component is verified against the HDS: PLC model and firmware version, SCADA server hardware and OS version, network switch configuration, UPS, instrument tags and calibration certificates. Software versions are verified and hash/checksum values are documented at this point in the installed environment.</p>
+          <p class="pt-text">The IQ also verifies environmental and infrastructure requirements: panel environmental ratings, earthing and bonding, power supply redundancy. Critically, the Backup and Recovery Procedure (RBP-SYS-001) must be tested as part of the IQ &#8212; backup and restore is a GMP requirement, not an IT nicety.</p>
+          <div class="pt-docs">
+            <span class="pt-doc">IQ-SYS-001</span><span class="pt-doc">RBP-SYS-001</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="pt-item">
+        <div class="pt-num"><div class="pt-circle">5</div></div>
+        <div class="pt-body">
+          <div class="pt-phase-label">Phase 05</div>
+          <div class="pt-title">Operational Qualification (OQ)</div>
+          <div class="pt-gate"><strong>Gate Entry Criteria</strong>IQ approved; SOPs drafted; operators in training.</div>
+          <p class="pt-text">The OQ verifies that the system <em>operates correctly</em> across its full functional range &#8212; all FDS functions, all alarms and interlocks, user access control, audit trail, electronic records, edge cases, and failure modes. Test cases are pre-approved and executed with witnessed signatures. Every deviation from an expected result is raised in the Master Deviation Ledger.</p>
+          <p class="pt-text">Four SOPs must be approved <em>before</em> OQ begins: System Operation, System Administration, Change Management, and Periodic Review. Operators must be in training by the time OQ starts. Training Records (TRF-SYS-001) are collected throughout this phase.</p>
+          <div class="pt-docs">
+            <span class="pt-doc">OQ-SYS-001</span><span class="pt-doc">SOP-OPS-SYS-001</span><span class="pt-doc">SOP-ADMIN-SYS-001</span><span class="pt-doc">SOP-CM-SYS-001</span><span class="pt-doc">SOP-PR-SYS-001</span><span class="pt-doc">TRF-SYS-001</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="pt-item">
+        <div class="pt-num"><div class="pt-circle">6</div></div>
+        <div class="pt-body">
+          <div class="pt-phase-label">Phase 06</div>
+          <div class="pt-title">Performance Qualification (PQ)</div>
+          <div class="pt-gate"><strong>Gate Entry Criteria</strong>OQ approved; all SOPs approved; all operators trained and competent.</div>
+          <p class="pt-text">The PQ proves the system <em>performs consistently</em> under actual production conditions. Unlike the OQ &#8212; which tests functions in isolation &#8212; the PQ tests the system as an integrated whole, typically over an extended period with real process media or validated simulation conditions.</p>
+          <p class="pt-text">For most process control systems, PQ includes a monitoring phase where process parameters are recorded and confirmed within specification over a defined number of batches or time period. The PQ is typically led by the client&#8217;s process owner. The automation engineer provides technical support rather than driving execution at this stage.</p>
+          <div class="pt-docs">
+            <span class="pt-doc">PQ-SYS-001</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="pt-item">
+        <div class="pt-num"><div class="pt-circle green">7</div></div>
+        <div class="pt-body">
+          <div class="pt-phase-label">Phase 07</div>
+          <div class="pt-title">GMP Release</div>
+          <div class="pt-gate"><strong>Gate Entry Criteria</strong>PQ approved; all deviations closed; Traceability Matrix 100% complete.</div>
+          <p class="pt-text">GMP release is the formal closure of the validation project. The <a href="validation-summary-report-guide.html">Validation Summary Report (VSR)</a> declares the system validated. It summarises every phase, confirms all deviations are closed, confirms the Traceability Matrix is 100% complete with PASSED status on every row, and formally releases the system for GMP use.</p>
+          <p class="pt-text">The VSR cannot be approved until every Category A (critical) deviation is formally closed. It also records the first scheduled periodic review date &#8212; typically 24 months from VSR approval. Once signed, the system is in its <strong>validated state</strong>.</p>
+          <div class="pt-docs">
+            <span class="pt-doc">VSR-SYS-001</span><span class="pt-doc">TM-SYS-001 (final)</span><span class="pt-doc">MDL-SYS-001 (final)</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="pt-item">
+        <div class="pt-num"><div class="pt-circle grey">8</div></div>
+        <div class="pt-body">
+          <div class="pt-phase-label">Phase 08 &#8212; Ongoing</div>
+          <div class="pt-title">Lifecycle Management</div>
+          <div class="pt-gate"><strong>Gate Entry Criteria</strong>VSR approved; system in routine GMP operation.</div>
+          <p class="pt-text">The validated state is not permanent without maintenance. Two processes keep it alive: <strong>change control</strong> and <strong>periodic review</strong>. Every modification to the system &#8212; software change, hardware replacement, configuration update &#8212; goes through a formal change control process (CCR/CCL) with a documented impact assessment and re-testing where required.</p>
+          <p class="pt-text">Periodic reviews are scheduled assessments &#8212; typically every 24 months per the schedule recorded in the VSR &#8212; confirming the system remains in its validated state. The SOP-PR-SYS-001 defines the process; the PRR-SYS-001 documents the outcome. The review covers the change control log, deviation history, audit trail samples, calibration status, and any incident records from the review period.</p>
+          <div class="pt-docs">
+            <span class="pt-doc">CCR-SYS-001</span><span class="pt-doc">CCL-SYS-001</span><span class="pt-doc">PRR-SYS-001</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <h2 id="traceability">The Thread That Runs Through Everything</h2>
+    <p>The Traceability Matrix is not a Phase 2 deliverable &#8212; it is a living document populated throughout the entire lifecycle. A URS requirement is added in Phase 2. The FDS function that implements it is linked in Phase 2. The test case that verifies it is linked in Phase 3&#8211;5. The executed result is recorded at test execution. By Phase 7, every row must show a PASSED status with a reference to the executed test evidence.</p>
+    <p>An incomplete traceability matrix at VSR approval is a blocking issue. It means a requirement exists with no verified test evidence. No auditor will accept a VSR where the traceability is incomplete &#8212; it is one of the first things an inspector checks.</p>
+
+    <div class="callout amber">
+      <div class="callout-label">Common Failure Mode</div>
+      <p>Starting OQ before IQ is approved &#8212; or running FAT, SAT, IQ, and OQ concurrently to save time. Phase gates exist because each phase builds on the evidence of the previous one. Concurrent execution means you cannot demonstrate that the system was in a known, verified state before testing began. That is not a documentation problem &#8212; it is a fundamental loss of validation integrity.</p>
+    </div>
+
+    <h2 id="your-role">Your Role Across the Lifecycle</h2>
+    <p>As an automation engineer or system integrator, your involvement is heaviest in Phases 2 and 3. You author the FDS, HDS, and SDS. You execute the FAT. You support the SAT. You may author the IQ and OQ protocols, or provide the technical content that the validation lead formats into the final documents.</p>
+    <p>From Phase 7 onwards your role shifts to supporting change control. Any modification to PLC code, SCADA configuration, or hardware after GMP release goes through the change control process &#8212; and you will typically provide the technical impact assessment and re-test plan.</p>
+    <p>Understanding the full lifecycle is what separates an engineer who produces good documents from one who understands <em>why</em> those documents exist and how they connect. That understanding is what makes your contribution credible under a QA review or regulatory inspection.</p>
+
+    <div class="callout green">
+      <div class="callout-label">In the QLean Framework</div>
+      <p>The QLean template pack covers every document across all eight phases: VP, PQP, RMP, SAQ/SAR, CP, URS, FDS, HDS, SDS, Risk Assessment, Traceability Matrix, Engineering Lists, FAT, SAT, IQ, OQ, PQ, Master Deviation Ledger, VSR, all four SOPs, RBP, TRF, CCR, CCL, and Periodic Review Report. Every document is structured to satisfy its phase gate requirements and clearly references the documents it depends on.</p>
+    </div>
+
+  </article>
+
+  <aside class="sidebar">
+    <div class="toc-card">
+      <div class="toc-label">In This Article</div>
+      <ul class="toc-list">
+        <li><a href="#what-is-lifecycle" class="active">Lifecycle, Not Event</a></li>
+        <li><a href="#phases">The Eight Phases</a></li>
+        <li><a href="#traceability">Traceability</a></li>
+        <li><a href="#your-role">Your Role</a></li>
+      </ul>
+    </div>
+    <div class="sidebar-cta">
+      <div class="sc-eyebrow">QLean Framework</div>
+      <div class="sc-title">29 production-ready GAMP 5 documents</div>
+      <div class="sc-body">Every document referenced in this article &#8212; templates, protocols, and registers &#8212; ready to adapt for your project.</div>
+      <a href="../index.html#pricing" class="sc-btn">Get the Framework &#8212; &#8364;249 &#8594;</a>
+      <div class="sc-note">// INSTANT DOWNLOAD &#183; COMPANY-WIDE LICENCE</div>
+    </div>
+    <div class="sidebar-share">
+      <div class="share-label">Share This Article</div>
+      <div class="share-links">
+        <a href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fqleanautomation.com%2Fblog%2Fgamp5-validation-lifecycle-overview.html" target="_blank" rel="noopener" class="share-link">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          Share on LinkedIn
+        </a>
+        <a href="https://www.reddit.com/submit?url=https%3A%2F%2Fqleanautomation.com%2Fblog%2Fgamp5-validation-lifecycle-overview.html&title=The+GAMP+5+Validation+Lifecycle%3A+Every+Phase+Explained" target="_blank" rel="noopener" class="share-link">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/></svg>
+          Share on Reddit
+        </a>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<section class="related">
+  <div class="related-inner">
+    <div class="related-label">More Articles</div>
+    <div class="related-grid">
+      <a href="v-model-pharma-validation.html" class="related-card">
+        <div class="rc-tag">&#128314; V-Model</div>
+        <div class="rc-title">The V-Model in Pharma Validation</div>
+        <div class="rc-desc">How specification documents on the left side map to qualification tests on the right &#8212; and why traceability is the mechanism that makes it auditable.</div>
+        <div class="rc-footer"><div class="rc-read">7 MIN READ</div><div class="rc-arrow">&#8594;</div></div>
+      </a>
+      <a href="validation-plan-what-it-must-contain.html" class="related-card">
+        <div class="rc-tag">&#128203; Validation Plan</div>
+        <div class="rc-title">The Validation Plan: What It Must Contain</div>
+        <div class="rc-desc">The VP governs the entire lifecycle. Before any test is executed, the plan must exist, be approved, and define the rules every other document follows.</div>
+        <div class="rc-footer"><div class="rc-read">7 MIN READ</div><div class="rc-arrow">&#8594;</div></div>
+      </a>
+      <a href="validation-summary-report-guide.html" class="related-card">
+        <div class="rc-tag">&#128196; VSR</div>
+        <div class="rc-title">The Validation Summary Report</div>
+        <div class="rc-desc">The document that formally closes the validation project and declares the system in its validated state. What it must contain and what blocks its approval.</div>
+        <div class="rc-footer"><div class="rc-read">6 MIN READ</div><div class="rc-arrow">&#8594;</div></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="../index.html" class="nav-logo">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none" style="flex-shrink:0">
+            <rect width="32" height="32" rx="7" fill="#0d0f12"/>
+            <rect x="8" y="7" width="16" height="16" rx="2" stroke="white" stroke-width="2.5" fill="none"/>
+            <line x1="20" y1="19" x2="26" y2="25" stroke="#0057FF" stroke-width="3" stroke-linecap="round"/>
+          </svg>
+          <span style="font-family:'Epilogue',sans-serif;font-weight:800;font-size:16px;color:#0d0f12;letter-spacing:-.03em">QLean <span style="font-weight:300;color:#5a6172">Automation</span></span>
+        </a>
+        <p>GMP documentation tools for system integrators and automation engineers entering pharmaceutical projects.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Products</h4>
+        <ul>
+          <li><a href="../index.html#framework">GAMP 5 Framework</a></li>
+          <li><a href="../index.html#products">Technical Masterclass</a></li>
+          <li><a href="../index.html#free-download">Free Resources</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Knowledge Base</h4>
+        <ul>
+          <li><a href="blog-index.html">All Articles</a></li>
+          <li><a href="v-model-pharma-validation.html">The V-Model</a></li>
+          <li><a href="validation-plan-what-it-must-contain.html">The Validation Plan</a></li>
+          <li><a href="iq-oq-pq-guide.html">IQ OQ PQ Guide</a></li>
+          <li><a href="validation-summary-report-guide.html">Validation Summary Report</a></li>
+          <li><a href="traceability-matrix-guide.html">Traceability Matrix</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="https://www.linkedin.com/company/qlean-automation" target="_blank">LinkedIn</a></li>
+          <li><a href="mailto:hello@qleanautomation.com">Contact</a></li>
+          <li><a href="../terms.html">Terms</a></li>
+          <li><a href="../privacy.html">Privacy</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&#169; 2026 QLEAN AUTOMATION &#183; QLEANAUTOMATION.COM</p>
+      <div class="compliance-pills">
+        <span class="cp">GAMP 5</span><span class="cp">EU ANNEX 11</span><span class="cp">21 CFR PART 11</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  window.addEventListener('scroll',()=>{
+    const doc=document.documentElement;
+    document.getElementById('progress').style.width=(doc.scrollTop/(doc.scrollHeight-doc.clientHeight)*100)+'%';
+  });
+  const sections=document.querySelectorAll('[id]');
+  const tocLinks=document.querySelectorAll('.toc-list a');
+  const observer=new IntersectionObserver((entries)=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting){
+        tocLinks.forEach(l=>l.classList.remove('active'));
+        const active=document.querySelector(`.toc-list a[href="#${entry.target.id}"]`);
+        if(active)active.classList.add('active');
+      }
+    });
+  },{rootMargin:'-20% 0px -70% 0px'});
+  sections.forEach(s=>observer.observe(s));
+</script>
+</body>
+</html>

@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-JJQ1TXZJX7"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-JJQ1TXZJX7');
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Deviation Management During Validation: How to Raise, Classify and Close | QLean Automation</title>
+<meta name="description" content="What to do when a test case fails during pharma validation. How to classify deviations as Category A or B, the 7-step handling process, CAPA requirements, and what blocks your phase gate.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@300;400;500;600;700;800;900&family=Source+Sans+3:ital,wght@0,300;0,400;0,500;1,300&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --white:#ffffff;--off:#f7f8f9;--off2:#f0f2f4;--ink:#0d0f12;--ink2:#1e2128;--ink3:#3d4456;--ink4:#9199a8;
+  --rule:#e2e5ea;--rule2:#c8cdd6;--blue:#0057ff;--blue2:#0044cc;--blue-dim:rgba(0,87,255,0.07);
+  --blue-glow:rgba(0,87,255,0.15);--green:#00875a;--green-dim:rgba(0,135,90,0.08);
+  --amber:#d97706;--amber-dim:rgba(217,119,6,0.08);--red:#dc2626;--red-dim:rgba(220,38,38,0.07);
+  --f-head:'Epilogue',sans-serif;--f-body:'Source Sans 3',sans-serif;--f-mono:'Roboto Mono',monospace;
+  --shadow-sm:0 2px 8px rgba(13,15,18,0.06),0 1px 3px rgba(13,15,18,0.04);
+  --shadow-lg:0 8px 32px rgba(13,15,18,0.10),0 3px 10px rgba(13,15,18,0.06);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;font-size:16px}
+body{background:var(--white);color:var(--ink);font-family:var(--f-body);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+nav{position:fixed;top:0;left:0;right:0;z-index:200;height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 6%;background:rgba(255,255,255,0.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--rule)}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+.nav-links{display:flex;align-items:center;gap:36px;list-style:none}
+.nav-links a{font-size:14px;font-weight:400;color:var(--ink3);text-decoration:none;transition:color .2s}
+.nav-links a:hover{color:var(--ink)}
+.nav-btn{font-family:var(--f-body);font-size:13px;font-weight:500;padding:9px 20px;background:var(--blue);color:white;border:none;border-radius:6px;cursor:pointer;text-decoration:none;transition:background .2s,transform .15s;white-space:nowrap;flex-shrink:0}
+.nav-btn:hover{background:var(--blue2);transform:translateY(-1px)}
+.article-hero{padding:120px 6% 64px;background:var(--white);border-bottom:1px solid var(--rule);position:relative;overflow:hidden}
+.article-hero::before{content:'';position:absolute;top:-80px;right:-80px;width:400px;height:400px;background:radial-gradient(circle,rgba(0,87,255,0.04) 0%,transparent 70%);pointer-events:none}
+.article-hero-inner{max-width:940px;margin:0 auto;position:relative;z-index:1}
+.breadcrumb{display:flex;align-items:center;gap:8px;font-family:var(--f-mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink4);margin-bottom:24px}
+.breadcrumb a{color:var(--ink4);text-decoration:none;transition:color .2s}
+.breadcrumb a:hover{color:var(--blue)}
+.breadcrumb span{color:var(--rule2)}
+.article-tag{display:inline-flex;align-items:center;gap:6px;font-family:var(--f-mono);font-size:10px;font-weight:500;color:var(--blue);letter-spacing:.1em;text-transform:uppercase;margin-bottom:20px;padding:4px 10px;background:var(--blue-dim);border-radius:4px}
+.article-hero h1{font-family:var(--f-head);font-size:clamp(32px,5vw,54px);font-weight:900;line-height:1.0;letter-spacing:-.04em;color:var(--ink);margin-bottom:20px}
+.article-hero h1 span{color:var(--blue)}
+.article-intro{font-size:18px;font-weight:400;color:var(--ink2);line-height:1.75;margin-bottom:32px;max-width:800px}
+.article-meta{display:flex;align-items:center;gap:24px;padding-top:24px;border-top:1px solid var(--rule);flex-wrap:wrap}
+.meta-author{display:flex;align-items:center;gap:10px}
+.author-avatar{width:36px;height:36px;border-radius:50%;background:var(--ink);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.author-name{font-size:13px;font-weight:500;color:var(--ink)}
+.author-role{font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.04em}
+.meta-divider{width:1px;height:28px;background:var(--rule)}
+.meta-stat{font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.06em}
+.article-wrap{max-width:1300px;margin:0 auto;padding:64px 6%;display:grid;grid-template-columns:1fr 300px;gap:60px;align-items:start}
+.article-body{min-width:0}
+.article-body h2{font-family:var(--f-head);font-size:26px;font-weight:800;letter-spacing:-.03em;color:var(--ink);margin:56px 0 16px;line-height:1.2}
+.article-body h2:first-child{margin-top:0}
+.article-body h3{font-family:var(--f-head);font-size:18px;font-weight:700;letter-spacing:-.02em;color:var(--ink);margin:32px 0 12px}
+.article-body p{font-size:16px;font-weight:400;color:var(--ink2);line-height:1.85;margin-bottom:20px}
+.article-body strong{color:var(--ink);font-weight:600}
+.article-body a{color:var(--blue);text-decoration:none;border-bottom:1px solid rgba(0,87,255,.25);transition:border-color .2s}
+.article-body a:hover{border-color:var(--blue)}
+/* callouts */
+.callout{padding:20px 24px;border-radius:8px;margin:32px 0;border-left:3px solid}
+.callout.blue{background:var(--blue-dim);border-color:var(--blue)}
+.callout.amber{background:var(--amber-dim);border-color:var(--amber)}
+.callout.green{background:var(--green-dim);border-color:var(--green)}
+.callout.red{background:var(--red-dim);border-color:var(--red)}
+.callout-label{font-family:var(--f-mono);font-size:9px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px}
+.callout.blue .callout-label{color:var(--blue)}
+.callout.amber .callout-label{color:var(--amber)}
+.callout.green .callout-label{color:var(--green)}
+.callout.red .callout-label{color:var(--red)}
+.callout p{font-size:14px;color:var(--ink2);line-height:1.7;margin:0}
+.callout strong{color:var(--ink)}
+/* category cards */
+.cat-deviation-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:28px 0}
+.dev-card{border-radius:8px;overflow:hidden;border:1px solid var(--rule);box-shadow:var(--shadow-sm)}
+.dev-card-head{padding:16px 20px}
+.dev-card-head.crit{background:rgba(220,38,38,0.08);border-bottom:2px solid var(--red)}
+.dev-card-head.minor{background:var(--amber-dim);border-bottom:2px solid var(--amber)}
+.dev-cat-label{font-family:var(--f-mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px}
+.dev-card-head.crit .dev-cat-label{color:var(--red)}
+.dev-card-head.minor .dev-cat-label{color:var(--amber)}
+.dev-cat-title{font-family:var(--f-head);font-size:18px;font-weight:800;letter-spacing:-.02em;color:var(--ink);margin-bottom:4px}
+.dev-cat-badge{display:inline-block;font-family:var(--f-mono);font-size:9px;font-weight:500;padding:2px 8px;border-radius:3px;letter-spacing:.04em}
+.dev-card-head.crit .dev-cat-badge{background:rgba(220,38,38,0.12);color:var(--red);border:1px solid rgba(220,38,38,0.25)}
+.dev-card-head.minor .dev-cat-badge{background:var(--amber-dim);color:var(--amber);border:1px solid rgba(217,119,6,0.3)}
+.dev-card-body{padding:16px 20px;background:var(--white)}
+.dev-card-body p{font-size:13px;color:var(--ink3);line-height:1.65;margin-bottom:10px}
+.dev-card-body p:last-child{margin-bottom:0}
+.dev-examples{list-style:none;display:flex;flex-direction:column;gap:5px;margin-top:8px}
+.dev-examples li{font-size:12px;color:var(--ink4);padding-left:14px;position:relative;line-height:1.5}
+.dev-examples li::before{content:'•';position:absolute;left:0;color:var(--ink4)}
+/* 7-step process */
+.step-list{display:flex;flex-direction:column;gap:0;margin:28px 0}
+.step-item{display:grid;grid-template-columns:52px 1fr;position:relative}
+.step-item:not(:last-child)::before{content:'';position:absolute;left:25px;top:50px;bottom:0;width:2px;background:var(--rule);z-index:0}
+.step-num{display:flex;flex-direction:column;align-items:center;padding-top:12px;z-index:1}
+.step-circle{width:34px;height:34px;border-radius:50%;background:var(--blue);display:flex;align-items:center;justify-content:center;font-family:var(--f-mono);font-size:11px;font-weight:500;color:white;flex-shrink:0}
+.step-circle.red{background:var(--red)}
+.step-circle.green{background:var(--green)}
+.step-body{padding:8px 0 28px 18px}
+.step-label{font-family:var(--f-mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink4);margin-bottom:5px}
+.step-title{font-family:var(--f-head);font-size:16px;font-weight:800;letter-spacing:-.02em;color:var(--ink);margin-bottom:8px}
+.step-text{font-size:14px;color:var(--ink3);line-height:1.7}
+.step-text strong{color:var(--ink)}
+/* table scroll */
+.table-scroll{width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;margin:28px 0;border:1px solid var(--rule);border-radius:8px}
+.std-table{width:100%;border-collapse:collapse;font-size:13px;min-width:480px}
+.std-table th{font-family:var(--f-mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink4);padding:10px 14px;border-bottom:2px solid var(--rule);text-align:left;background:var(--off)}
+.std-table td{padding:11px 14px;border-bottom:1px solid var(--rule);color:var(--ink2);vertical-align:top;line-height:1.55}
+.std-table tr:last-child td{border-bottom:none}
+.std-table td:first-child{font-weight:600;color:var(--ink);white-space:nowrap}
+/* SVG figure */
+.article-img{width:100%;border-radius:8px;border:1px solid var(--rule);overflow:hidden;margin:36px 0}
+.svg-fig{border:1px solid #1e2535}
+.svg-fig figcaption{padding:10px 14px;background:#0d0f12;font-family:var(--f-mono);font-size:10px;color:rgba(255,255,255,0.25);letter-spacing:.06em;border-top:1px solid #1e2535;border-radius:0 0 8px 8px}
+/* checklist */
+.checklist{list-style:none;display:flex;flex-direction:column;gap:8px;margin:16px 0 24px}
+.checklist li{display:flex;align-items:flex-start;gap:10px;font-size:15px;color:var(--ink2);line-height:1.6}
+.checklist li::before{content:'';width:16px;height:16px;flex-shrink:0;margin-top:3px;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 14 14' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='7' cy='7' r='6.5' fill='none' stroke='%230057ff' stroke-width='1'/%3E%3Cpath d='M4 7l2 2 4-4' stroke='%230057ff' stroke-width='1.3' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:center;background-size:contain}
+/* sidebar */
+.sidebar{position:sticky;top:88px;display:flex;flex-direction:column;gap:16px}
+.toc-card{border:1px solid var(--rule);border-radius:8px;padding:24px;background:var(--white);box-shadow:var(--shadow-sm)}
+.toc-label{font-family:var(--f-mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);margin-bottom:16px}
+.toc-list{list-style:none;display:flex;flex-direction:column;gap:2px}
+.toc-list a{display:block;font-size:13px;color:var(--ink3);text-decoration:none;padding:6px 10px;border-radius:4px;transition:all .15s;border-left:2px solid transparent}
+.toc-list a:hover,.toc-list a.active{color:var(--blue);background:var(--blue-dim);border-left-color:var(--blue)}
+.sidebar-cta{border:1px solid var(--blue);border-radius:8px;padding:24px;background:var(--blue-dim)}
+.sc-eyebrow{font-family:var(--f-mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);margin-bottom:10px}
+.sc-title{font-family:var(--f-head);font-size:17px;font-weight:800;letter-spacing:-.02em;color:var(--ink);margin-bottom:8px;line-height:1.2}
+.sc-body{font-size:13px;color:var(--ink3);line-height:1.6;margin-bottom:16px}
+.sc-btn{display:block;text-align:center;padding:11px 16px;background:var(--blue);color:white;border-radius:6px;font-family:var(--f-body);font-size:13px;font-weight:500;text-decoration:none;transition:background .2s,transform .15s}
+.sc-btn:hover{background:var(--blue2);transform:translateY(-1px)}
+.sc-note{font-family:var(--f-mono);font-size:9px;color:var(--ink4);text-align:center;margin-top:8px;letter-spacing:.04em}
+.sidebar-share{border:1px solid var(--rule);border-radius:8px;padding:20px 24px;background:var(--white)}
+.share-label{font-family:var(--f-mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);margin-bottom:12px}
+.share-links{display:flex;flex-direction:column;gap:6px}
+.share-link{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--ink3);text-decoration:none;padding:8px 10px;border-radius:4px;border:1px solid var(--rule);transition:all .15s}
+.share-link:hover{border-color:var(--blue);color:var(--blue);background:var(--blue-dim)}
+/* related */
+.related{padding:64px 6%;border-top:1px solid var(--rule);background:var(--off)}
+.related-inner{max-width:1100px;margin:0 auto}
+.related-label{font-family:var(--f-mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);margin-bottom:32px;display:flex;align-items:center;gap:10px}
+.related-label::before{content:'';width:20px;height:1px;background:var(--blue)}
+.related-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.related-card{padding:24px;border:1px solid var(--rule);border-radius:8px;background:var(--white);box-shadow:var(--shadow-sm);transition:border-color .2s,transform .2s,box-shadow .2s;text-decoration:none;display:flex;flex-direction:column;gap:12px}
+.related-card:hover{border-color:var(--blue);transform:translateY(-4px);box-shadow:var(--shadow-lg)}
+.rc-tag{font-family:var(--f-mono);font-size:9px;color:var(--blue);letter-spacing:.08em;text-transform:uppercase;padding:3px 8px;background:var(--blue-dim);border-radius:3px;align-self:flex-start}
+.rc-title{font-family:var(--f-head);font-size:16px;font-weight:700;letter-spacing:-.02em;color:var(--ink);line-height:1.25}
+.rc-desc{font-size:13px;color:var(--ink3);line-height:1.6;flex:1}
+.rc-footer{display:flex;align-items:center;justify-content:space-between;padding-top:12px;border-top:1px solid var(--rule)}
+.rc-read{font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.04em}
+.rc-arrow{font-size:14px;color:var(--blue)}
+/* footer */
+footer{padding:56px 6% 32px;border-top:1px solid var(--rule);background:var(--white)}
+.footer-inner{max-width:1160px;margin:0 auto}
+.footer-top{display:flex;justify-content:space-between;align-items:flex-start;gap:40px;flex-wrap:wrap;margin-bottom:48px}
+.footer-brand p{font-size:13px;font-weight:300;color:var(--ink3);margin-top:12px;max-width:260px;line-height:1.6}
+.footer-col h4{font-family:var(--f-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink4);margin-bottom:16px}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+.footer-col a{font-size:13px;color:var(--ink3);text-decoration:none;transition:color .2s}
+.footer-col a:hover{color:var(--blue)}
+.footer-bottom{padding-top:24px;border-top:1px solid var(--rule);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.footer-bottom p{font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.04em}
+.compliance-pills{display:flex;gap:6px;flex-wrap:wrap}
+.cp{font-family:var(--f-mono);font-size:9px;padding:3px 8px;border:1px solid var(--rule);border-radius:3px;color:var(--ink4);letter-spacing:.06em}
+.progress-bar{position:fixed;top:64px;left:0;right:0;height:2px;background:var(--rule);z-index:199}
+.progress-fill{height:100%;background:var(--blue);width:0%;transition:width .1s linear}
+@media(max-width:900px){
+  .article-wrap{grid-template-columns:1fr;gap:48px}.sidebar{position:static}
+  .cat-deviation-grid{grid-template-columns:1fr}.related-grid{grid-template-columns:1fr}
+  .nav-links{display:none}
+}
+@media(max-width:540px){nav{padding:0 4%}.nav-btn{font-size:12px;padding:8px 14px}}
+</style>
+</head>
+<body>
+
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+
+<nav>
+  <a href="../index.html" class="nav-logo">
+    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" style="flex-shrink:0">
+      <rect width="32" height="32" rx="7" fill="#0d0f12"/>
+      <rect x="8" y="7" width="16" height="16" rx="2" stroke="white" stroke-width="2.5" fill="none"/>
+      <line x1="20" y1="19" x2="26" y2="25" stroke="#0057FF" stroke-width="3" stroke-linecap="round"/>
+    </svg>
+    <span style="font-family:'Epilogue',sans-serif;font-weight:800;font-size:16px;color:#0d0f12;letter-spacing:-.03em;white-space:nowrap">QLean <span style="font-weight:300;color:#5a6172">Automation</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="../index.html#products">Products</a></li>
+    <li><a href="../index.html#framework">Framework</a></li>
+    <li><a href="blog-index.html">Knowledge Base</a></li>
+    <li><a href="../index.html#pricing">Pricing</a></li>
+    <li><a href="../about.html">About</a></li>
+    <li><a href="../index.html#faq">FAQ</a></li>
+  </ul>
+  <a href="../index.html#pricing" class="nav-btn">Get the Framework →</a>
+</nav>
+
+<header class="article-hero">
+  <div class="article-hero-inner">
+    <div class="breadcrumb">
+      <a href="../index.html">Home</a><span>/</span>
+      <a href="blog-index.html">Knowledge Base</a><span>/</span>
+      Deviation Management
+    </div>
+    <div class="article-tag">⚠️ Validation</div>
+    <h1>Deviation Management<br><span>During Validation:</span><br>Raise, Classify and Close</h1>
+    <p class="article-intro">A test case fails during your OQ. What happens next determines whether your validation package is credible or compromised. Here is the exact process — classification, investigation, CAPA, and what is blocking your phase gate.</p>
+    <div class="article-meta">
+      <div class="meta-author">
+        <div class="author-avatar">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="7" r="3.5" stroke="white" stroke-width="1.5"/><path d="M2.5 16c0-3.59 2.91-6.5 6.5-6.5s6.5 2.91 6.5 6.5" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </div>
+        <div>
+          <div class="author-name">QLean Automation</div>
+          <div class="author-role">ENGINEERS WHO BUILD SYSTEMS, NOT JUST SIGN THEM</div>
+        </div>
+      </div>
+      <div class="meta-divider"></div>
+      <div class="meta-stat">7 MIN READ</div>
+      <div class="meta-divider"></div>
+      <div class="meta-stat">VALIDATION · DEVIATION MANAGEMENT</div>
+    </div>
+  </div>
+</header>
+
+<div class="article-wrap">
+  <article class="article-body">
+
+    <h2 id="what-is-deviation">What a Deviation Actually Is</h2>
+    <p>In GMP validation, a <strong>deviation</strong> is any departure from an expected result defined in an approved test protocol. When a test step in your FAT, IQ, OQ, or PQ produces an outcome that does not match the pre-approved acceptance criterion — that is a deviation, and it must be documented immediately.</p>
+    <p>The word "immediately" is not a suggestion. The moment you observe an unexpected result, the test is paused, the deviation is recorded in the Master Deviation Ledger, and no further testing on that function proceeds until QA has been notified and a classification has been made. Continuing to test through a deviation without documenting it is a data integrity violation — the kind that turns a manageable technical problem into a regulatory finding.</p>
+    <p>Deviations are not failures of the project. They are a normal and expected part of pharmaceutical validation. A competently managed deviation — documented, investigated, corrected, and closed — actually strengthens your validation package by demonstrating that the testing regime was rigorous enough to catch real problems.</p>
+
+    <div class="callout red">
+      <div class="callout-label">Stop Testing Rule</div>
+      <p>When a deviation is observed: <strong>stop testing on the affected function immediately</strong>. Document the deviation in the MDL before proceeding to any other test case. Do not attempt a quick fix and re-run without recording the deviation first. An undocumented deviation discovered during a regulatory inspection is significantly worse than a documented, closed one.</p>
+    </div>
+
+    <h2 id="classification">Two Categories: A and B</h2>
+    <p>The Master Deviation Ledger (MDL-SYS-001) classifies every deviation as either <strong>Category A</strong> or <strong>Category B</strong>. The classification is made jointly by the Validation Lead and the QA Representative — it cannot be made unilaterally by the engineer who observed the deviation.</p>
+
+    <div class="cat-deviation-grid">
+      <div class="dev-card">
+        <div class="dev-card-head crit">
+          <div class="dev-cat-label">Category A</div>
+          <div class="dev-cat-title">Critical</div>
+          <span class="dev-cat-badge">BLOCKING</span>
+        </div>
+        <div class="dev-card-body">
+          <p>A test case failure that directly risks patient safety, product quality, or regulatory compliance. The FDS requirement is not met. Testing is halted on the affected function.</p>
+          <p><strong>Phase gate impact:</strong> A phase gate cannot be signed with any open Category A deviation. No exceptions without written QA Manager approval.</p>
+          <ul class="dev-examples">
+            <li>GMP data not recording to historian</li>
+            <li>Audit trail entries missing for parameter changes</li>
+            <li>Safety interlock not functioning as designed</li>
+            <li>Data modification possible without audit trail entry</li>
+            <li>Access control bypass — unauthorised role access confirmed</li>
+          </ul>
+        </div>
+      </div>
+      <div class="dev-card">
+        <div class="dev-card-head minor">
+          <div class="dev-cat-label">Category B</div>
+          <div class="dev-cat-title">Minor</div>
+          <span class="dev-cat-badge">NON-BLOCKING</span>
+        </div>
+        <div class="dev-card-body">
+          <p>A non-critical finding that does not risk patient safety or product quality. May be a cosmetic issue, documentation gap, or non-GMP functional deviation.</p>
+          <p><strong>Phase gate impact:</strong> Non-blocking — documented and carried to the next phase with QA acceptance. Must be resolved before the Validation Summary Report is approved.</p>
+          <ul class="dev-examples">
+            <li>Typographical error in a protocol or document</li>
+            <li>Unit label incorrect on a non-critical display</li>
+            <li>Non-GMP report formatting error</li>
+            <li>Cosmetic alarm colour inconsistency</li>
+            <li>Non-critical HMI navigation issue</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout blue">
+      <div class="callout-label">Classification Is a Joint Decision</div>
+      <p>The engineer cannot classify their own deviation as Category B to avoid halting the test plan. Classification requires the Validation Lead and QA Representative together. If there is disagreement, the higher classification applies until investigation confirms otherwise. Downgrading a deviation from A to B after the fact requires documented root cause justification and QA sign-off.</p>
+    </div>
+
+    <!-- SVG: Deviation lifecycle flow -->
+    <figure class="article-img svg-fig">
+      <svg viewBox="0 0 720 220" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;background:#0d0f12;border-radius:8px 8px 0 0">
+        <defs>
+          <marker id="arr26" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+            <path d="M0,0.5 L5,3 L0,5.5" fill="none" stroke="#0057ff" stroke-width="1.2"/>
+          </marker>
+          <marker id="arr26r" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+            <path d="M0,0.5 L5,3 L0,5.5" fill="none" stroke="rgba(220,38,38,0.7)" stroke-width="1.2"/>
+          </marker>
+        </defs>
+        <text x="36" y="26" font-family="Epilogue,sans-serif" font-weight="700" font-size="10" fill="rgba(255,255,255,0.35)" letter-spacing="0.1em">DEVIATION LIFECYCLE — FROM DETECTION TO CLOSURE</text>
+
+        <!-- Step boxes -->
+        <!-- Detect -->
+        <rect x="18" y="48" width="86" height="38" rx="5" fill="rgba(220,38,38,0.15)" stroke="rgba(220,38,38,0.5)" stroke-width="1.5"/>
+        <text x="61" y="63" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(255,255,255,0.45)" letter-spacing="0.05em">STEP 1</text>
+        <text x="61" y="78" text-anchor="middle" font-family="Epilogue,sans-serif" font-weight="700" font-size="10" fill="rgba(220,80,80,0.9)">Detect &amp; Stop</text>
+        <line x1="104" y1="67" x2="116" y2="67" stroke="#0057ff" stroke-width="1.5" marker-end="url(#arr26)"/>
+
+        <!-- Record in MDL -->
+        <rect x="116" y="48" width="86" height="38" rx="5" fill="rgba(0,87,255,0.14)" stroke="#0057ff" stroke-width="1"/>
+        <text x="159" y="63" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(255,255,255,0.35)" letter-spacing="0.05em">STEP 2</text>
+        <text x="159" y="78" text-anchor="middle" font-family="Epilogue,sans-serif" font-weight="700" font-size="10" fill="rgba(255,255,255,0.8)">Record in MDL</text>
+        <line x1="202" y1="67" x2="214" y2="67" stroke="#0057ff" stroke-width="1.5" marker-end="url(#arr26)"/>
+
+        <!-- Classify A/B -->
+        <rect x="214" y="48" width="86" height="38" rx="5" fill="rgba(0,87,255,0.14)" stroke="#0057ff" stroke-width="1"/>
+        <text x="257" y="63" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(255,255,255,0.35)" letter-spacing="0.05em">STEP 3</text>
+        <text x="257" y="78" text-anchor="middle" font-family="Epilogue,sans-serif" font-weight="700" font-size="10" fill="rgba(255,255,255,0.8)">Classify A / B</text>
+        <line x1="300" y1="67" x2="312" y2="67" stroke="#0057ff" stroke-width="1.5" marker-end="url(#arr26)"/>
+
+        <!-- Investigate -->
+        <rect x="312" y="48" width="86" height="38" rx="5" fill="rgba(0,87,255,0.14)" stroke="#0057ff" stroke-width="1"/>
+        <text x="355" y="63" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(255,255,255,0.35)" letter-spacing="0.05em">STEP 4</text>
+        <text x="355" y="78" text-anchor="middle" font-family="Epilogue,sans-serif" font-weight="700" font-size="10" fill="rgba(255,255,255,0.8)">Investigate</text>
+        <line x1="398" y1="67" x2="410" y2="67" stroke="#0057ff" stroke-width="1.5" marker-end="url(#arr26)"/>
+
+        <!-- Correct + Re-test -->
+        <rect x="410" y="48" width="86" height="38" rx="5" fill="rgba(0,87,255,0.14)" stroke="#0057ff" stroke-width="1"/>
+        <text x="453" y="63" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(255,255,255,0.35)" letter-spacing="0.05em">STEP 5</text>
+        <text x="453" y="78" text-anchor="middle" font-family="Epilogue,sans-serif" font-weight="700" font-size="10" fill="rgba(255,255,255,0.8)">Correct + Re-test</text>
+        <line x1="496" y1="67" x2="508" y2="67" stroke="#0057ff" stroke-width="1.5" marker-end="url(#arr26)"/>
+
+        <!-- CAPA -->
+        <rect x="508" y="48" width="86" height="38" rx="5" fill="rgba(0,87,255,0.14)" stroke="#0057ff" stroke-width="1"/>
+        <text x="551" y="63" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(255,255,255,0.35)" letter-spacing="0.05em">STEP 6</text>
+        <text x="551" y="78" text-anchor="middle" font-family="Epilogue,sans-serif" font-weight="700" font-size="10" fill="rgba(255,255,255,0.8)">CAPA (A only)</text>
+        <line x1="594" y1="67" x2="606" y2="67" stroke="#0057ff" stroke-width="1.5" marker-end="url(#arr26)"/>
+
+        <!-- QA Close -->
+        <rect x="606" y="48" width="86" height="38" rx="5" fill="rgba(0,135,90,0.18)" stroke="#00875a" stroke-width="1.5"/>
+        <text x="649" y="63" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(255,255,255,0.35)" letter-spacing="0.05em">STEP 7</text>
+        <text x="649" y="78" text-anchor="middle" font-family="Epilogue,sans-serif" font-weight="700" font-size="10" fill="#00c97a">QA Closes</text>
+
+        <!-- Cat A halt indicator -->
+        <rect x="214" y="112" width="182" height="28" rx="4" fill="rgba(220,38,38,0.1)" stroke="rgba(220,38,38,0.35)" stroke-width="1"/>
+        <text x="305" y="130" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(220,80,80,0.8)" letter-spacing="0.05em">CAT A → HALT TESTING + NOTIFY QA MANAGER</text>
+        <line x1="257" y1="86" x2="257" y2="112" stroke="rgba(220,38,38,0.5)" stroke-width="1" stroke-dasharray="3,2"/>
+        <line x1="355" y1="86" x2="355" y2="112" stroke="rgba(220,38,38,0.5)" stroke-width="1" stroke-dasharray="3,2"/>
+
+        <!-- Cat B carry forward -->
+        <rect x="116" y="155" width="182" height="28" rx="4" fill="rgba(217,119,6,0.08)" stroke="rgba(217,119,6,0.35)" stroke-width="1"/>
+        <text x="207" y="173" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(217,119,6,0.8)" letter-spacing="0.05em">CAT B → CARRY FORWARD WITH QA ACCEPTANCE</text>
+        <line x1="159" y1="86" x2="159" y2="155" stroke="rgba(217,119,6,0.4)" stroke-width="1" stroke-dasharray="3,2"/>
+        <line x1="257" y1="140" x2="257" y2="155" stroke="rgba(217,119,6,0.4)" stroke-width="1" stroke-dasharray="3,2"/>
+
+        <!-- VSR block -->
+        <rect x="412" y="155" width="240" height="28" rx="4" fill="rgba(0,135,90,0.08)" stroke="rgba(0,135,90,0.35)" stroke-width="1"/>
+        <text x="532" y="173" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(0,200,122,0.7)" letter-spacing="0.05em">ALL CLOSED BEFORE VSR CAN BE APPROVED</text>
+        <line x1="649" y1="86" x2="649" y2="155" stroke="rgba(0,135,90,0.4)" stroke-width="1" stroke-dasharray="3,2"/>
+
+        <text x="36" y="207" font-family="Roboto Mono,monospace" font-size="7.5" fill="rgba(255,255,255,0.18)" letter-spacing="0.04em">MDL-SYS-001 IS THE SINGLE SOURCE OF TRUTH FOR DEVIATION STATUS THROUGHOUT THE PROJECT.</text>
+      </svg>
+      <figcaption>// DEVIATION LIFECYCLE — 7 STEPS FROM DETECTION TO QA CLOSURE. CATEGORY A DEVIATIONS BLOCK THE PHASE GATE. ALL DEVIATIONS MUST BE CLOSED BEFORE VSR APPROVAL.</figcaption>
+    </figure>
+
+    <h2 id="seven-steps">The 7-Step Handling Process</h2>
+    <p>The deviation handling process is defined in the Project Quality Plan (PQP-SYS-001) Section 8.2. Every deviation follows the same sequence regardless of category — the difference is the speed and escalation requirements for Category A.</p>
+
+    <div class="step-list">
+
+      <div class="step-item">
+        <div class="step-num"><div class="step-circle red">1</div></div>
+        <div class="step-body">
+          <div class="step-label">Step 01</div>
+          <div class="step-title">Detect and stop</div>
+          <p class="step-text">Any team member observing a deviation must <strong>stop testing on the affected function immediately</strong> and notify the Validation Lead. Do not attempt to repeat the test informally before documenting. Do not continue to the next test step. The deviation must enter the MDL before any further action on that function.</p>
+        </div>
+      </div>
+
+      <div class="step-item">
+        <div class="step-num"><div class="step-circle">2</div></div>
+        <div class="step-body">
+          <div class="step-label">Step 02</div>
+          <div class="step-title">Record in the Master Deviation Ledger</div>
+          <p class="step-text">Open a new row in MDL-SYS-001. Record: phase, protocol reference, test case ID, deviation description (what was observed vs what was expected per the protocol), the date and who observed it. The description must be factual and objective — what happened, not what you think caused it. Leave root cause blank until Step 4.</p>
+        </div>
+      </div>
+
+      <div class="step-item">
+        <div class="step-num"><div class="step-circle">3</div></div>
+        <div class="step-body">
+          <div class="step-label">Step 03</div>
+          <div class="step-title">Classify — jointly with QA</div>
+          <p class="step-text">The Validation Lead and QA Representative jointly assess the deviation against the Category A/B definitions and assign the classification. For Category A: QA Manager and relevant stakeholders are notified immediately. Testing on the affected function is formally halted. For Category B: QA accepts carry-forward and testing continues on unaffected functions.</p>
+        </div>
+      </div>
+
+      <div class="step-item">
+        <div class="step-num"><div class="step-circle">4</div></div>
+        <div class="step-body">
+          <div class="step-label">Step 04</div>
+          <div class="step-title">Immediate impact assessment</div>
+          <p class="step-text">Before investigating root cause, assess three things: (a) Can testing on other functions continue, or is the deviation systemic? (b) Does this deviation affect test cases already executed — i.e., do previously passed tests need to be re-examined? (c) Is there a GMP data integrity impact — has any GMP record been affected by the failure? This last question is the most important and must be answered before the investigation proceeds.</p>
+        </div>
+      </div>
+
+      <div class="step-item">
+        <div class="step-num"><div class="step-circle">5</div></div>
+        <div class="step-body">
+          <div class="step-label">Step 05</div>
+          <div class="step-title">Root cause investigation and correction</div>
+          <p class="step-text">For Category A deviations, a formal root cause analysis is required — 5-Why, Fishbone/Ishikawa, or equivalent. The root cause must be <strong>confirmed</strong>, not assumed. "Probably a software bug" is not an acceptable root cause. Once the root cause is confirmed and the correction is implemented, all affected test cases are re-executed from the beginning. You cannot patch a partial test — the complete test case must be repeated with a clean execution record.</p>
+        </div>
+      </div>
+
+      <div class="step-item">
+        <div class="step-num"><div class="step-circle">6</div></div>
+        <div class="step-body">
+          <div class="step-label">Step 06</div>
+          <div class="step-title">CAPA — Category A only</div>
+          <p class="step-text">For Category A deviations, a formal <strong>Corrective and Preventive Action (CAPA)</strong> must be raised and tracked. The corrective action addresses the specific failure. The preventive action addresses the root cause to prevent recurrence. The CAPA is maintained in the site QMS and cross-referenced in the MDL. No validation phase may be closed while a CAPA that falls within its scope remains open.</p>
+        </div>
+      </div>
+
+      <div class="step-item">
+        <div class="step-num"><div class="step-circle green">7</div></div>
+        <div class="step-body">
+          <div class="step-label">Step 07</div>
+          <div class="step-title">QA closure</div>
+          <p class="step-text">QA signs off the deviation closure in the MDL once they are satisfied that: the root cause is confirmed, the correction has been implemented and verified, re-testing is complete and passed, and (for Category A) the CAPA is raised with a scheduled effectiveness check date. The deviation status in the MDL changes to Closed. Only a QA representative can close a deviation — the engineer cannot close their own.</p>
+        </div>
+      </div>
+
+    </div>
+
+    <h2 id="phase-gates">What Blocks Your Phase Gate</h2>
+    <p>The phase gate relationship is simple: <strong>no open Category A deviations means no phase gate sign-off.</strong> This is an absolute rule. If you have a Category A deviation open at the time you want to close your OQ, you cannot close it — regardless of schedule pressure, regardless of commercial urgency.</p>
+
+    <div class="table-scroll">
+    <table class="std-table">
+      <thead>
+        <tr>
+          <th>Phase Gate</th>
+          <th>Deviation Requirement</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>FAT → SAT / IQ</td>
+          <td>All Category A FAT deviations closed or formally risk-accepted in writing by QA Manager. Software version frozen with documented hash/checksum.</td>
+        </tr>
+        <tr>
+          <td>IQ → OQ</td>
+          <td>No open Category A IQ deviations. All IQ verification items complete.</td>
+        </tr>
+        <tr>
+          <td>OQ → PQ</td>
+          <td>No open Category A OQ deviations. All CAPA actions within OQ scope closed.</td>
+        </tr>
+        <tr>
+          <td>PQ → GMP Release (VSR)</td>
+          <td>All MDL deviations (both Category A and B) closed. All CAPA closed or formally risk-accepted. TM 100% complete with PASSED status on all rows.</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="callout amber">
+      <div class="callout-label">Risk Acceptance — the Exception Path</div>
+      <p>In rare cases, a Category A deviation may be formally risk-accepted rather than resolved — typically where the root cause is a known platform limitation with no viable engineering fix, and the residual risk has been formally assessed and accepted by QA management in writing. This is the exception, not a shortcut. The risk acceptance must be documented in the MDL, referenced in the CAPA, and approved at the appropriate level. Regulatory inspectors are familiar with this mechanism and will scrutinise its use carefully.</p>
+    </div>
+
+    <h2 id="mdl">The Master Deviation Ledger in Practice</h2>
+    <p>The <a href="master-deviation-ledger-guide.html">Master Deviation Ledger</a> (MDL-SYS-001) opens at the start of FAT and remains active through all testing phases until the VSR is approved. It is the single source of truth for deviation status across the project.</p>
+    <p>Every deviation gets a unique MDL reference number (MDL-001, MDL-002, etc.) that appears in the protocol execution record, the CAPA, and the VSR summary table. When an inspector reviews your validation package, the VSR references the MDL, the MDL references the protocol, and the protocol shows the executed test case — the full chain of evidence is auditable in both directions.</p>
+
+    <ul class="checklist">
+      <li><strong>One MDL per system per validation project</strong> — not one per phase. All FAT, IQ, OQ, and PQ deviations live in the same ledger.</li>
+      <li><strong>Never delete or overwrite a row</strong> — if a deviation was raised and later classified incorrectly, add a correction entry. The original record must be preserved.</li>
+      <li><strong>Status must be current</strong> — the MDL is a living document. An inspector can ask to see it at any point during testing. A stale MDL with deviations showing as "Open" that were actually resolved weeks ago is a finding in itself.</li>
+      <li><strong>The VSR deviation summary is generated from the MDL</strong> — if the MDL is incomplete, the VSR will be too. Maintain the MDL throughout the project, not as a clean-up exercise at the end.</li>
+    </ul>
+
+    <div class="callout green">
+      <div class="callout-label">In the QLean Framework</div>
+      <p>MDL-SYS-001 is a pre-structured Excel workbook with the full deviation log, category definitions. PQP-SYS-001 Section 8 contains the full deviation handling procedure with the 7-step process and phase gate requirements shown in this article. Both documents are ready to use — no blank-sheet-of-paper problem.</p>
+    </div>
+
+  </article>
+
+  <aside class="sidebar">
+    <div class="toc-card">
+      <div class="toc-label">In This Article</div>
+      <ul class="toc-list">
+        <li><a href="#what-is-deviation" class="active">What a Deviation Is</a></li>
+        <li><a href="#classification">Category A and B</a></li>
+        <li><a href="#seven-steps">The 7-Step Process</a></li>
+        <li><a href="#phase-gates">What Blocks Your Gate</a></li>
+        <li><a href="#mdl">The MDL in Practice</a></li>
+      </ul>
+    </div>
+    <div class="sidebar-cta">
+      <div class="sc-eyebrow">QLean Framework</div>
+      <div class="sc-title">29 production-ready GAMP 5 documents</div>
+      <div class="sc-body">Every document referenced in this article — templates, protocols, and registers — ready to adapt for your project.</div>
+      <a href="../index.html#pricing" class="sc-btn">Get the Framework — €249 →</a>
+      <div class="sc-note">// INSTANT DOWNLOAD · COMPANY-WIDE LICENCE</div>
+    </div>
+    <div class="sidebar-share">
+      <div class="share-label">Share This Article</div>
+      <div class="share-links">
+        <a href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fqleanautomation.com%2Fblog%2Fdeviation-management-pharma-validation.html" target="_blank" rel="noopener" class="share-link">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          Share on LinkedIn
+        </a>
+        <a href="https://www.reddit.com/submit?url=https%3A%2F%2Fqleanautomation.com%2Fblog%2Fdeviation-management-pharma-validation.html&title=Deviation+Management+During+Validation%3A+How+to+Raise%2C+Classify+and+Close" target="_blank" rel="noopener" class="share-link">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/></svg>
+          Share on Reddit
+        </a>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<section class="related">
+  <div class="related-inner">
+    <div class="related-label">More Articles</div>
+    <div class="related-grid">
+      <a href="master-deviation-ledger-guide.html" class="related-card">
+        <div class="rc-tag">📋 MDL</div>
+        <div class="rc-title">The Master Deviation Ledger: What It Is and How to Run It</div>
+        <div class="rc-desc">A deep dive into MDL-SYS-001 — structure, fields, dashboard, and how to keep it current across all testing phases.</div>
+        <div class="rc-footer"><div class="rc-read">5 MIN READ</div><div class="rc-arrow">→</div></div>
+      </a>
+      <a href="iq-oq-pq-guide.html" class="related-card">
+        <div class="rc-tag">✅ IQ OQ PQ</div>
+        <div class="rc-title">IQ, OQ, PQ: How They Work Together</div>
+        <div class="rc-desc">The qualification phases where deviations are most commonly raised — and what your test case structure must look like to support clean deviation management.</div>
+        <div class="rc-footer"><div class="rc-read">8 MIN READ</div><div class="rc-arrow">→</div></div>
+      </a>
+      <a href="validation-summary-report-guide.html" class="related-card">
+        <div class="rc-tag">📄 VSR</div>
+        <div class="rc-title">The Validation Summary Report</div>
+        <div class="rc-desc">The VSR cannot be approved until all MDL deviations are closed. Here is what the deviation reconciliation section of your VSR must show.</div>
+        <div class="rc-footer"><div class="rc-read">6 MIN READ</div><div class="rc-arrow">→</div></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="../index.html" class="nav-logo">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none" style="flex-shrink:0">
+            <rect width="32" height="32" rx="7" fill="#0d0f12"/>
+            <rect x="8" y="7" width="16" height="16" rx="2" stroke="white" stroke-width="2.5" fill="none"/>
+            <line x1="20" y1="19" x2="26" y2="25" stroke="#0057FF" stroke-width="3" stroke-linecap="round"/>
+          </svg>
+          <span style="font-family:'Epilogue',sans-serif;font-weight:800;font-size:16px;color:#0d0f12;letter-spacing:-.03em">QLean <span style="font-weight:300;color:#5a6172">Automation</span></span>
+        </a>
+        <p>GMP documentation tools for system integrators and automation engineers entering pharmaceutical projects.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Products</h4>
+        <ul>
+          <li><a href="../index.html#framework">GAMP 5 Framework</a></li>
+          <li><a href="../index.html#products">Technical Masterclass</a></li>
+          <li><a href="../index.html#free-download">Free Resources</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Knowledge Base</h4>
+        <ul>
+          <li><a href="blog-index.html">All Articles</a></li>
+          <li><a href="master-deviation-ledger-guide.html">Master Deviation Ledger</a></li>
+          <li><a href="iq-oq-pq-guide.html">IQ OQ PQ Guide</a></li>
+          <li><a href="validation-summary-report-guide.html">Validation Summary Report</a></li>
+          <li><a href="change-control-validated-system.html">Change Control</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="https://www.linkedin.com/company/qlean-automation" target="_blank">LinkedIn</a></li>
+          <li><a href="mailto:hello@qleanautomation.com">Contact</a></li>
+          <li><a href="../terms.html">Terms</a></li>
+          <li><a href="../privacy.html">Privacy</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 QLEAN AUTOMATION · QLEANAUTOMATION.COM</p>
+      <div class="compliance-pills">
+        <span class="cp">GAMP 5</span><span class="cp">EU ANNEX 11</span><span class="cp">21 CFR PART 11</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  window.addEventListener('scroll',()=>{
+    const doc=document.documentElement;
+    document.getElementById('progress').style.width=(doc.scrollTop/(doc.scrollHeight-doc.clientHeight)*100)+'%';
+  });
+  const sections=document.querySelectorAll('[id]');
+  const tocLinks=document.querySelectorAll('.toc-list a');
+  const observer=new IntersectionObserver((entries)=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting){
+        tocLinks.forEach(l=>l.classList.remove('active'));
+        const a=document.querySelector(`.toc-list a[href="#${entry.target.id}"]`);
+        if(a)a.classList.add('active');
+      }
+    });
+  },{rootMargin:'-20% 0px -70% 0px'});
+  sections.forEach(s=>observer.observe(s));
+</script>
+</body>
+</html>

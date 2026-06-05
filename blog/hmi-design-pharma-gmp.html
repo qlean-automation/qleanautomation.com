@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-JJQ1TXZJX7"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-JJQ1TXZJX7');
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HMI Design for GMP Environments — What Validation Requires | QLean Automation</title>
+<meta name="description" content="HMI design for a pharma SCADA is not graphic design — it is engineering with testable acceptance criteria. Colour standards, the 3-click navigation rule, what the main overview screen must show, and how the OQ tests it. Here's what validation requires and why.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@300;400;500;600;700;800;900&family=Source+Sans+3:ital,wght@0,300;0,400;0,500;1,300&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--white:#ffffff;--off:#f7f8f9;--ink:#0d0f12;--ink2:#1e2128;--ink3:#3d4456;--ink4:#9199a8;--rule:#e2e5ea;--rule2:#c8cdd6;--blue:#0057ff;--blue2:#0044cc;--blue-dim:rgba(0,87,255,0.07);--green:#00875a;--green-dim:rgba(0,135,90,0.08);--amber:#d97706;--amber-dim:rgba(217,119,6,0.08);--red:#c0392b;--red-dim:rgba(192,57,43,0.08);--f-head:'Epilogue',sans-serif;--f-body:'Source Sans 3',sans-serif;--f-mono:'Roboto Mono',monospace;--shadow-sm:0 2px 8px rgba(13,15,18,0.06),0 1px 3px rgba(13,15,18,0.04)}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}body{background:var(--white);color:var(--ink);font-family:var(--f-body);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+nav{position:fixed;top:0;left:0;right:0;z-index:200;height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 6%;background:rgba(255,255,255,0.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--rule)}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;flex-shrink:0}
+.nav-links{display:flex;align-items:center;gap:36px;list-style:none}.nav-links a{font-size:14px;font-weight:400;color:var(--ink3);text-decoration:none;transition:color .2s}.nav-links a:hover{color:var(--ink)}
+.nav-btn{font-family:var(--f-body);font-size:13px;font-weight:500;padding:9px 20px;background:var(--blue);color:white;border:none;border-radius:6px;cursor:pointer;text-decoration:none;white-space:nowrap;flex-shrink:0}.nav-btn:hover{background:var(--blue2)}
+.progress-bar{position:fixed;top:64px;left:0;right:0;height:2px;background:var(--rule);z-index:199}.progress-fill{height:100%;background:var(--blue);width:0%}
+.article-hero{padding:120px 6% 64px;background:var(--white);border-bottom:1px solid var(--rule);position:relative;overflow:hidden}
+.article-hero::before{content:'';position:absolute;top:-80px;right:-80px;width:400px;height:400px;background:radial-gradient(circle,rgba(0,87,255,0.04) 0%,transparent 70%);pointer-events:none}
+.article-hero-inner{max-width:940px;margin:0 auto;position:relative;z-index:1}
+.breadcrumb{display:flex;align-items:center;gap:8px;font-family:var(--f-mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink4);margin-bottom:24px}.breadcrumb a{color:var(--ink4);text-decoration:none}.breadcrumb a:hover{color:var(--blue)}.breadcrumb span{color:var(--rule2)}
+.article-tag{display:inline-flex;align-items:center;gap:6px;font-family:var(--f-mono);font-size:10px;font-weight:500;color:var(--blue);letter-spacing:.1em;text-transform:uppercase;margin-bottom:20px;padding:4px 10px;background:var(--blue-dim);border-radius:4px}
+.article-hero h1{font-family:var(--f-head);font-size:clamp(30px,5vw,52px);font-weight:900;line-height:1.0;letter-spacing:-.04em;color:var(--ink);margin-bottom:20px}.article-hero h1 span{color:var(--blue)}
+.article-intro{font-size:18px;font-weight:400;color:var(--ink2);line-height:1.75;margin-bottom:32px;max-width:800px}
+.article-meta{display:flex;align-items:center;gap:24px;padding-top:24px;border-top:1px solid var(--rule);flex-wrap:wrap}
+.meta-author{display:flex;align-items:center;gap:10px}.author-avatar{width:36px;height:36px;border-radius:50%;background:var(--ink);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.author-name{font-size:13px;font-weight:500;color:var(--ink)}.author-role{font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.04em}
+.meta-divider{width:1px;height:28px;background:var(--rule)}.meta-stat{font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.06em}
+.article-wrap{max-width:1300px;margin:0 auto;padding:64px 6%;display:grid;grid-template-columns:1fr 300px;gap:60px;align-items:start}
+.article-body{min-width:0}
+.article-body h2{font-family:var(--f-head);font-size:26px;font-weight:800;letter-spacing:-.03em;color:var(--ink);margin:56px 0 16px;line-height:1.2}.article-body h2:first-child{margin-top:0}
+.article-body h3{font-family:var(--f-head);font-size:18px;font-weight:700;letter-spacing:-.02em;color:var(--ink);margin:32px 0 12px}
+.article-body p{font-size:16px;font-weight:400;color:var(--ink2);line-height:1.85;margin-bottom:20px}
+.article-body strong{color:var(--ink);font-weight:600}
+.article-body a{color:var(--blue);text-decoration:none;border-bottom:1px solid rgba(0,87,255,.25)}.article-body a:hover{border-color:var(--blue)}
+.callout{padding:20px 24px;border-radius:8px;margin:32px 0;border-left:3px solid}
+.callout.blue{background:var(--blue-dim);border-color:var(--blue)}.callout.amber{background:var(--amber-dim);border-color:var(--amber)}.callout.green{background:var(--green-dim);border-color:var(--green)}.callout.red{background:var(--red-dim);border-color:var(--red)}
+.callout-label{font-family:var(--f-mono);font-size:9px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px}.callout.blue .callout-label{color:var(--blue)}.callout.amber .callout-label{color:var(--amber)}.callout.green .callout-label{color:var(--green)}.callout.red .callout-label{color:var(--red)}
+.callout p{font-size:14px;color:var(--ink2);line-height:1.7;margin:0}.callout strong{color:var(--ink)}
+.article-img{width:100%;border-radius:8px;border:1px solid #1e2535;overflow:hidden;margin:36px 0}
+.article-img figcaption{padding:10px 14px;background:var(--off);font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.04em;border-top:1px solid var(--rule)}
+.arrow-list{list-style:none;display:flex;flex-direction:column;gap:8px;margin:16px 0 24px}
+.arrow-list li{display:flex;align-items:flex-start;gap:10px;font-size:15px;color:var(--ink2);line-height:1.6}
+.arrow-list li::before{content:'\2192';color:var(--blue);flex-shrink:0;font-size:12px;margin-top:3px}
+.checklist{list-style:none;display:flex;flex-direction:column;gap:8px;margin:20px 0 28px}
+.checklist li{display:flex;align-items:flex-start;gap:10px;font-size:15px;color:var(--ink2);line-height:1.6}
+.checklist li::before{content:'';width:16px;height:16px;flex-shrink:0;margin-top:3px;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 14 14' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='7' cy='7' r='6.5' fill='none' stroke='%230057ff' stroke-width='1'/%3E%3Cpath d='M4 7l2 2 4-4' stroke='%230057ff' stroke-width='1.3' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:center;background-size:contain}
+.table-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:28px 0}
+.compare-table{width:100%;border-collapse:collapse;font-size:14px}
+.compare-table th{font-family:var(--f-mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink4);padding:10px 16px;border-bottom:2px solid var(--rule);text-align:left;background:var(--off)}
+.compare-table td{padding:12px 16px;border-bottom:1px solid var(--rule);vertical-align:top;color:var(--ink2);line-height:1.6}
+.compare-table tr:last-child td{border-bottom:none}
+.compare-table td:first-child{font-weight:600;color:var(--ink);font-family:var(--f-mono);font-size:12px}
+.sidebar{position:sticky;top:88px;display:flex;flex-direction:column;gap:16px}
+.toc-card{border:1px solid var(--rule);border-radius:8px;padding:24px;background:var(--white);box-shadow:var(--shadow-sm)}
+.toc-label{font-family:var(--f-mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);margin-bottom:16px}
+.toc-list{list-style:none;display:flex;flex-direction:column;gap:2px}
+.toc-list a{display:block;font-size:13px;color:var(--ink3);text-decoration:none;padding:6px 10px;border-radius:4px;transition:all .15s;border-left:2px solid transparent}
+.toc-list a:hover,.toc-list a.active{color:var(--blue);background:var(--blue-dim);border-left-color:var(--blue)}
+.sidebar-cta{border:1px solid var(--blue);border-radius:8px;padding:24px;background:var(--blue-dim)}
+.sc-eyebrow{font-family:var(--f-mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);margin-bottom:10px}
+.sc-title{font-family:var(--f-head);font-size:17px;font-weight:800;letter-spacing:-.02em;color:var(--ink);margin-bottom:8px;line-height:1.2}
+.sc-body{font-size:13px;color:var(--ink3);line-height:1.6;margin-bottom:16px}
+.sc-btn{display:block;text-align:center;padding:11px 16px;background:var(--blue);color:white;border-radius:6px;font-family:var(--f-body);font-size:13px;font-weight:500;text-decoration:none}.sc-btn:hover{background:var(--blue2)}
+.sc-note{font-family:var(--f-mono);font-size:9px;color:var(--ink4);text-align:center;margin-top:8px;letter-spacing:.04em}
+.sidebar-share{border:1px solid var(--rule);border-radius:8px;padding:20px 24px;background:var(--white)}
+.share-label{font-family:var(--f-mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);margin-bottom:14px}
+.share-links{display:flex;flex-direction:column;gap:8px}
+.share-link{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--ink3);text-decoration:none;padding:9px 12px;border:1px solid var(--rule);border-radius:6px;transition:border-color .2s,color .2s}.share-link:hover{border-color:var(--blue);color:var(--blue)}
+.related{padding:64px 6%;border-top:1px solid var(--rule);background:var(--off)}
+.related-inner{max-width:1100px;margin:0 auto}
+.related-label{font-family:var(--f-mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);margin-bottom:32px;display:flex;align-items:center;gap:10px}
+.related-label::before{content:'';width:20px;height:1px;background:var(--blue)}
+.related-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.related-card{padding:24px;border:1px solid var(--rule);border-radius:8px;background:var(--white);box-shadow:var(--shadow-sm);transition:border-color .2s,transform .2s;text-decoration:none;display:flex;flex-direction:column;gap:12px}.related-card:hover{border-color:var(--blue);transform:translateY(-4px)}
+.rc-tag{font-family:var(--f-mono);font-size:9px;color:var(--blue);letter-spacing:.08em;text-transform:uppercase;padding:3px 8px;background:var(--blue-dim);border-radius:3px;align-self:flex-start}
+.rc-title{font-family:var(--f-head);font-size:16px;font-weight:700;letter-spacing:-.02em;color:var(--ink);line-height:1.25}
+.rc-desc{font-size:13px;color:var(--ink3);line-height:1.6;flex:1}
+.rc-footer{display:flex;align-items:center;justify-content:space-between;padding-top:12px;border-top:1px solid var(--rule)}
+.rc-read{font-family:var(--f-mono);font-size:10px;color:var(--ink4)}.rc-arrow{font-size:14px;color:var(--blue)}
+footer{padding:56px 6% 32px;border-top:1px solid var(--rule);background:var(--white)}
+.footer-inner{max-width:1160px;margin:0 auto}
+.footer-top{display:flex;justify-content:space-between;align-items:flex-start;gap:40px;flex-wrap:wrap;margin-bottom:48px}
+.footer-brand p{font-size:13px;font-weight:300;color:var(--ink3);margin-top:12px;max-width:260px;line-height:1.6}
+.footer-col h4{font-family:var(--f-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink4);margin-bottom:16px}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+.footer-col a{font-size:13px;color:var(--ink3);text-decoration:none}.footer-col a:hover{color:var(--blue)}
+.footer-bottom{padding-top:24px;border-top:1px solid var(--rule);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.footer-bottom p{font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.04em}
+.compliance-pills{display:flex;gap:6px;flex-wrap:wrap}
+.cp{font-family:var(--f-mono);font-size:9px;padding:3px 8px;border:1px solid var(--rule);border-radius:3px;color:var(--ink4);letter-spacing:.06em}
+@media(max-width:900px){.article-wrap{grid-template-columns:1fr;gap:48px}.sidebar{position:static}.related-grid{grid-template-columns:1fr}.table-scroll{margin:20px 0}}
+@media(max-width:900px){.nav-links{display:none}}
+@media(max-width:540px){nav{padding:0 4%}.nav-btn{font-size:12px;padding:8px 14px}}
+</style>
+</head>
+<body>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+<nav>
+  <a href="../index.html" class="nav-logo">
+    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" style="flex-shrink:0"><rect width="32" height="32" rx="7" fill="#0d0f12"/><rect x="8" y="7" width="16" height="16" rx="2" stroke="white" stroke-width="2.5" fill="none"/><line x1="20" y1="19" x2="26" y2="25" stroke="#0057FF" stroke-width="3" stroke-linecap="round"/></svg>
+    <span style="font-family:'Epilogue',sans-serif;font-weight:800;font-size:16px;color:#0d0f12;letter-spacing:-.03em;white-space:nowrap">QLean <span style="font-weight:300;color:#5a6172">Automation</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="../index.html#products">Products</a></li>
+    <li><a href="../index.html#framework">Framework</a></li>
+    <li><a href="blog-index.html">Knowledge Base</a></li>
+    <li><a href="../index.html#pricing">Pricing</a></li>
+    <li><a href="../about.html">About</a></li>
+    <li><a href="../index.html#faq">FAQ</a></li>
+  </ul>
+  <a href="../index.html#pricing" class="nav-btn">Get the Framework →</a>
+</nav>
+
+<header class="article-hero">
+  <div class="article-hero-inner">
+    <div class="breadcrumb"><a href="../index.html">Home</a><span>/</span><a href="blog-index.html">Knowledge Base</a><span>/</span>HMI Design for GMP Environments</div>
+    <div class="article-tag">🖥️ SCADA Engineering</div>
+    <h1>HMI Design for GMP<br><span>Environments — What</span><br>Validation Requires</h1>
+    <p class="article-intro">HMI design for a pharma SCADA is not an exercise in graphic design. Every colour choice, every navigation path, and every element on the main overview screen is an FDS specification with an OQ acceptance criterion attached. Inconsistency between screens is a validation finding. The 3-click navigation rule is tested adversarially. Here's what you need to specify and what the OQ verifies.</p>
+    <div class="article-meta">
+      <div class="meta-author">
+        <div class="author-avatar"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="7" r="3.5" stroke="white" stroke-width="1.5"/><path d="M2.5 16c0-3.59 2.91-6.5 6.5-6.5s6.5 2.91 6.5 6.5" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+        <div><div class="author-name">QLean Automation</div><div class="author-role">ENGINEERS WHO BUILD SYSTEMS, NOT JUST SIGN THEM</div></div>
+      </div>
+      <div class="meta-divider"></div><div class="meta-stat">7 MIN READ</div>
+      <div class="meta-divider"></div><div class="meta-stat">HMI DESIGN · SCADA · GMP VALIDATION</div>
+    </div>
+  </div>
+</header>
+
+<div class="article-wrap">
+  <article class="article-body">
+
+    <h2 id="hmi-as-fds-specification">HMI Design Is an FDS Specification, Not an Aesthetic Choice</h2>
+    <p>The most common misunderstanding about HMI design in a GMP context: treating the HMI as a front-end cosmetic layer that can be designed by whoever has time, reviewed informally, and adjusted without consequence. In a validated SCADA system the HMI design is a set of FDS functional specifications — FUNC-HMI-001 through FUNC-HMI-00X — each with defined acceptance criteria that are tested at OQ. The HMI is not decorative. It is the operator's primary interface with the process, and the design decisions made during development directly affect whether operators can respond correctly to process conditions and alarms.</p>
+    <p>This has practical consequences for the engineering team. The HMI design must be frozen as part of the FDS before development begins. Post-FAT HMI changes — even cosmetic ones like moving a label or changing a background colour — are change control events if they affect any validated element. An HMI screen redesign (moving from one layout to another, changing the navigation structure) is a Type 1 major change requiring QA Manager approval and re-test. This is not bureaucratic obstruction — it is what "validated state" means for the HMI layer.</p>
+
+    <h2 id="colour-standard">The Colour Standard — Why Consistency Is Testable</h2>
+    <p>The colour standard for a GMP SCADA HMI must be defined in the FDS and applied consistently across every screen. "Consistently" means exactly — not approximately. A conductivity value that displays green on the overview screen and teal on the process area screen is an inconsistency that an OQ tester must raise as a deviation. The colour standard is not a preference — it is a specification that informs operator response: an operator who sees yellow knows what it means, and what it means must be the same on every screen.</p>
+
+    <figure class="article-img">
+      <svg viewBox="0 0 720 200" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;background:#0d0f12;border-radius:8px 8px 0 0">
+        <text x="360" y="18" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(255,255,255,0.2)" letter-spacing="0.12em">GMP SCADA COLOUR STANDARD — FIVE STATES, FIXED MEANING</text>
+
+        <!-- Grey -->
+        <rect x="16" y="34" width="124" height="148" rx="5" fill="rgba(80,85,100,0.2)" stroke="rgba(120,125,140,0.4)" stroke-width="1.5"/>
+        <rect x="16" y="34" width="124" height="36" rx="5" fill="rgba(100,110,130,0.5)"/>
+        <text x="78" y="57" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="10" fill="rgba(200,205,215,0.8)">GREY</text>
+        <text x="78" y="92" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="12" fill="rgba(255,255,255,0.65)">Off / Inactive</text>
+        <text x="78" y="112" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="12" fill="rgba(255,255,255,0.65)">Not in service</text>
+        <text x="78" y="132" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="12" fill="rgba(255,255,255,0.65)">Powered down</text>
+        <text x="78" y="164" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(200,205,215,0.35)">NO ACTION NEEDED</text>
+
+        <!-- Green -->
+        <rect x="156" y="34" width="124" height="148" rx="5" fill="rgba(0,135,90,0.12)" stroke="rgba(0,135,90,0.4)" stroke-width="1.5"/>
+        <rect x="156" y="34" width="124" height="36" rx="5" fill="rgba(0,135,90,0.35)"/>
+        <text x="218" y="57" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="10" fill="rgba(0,201,122,0.9)">GREEN</text>
+        <text x="218" y="92" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="12" fill="rgba(255,255,255,0.65)">Running / Normal</text>
+        <text x="218" y="112" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="12" fill="rgba(255,255,255,0.65)">In specification</text>
+        <text x="218" y="132" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="12" fill="rgba(255,255,255,0.65)">Healthy</text>
+        <text x="218" y="164" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(0,201,122,0.35)">EXPECTED STATE</text>
+
+        <!-- Yellow -->
+        <rect x="296" y="34" width="124" height="148" rx="5" fill="rgba(217,119,6,0.1)" stroke="rgba(217,119,6,0.35)" stroke-width="1.5"/>
+        <rect x="296" y="34" width="124" height="36" rx="5" fill="rgba(217,119,6,0.3)"/>
+        <text x="358" y="57" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="10" fill="rgba(240,160,40,0.85)">YELLOW</text>
+        <text x="358" y="92" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="12" fill="rgba(255,255,255,0.65)">Warning</text>
+        <text x="358" y="112" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="12" fill="rgba(255,255,255,0.65)">Advisory alarm</text>
+        <text x="358" y="132" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="12" fill="rgba(255,255,255,0.65)">Needs attention</text>
+        <text x="358" y="164" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(240,160,40,0.35)">MONITOR CLOSELY</text>
+
+        <!-- Red -->
+        <rect x="436" y="34" width="124" height="148" rx="5" fill="rgba(192,57,43,0.12)" stroke="rgba(192,57,43,0.4)" stroke-width="1.5"/>
+        <rect x="436" y="34" width="124" height="36" rx="5" fill="rgba(192,57,43,0.35)"/>
+        <text x="498" y="57" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="10" fill="rgba(220,80,80,0.9)">RED</text>
+        <text x="498" y="92" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="12" fill="rgba(255,255,255,0.65)">Alarm / Critical</text>
+        <text x="498" y="112" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="12" fill="rgba(255,255,255,0.65)">Out of specification</text>
+        <text x="498" y="132" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="12" fill="rgba(255,255,255,0.65)">Active fault</text>
+        <text x="498" y="164" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(220,80,80,0.35)">IMMEDIATE ACTION</text>
+
+        <!-- Blue -->
+        <rect x="576" y="34" width="128" height="148" rx="5" fill="rgba(0,87,255,0.1)" stroke="rgba(0,87,255,0.35)" stroke-width="1.5"/>
+        <rect x="576" y="34" width="128" height="36" rx="5" fill="rgba(0,87,255,0.28)"/>
+        <text x="640" y="57" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="10" fill="#6699ff">BLUE</text>
+        <text x="640" y="92" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="12" fill="rgba(255,255,255,0.65)">Manual mode</text>
+        <text x="640" y="112" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="12" fill="rgba(255,255,255,0.65)">Operator override</text>
+        <text x="640" y="132" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="12" fill="rgba(255,255,255,0.65)">Maintenance state</text>
+        <text x="640" y="164" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(0,87,255,0.4)">INTENTIONAL STATE</text>
+
+        <text x="360" y="192" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(255,255,255,0.18)">EVERY STATUS INDICATOR ON EVERY SCREEN MUST USE ONLY THESE FIVE COLOURS WITH THESE EXACT MEANINGS</text>
+      </svg>
+      <figcaption>GMP SCADA COLOUR STANDARD — Five states, fixed meanings, applied consistently across every screen. Any status indicator that uses a different colour for the same state — even if visually similar — is a validation finding that requires a deviation and a corrective action.</figcaption>
+    </figure>
+
+    <p>The five-colour standard — grey (off/inactive), green (running/normal), yellow (warning), red (alarm/critical), blue (manual mode) — covers every equipment and process state. The standard must be defined in the FDS with explicit RGB or hex values, not just colour names. "Green" interpreted by one developer as RGB(0,200,0) and by another as RGB(50,150,50) produces an inconsistent result that fails the colour standard test. The FDS specifies the exact colour code. The SCADA developer implements it. The OQ tester checks it against the FDS specification screen by screen.</p>
+
+    <div class="callout amber">
+      <div class="callout-label">Colour Inconsistency Is a Real Finding</div>
+      <p>This is not a theoretical concern. At FAT and OQ on pharma SCADA projects, colour inconsistencies between screens are regularly raised as deviations. Common examples: the alarm banner uses a slightly different red than the process value alarm indicator; a pump status indicator uses a different shade of green on the maintenance screen than on the overview screen; a manual mode indicator is blue on one screen and purple on another because a developer used a slightly different hex value. <strong>Every deviation must be corrected and re-tested before the protocol is closed.</strong> Define the exact hex values in the FDS and build a colour palette file for the SCADA project that developers reference — do not rely on visual approximation.</p>
+    </div>
+
+    <h2 id="main-overview-screen">The Main Overview Screen — What It Must Show</h2>
+    <p>The main overview screen is the most important screen in the system from a GMP perspective. It is where the operator spends most of their time. It must provide a complete situational awareness picture without requiring any navigation. The FDS must specify exactly what the main overview displays — not "relevant process information" but each element explicitly.</p>
+    <p>The required elements for a GMP process SCADA main overview are not arbitrary. They represent the minimum information an operator needs to make a correct response decision at any moment:</p>
+
+    <ul class="arrow-list">
+      <li><strong>All critical quality parameter current values with colour-coded status indicators:</strong> Conductivity, temperature at all monitoring points, TOC, distribution pressure — displayed simultaneously on one screen, without scrolling. An operator who must navigate to see a critical parameter is an operator who may miss an alarm.</li>
+      <li><strong>Active alarm count and highest-priority active alarm:</strong> The alarm banner must show not just that alarms exist but how many and what the highest priority is. An operator who sees "3 alarms" and cannot immediately see that one of them is Critical may not respond with the urgency required.</li>
+      <li><strong>System operational mode:</strong> Normal, Startup, Shutdown, Sanitization, Maintenance — displayed as a labelled indicator with the appropriate colour. An operator who does not immediately know what mode the system is in may take an inappropriate action.</li>
+      <li><strong>Distribution loop status:</strong> Supply or divert-to-drain. This is a critical quality state — a loop in divert mode means potentially non-conforming water is being rejected. It must be visible on the overview without navigating to a detail screen.</li>
+      <li><strong>Sanitization cycle status:</strong> Active or inactive, and if active, which phase. An operator who cannot see at a glance that a sanitization cycle is running and which phase it is in may attempt manual operations that conflict with the cycle sequence.</li>
+    </ul>
+
+    <p>The FDS specification must include a display update rate: "Display updates maximum every 2 seconds" is an example of a testable specification. A display that updates every 10 seconds while the process changes every second is not providing real situational awareness. The update rate is tested at OQ — the tester triggers a parameter change and measures the time to display update.</p>
+
+    <h2 id="navigation-and-3click">Navigation Design and the 3-Click Rule</h2>
+    <p>The 3-click rule is a common usability principle that has been given FDS status in GMP SCADA design: any screen in the system must be reachable from the main overview within 3 clicks or touch interactions. This is not a preference — it is a testable acceptance criterion. The OQ test (OQ-061) navigates five specific screen pairs and counts the clicks. All five must reach their destination in 3 or fewer interactions. Any screen that requires 4 or more clicks from the overview is a navigation deviation.</p>
+    <p>The navigation structure must be specified in the FDS as a hierarchy: Overview → Process Area → Equipment Detail → Configuration popup. The FDS must state explicitly that the active alarm summary and process trend screens are accessible within 1 click from any screen via a permanently visible toolbar. This "1-click from anywhere" requirement for alarms and trends is a safety design — an operator in the middle of a configuration task must be able to reach the alarm summary without navigating back through the hierarchy.</p>
+    <p>Two navigation requirements that must be in the FDS and are frequently missed:</p>
+    <ul class="arrow-list">
+      <li><strong>Breadcrumb trail:</strong> All non-overview screens must display a breadcrumb trail showing the navigation path (e.g., Overview / Generation Area / Storage Tank / Temperature Control). An operator who has navigated into a detail screen must always be able to see where they are in the system hierarchy without having to remember their navigation path.</li>
+      <li><strong>Back navigation on all screens:</strong> Every screen must have a back navigation control. An operator should not have to use the overview as a hub for every navigation step — they should be able to step backwards through their navigation history.</li>
+    </ul>
+
+    <h2 id="simulation-and-maintenance-indicators">Simulation and Maintenance Mode Indicators</h2>
+    <p>Two HMI design requirements that most first-project engineers underspecify — both have direct GMP compliance implications.</p>
+    <p><strong>Simulation mode indicator:</strong> When a GMP-critical tag is in simulation mode (a forced software value substituting for the real sensor reading), the HMI display of that tag must carry an unambiguous simulation indicator. In the SDS the typ_AI_GxP UDT includes a <code>b_Simulated</code> flag — when this flag is true, the HMI must display the tag value with a clear visual indicator that it is simulated. A yellow hatched border, a "SIM" label overlaid on the value, or a simulation banner are all acceptable approaches. What is not acceptable is displaying a simulated value with no visual distinction from a real value. An operator who acts on a simulated value believing it to be a real process value is a patient safety risk.</p>
+    <p><strong>Maintenance mode indicator:</strong> When an instrument or control loop is in maintenance mode (out of service, manually controlled), the HMI must show the out-of-service state clearly. The blue colour standard covers the manual mode state. But the out-of-service state also requires a text indicator — "OUT OF SERVICE" or "MAINTENANCE" — that is visible at the equipment detail level and summarised at the overview level (either via a maintenance mode count indicator in the status bar or via a dedicated maintenance mode summary screen accessible in 1 click).</p>
+
+    <h2 id="what-fds-must-specify">What the FDS Must Specify for HMI</h2>
+    <p>The FUNC-HMI sections of the FDS must be specific enough to serve as OQ acceptance criteria. Reviewing the FDS against this checklist before QA approval avoids deviations at FAT and OQ.</p>
+
+    <ul class="checklist">
+      <li>Exact colour codes (hex or RGB) for all five status states — not colour names</li>
+      <li>Main overview screen content listed element by element with engineering units specified</li>
+      <li>Display update rate in seconds — specific value, not "real-time"</li>
+      <li>Navigation hierarchy defined: all four levels named with example screen names</li>
+      <li>3-click rule stated explicitly as a testable requirement</li>
+      <li>Alarm and trend screens accessible within 1 click from any screen via permanent toolbar — stated explicitly</li>
+      <li>Breadcrumb trail required on all non-overview screens</li>
+      <li>Back navigation required on all screens</li>
+      <li>Simulation mode visual indicator — description of the indicator design</li>
+      <li>Maintenance / out-of-service visual indicator — description with reference to blue colour standard</li>
+      <li>Engineering units displayed on all process value indicators — no raw counts or percentages without unit context</li>
+    </ul>
+
+    <div class="callout green">
+      <div class="callout-label">In the QLean Framework</div>
+      <p>The FDS-SYS-001 FUNC-HMI-001 specifies the main overview screen content element by element: all critical quality parameter values with colour-coded status indicators, active alarm count and highest-priority alarm, system operational mode, distribution loop status, and sanitization cycle status with current phase — all displayed simultaneously without scrolling, updating every 2 seconds maximum. The five-colour standard (Grey = Off/Inactive, Green = Running/Normal, Yellow = Warning, Red = Alarm/Critical, Blue = Manual Mode) is defined in FUNC-HMI-001 and applies uniformly across all screens. FUNC-HMI-002 specifies the navigation hierarchy, the 3-click rule as a testable requirement, the 1-click access from any screen to alarm summary and trends via permanent toolbar, the breadcrumb trail requirement, and back navigation on all screens. The OQ-SYS-001 OQ-061 test case verifies the 3-click rule: five screen pairs navigated from the Main Overview, click counts recorded, pass criterion is all five reachable in 3 or fewer clicks with breadcrumb trail visible. The SDS-SYS-001 Section 4 documents the SCADA screen architecture including the simulation indicator implementation for tags with b_Simulated = TRUE.</p>
+    </div>
+
+  </article>
+
+  <aside class="sidebar">
+    <div class="toc-card">
+      <div class="toc-label">In This Article</div>
+      <ul class="toc-list">
+        <li><a href="#hmi-as-fds-specification" class="active">HMI as FDS Specification</a></li>
+        <li><a href="#colour-standard">The Colour Standard</a></li>
+        <li><a href="#main-overview-screen">The Main Overview Screen</a></li>
+        <li><a href="#navigation-and-3click">Navigation and the 3-Click Rule</a></li>
+        <li><a href="#simulation-and-maintenance-indicators">Simulation and Maintenance Indicators</a></li>
+        <li><a href="#what-fds-must-specify">What the FDS Must Specify</a></li>
+      </ul>
+    </div>
+    <div class="sidebar-cta">
+      <div class="sc-eyebrow">QLean Framework</div>
+      <div class="sc-title">29 production-ready GAMP 5 documents</div>
+      <div class="sc-body">FUNC-HMI-001/002 with full colour standard, main overview specification, 3-click navigation rule, and OQ-061 navigation test case — all included.</div>
+      <a href="../index.html#pricing" class="sc-btn">Get the Framework — €249 →</a>
+      <div class="sc-note">// INSTANT DOWNLOAD · COMPANY-WIDE LICENCE</div>
+    </div>
+    <div class="sidebar-share">
+      <div class="share-label">Share This Article</div>
+      <div class="share-links">
+        <a href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fqleanautomation.com%2Fblog%2Fhmi-design-pharma-gmp.html" target="_blank" rel="noopener" class="share-link">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          Share on LinkedIn
+        </a>
+        <a href="https://www.reddit.com/submit?url=https%3A%2F%2Fqleanautomation.com%2Fblog%2Fhmi-design-pharma-gmp.html&title=HMI+Design+for+GMP+Environments+%E2%80%94+What+Validation+Requires" target="_blank" rel="noopener" class="share-link">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/></svg>
+          Share on Reddit
+        </a>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<section class="related">
+  <div class="related-inner">
+    <div class="related-label">More Articles</div>
+    <div class="related-grid">
+      <a href="functional-design-specification-guide.html" class="related-card">
+        <div class="rc-tag">📄 Design Docs</div>
+        <div class="rc-title">How to Write a Functional Design Specification</div>
+        <div class="rc-desc">The FUNC-HMI sections described in this article are part of the FDS. This guide covers the full FDS structure — how to write every section so it is approvable by QA and testable at OQ.</div>
+        <div class="rc-footer"><div class="rc-read">9 MIN READ</div><div class="rc-arrow">→</div></div>
+      </a>
+      <a href="urs-vs-fds-pharma-difference.html" class="related-card">
+        <div class="rc-tag">📄 Design Docs</div>
+        <div class="rc-title">URS vs FDS: What's the Difference</div>
+        <div class="rc-desc">The URS states what the HMI must do from the user's perspective. The FDS specifies how it does it — colour standard, navigation hierarchy, update rate. Both are required before development begins.</div>
+        <div class="rc-footer"><div class="rc-read">7 MIN READ</div><div class="rc-arrow">→</div></div>
+      </a>
+      <a href="scada-user-management-part11.html" class="related-card">
+        <div class="rc-tag">🖥️ SCADA Engineering</div>
+        <div class="rc-title">SCADA User Management for 21 CFR Part 11</div>
+        <div class="rc-desc">The HMI enforces the RBAC role boundaries — what each role can see and do. The user management design that drives those boundaries must be in place before the HMI role enforcement is tested at OQ.</div>
+        <div class="rc-footer"><div class="rc-read">7 MIN READ</div><div class="rc-arrow">→</div></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="../index.html" class="nav-logo">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none" style="flex-shrink:0"><rect width="32" height="32" rx="7" fill="#0d0f12"/><rect x="8" y="7" width="16" height="16" rx="2" stroke="white" stroke-width="2.5" fill="none"/><line x1="20" y1="19" x2="26" y2="25" stroke="#0057FF" stroke-width="3" stroke-linecap="round"/></svg>
+          <span style="font-family:'Epilogue',sans-serif;font-weight:800;font-size:16px;color:#0d0f12;letter-spacing:-.03em;white-space:nowrap">QLean <span style="font-weight:300;color:#5a6172">Automation</span></span>
+        </a>
+        <p>GMP documentation tools for system integrators and automation engineers entering pharmaceutical projects.</p>
+      </div>
+      <div class="footer-col"><h4>Products</h4><ul><li><a href="../index.html#framework">GAMP 5 Framework</a></li><li><a href="../index.html#products">Technical Masterclass</a></li></ul></div>
+      <div class="footer-col"><h4>Knowledge Base</h4><ul>
+        <li><a href="blog-index.html">All Articles</a></li>
+        <li><a href="functional-design-specification-guide.html">How to Write an FDS</a></li>
+        <li><a href="urs-vs-fds-pharma-difference.html">URS vs FDS</a></li>
+        <li><a href="scada-user-management-part11.html">SCADA User Management</a></li>
+        <li><a href="scada-alarm-management-configuration.html">Alarm Management</a></li>
+        <li><a href="iq-oq-pq-guide.html">IQ OQ PQ Guide</a></li>
+        <li><a href="gamp5-categories.html">GAMP 5 Categories</a></li>
+      </ul></div>
+      <div class="footer-col"><h4>Company</h4><ul><li><a href="https://www.linkedin.com/company/qlean-automation" target="_blank">LinkedIn</a></li><li><a href="mailto:hello@qleanautomation.com">Contact</a></li><li><a href="../terms.html">Terms</a></li></ul></div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 QLEAN AUTOMATION · QLEANAUTOMATION.COM</p>
+      <div class="compliance-pills"><span class="cp">ISA-101</span><span class="cp">GAMP 5</span><span class="cp">EU ANNEX 11</span><span class="cp">21 CFR PART 11</span></div>
+    </div>
+  </div>
+</footer>
+
+<script>
+window.addEventListener('scroll',()=>{const d=document.documentElement;document.getElementById('progress').style.width=(d.scrollTop/(d.scrollHeight-d.clientHeight)*100)+'%'});
+const obs=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting){document.querySelectorAll('.toc-list a').forEach(l=>l.classList.remove('active'));const a=document.querySelector('.toc-list a[href="#'+x.target.id+'"]');if(a)a.classList.add('active')}})  ,{rootMargin:'-20% 0px -70% 0px'});
+document.querySelectorAll('[id]').forEach(s=>obs.observe(s));
+</script>
+</body>
+</html>

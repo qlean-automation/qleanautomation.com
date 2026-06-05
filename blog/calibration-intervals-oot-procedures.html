@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-JJQ1TXZJX7"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-JJQ1TXZJX7');
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calibration Intervals and Out-of-Tolerance Procedures | QLean Automation</title>
+<meta name="description" content="How to set risk-based calibration intervals, use as-found drift data to review them, and manage the full out-of-tolerance response when a GMP instrument fails calibration — including the suspect data window assessment and change control implications.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@300;400;500;600;700;800;900&family=Source+Sans+3:ital,wght@0,300;0,400;0,500;1,300&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--white:#ffffff;--off:#f7f8f9;--ink:#0d0f12;--ink2:#1e2128;--ink3:#3d4456;--ink4:#9199a8;--rule:#e2e5ea;--rule2:#c8cdd6;--blue:#0057ff;--blue2:#0044cc;--blue-dim:rgba(0,87,255,0.07);--green:#00875a;--green-dim:rgba(0,135,90,0.08);--amber:#d97706;--amber-dim:rgba(217,119,6,0.08);--red:#c0392b;--red-dim:rgba(192,57,43,0.08);--f-head:'Epilogue',sans-serif;--f-body:'Source Sans 3',sans-serif;--f-mono:'Roboto Mono',monospace;--shadow-sm:0 2px 8px rgba(13,15,18,0.06),0 1px 3px rgba(13,15,18,0.04)}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}body{background:var(--white);color:var(--ink);font-family:var(--f-body);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+nav{position:fixed;top:0;left:0;right:0;z-index:200;height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 6%;background:rgba(255,255,255,0.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--rule)}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;flex-shrink:0}
+.nav-links{display:flex;align-items:center;gap:36px;list-style:none}.nav-links a{font-size:14px;font-weight:400;color:var(--ink3);text-decoration:none;transition:color .2s}.nav-links a:hover{color:var(--ink)}
+.nav-btn{font-family:var(--f-body);font-size:13px;font-weight:500;padding:9px 20px;background:var(--blue);color:white;border:none;border-radius:6px;cursor:pointer;text-decoration:none;white-space:nowrap;flex-shrink:0}.nav-btn:hover{background:var(--blue2)}
+.progress-bar{position:fixed;top:64px;left:0;right:0;height:2px;background:var(--rule);z-index:199}.progress-fill{height:100%;background:var(--blue);width:0%}
+.article-hero{padding:120px 6% 64px;background:var(--white);border-bottom:1px solid var(--rule);position:relative;overflow:hidden}
+.article-hero::before{content:'';position:absolute;top:-80px;right:-80px;width:400px;height:400px;background:radial-gradient(circle,rgba(0,87,255,0.04) 0%,transparent 70%);pointer-events:none}
+.article-hero-inner{max-width:940px;margin:0 auto;position:relative;z-index:1}
+.breadcrumb{display:flex;align-items:center;gap:8px;font-family:var(--f-mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink4);margin-bottom:24px}.breadcrumb a{color:var(--ink4);text-decoration:none}.breadcrumb a:hover{color:var(--blue)}.breadcrumb span{color:var(--rule2)}
+.article-tag{display:inline-flex;align-items:center;gap:6px;font-family:var(--f-mono);font-size:10px;font-weight:500;color:var(--blue);letter-spacing:.1em;text-transform:uppercase;margin-bottom:20px;padding:4px 10px;background:var(--blue-dim);border-radius:4px}
+.article-hero h1{font-family:var(--f-head);font-size:clamp(30px,5vw,52px);font-weight:900;line-height:1.0;letter-spacing:-.04em;color:var(--ink);margin-bottom:20px}.article-hero h1 span{color:var(--blue)}
+.article-intro{font-size:18px;font-weight:400;color:var(--ink2);line-height:1.75;margin-bottom:32px;max-width:800px}
+.article-meta{display:flex;align-items:center;gap:24px;padding-top:24px;border-top:1px solid var(--rule);flex-wrap:wrap}
+.meta-author{display:flex;align-items:center;gap:10px}.author-avatar{width:36px;height:36px;border-radius:50%;background:var(--ink);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.author-name{font-size:13px;font-weight:500;color:var(--ink)}.author-role{font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.04em}
+.meta-divider{width:1px;height:28px;background:var(--rule)}.meta-stat{font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.06em}
+.article-wrap{max-width:1300px;margin:0 auto;padding:64px 6%;display:grid;grid-template-columns:1fr 300px;gap:60px;align-items:start}
+.article-body{min-width:0}
+.article-body h2{font-family:var(--f-head);font-size:26px;font-weight:800;letter-spacing:-.03em;color:var(--ink);margin:56px 0 16px;line-height:1.2}.article-body h2:first-child{margin-top:0}
+.article-body h3{font-family:var(--f-head);font-size:18px;font-weight:700;letter-spacing:-.02em;color:var(--ink);margin:32px 0 12px}
+.article-body p{font-size:16px;font-weight:400;color:var(--ink2);line-height:1.85;margin-bottom:20px}
+.article-body strong{color:var(--ink);font-weight:600}
+.article-body a{color:var(--blue);text-decoration:none;border-bottom:1px solid rgba(0,87,255,.25)}.article-body a:hover{border-color:var(--blue)}
+.callout{padding:20px 24px;border-radius:8px;margin:32px 0;border-left:3px solid}
+.callout.blue{background:var(--blue-dim);border-color:var(--blue)}.callout.amber{background:var(--amber-dim);border-color:var(--amber)}.callout.green{background:var(--green-dim);border-color:var(--green)}.callout.red{background:var(--red-dim);border-color:var(--red)}
+.callout-label{font-family:var(--f-mono);font-size:9px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px}.callout.blue .callout-label{color:var(--blue)}.callout.amber .callout-label{color:var(--amber)}.callout.green .callout-label{color:var(--green)}.callout.red .callout-label{color:var(--red)}
+.callout p{font-size:14px;color:var(--ink2);line-height:1.7;margin:0}.callout strong{color:var(--ink)}
+.article-img{width:100%;border-radius:8px;border:1px solid #1e2535;overflow:hidden;margin:36px 0}
+.article-img figcaption{padding:10px 14px;background:var(--off);font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.04em;border-top:1px solid var(--rule)}
+.checklist{list-style:none;display:flex;flex-direction:column;gap:8px;margin:20px 0 28px}
+.checklist li{display:flex;align-items:flex-start;gap:10px;font-size:15px;color:var(--ink2);line-height:1.6}
+.checklist li::before{content:'';width:16px;height:16px;flex-shrink:0;margin-top:3px;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 14 14' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='7' cy='7' r='6.5' fill='none' stroke='%230057ff' stroke-width='1'/%3E%3Cpath d='M4 7l2 2 4-4' stroke='%230057ff' stroke-width='1.3' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:center;background-size:contain}
+.arrow-list{list-style:none;display:flex;flex-direction:column;gap:8px;margin:20px 0 28px}
+.arrow-list li{display:flex;align-items:flex-start;gap:10px;font-size:15px;color:var(--ink2);line-height:1.6}
+.arrow-list li::before{content:'\2192';color:var(--blue);flex-shrink:0;font-family:var(--f-mono);font-size:13px;margin-top:2px}
+.table-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:28px 0}
+.compare-table{width:100%;border-collapse:collapse;font-size:14px}
+.compare-table th{font-family:var(--f-mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink4);padding:10px 16px;border-bottom:2px solid var(--rule);text-align:left;background:var(--off)}
+.compare-table td{padding:12px 16px;border-bottom:1px solid var(--rule);vertical-align:top;color:var(--ink2);line-height:1.6}
+.compare-table tr:last-child td{border-bottom:none}
+.compare-table td:first-child{font-weight:600;color:var(--ink);font-family:var(--f-mono);font-size:12px}
+.sidebar{position:sticky;top:88px;display:flex;flex-direction:column;gap:16px}
+.toc-card{border:1px solid var(--rule);border-radius:8px;padding:24px;background:var(--white);box-shadow:var(--shadow-sm)}
+.toc-label{font-family:var(--f-mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);margin-bottom:16px}
+.toc-list{list-style:none;display:flex;flex-direction:column;gap:2px}
+.toc-list a{display:block;font-size:13px;color:var(--ink3);text-decoration:none;padding:6px 10px;border-radius:4px;transition:all .15s;border-left:2px solid transparent}
+.toc-list a:hover,.toc-list a.active{color:var(--blue);background:var(--blue-dim);border-left-color:var(--blue)}
+.sidebar-cta{border:1px solid var(--blue);border-radius:8px;padding:24px;background:var(--blue-dim)}
+.sc-eyebrow{font-family:var(--f-mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);margin-bottom:10px}
+.sc-title{font-family:var(--f-head);font-size:17px;font-weight:800;letter-spacing:-.02em;color:var(--ink);margin-bottom:8px;line-height:1.2}
+.sc-body{font-size:13px;color:var(--ink3);line-height:1.6;margin-bottom:16px}
+.sc-btn{display:block;text-align:center;padding:11px 16px;background:var(--blue);color:white;border-radius:6px;font-family:var(--f-body);font-size:13px;font-weight:500;text-decoration:none}.sc-btn:hover{background:var(--blue2)}
+.sc-note{font-family:var(--f-mono);font-size:9px;color:var(--ink4);text-align:center;margin-top:8px;letter-spacing:.04em}
+.sidebar-share{border:1px solid var(--rule);border-radius:8px;padding:20px 24px;background:var(--white)}
+.share-label{font-family:var(--f-mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);margin-bottom:14px}
+.share-links{display:flex;flex-direction:column;gap:8px}
+.share-link{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--ink3);text-decoration:none;padding:9px 12px;border:1px solid var(--rule);border-radius:6px;transition:border-color .2s,color .2s}.share-link:hover{border-color:var(--blue);color:var(--blue)}
+.related{padding:64px 6%;border-top:1px solid var(--rule);background:var(--off)}
+.related-inner{max-width:1100px;margin:0 auto}
+.related-label{font-family:var(--f-mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);margin-bottom:32px;display:flex;align-items:center;gap:10px}
+.related-label::before{content:'';width:20px;height:1px;background:var(--blue)}
+.related-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.related-card{padding:24px;border:1px solid var(--rule);border-radius:8px;background:var(--white);box-shadow:var(--shadow-sm);transition:border-color .2s,transform .2s;text-decoration:none;display:flex;flex-direction:column;gap:12px}.related-card:hover{border-color:var(--blue);transform:translateY(-4px)}
+.rc-tag{font-family:var(--f-mono);font-size:9px;color:var(--blue);letter-spacing:.08em;text-transform:uppercase;padding:3px 8px;background:var(--blue-dim);border-radius:3px;align-self:flex-start}
+.rc-title{font-family:var(--f-head);font-size:16px;font-weight:700;letter-spacing:-.02em;color:var(--ink);line-height:1.25}
+.rc-desc{font-size:13px;color:var(--ink3);line-height:1.6;flex:1}
+.rc-footer{display:flex;align-items:center;justify-content:space-between;padding-top:12px;border-top:1px solid var(--rule)}
+.rc-read{font-family:var(--f-mono);font-size:10px;color:var(--ink4)}.rc-arrow{font-size:14px;color:var(--blue)}
+footer{padding:56px 6% 32px;border-top:1px solid var(--rule);background:var(--white)}
+.footer-inner{max-width:1160px;margin:0 auto}
+.footer-top{display:flex;justify-content:space-between;align-items:flex-start;gap:40px;flex-wrap:wrap;margin-bottom:48px}
+.footer-brand p{font-size:13px;font-weight:300;color:var(--ink3);margin-top:12px;max-width:260px;line-height:1.6}
+.footer-col h4{font-family:var(--f-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink4);margin-bottom:16px}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+.footer-col a{font-size:13px;color:var(--ink3);text-decoration:none}.footer-col a:hover{color:var(--blue)}
+.footer-bottom{padding-top:24px;border-top:1px solid var(--rule);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.footer-bottom p{font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.04em}
+.compliance-pills{display:flex;gap:6px;flex-wrap:wrap}
+.cp{font-family:var(--f-mono);font-size:9px;padding:3px 8px;border:1px solid var(--rule);border-radius:3px;color:var(--ink4);letter-spacing:.06em}
+@media(max-width:900px){.article-wrap{grid-template-columns:1fr;gap:48px}.sidebar{position:static}.related-grid{grid-template-columns:1fr}.table-scroll{margin:20px 0}}
+@media(max-width:900px){.nav-links{display:none}}
+@media(max-width:540px){nav{padding:0 4%}.nav-btn{font-size:12px;padding:8px 14px}}
+</style>
+</head>
+<body>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+<nav>
+  <a href="../index.html" class="nav-logo">
+    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" style="flex-shrink:0"><rect width="32" height="32" rx="7" fill="#0d0f12"/><rect x="8" y="7" width="16" height="16" rx="2" stroke="white" stroke-width="2.5" fill="none"/><line x1="20" y1="19" x2="26" y2="25" stroke="#0057FF" stroke-width="3" stroke-linecap="round"/></svg>
+    <span style="font-family:'Epilogue',sans-serif;font-weight:800;font-size:16px;color:#0d0f12;letter-spacing:-.03em;white-space:nowrap">QLean <span style="font-weight:300;color:#5a6172">Automation</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="../index.html#products">Products</a></li>
+    <li><a href="../index.html#framework">Framework</a></li>
+    <li><a href="blog-index.html">Knowledge Base</a></li>
+    <li><a href="../index.html#pricing">Pricing</a></li>
+    <li><a href="../about.html">About</a></li>
+    <li><a href="../index.html#faq">FAQ</a></li>
+  </ul>
+  <a href="../index.html#pricing" class="nav-btn">Get the Framework &#8594;</a>
+</nav>
+
+<header class="article-hero">
+  <div class="article-hero-inner">
+    <div class="breadcrumb"><a href="../index.html">Home</a><span>/</span><a href="blog-index.html">Knowledge Base</a><span>/</span>Calibration Intervals and OOT Procedures</div>
+    <div class="article-tag">&#128207; Instrumentation &amp; Calibration</div>
+    <h1>Calibration Intervals<br><span>and Out-of-Tolerance</span><br>Procedures</h1>
+    <p class="article-intro">Setting a calibration interval is a risk management decision, not a scheduling exercise. Setting it too long increases the window during which an out-of-tolerance instrument produces invalid GMP records. Setting it too short creates unnecessary operational burden. And when an instrument does fail calibration, the response must be faster and more thorough than most engineers expect — because the problem is not just the failed instrument, it is the data it produced while it was out of tolerance.</p>
+    <div class="article-meta">
+      <div class="meta-author">
+        <div class="author-avatar"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="7" r="3.5" stroke="white" stroke-width="1.5"/><path d="M2.5 16c0-3.59 2.91-6.5 6.5-6.5s6.5 2.91 6.5 6.5" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+        <div><div class="author-name">QLean Automation</div><div class="author-role">ENGINEERS WHO BUILD SYSTEMS, NOT JUST SIGN THEM</div></div>
+      </div>
+      <div class="meta-divider"></div><div class="meta-stat">7 MIN READ</div>
+      <div class="meta-divider"></div><div class="meta-stat">OOT &#183; CALIBRATION INTERVALS &#183; DEVIATION MANAGEMENT</div>
+    </div>
+  </div>
+</header>
+
+<div class="article-wrap">
+  <article class="article-body">
+
+    <h2 id="interval-as-risk-decision">Interval as a Risk Decision</h2>
+    <p>Every calibration interval in a pharmaceutical automation system should be traceable to a documented rationale. "We've always done it every 12 months" is not a rationale. The interval must be justified based on the GMP criticality of the measurement, the known drift characteristics of the instrument type and model, the process environment, and — once you have data — the historical as-found performance of that specific instrument.</p>
+    <p>The starting point for a new installation is the manufacturer's recommended calibration interval, adjusted upward or downward based on the risk classification. A conductivity sensor classified as Critical Primary Quality should start at a shorter interval than the manufacturer might recommend for an industrial application — because the GMP consequence of drift is significantly higher than in a non-regulated environment. Document this reasoning in the Control Philosophy, and commit to reviewing the interval after the first complete calibration cycle once you have real as-found data.</p>
+
+    <div class="callout blue">
+      <div class="callout-label">The QLean Framework Starting Points</div>
+      <p>The Control Philosophy (CP-SYS-001) in the QLean Framework specifies the following baseline calibration intervals by category: <strong>Critical Primary Quality</strong> (conductivity sensors, TOC analyser) — 3 months; <strong>Critical Process Control</strong> (temperature transmitters, pressure transmitters) — 6 months; <strong>Important Monitoring</strong> (level transmitters, flow indicators) — 12 months; <strong>Non-GMP Indicative</strong> (local gauges, non-GMP displays) — 24 months. These are starting points grounded in industry practice for pharmaceutical water systems — not arbitrary defaults.</p>
+    </div>
+
+    <h2 id="risk-factors-for-interval">Risk Factors That Drive a Shorter Interval</h2>
+    <p>Several factors should push you toward a shorter calibration interval than the baseline suggests:</p>
+
+    <ul class="arrow-list">
+      <li><strong>High consequence of drift:</strong> if the measurement drives a direct product quality decision — a conductivity reading used for batch release, a temperature reading for sterilisation efficacy — the consequence of undetected drift is higher, and the interval should be shorter to minimise the potential suspect data window.</li>
+      <li><strong>Harsh process environment:</strong> CIP/SIP cycling, high temperature, vibration, corrosive cleaning agents, and frequent mechanical contact all accelerate sensor drift. An instrument in a CIP loop may drift significantly faster than the same model in a stable ambient environment.</li>
+      <li><strong>Known drift-prone technology:</strong> thermocouples at high temperatures, electrochemical sensors (pH, DO) exposed to fouling, and sensors with moving parts tend to drift more rapidly than solid-state pressure or RTD temperature sensors. Adjust intervals accordingly.</li>
+      <li><strong>Tight process specification tolerance:</strong> if the process specification is ±0.5°C and the sensor accuracy specification is ±0.3°C, you have very little margin before drift creates a GMP record that may not reflect actual process conditions. Tighter specifications demand shorter intervals or tighter accuracy instruments.</li>
+      <li><strong>New installation without historical data:</strong> for a first validation, you have no site-specific drift data. Start conservatively and extend based on actual as-found evidence from the first cycle.</li>
+    </ul>
+
+    <h2 id="using-asfound-data">Using As-Found Data to Review Intervals</h2>
+    <p>The as-found reading on a calibration certificate is the measurement of the instrument's current error before any adjustment is made. It is the single most valuable data point for calibration interval management — and it is systematically underused on most pharma projects.</p>
+    <p>After each calibration cycle, the as-found error for every GMP-critical instrument should be recorded in the calibration register (Engineering Lists, Calibration Register tab). Over two or three calibration cycles, a pattern emerges. An instrument that consistently returns as-found within 10% of its tolerance band has plenty of margin — the interval could potentially be extended. An instrument that returns at 80–90% of its tolerance band every cycle is close to OOT and needs either a shorter interval or replacement.</p>
+
+    <figure class="article-img">
+      <svg viewBox="0 0 720 220" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;background:#0d0f12;border-radius:8px 8px 0 0">
+        <text x="360" y="18" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(255,255,255,0.2)" letter-spacing="0.12em">AS-FOUND DRIFT DATA — THREE CALIBRATION CYCLES</text>
+
+        <!-- Axes -->
+        <line x1="60" y1="30" x2="60" y2="175" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+        <line x1="60" y1="175" x2="680" y2="175" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+
+        <!-- Tolerance band -->
+        <rect x="60" y="55" width="620" height="80" rx="0" fill="rgba(0,87,255,0.06)" stroke="none"/>
+        <line x1="60" y1="55" x2="680" y2="55" stroke="rgba(0,87,255,0.3)" stroke-width="1" stroke-dasharray="6,3"/>
+        <line x1="60" y1="135" x2="680" y2="135" stroke="rgba(0,87,255,0.3)" stroke-width="1" stroke-dasharray="6,3"/>
+        <text x="686" y="59" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(0,87,255,0.6)">+TOL</text>
+        <text x="686" y="139" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(0,87,255,0.6)">-TOL</text>
+        <text x="686" y="99" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(100,160,255,0.4)">ZERO</text>
+
+        <!-- Instrument A — stable, well within tolerance (green scenario) -->
+        <!-- Cycle 1: t=120 -->
+        <circle cx="160" cy="82" r="5" fill="#00875a"/>
+        <!-- Cycle 2: t=280 -->
+        <circle cx="330" cy="86" r="5" fill="#00875a"/>
+        <!-- Cycle 3: t=440 -->
+        <circle cx="500" cy="79" r="5" fill="#00875a"/>
+        <polyline points="160,82 330,86 500,79" fill="none" stroke="#00875a" stroke-width="1.5" opacity="0.7"/>
+        <text x="510" y="77" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(0,175,90,0.8)">Instrument A — extend interval</text>
+
+        <!-- Instrument B — trending toward OOT (amber scenario) -->
+        <circle cx="160" cy="100" r="5" fill="#d97706"/>
+        <circle cx="330" cy="112" r="5" fill="#d97706"/>
+        <circle cx="500" cy="126" r="5" fill="#d97706"/>
+        <polyline points="160,100 330,112 500,126" fill="none" stroke="#d97706" stroke-width="1.5" opacity="0.7"/>
+        <text x="510" y="130" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(217,119,6,0.8)">Instrument B — shorten interval</text>
+
+        <!-- Instrument C — OOT at cycle 3 (red scenario) -->
+        <circle cx="160" cy="90" r="5" fill="#c0392b"/>
+        <circle cx="330" cy="108" r="5" fill="#c0392b"/>
+        <circle cx="500" cy="148" r="5" fill="none" stroke="#c0392b" stroke-width="2"/>
+        <text x="500" y="148" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="10" fill="#c0392b">&#10006;</text>
+        <polyline points="160,90 330,108 500,148" fill="none" stroke="#c0392b" stroke-width="1.5" opacity="0.7"/>
+        <text x="510" y="150" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(192,57,43,0.8)">Instrument C — OOT at cycle 3</text>
+
+        <!-- X axis labels -->
+        <text x="60" y="190" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(100,160,255,0.4)">START</text>
+        <text x="160" y="190" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(100,160,255,0.5)">CAL 1</text>
+        <text x="330" y="190" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(100,160,255,0.5)">CAL 2</text>
+        <text x="500" y="190" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(100,160,255,0.5)">CAL 3</text>
+
+        <!-- Y axis label -->
+        <text x="16" y="100" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(100,160,255,0.4)" transform="rotate(-90,16,100)" letter-spacing="0.06em">AS-FOUND ERROR</text>
+
+        <!-- Legend bullets -->
+        <circle cx="74" cy="208" r="4" fill="#00875a"/>
+        <text x="82" y="212" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(180,200,230,0.6)">Within 30% of tolerance — candidate for interval extension</text>
+        <circle cx="340" cy="208" r="4" fill="#d97706"/>
+        <text x="348" y="212" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(180,200,230,0.6)">Trending to limit — shorten or replace</text>
+      </svg>
+      <figcaption>AS-FOUND DRIFT TREND ANALYSIS — THREE CALIBRATION CYCLES REVEAL WHETHER AN INTERVAL IS APPROPRIATE, TOO LONG, OR TOO SHORT</figcaption>
+    </figure>
+
+    <p>The interval review should be a formal documented action, not an informal judgment call. The recommended approach is to review the as-found data from the first two complete calibration cycles against the tolerance band, document the review in the calibration register or a calibration review report, and record any interval changes as a formal document revision to the Control Philosophy — which requires change control approval since the CP is a controlled GMP document. See the article on <a href="change-control-validated-system.html">change control for validated systems</a> for how interval changes are processed.</p>
+
+    <h2 id="the-oot-trigger">What Triggers an OOT Finding</h2>
+    <p>An out-of-tolerance finding occurs when any as-found calibration point falls outside the specified tolerance band. This is a binary determination — the instrument either passed or it did not. There is no "close enough" in GMP calibration. An instrument that returns at 101% of its tolerance band is an OOT finding regardless of how close it is to the limit.</p>
+    <p>The tolerance band must be defined before calibration begins — in the Control Philosophy, the HDS instrument specification, or the calibration procedure. It cannot be defined after the fact to accommodate an inconvenient as-found result. A calibration certificate that states "tolerance: ±X%" when the original specification said "±Y%" is a data integrity problem, not a calibration record.</p>
+
+    <h2 id="oot-procedure-steps">The OOT Response Procedure — Six Steps</h2>
+    <p>The OOT response procedure must be defined in the Control Philosophy before the system goes live. When an OOT finding occurs, the procedure is followed without improvisation. The QLean Framework Control Philosophy (CP-SYS-001 Section 8.3) defines this procedure as follows:</p>
+
+    <ul class="checklist">
+      <li><strong>Step 1 — Remove from GMP service immediately.</strong> Do not use the instrument's readings for any quality decision while the OOT status is unresolved. If the instrument feeds an alarm or interlock, assess whether alternative means of monitoring are available and document the temporary arrangement.</li>
+      <li><strong>Step 2 — Establish the suspect data window.</strong> When did this instrument last pass calibration? The date of the last passed calibration certificate is the start of the suspect window. The current OOT finding date is the end. All GMP data produced between these two dates by this instrument is potentially unreliable.</li>
+      <li><strong>Step 3 — Conduct an impact assessment.</strong> What GMP records were produced using this instrument's data during the suspect window? Were any batch release decisions made? Were any process specifications verified against this instrument's output? Were any alarm setpoints defined using this measurement? The impact assessment must consider both the magnitude of the drift and its direction — whether the instrument was reading high or low relative to actual, and whether that direction creates risk for product quality or patient safety.</li>
+      <li><strong>Step 4 — Raise a deviation.</strong> Log the OOT finding in the Master Deviation Ledger. The deviation record must capture: instrument tag and description, the OOT finding date, the as-found error and magnitude, the suspect data window dates, and a summary of the impact assessment. Classify the deviation as Category A (Critical) if the impact assessment identifies a potential product quality risk; Category B (Minor) if the drift was in a direction that posed no quality risk and the impact assessment is closed out accordingly.</li>
+      <li><strong>Step 5 — Adjust and re-calibrate.</strong> Return the instrument to the calibration laboratory for adjustment and re-calibration. The new calibration certificate must record both the as-found reading (the OOT magnitude) and the as-left reading (the post-adjustment accuracy). The as-found reading from this certificate is the key data for the impact assessment and for the interval review.</li>
+      <li><strong>Step 6 — Return to service with documentation.</strong> Update the calibration register (Engineering Lists, Calibration Register tab) with the new certificate reference and next due date. Close the deviation with the impact assessment conclusion and QA approval. If the impact assessment identified a product quality risk, any additional investigations or batch disposition decisions must be completed and documented before the deviation is closed.</li>
+    </ul>
+
+    <h2 id="suspect-window-assessment">The Suspect Data Window — Practical Assessment</h2>
+    <p>The impact assessment for the suspect data window is the step that most engineers underestimate. For a conductivity sensor that monitored WFI quality continuously for six months before being found 15% out of tolerance, the suspect window contains thousands of data records. The question is not "is all this data wrong?" — it is "does the magnitude and direction of the drift create a risk that the data misrepresented a process condition that would have triggered a quality decision or corrective action?"</p>
+    <p>Practical framework for the suspect window assessment:</p>
+
+    <ul class="arrow-list">
+      <li><strong>Determine drift direction first.</strong> Was the instrument reading high or low? For a conductivity sensor reading high (showing higher conductivity than actual), any records that showed values below the specification limit may actually have been even further below the limit — which is conservative and favourable. If the instrument was reading low (showing lower conductivity than actual), records near the specification limit may actually have been above it — which is the risk scenario that requires investigation.</li>
+      <li><strong>Quantify worst-case impact.</strong> Apply the maximum OOT error to the most critical readings in the suspect window. If the worst-case error would still leave the measurement within specification, the impact is low and the deviation can be closed with a documented assessment. If the worst-case error brings measurements out of specification, QA must assess whether any product decisions were based on those measurements.</li>
+      <li><strong>Cross-reference against independent measurements.</strong> If the system has redundant measurement (e.g., two conductivity sensors on the return line), compare the readings from both sensors during the suspect window. Significant divergence would have been visible in historian trending. If both sensors tracked closely throughout the period, the OOT finding may be a recent event rather than a long-standing problem.</li>
+      <li><strong>Review historian trend data.</strong> The historian records allow you to see whether the measurement was stable and consistent throughout the suspect window (suggesting the drift occurred near the end of the calibration interval) or whether anomalies are visible (suggesting drift started earlier). Document this review as part of the impact assessment.</li>
+    </ul>
+
+    <h2 id="interval-change-as-change-control">Interval Changes Require Change Control</h2>
+    <p>Calibration intervals are documented in the Control Philosophy — a controlled GMP document. Changing an interval, whether shortening it in response to repeated OOT findings or extending it based on consistently excellent as-found data, is a change to a controlled document. It requires a formal change control record.</p>
+    <p>This is not bureaucracy — it is the mechanism by which the change is reviewed, approved by QA, implemented consistently, and recorded so that the periodic review can account for it. An informal verbal decision to calibrate a sensor every three months instead of every six months, with no document update and no change control record, means the next person to manage calibration for that instrument will default to the documented 6-month interval and the informal change will be lost.</p>
+    <p>For a step-by-step guide to raising and closing change control records on a validated system, see the article on <a href="change-control-validated-system.html">change control for validated systems</a>.</p>
+
+    <div class="callout green">
+      <div class="callout-label">In the QLean Framework</div>
+      <p>The Control Philosophy (CP-SYS-001) Section 8.3 defines the full six-step OOT procedure as described in this article. Section 8.1 defines the baseline calibration intervals by category. Section 8.2 defines the 30-day advisory and overdue alarm thresholds for the calibration dashboard. The Engineering Lists workbook (EL-SYS-001) includes a Calibration Register tab where as-found data from each calibration cycle is recorded — providing the data foundation for interval review decisions. <strong>The procedure is already written; you populate it with your site-specific context and instrument data.</strong></p>
+    </div>
+
+  </article>
+
+  <aside class="sidebar">
+    <div class="toc-card">
+      <div class="toc-label">On This Page</div>
+      <ul class="toc-list">
+        <li><a href="#interval-as-risk-decision">Interval as Risk Decision</a></li>
+        <li><a href="#risk-factors-for-interval">Risk Factors</a></li>
+        <li><a href="#using-asfound-data">Using As-Found Data</a></li>
+        <li><a href="#the-oot-trigger">OOT Trigger</a></li>
+        <li><a href="#oot-procedure-steps">OOT Response — 6 Steps</a></li>
+        <li><a href="#suspect-window-assessment">Suspect Window Assessment</a></li>
+        <li><a href="#interval-change-as-change-control">Interval Changes</a></li>
+      </ul>
+    </div>
+
+    <div class="sidebar-cta">
+      <div class="sc-eyebrow">QLean Framework</div>
+      <div class="sc-title">29 production-ready GAMP 5 documents</div>
+      <p class="sc-body">Control Philosophy with OOT procedure and calibration intervals pre-defined, Engineering Lists with Calibration Register tab for as-found data tracking — ready to use on your project.</p>
+      <a href="../index.html#pricing" class="sc-btn">Get the Framework &#8594;</a>
+      <div class="sc-note">COMPANY-WIDE LICENCE &#183; NO PER-SEAT FEES</div>
+    </div>
+
+    <div class="sidebar-share">
+      <div class="share-label">Share This Article</div>
+      <div class="share-links">
+        <a href="https://www.linkedin.com/sharing/share-offsite/?url=https://qleanautomation.com/blog/calibration-intervals-oot-procedures.html" target="_blank" rel="noopener" class="share-link">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          Share on LinkedIn
+        </a>
+        <a href="https://reddit.com/submit?url=https://qleanautomation.com/blog/calibration-intervals-oot-procedures.html&title=Calibration%20Intervals%20and%20Out-of-Tolerance%20Procedures" target="_blank" rel="noopener" class="share-link">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/></svg>
+          Share on Reddit
+        </a>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<section class="related">
+  <div class="related-inner">
+    <div class="related-label">Continue Reading</div>
+    <div class="related-grid">
+      <a href="calibration-management-pharma-iq.html" class="related-card">
+        <span class="rc-tag">&#128207; Instrumentation</span>
+        <div class="rc-title">Calibration Management for Pharma Automation</div>
+        <div class="rc-desc">Certificate traceability requirements, classification tables, calibration dashboard requirements, and the instrument register that anchors the full calibration evidence package.</div>
+        <div class="rc-footer"><span class="rc-read">7 MIN READ</span><span class="rc-arrow">&#8594;</span></div>
+      </a>
+      <a href="change-control-validated-system.html" class="related-card">
+        <span class="rc-tag">&#9881;&#65039; GAMP 5</span>
+        <div class="rc-title">Change Control for Validated Systems</div>
+        <div class="rc-desc">How calibration interval changes are processed through change control — and why informal interval adjustments without a change record break the validated state.</div>
+        <div class="rc-footer"><span class="rc-read">8 MIN READ</span><span class="rc-arrow">&#8594;</span></div>
+      </a>
+      <a href="field-instrumentation-iq-documentation.html" class="related-card">
+        <span class="rc-tag">&#128207; Instrumentation</span>
+        <div class="rc-title">How to Document Field Instrumentation for a Pharma IQ</div>
+        <div class="rc-desc">The IQ verification steps that establish the calibration baseline — and how the instrument register built during IQ becomes the starting point for ongoing calibration management.</div>
+        <div class="rc-footer"><span class="rc-read">7 MIN READ</span><span class="rc-arrow">&#8594;</span></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="../index.html" class="nav-logo" style="text-decoration:none">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="7" fill="#0d0f12"/><rect x="8" y="7" width="16" height="16" rx="2" stroke="white" stroke-width="2.5" fill="none"/><line x1="20" y1="19" x2="26" y2="25" stroke="#0057FF" stroke-width="3" stroke-linecap="round"/></svg>
+          <span style="font-family:'Epilogue',sans-serif;font-weight:800;font-size:16px;color:#0d0f12;letter-spacing:-.03em">QLean <span style="font-weight:300;color:#5a6172">Automation</span></span>
+        </a>
+        <p>GMP validation documentation tools for automation engineers and system integrators.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Products</h4>
+        <ul>
+          <li><a href="../index.html#products">GAMP 5 Framework Pack</a></li>
+          <li><a href="../index.html#products">Technical Ebook</a></li>
+          <li><a href="../index.html#pricing">Pricing</a></li>
+          <li><a href="../index.html#faq">FAQ</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Knowledge Base</h4>
+        <ul>
+          <li><a href="blog-index.html">All Articles</a></li>
+          <li><a href="cluster-instrumentation.html">Instrumentation &amp; Calibration</a></li>
+          <li><a href="calibration-management-pharma-iq.html">Calibration Management</a></li>
+          <li><a href="field-instrumentation-iq-documentation.html">Field Instrumentation IQ</a></li>
+          <li><a href="change-control-validated-system.html">Change Control</a></li>
+          <li><a href="temperature-sensor-calibration-gmp.html">Temperature Sensor Cal.</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="../index.html#framework">Framework</a></li>
+          <li><a href="../terms.html">Terms of Service</a></li>
+          <li><a href="../privacy.html">Privacy Policy</a></li>
+          <li><a href="mailto:hello@qleanautomation.com">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 QLean Automation. All rights reserved.</p>
+      <div class="compliance-pills">
+        <span class="cp">GAMP 5</span>
+        <span class="cp">EU GMP ANNEX 11</span>
+        <span class="cp">21 CFR PART 11</span>
+        <span class="cp">ISO/IEC 17025</span>
+        <span class="cp">GXP</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+window.addEventListener('scroll',function(){
+  var s=document.getElementById('progress');
+  var h=document.documentElement;
+  var p=(h.scrollTop||document.body.scrollTop)/(h.scrollHeight-h.clientHeight)*100;
+  s.style.width=p+'%';
+});
+var tl=document.querySelectorAll('.toc-list a');
+window.addEventListener('scroll',function(){
+  var headings=document.querySelectorAll('.article-body h2[id]');
+  var scrollY=window.scrollY+120;
+  var current='';
+  headings.forEach(function(h){if(h.offsetTop<=scrollY)current=h.id;});
+  tl.forEach(function(a){
+    a.classList.remove('active');
+    if(a.getAttribute('href')==='#'+current)a.classList.add('active');
+  });
+});
+</script>
+</body>
+</html>

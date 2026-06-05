@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-JJQ1TXZJX7"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-JJQ1TXZJX7');
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Configuring NTP Synchronisation on a PLC for 21 CFR Part 11 | QLean Automation</title>
+<meta name="description" content="Every audit trail timestamp on a pharma system must be accurate and traceable. Here is how to configure NTP synchronisation on a PLC for Part 11 compliance — from TIA Portal SNTP setup to IQ verification and what happens when sync is lost.">
+<link rel="canonical" href="https://qleanautomation.com/blog/ntp-synchronisation-plc-part11.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@300;400;500;600;700;800;900&family=Source+Sans+3:ital,wght@0,300;0,400;0,500;1,300&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--white:#ffffff;--off:#f7f8f9;--ink:#0d0f12;--ink2:#1e2128;--ink3:#3d4456;--ink4:#9199a8;--rule:#e2e5ea;--rule2:#c8cdd6;--blue:#0057ff;--blue2:#0044cc;--blue-dim:rgba(0,87,255,0.07);--green:#00875a;--green-dim:rgba(0,135,90,0.08);--amber:#d97706;--amber-dim:rgba(217,119,6,0.08);--red:#c0392b;--red-dim:rgba(192,57,43,0.08);--f-head:'Epilogue',sans-serif;--f-body:'Source Sans 3',sans-serif;--f-mono:'Roboto Mono',monospace;--shadow-sm:0 2px 8px rgba(13,15,18,0.06),0 1px 3px rgba(13,15,18,0.04)}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}body{background:var(--white);color:var(--ink);font-family:var(--f-body);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+nav{position:fixed;top:0;left:0;right:0;z-index:200;height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 6%;background:rgba(255,255,255,0.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--rule)}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;flex-shrink:0}
+.nav-links{display:flex;align-items:center;gap:36px;list-style:none}.nav-links a{font-size:14px;font-weight:400;color:var(--ink3);text-decoration:none;transition:color .2s}.nav-links a:hover{color:var(--ink)}
+.nav-btn{font-family:var(--f-body);font-size:13px;font-weight:500;padding:9px 20px;background:var(--blue);color:white;border:none;border-radius:6px;cursor:pointer;text-decoration:none;white-space:nowrap;flex-shrink:0}.nav-btn:hover{background:var(--blue2)}
+.progress-bar{position:fixed;top:64px;left:0;right:0;height:2px;background:var(--rule);z-index:199}.progress-fill{height:100%;background:var(--blue);width:0%}
+.article-hero{padding:120px 6% 64px;background:var(--white);border-bottom:1px solid var(--rule);position:relative;overflow:hidden}
+.article-hero::before{content:'';position:absolute;top:-80px;right:-80px;width:400px;height:400px;background:radial-gradient(circle,rgba(0,87,255,0.04) 0%,transparent 70%);pointer-events:none}
+.article-hero-inner{max-width:940px;margin:0 auto;position:relative;z-index:1}
+.breadcrumb{display:flex;align-items:center;gap:8px;font-family:var(--f-mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink4);margin-bottom:24px}.breadcrumb a{color:var(--ink4);text-decoration:none}.breadcrumb a:hover{color:var(--blue)}.breadcrumb span{color:var(--rule2)}
+.article-tag{display:inline-flex;align-items:center;gap:6px;font-family:var(--f-mono);font-size:10px;font-weight:500;color:var(--blue);letter-spacing:.1em;text-transform:uppercase;margin-bottom:20px;padding:4px 10px;background:var(--blue-dim);border-radius:4px}
+.article-hero h1{font-family:var(--f-head);font-size:clamp(30px,5vw,52px);font-weight:900;line-height:1.0;letter-spacing:-.04em;color:var(--ink);margin-bottom:20px}.article-hero h1 span{color:var(--blue)}
+.article-intro{font-size:18px;font-weight:400;color:var(--ink2);line-height:1.75;margin-bottom:32px;max-width:800px}
+.article-meta{display:flex;align-items:center;gap:24px;padding-top:24px;border-top:1px solid var(--rule);flex-wrap:wrap}
+.meta-author{display:flex;align-items:center;gap:10px}.author-avatar{width:36px;height:36px;border-radius:50%;background:var(--ink);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.author-name{font-size:13px;font-weight:500;color:var(--ink)}.author-role{font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.04em}
+.meta-divider{width:1px;height:28px;background:var(--rule)}.meta-stat{font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.06em}
+.article-wrap{max-width:1300px;margin:0 auto;padding:64px 6%;display:grid;grid-template-columns:1fr 300px;gap:60px;align-items:start}
+.article-body{min-width:0}
+.article-body h2{font-family:var(--f-head);font-size:26px;font-weight:800;letter-spacing:-.03em;color:var(--ink);margin:56px 0 16px;line-height:1.2}.article-body h2:first-child{margin-top:0}
+.article-body h3{font-family:var(--f-head);font-size:18px;font-weight:700;letter-spacing:-.02em;color:var(--ink);margin:32px 0 12px}
+.article-body p{font-size:16px;font-weight:400;color:var(--ink2);line-height:1.85;margin-bottom:20px}
+.article-body strong{color:var(--ink);font-weight:600}
+.article-body a{color:var(--blue);text-decoration:none;border-bottom:1px solid rgba(0,87,255,.25)}.article-body a:hover{border-color:var(--blue)}
+.callout{padding:20px 24px;border-radius:8px;margin:32px 0;border-left:3px solid}
+.callout.blue{background:var(--blue-dim);border-color:var(--blue)}.callout.amber{background:var(--amber-dim);border-color:var(--amber)}.callout.green{background:var(--green-dim);border-color:var(--green)}.callout.red{background:var(--red-dim);border-color:var(--red)}
+.callout-label{font-family:var(--f-mono);font-size:9px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px}.callout.blue .callout-label{color:var(--blue)}.callout.amber .callout-label{color:var(--amber)}.callout.green .callout-label{color:var(--green)}.callout.red .callout-label{color:var(--red)}
+.callout p{font-size:14px;color:var(--ink2);line-height:1.7;margin:0}.callout strong{color:var(--ink)}
+.article-img{width:100%;border-radius:8px;border:1px solid #1e2535;overflow:hidden;margin:36px 0}
+.article-img figcaption{padding:10px 14px;background:var(--off);font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.04em;border-top:1px solid var(--rule)}
+.arrow-list{list-style:none;display:flex;flex-direction:column;gap:8px;margin:16px 0 24px}
+.arrow-list li{display:flex;align-items:flex-start;gap:10px;font-size:15px;color:var(--ink2);line-height:1.6}
+.arrow-list li::before{content:'\2192';color:var(--blue);flex-shrink:0;font-size:12px;margin-top:3px}
+.checklist{list-style:none;display:flex;flex-direction:column;gap:8px;margin:20px 0 28px}
+.checklist li{display:flex;align-items:flex-start;gap:10px;font-size:15px;color:var(--ink2);line-height:1.6}
+.checklist li::before{content:'';width:16px;height:16px;flex-shrink:0;margin-top:3px;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 14 14' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='7' cy='7' r='6.5' fill='none' stroke='%230057ff' stroke-width='1'/%3E%3Cpath d='M4 7l2 2 4-4' stroke='%230057ff' stroke-width='1.3' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:center;background-size:contain}
+.table-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:28px 0}
+.compare-table{width:100%;border-collapse:collapse;font-size:14px}
+.compare-table th{font-family:var(--f-mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink4);padding:10px 16px;border-bottom:2px solid var(--rule);text-align:left;background:var(--off)}
+.compare-table td{padding:12px 16px;border-bottom:1px solid var(--rule);vertical-align:top;color:var(--ink2);line-height:1.6}
+.compare-table tr:last-child td{border-bottom:none}
+.compare-table td:first-child{font-weight:600;color:var(--ink);font-family:var(--f-mono);font-size:12px}
+.sidebar{position:sticky;top:88px;display:flex;flex-direction:column;gap:16px}
+.toc-card{border:1px solid var(--rule);border-radius:8px;padding:24px;background:var(--white);box-shadow:var(--shadow-sm)}
+.toc-label{font-family:var(--f-mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);margin-bottom:16px}
+.toc-list{list-style:none;display:flex;flex-direction:column;gap:2px}
+.toc-list a{display:block;font-size:13px;color:var(--ink3);text-decoration:none;padding:6px 10px;border-radius:4px;transition:all .15s;border-left:2px solid transparent}
+.toc-list a:hover,.toc-list a.active{color:var(--blue);background:var(--blue-dim);border-left-color:var(--blue)}
+.sidebar-cta{border:1px solid var(--blue);border-radius:8px;padding:24px;background:var(--blue-dim)}
+.sc-eyebrow{font-family:var(--f-mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);margin-bottom:10px}
+.sc-title{font-family:var(--f-head);font-size:17px;font-weight:800;letter-spacing:-.02em;color:var(--ink);margin-bottom:8px;line-height:1.2}
+.sc-body{font-size:13px;color:var(--ink3);line-height:1.6;margin-bottom:16px}
+.sc-btn{display:block;text-align:center;padding:11px 16px;background:var(--blue);color:white;border-radius:6px;font-family:var(--f-body);font-size:13px;font-weight:500;text-decoration:none}.sc-btn:hover{background:var(--blue2)}
+.sc-note{font-family:var(--f-mono);font-size:9px;color:var(--ink4);text-align:center;margin-top:8px;letter-spacing:.04em}
+.sidebar-share{border:1px solid var(--rule);border-radius:8px;padding:20px 24px;background:var(--white)}
+.share-label{font-family:var(--f-mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);margin-bottom:14px}
+.share-links{display:flex;flex-direction:column;gap:8px}
+.share-link{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--ink3);text-decoration:none;padding:9px 12px;border:1px solid var(--rule);border-radius:6px;transition:border-color .2s,color .2s}.share-link:hover{border-color:var(--blue);color:var(--blue)}
+.related{padding:64px 6%;border-top:1px solid var(--rule);background:var(--off)}
+.related-inner{max-width:1100px;margin:0 auto}
+.related-label{font-family:var(--f-mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);margin-bottom:32px;display:flex;align-items:center;gap:10px}
+.related-label::before{content:'';width:20px;height:1px;background:var(--blue)}
+.related-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.related-card{padding:24px;border:1px solid var(--rule);border-radius:8px;background:var(--white);box-shadow:var(--shadow-sm);transition:border-color .2s,transform .2s;text-decoration:none;display:flex;flex-direction:column;gap:12px}.related-card:hover{border-color:var(--blue);transform:translateY(-4px)}
+.rc-tag{font-family:var(--f-mono);font-size:9px;color:var(--blue);letter-spacing:.08em;text-transform:uppercase;padding:3px 8px;background:var(--blue-dim);border-radius:3px;align-self:flex-start}
+.rc-title{font-family:var(--f-head);font-size:16px;font-weight:700;letter-spacing:-.02em;color:var(--ink);line-height:1.25}
+.rc-desc{font-size:13px;color:var(--ink3);line-height:1.6;flex:1}
+.rc-footer{display:flex;align-items:center;justify-content:space-between;padding-top:12px;border-top:1px solid var(--rule)}
+.rc-read{font-family:var(--f-mono);font-size:10px;color:var(--ink4)}.rc-arrow{font-size:14px;color:var(--blue)}
+footer{padding:56px 6% 32px;border-top:1px solid var(--rule);background:var(--white)}
+.footer-inner{max-width:1160px;margin:0 auto}
+.footer-top{display:flex;justify-content:space-between;align-items:flex-start;gap:40px;flex-wrap:wrap;margin-bottom:48px}
+.footer-brand p{font-size:13px;font-weight:300;color:var(--ink3);margin-top:12px;max-width:260px;line-height:1.6}
+.footer-col h4{font-family:var(--f-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink4);margin-bottom:16px}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+.footer-col a{font-size:13px;color:var(--ink3);text-decoration:none}.footer-col a:hover{color:var(--blue)}
+.footer-bottom{padding-top:24px;border-top:1px solid var(--rule);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.footer-bottom p{font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.04em}
+.compliance-pills{display:flex;gap:6px;flex-wrap:wrap}
+.cp{font-family:var(--f-mono);font-size:9px;padding:3px 8px;border:1px solid var(--rule);border-radius:3px;color:var(--ink4);letter-spacing:.06em}
+@media(max-width:900px){.article-wrap{grid-template-columns:1fr;gap:48px}.sidebar{position:static}.related-grid{grid-template-columns:1fr}.table-scroll{margin:20px 0}}
+@media(max-width:900px){.nav-links{display:none}}
+@media(max-width:540px){nav{padding:0 4%}.nav-btn{font-size:12px;padding:8px 14px}}
+</style>
+</head>
+<body>
+
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+
+<nav>
+  <a href="../index.html" class="nav-logo">
+    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" style="flex-shrink:0"><rect width="32" height="32" rx="7" fill="#0d0f12"/><rect x="8" y="7" width="16" height="16" rx="2" stroke="white" stroke-width="2.5" fill="none"/><line x1="20" y1="19" x2="26" y2="25" stroke="#0057FF" stroke-width="3" stroke-linecap="round"/></svg>
+    <span style="font-family:'Epilogue',sans-serif;font-weight:800;font-size:16px;color:#0d0f12;letter-spacing:-.03em;white-space:nowrap">QLean <span style="font-weight:300;color:#5a6172">Automation</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="../index.html#products">Products</a></li>
+    <li><a href="../index.html#framework">Framework</a></li>
+    <li><a href="blog-index.html">Knowledge Base</a></li>
+    <li><a href="../index.html#pricing">Pricing</a></li>
+    <li><a href="../about.html">About</a></li>
+    <li><a href="../index.html#faq">FAQ</a></li>
+  </ul>
+  <a href="../index.html#pricing" class="nav-btn">Get the Framework &#8594;</a>
+</nav>
+
+<header class="article-hero">
+  <div class="article-hero-inner">
+    <div class="breadcrumb"><a href="../index.html">Home</a><span>/</span><a href="blog-index.html">Knowledge Base</a><span>/</span>NTP Synchronisation for Part 11</div>
+    <div class="article-tag">&#9881;&#65039; PLC Engineering</div>
+    <h1>Configuring NTP Synchronisation<br><span>on a PLC for 21 CFR Part 11</span></h1>
+    <p class="article-intro">Part 11 requires that timestamps on electronic records are accurate and trustworthy. A PLC running on its own internal clock does not meet that bar. Here is how to configure NTP synchronisation correctly, what the SDS must specify, what happens when sync is lost, and how IQ and SAT verify it.</p>
+    <div class="article-meta">
+      <div class="meta-author">
+        <div class="author-avatar"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="7" r="3.5" stroke="white" stroke-width="1.5"/><path d="M2.5 16c0-3.59 2.91-6.5 6.5-6.5s6.5 2.91 6.5 6.5" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+        <div><div class="author-name">QLean Automation</div><div class="author-role">ENGINEERS WHO BUILD SYSTEMS, NOT JUST SIGN THEM</div></div>
+      </div>
+      <div class="meta-divider"></div><div class="meta-stat">6 MIN READ</div>
+      <div class="meta-divider"></div><div class="meta-stat">21 CFR PART 11 &#183; PLC &#183; AUDIT TRAIL</div>
+    </div>
+  </div>
+</header>
+
+<div class="article-wrap">
+  <article class="article-body">
+
+    <h2 id="why-timestamps-matter">Why Timestamps Are a Part 11 Issue</h2>
+    <p>21 CFR Part 11 requires that electronic records are trustworthy, reliable, and equivalent to paper records. A fundamental component of that is the timestamp. Every audit trail entry — every setpoint change, alarm acknowledgement, user login, mode change — must carry a timestamp that accurately reflects when the event occurred. If the clock is wrong by 20 minutes, or if it drifts over time without correction, the timestamps in your audit trail are inaccurate. That is a data integrity failure, regardless of whether the underlying process data is correct.</p>
+    <p>The same requirement flows through the <a href="eu-gmp-annex-11-vs-21-cfr-part-11.html">EU GMP Annex 11</a> on the European side. Both frameworks treat timestamp accuracy as a precondition for audit trail validity, not an optional feature. On a pharma project, this means the PLC clock cannot just be set once during commissioning and left to drift. It must be continuously synchronised to a traceable time source.</p>
+    <p>NTP — Network Time Protocol — is the standard mechanism. But the implementation details matter: which NTP server, what sync interval, what happens when synchronisation is lost, and how you prove it is working during qualification. All of these need to be designed, documented, and verified.</p>
+
+    <h2 id="the-ntp-architecture">The NTP Architecture for a Pharma OT System</h2>
+    <p>The key architectural decision is that OT devices must not synchronise directly to internet NTP servers. Pharma OT networks are segmented precisely to prevent unsolicited traffic from the internet reaching the control layer. A PLC that punches through the firewall to reach pool.ntp.org is both a cybersecurity problem and an architectural inconsistency — it contradicts the network segmentation documented in your HDS.</p>
+    <p>The correct architecture has a dedicated OT NTP server sitting inside the OT network, synchronised to the site's GPS-based or stratum-1 time source. All OT devices — PLC, SCADA server, historian, HMI workstations — synchronise to this OT NTP server. The OT NTP server handles the external time source relationship; the OT devices never need to see beyond the OT network boundary.</p>
+
+    <figure class="article-img">
+      <svg viewBox="0 0 720 240" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;background:#0d0f12;border-radius:8px 8px 0 0">
+        <text x="360" y="20" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(255,255,255,0.2)" letter-spacing="0.12em">NTP ARCHITECTURE &#8212; PHARMA OT NETWORK</text>
+
+        <!-- GPS/Stratum-1 -->
+        <rect x="270" y="30" width="180" height="40" rx="4" fill="rgba(0,87,255,0.12)" stroke="rgba(0,87,255,0.4)" stroke-width="1.5"/>
+        <text x="360" y="48" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="#6699ff">GPS / STRATUM-1 SOURCE</text>
+        <text x="360" y="62" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(255,255,255,0.4)">Site time reference</text>
+
+        <!-- Arrow down -->
+        <line x1="360" y1="70" x2="360" y2="92" stroke="#0057ff" stroke-width="1.5" marker-end="url(#a1)"/>
+        <defs><marker id="a1" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 Z" fill="#0057ff"/></marker></defs>
+
+        <!-- OT NTP server -->
+        <rect x="250" y="93" width="220" height="40" rx="4" fill="rgba(0,135,90,0.12)" stroke="rgba(0,135,90,0.4)" stroke-width="1.5"/>
+        <text x="360" y="111" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="#00c97a">SITE OT NTP SERVER</text>
+        <text x="360" y="125" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(255,255,255,0.4)">Inside OT network &#8212; stratum 2</text>
+
+        <!-- Firewall barrier -->
+        <line x1="60" y1="155" x2="660" y2="155" stroke="rgba(217,119,6,0.4)" stroke-width="1" stroke-dasharray="6,4"/>
+        <text x="360" y="152" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(217,119,6,0.5)">OT NETWORK BOUNDARY &#8212; NO DIRECT INTERNET NTP BELOW THIS LINE</text>
+
+        <!-- Arrows down from OT NTP -->
+        <line x1="200" y1="133" x2="130" y2="170" stroke="#00875a" stroke-width="1.5" marker-end="url(#a2)"/>
+        <line x1="295" y1="133" x2="295" y2="170" stroke="#00875a" stroke-width="1.5" marker-end="url(#a2)"/>
+        <line x1="425" y1="133" x2="425" y2="170" stroke="#00875a" stroke-width="1.5" marker-end="url(#a2)"/>
+        <line x1="555" y1="133" x2="590" y2="170" stroke="#00875a" stroke-width="1.5" marker-end="url(#a2)"/>
+        <defs><marker id="a2" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 Z" fill="#00875a"/></marker></defs>
+
+        <!-- Devices -->
+        <rect x="60" y="171" width="140" height="40" rx="4" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
+        <text x="130" y="189" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(255,255,255,0.6)">PLC CPU</text>
+        <text x="130" y="203" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="9" fill="rgba(255,255,255,0.3)">SNTP client &#183; 60s sync</text>
+
+        <rect x="220" y="171" width="150" height="40" rx="4" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
+        <text x="295" y="189" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(255,255,255,0.6)">SCADA SERVER</text>
+        <text x="295" y="203" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="9" fill="rgba(255,255,255,0.3)">w32tm &#183; Windows Time Svc</text>
+
+        <rect x="350" y="171" width="150" height="40" rx="4" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
+        <text x="425" y="189" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(255,255,255,0.6)">HISTORIAN</text>
+        <text x="425" y="203" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="9" fill="rgba(255,255,255,0.3)">SQL timestamp source</text>
+
+        <rect x="520" y="171" width="140" height="40" rx="4" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
+        <text x="590" y="189" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(255,255,255,0.6)">HMI WORKSTATIONS</text>
+        <text x="590" y="203" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="9" fill="rgba(255,255,255,0.3)">Operator display timestamps</text>
+
+        <!-- NTP loss alarm note -->
+        <rect x="60" y="220" width="600" height="14" rx="2" fill="rgba(217,119,6,0.06)"/>
+        <text x="360" y="231" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(217,119,6,0.6)">NTP SYNC LOSS &#8212; HIGH ALARM GENERATED &#183; PARAMETER CHANGES LOCKED IF DRIFT &gt; 30 SECONDS</text>
+      </svg>
+      <figcaption>// ALL OT DEVICES SYNCHRONISE TO THE SITE OT NTP SERVER &#8212; NOT TO INTERNET NTP. THE FIREWALL BLOCKS DIRECT NTP TRAFFIC FROM THE OT NETWORK TO THE INTERNET.</figcaption>
+    </figure>
+
+    <h2 id="plc-configuration">Configuring the PLC SNTP Client</h2>
+    <p>PLCs use SNTP (Simple Network Time Protocol) — a lightweight subset of NTP appropriate for devices that need time synchronisation but are not themselves time servers. The configuration approach differs by platform, but the required parameters are the same across all of them: server IP address, sync interval, and handling of sync failure.</p>
+    <p>In TIA Portal (Siemens S7), NTP synchronisation is configured in the CPU properties under the PROFINET interface settings. You add the site OT NTP server IP address and set the synchronisation interval. The built-in SNTP function block handles the periodic requests. The CPU system clock is updated on each successful sync. In FactoryTalk (Rockwell Studio 5000), the equivalent is configured in the controller properties. In Codesys-based platforms, it is typically a library function block with an NTP client function. The platform differs; the principle is identical.</p>
+    <p>The sync interval for a GMP system should be 60 seconds or less. This is not about network load — SNTP packets are tiny. It is about limiting the maximum drift window between sync events. A 60-second interval means the worst-case drift accumulation before the next correction is a few milliseconds on a stable system. A 3600-second interval means a drifting PLC clock could be off by seconds before the next sync corrects it.</p>
+
+    <div class="callout amber">
+      <div class="callout-label">The 30-Second Drift Rule</div>
+      <p>A well-designed pharma PLC system does not simply alarm on NTP loss and continue accepting parameter changes. It <strong>locks parameter changes</strong> if the clock drift exceeds 30 seconds from the last confirmed NTP sync. The reasoning: if the clock is more than 30 seconds adrift, timestamps on any changes made during that window are inaccurate by a regulatory standard. The system should not create inaccurate audit trail entries — it should refuse to create them until the clock is corrected. This is not a standard requirement in most GMP guidance documents, but it is a defensible design decision that demonstrates a serious approach to data integrity. The lock releases automatically when NTP sync is restored.</p>
+    </div>
+
+    <h2 id="what-sds-must-specify">What the SDS Must Specify</h2>
+    <p>NTP configuration is a software design decision, so it lives in the Software Design Specification. The SDS must cover four things for the NTP implementation to be fully documented and verifiable:</p>
+    <ul class="arrow-list">
+      <li><strong>NTP server IP address</strong> — the specific site OT NTP server IP, not a generic placeholder. This is what the IQ verification step checks against the running configuration.</li>
+      <li><strong>Sync interval</strong> — the frequency of synchronisation requests from the PLC SNTP client. 60 seconds for GMP systems.</li>
+      <li><strong>Sync loss behaviour</strong> — what the system does when NTP sync is lost: alarm priority, alarm tag, and whether parameter changes are locked. This becomes an OQ test case.</li>
+      <li><strong>Manual time change controls</strong> — who can change the system clock, what role is required, what audit trail entry is generated, and whether an alarm fires. On a GMP system, manual clock changes should require Administrator role, generate a mandatory reason entry, and trigger a Critical alarm visible to all logged-in users.</li>
+    </ul>
+    <p>The <a href="21-cfr-part-11-audit-trail-checklist.html">audit trail</a> data structure also needs to reflect NTP synchronisation. Every audit trail record includes a timestamp field — the SDS UDT (User Defined Type) for an audit trail entry should explicitly note that the timestamp is NTP-synchronised. This is the design-level evidence that the timestamps in the audit trail are trustworthy.</p>
+
+    <h2 id="iq-verification">IQ Verification — What Gets Checked</h2>
+    <p>The IQ verifies the NTP configuration statically — confirming that the PLC and SCADA server are configured to use the site OT NTP server, not an internet server or the supplier's lab NTP server from the FAT. This is IQ-CYB-005 in the IQ protocol: run <code>w32tm /query /status</code> on the SCADA server and record the NTP source IP. It must match the site OT NTP server IP documented in the SDS. Record the actual IP in the IQ evidence.</p>
+    <p>This is a common but significant failure mode: the system leaves the supplier's factory synchronised to the supplier's lab NTP server. It passes the FAT. It arrives on site, is connected to the site OT network, and nobody reconfigures the NTP source. The IQ verification catches this — the recorded NTP source IP will not match the SDS specification, generating a deviation and requiring the configuration to be corrected before OQ can begin.</p>
+    <p>The IQ does not test whether the synchronisation is actually working end-to-end with site timestamps — that is the SAT. The IQ confirms the configuration is correct. The SAT confirms the behaviour is correct.</p>
+
+    <h2 id="sat-verification">SAT Verification — Live Timestamp Confirmation</h2>
+    <p>The <a href="site-acceptance-test-pharma-guide.html">SAT</a> is where NTP gets its live test. SAT-021 specifically tests site OT NTP synchronisation: run <code>w32tm /query /status</code> on the SCADA server and confirm the NTP source shows the site OT NTP server IP, with a stratum level and time offset within the acceptable tolerance. The acceptance criterion is a time offset of less than 30 seconds from the site NTP server.</p>
+    <p>The SAT also tests NTP loss behaviour: disconnect the site OT NTP server (or disable the NTP service temporarily), wait 65 seconds, and confirm the SCADA generates a High alarm — typically tagged something like ALM-DATA-003 (NTP Synchronisation Lost) — within 60 seconds of NTP loss. Then reconnect and confirm the alarm clears and sync is restored. This is a live functional test of the alarm and recovery behaviour documented in the SDS.</p>
+    <p>The audit trail verification in the SAT ties directly to NTP. SAT-020 requires that the first live audit trail entries on the site system show the site NTP-synchronised timestamps — not the supplier lab timestamps from FAT. The verifier checks that an audit trail entry timestamp matches the site NTP server current time to within &#177;30 seconds, and records both values in the protocol as evidence. This is the end-to-end proof that the entire timestamp chain — from the site GPS time source, through the OT NTP server, through the PLC SNTP client, into the audit trail record — is working correctly.</p>
+
+    <div class="callout green">
+      <div class="callout-label">In the QLean Framework</div>
+      <p>The SDS (SDS-SYS-001) specifies the PLC NTP configuration under the communications protocol table: SNTP client to site OT NTP server, 60-second sync interval, parameter changes locked if drift exceeds 30 seconds from last confirmed sync, manual time change requires Administrator role plus mandatory reason entry plus Critical alarm. The audit trail UDT (typ_AuditEntry_GxP) explicitly marks the timestamp field as NTP-synchronised. The IQ protocol (IQ-SYS-001) includes IQ-CYB-005 — NTP source verification via w32tm — as part of Section 9 (Cybersecurity Installation Verification). The SAT protocol (SAT-SYS-001) includes SAT-020 (first live audit trail entries with site NTP timestamps, &#177;30 second tolerance check) and SAT-021 (NTP synchronisation live verification and NTP loss alarm test) in Section 9 (Live Data Integrity and Audit Trail Verification).</p>
+    </div>
+
+    <h2 id="common-mistakes">Common Mistakes</h2>
+    <p>Beyond the factory NTP server issue already covered, the same errors appear on project after project:</p>
+    <ul class="arrow-list">
+      <li><strong>NTP configured on the SCADA server but not the PLC.</strong> The SCADA historian timestamps use the server clock, which is NTP-synchronised. But the PLC's internal clock, which stamps the audit trail buffer entries before they reach the historian, is free-running. The timestamps diverge over weeks and months, and the discrepancy becomes visible in historian queries that compare PLC-originated records with SCADA-originated records.</li>
+      <li><strong>Using the corporate IT NTP server.</strong> The corporate domain controller is often the path of least resistance. It is reachable, it works, the SCADA server is probably already pointing at it for Windows Time Service. The problem is that corporate IT NTP is on the IT network, not the OT network — and a dependency on the IT network violates the OT segmentation architecture. If IT takes the domain controller down for maintenance, the OT system loses NTP. The correct source is always a dedicated OT NTP server inside the OT segment.</li>
+      <li><strong>No alarm on NTP loss.</strong> If the NTP server goes away silently and no alarm fires, the system continues generating audit trail entries with a drifting clock. Hours or days of records may have inaccurate timestamps before anyone notices. The NTP loss alarm must be there, and it must be tested at the SAT.</li>
+      <li><strong>NTP not specified in the SDS.</strong> It gets configured during commissioning as a matter of practice, but it is never formally documented. The IQ verification step then has no specification to check against, so it cannot be formally verified. NTP is a software configuration item — it belongs in the SDS.</li>
+    </ul>
+
+  </article>
+
+  <aside class="sidebar">
+    <div class="toc-card">
+      <div class="toc-label">In This Article</div>
+      <ul class="toc-list">
+        <li><a href="#why-timestamps-matter" class="active">Why timestamps are a Part 11 issue</a></li>
+        <li><a href="#the-ntp-architecture">NTP architecture for pharma OT</a></li>
+        <li><a href="#plc-configuration">Configuring the PLC SNTP client</a></li>
+        <li><a href="#what-sds-must-specify">What the SDS must specify</a></li>
+        <li><a href="#iq-verification">IQ verification</a></li>
+        <li><a href="#sat-verification">SAT verification</a></li>
+        <li><a href="#common-mistakes">Common mistakes</a></li>
+      </ul>
+    </div>
+    <div class="sidebar-cta">
+      <div class="sc-eyebrow">QLean Framework</div>
+      <div class="sc-title">29 production-ready GAMP 5 documents</div>
+      <div class="sc-body">SDS with full NTP specification, IQ-CYB-005 NTP verification step, and SAT-020/021 live timestamp tests — all included.</div>
+      <a href="../index.html#pricing" class="sc-btn">Get the Framework &#8212; &#8364;249 &#8594;</a>
+      <div class="sc-note">// INSTANT DOWNLOAD &#183; COMPANY-WIDE LICENCE</div>
+    </div>
+    <div class="sidebar-share">
+      <div class="share-label">Share This Article</div>
+      <div class="share-links">
+        <a href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fqleanautomation.com%2Fblog%2Fntp-synchronisation-plc-part11.html" target="_blank" rel="noopener" class="share-link">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          Share on LinkedIn
+        </a>
+        <a href="https://www.reddit.com/submit?url=https%3A%2F%2Fqleanautomation.com%2Fblog%2Fntp-synchronisation-plc-part11.html&title=Configuring+NTP+Synchronisation+on+a+PLC+for+21+CFR+Part+11" target="_blank" rel="noopener" class="share-link">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/></svg>
+          Share on Reddit
+        </a>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<section class="related">
+  <div class="related-inner">
+    <div class="related-label">More Articles</div>
+    <div class="related-grid">
+      <a href="21-cfr-part-11-audit-trail-checklist.html" class="related-card">
+        <div class="rc-tag">&#128203; 21 CFR Part 11</div>
+        <div class="rc-title">Audit Trail Checklist for 21 CFR Part 11</div>
+        <div class="rc-desc">NTP synchronisation is one item on the full audit trail compliance checklist. Here is the complete list of what your audit trail implementation must cover.</div>
+        <div class="rc-footer"><div class="rc-read">7 MIN READ</div><div class="rc-arrow">&#8594;</div></div>
+      </a>
+      <a href="plc-io-mapping-iq-documentation.html" class="related-card">
+        <div class="rc-tag">&#9881;&#65039; PLC Engineering</div>
+        <div class="rc-title">PLC I/O Mapping Documentation for a Pharma IQ</div>
+        <div class="rc-desc">NTP verification is one prerequisite before IQ execution begins. Here is the full picture of what the IO documentation must contain for a pharma IQ.</div>
+        <div class="rc-footer"><div class="rc-read">7 MIN READ</div><div class="rc-arrow">&#8594;</div></div>
+      </a>
+      <a href="site-acceptance-test-pharma-guide.html" class="related-card">
+        <div class="rc-tag">&#128221; Testing</div>
+        <div class="rc-title">Site Acceptance Test: A Pharma Guide</div>
+        <div class="rc-desc">SAT-020 and SAT-021 are the live NTP verification tests. Here is the full SAT protocol structure and what each section verifies on site.</div>
+        <div class="rc-footer"><div class="rc-read">8 MIN READ</div><div class="rc-arrow">&#8594;</div></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="../index.html" class="nav-logo">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none" style="flex-shrink:0"><rect width="32" height="32" rx="7" fill="#0d0f12"/><rect x="8" y="7" width="16" height="16" rx="2" stroke="white" stroke-width="2.5" fill="none"/><line x1="20" y1="19" x2="26" y2="25" stroke="#0057FF" stroke-width="3" stroke-linecap="round"/></svg>
+          <span style="font-family:'Epilogue',sans-serif;font-weight:800;font-size:16px;color:#0d0f12;letter-spacing:-.03em;white-space:nowrap">QLean <span style="font-weight:300;color:#5a6172">Automation</span></span>
+        </a>
+        <p>GMP documentation tools for system integrators and automation engineers entering pharmaceutical projects.</p>
+      </div>
+      <div class="footer-col"><h4>Products</h4><ul><li><a href="../index.html#framework">GAMP 5 Framework</a></li><li><a href="../index.html#products">Technical Masterclass</a></li></ul></div>
+      <div class="footer-col"><h4>Knowledge Base</h4><ul>
+        <li><a href="blog-index.html">All Articles</a></li>
+        <li><a href="21-cfr-part-11-audit-trail-checklist.html">Audit Trail Checklist</a></li>
+        <li><a href="21-cfr-part-11.html">21 CFR Part 11</a></li>
+        <li><a href="plc-io-mapping-iq-documentation.html">PLC I/O Mapping for IQ</a></li>
+        <li><a href="site-acceptance-test-pharma-guide.html">Site Acceptance Test</a></li>
+        <li><a href="iq-oq-pq-guide.html">IQ OQ PQ Guide</a></li>
+        <li><a href="change-control-validated-system.html">Change Control</a></li>
+      </ul></div>
+      <div class="footer-col"><h4>Company</h4><ul><li><a href="https://www.linkedin.com/company/qlean-automation" target="_blank">LinkedIn</a></li><li><a href="mailto:hello@qleanautomation.com">Contact</a></li><li><a href="../terms.html">Terms</a></li></ul></div>
+    </div>
+    <div class="footer-bottom">
+      <p>&#169; 2026 QLEAN AUTOMATION &#183; QLEANAUTOMATION.COM</p>
+      <div class="compliance-pills"><span class="cp">21 CFR PART 11</span><span class="cp">EU ANNEX 11</span><span class="cp">GAMP 5</span><span class="cp">SNTP / NTP</span></div>
+    </div>
+  </div>
+</footer>
+
+<script>
+window.addEventListener('scroll',()=>{const d=document.documentElement;document.getElementById('progress').style.width=(d.scrollTop/(d.scrollHeight-d.clientHeight)*100)+'%'});
+const obs=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting){document.querySelectorAll('.toc-list a').forEach(l=>l.classList.remove('active'));const a=document.querySelector('.toc-list a[href="#'+x.target.id+'"]');if(a)a.classList.add('active')}})  ,{rootMargin:'-20% 0px -70% 0px'});
+document.querySelectorAll('[id]').forEach(s=>obs.observe(s));
+</script>
+</body>
+</html>

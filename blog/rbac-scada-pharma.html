@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-JJQ1TXZJX7"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-JJQ1TXZJX7');
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Role-Based Access Control in Pharma SCADA — Design and Test | QLean Automation</title>
+<meta name="description" content="RBAC in a pharma SCADA is a GMP requirement, not just an IT policy. Four roles, 16 permission boundaries, password policy, concurrent login prevention, and the OQ tests that verify every negative case. Here's how to design it and what QA will check.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@300;400;500;600;700;800;900&family=Source+Sans+3:ital,wght@0,300;0,400;0,500;1,300&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--white:#ffffff;--off:#f7f8f9;--ink:#0d0f12;--ink2:#1e2128;--ink3:#3d4456;--ink4:#9199a8;--rule:#e2e5ea;--rule2:#c8cdd6;--blue:#0057ff;--blue2:#0044cc;--blue-dim:rgba(0,87,255,0.07);--green:#00875a;--green-dim:rgba(0,135,90,0.08);--amber:#d97706;--amber-dim:rgba(217,119,6,0.08);--red:#c0392b;--red-dim:rgba(192,57,43,0.08);--f-head:'Epilogue',sans-serif;--f-body:'Source Sans 3',sans-serif;--f-mono:'Roboto Mono',monospace;--shadow-sm:0 2px 8px rgba(13,15,18,0.06),0 1px 3px rgba(13,15,18,0.04)}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}body{background:var(--white);color:var(--ink);font-family:var(--f-body);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+nav{position:fixed;top:0;left:0;right:0;z-index:200;height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 6%;background:rgba(255,255,255,0.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--rule)}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;flex-shrink:0}
+.nav-links{display:flex;align-items:center;gap:36px;list-style:none}.nav-links a{font-size:14px;font-weight:400;color:var(--ink3);text-decoration:none;transition:color .2s}.nav-links a:hover{color:var(--ink)}
+.nav-btn{font-family:var(--f-body);font-size:13px;font-weight:500;padding:9px 20px;background:var(--blue);color:white;border:none;border-radius:6px;cursor:pointer;text-decoration:none;white-space:nowrap;flex-shrink:0}.nav-btn:hover{background:var(--blue2)}
+.progress-bar{position:fixed;top:64px;left:0;right:0;height:2px;background:var(--rule);z-index:199}.progress-fill{height:100%;background:var(--blue);width:0%}
+.article-hero{padding:120px 6% 64px;background:var(--white);border-bottom:1px solid var(--rule);position:relative;overflow:hidden}
+.article-hero::before{content:'';position:absolute;top:-80px;right:-80px;width:400px;height:400px;background:radial-gradient(circle,rgba(0,87,255,0.04) 0%,transparent 70%);pointer-events:none}
+.article-hero-inner{max-width:940px;margin:0 auto;position:relative;z-index:1}
+.breadcrumb{display:flex;align-items:center;gap:8px;font-family:var(--f-mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink4);margin-bottom:24px}.breadcrumb a{color:var(--ink4);text-decoration:none}.breadcrumb a:hover{color:var(--blue)}.breadcrumb span{color:var(--rule2)}
+.article-tag{display:inline-flex;align-items:center;gap:6px;font-family:var(--f-mono);font-size:10px;font-weight:500;color:var(--blue);letter-spacing:.1em;text-transform:uppercase;margin-bottom:20px;padding:4px 10px;background:var(--blue-dim);border-radius:4px}
+.article-hero h1{font-family:var(--f-head);font-size:clamp(30px,5vw,52px);font-weight:900;line-height:1.0;letter-spacing:-.04em;color:var(--ink);margin-bottom:20px}.article-hero h1 span{color:var(--blue)}
+.article-intro{font-size:18px;font-weight:400;color:var(--ink2);line-height:1.75;margin-bottom:32px;max-width:800px}
+.article-meta{display:flex;align-items:center;gap:24px;padding-top:24px;border-top:1px solid var(--rule);flex-wrap:wrap}
+.meta-author{display:flex;align-items:center;gap:10px}.author-avatar{width:36px;height:36px;border-radius:50%;background:var(--ink);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.author-name{font-size:13px;font-weight:500;color:var(--ink)}.author-role{font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.04em}
+.meta-divider{width:1px;height:28px;background:var(--rule)}.meta-stat{font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.06em}
+.article-wrap{max-width:1300px;margin:0 auto;padding:64px 6%;display:grid;grid-template-columns:1fr 300px;gap:60px;align-items:start}
+.article-body{min-width:0}
+.article-body h2{font-family:var(--f-head);font-size:26px;font-weight:800;letter-spacing:-.03em;color:var(--ink);margin:56px 0 16px;line-height:1.2}.article-body h2:first-child{margin-top:0}
+.article-body h3{font-family:var(--f-head);font-size:18px;font-weight:700;letter-spacing:-.02em;color:var(--ink);margin:32px 0 12px}
+.article-body p{font-size:16px;font-weight:400;color:var(--ink2);line-height:1.85;margin-bottom:20px}
+.article-body strong{color:var(--ink);font-weight:600}
+.article-body a{color:var(--blue);text-decoration:none;border-bottom:1px solid rgba(0,87,255,.25)}.article-body a:hover{border-color:var(--blue)}
+.callout{padding:20px 24px;border-radius:8px;margin:32px 0;border-left:3px solid}
+.callout.blue{background:var(--blue-dim);border-color:var(--blue)}.callout.amber{background:var(--amber-dim);border-color:var(--amber)}.callout.green{background:var(--green-dim);border-color:var(--green)}.callout.red{background:var(--red-dim);border-color:var(--red)}
+.callout-label{font-family:var(--f-mono);font-size:9px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px}.callout.blue .callout-label{color:var(--blue)}.callout.amber .callout-label{color:var(--amber)}.callout.green .callout-label{color:var(--green)}.callout.red .callout-label{color:var(--red)}
+.callout p{font-size:14px;color:var(--ink2);line-height:1.7;margin:0}.callout strong{color:var(--ink)}
+.article-img{width:100%;border-radius:8px;border:1px solid #1e2535;overflow:hidden;margin:36px 0}
+.article-img figcaption{padding:10px 14px;background:var(--off);font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.04em;border-top:1px solid var(--rule)}
+.arrow-list{list-style:none;display:flex;flex-direction:column;gap:8px;margin:16px 0 24px}
+.arrow-list li{display:flex;align-items:flex-start;gap:10px;font-size:15px;color:var(--ink2);line-height:1.6}
+.arrow-list li::before{content:'\2192';color:var(--blue);flex-shrink:0;font-size:12px;margin-top:3px}
+.checklist{list-style:none;display:flex;flex-direction:column;gap:8px;margin:20px 0 28px}
+.checklist li{display:flex;align-items:flex-start;gap:10px;font-size:15px;color:var(--ink2);line-height:1.6}
+.checklist li::before{content:'';width:16px;height:16px;flex-shrink:0;margin-top:3px;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 14 14' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='7' cy='7' r='6.5' fill='none' stroke='%230057ff' stroke-width='1'/%3E%3Cpath d='M4 7l2 2 4-4' stroke='%230057ff' stroke-width='1.3' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:center;background-size:contain}
+.table-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:28px 0}
+.compare-table{width:100%;border-collapse:collapse;font-size:14px}
+.compare-table th{font-family:var(--f-mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink4);padding:10px 16px;border-bottom:2px solid var(--rule);text-align:left;background:var(--off)}
+.compare-table td{padding:12px 16px;border-bottom:1px solid var(--rule);vertical-align:top;color:var(--ink2);line-height:1.6}
+.compare-table tr:last-child td{border-bottom:none}
+.compare-table td:first-child{font-weight:600;color:var(--ink);font-family:var(--f-mono);font-size:12px}
+.sidebar{position:sticky;top:88px;display:flex;flex-direction:column;gap:16px}
+.toc-card{border:1px solid var(--rule);border-radius:8px;padding:24px;background:var(--white);box-shadow:var(--shadow-sm)}
+.toc-label{font-family:var(--f-mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);margin-bottom:16px}
+.toc-list{list-style:none;display:flex;flex-direction:column;gap:2px}
+.toc-list a{display:block;font-size:13px;color:var(--ink3);text-decoration:none;padding:6px 10px;border-radius:4px;transition:all .15s;border-left:2px solid transparent}
+.toc-list a:hover,.toc-list a.active{color:var(--blue);background:var(--blue-dim);border-left-color:var(--blue)}
+.sidebar-cta{border:1px solid var(--blue);border-radius:8px;padding:24px;background:var(--blue-dim)}
+.sc-eyebrow{font-family:var(--f-mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);margin-bottom:10px}
+.sc-title{font-family:var(--f-head);font-size:17px;font-weight:800;letter-spacing:-.02em;color:var(--ink);margin-bottom:8px;line-height:1.2}
+.sc-body{font-size:13px;color:var(--ink3);line-height:1.6;margin-bottom:16px}
+.sc-btn{display:block;text-align:center;padding:11px 16px;background:var(--blue);color:white;border-radius:6px;font-family:var(--f-body);font-size:13px;font-weight:500;text-decoration:none}.sc-btn:hover{background:var(--blue2)}
+.sc-note{font-family:var(--f-mono);font-size:9px;color:var(--ink4);text-align:center;margin-top:8px;letter-spacing:.04em}
+.sidebar-share{border:1px solid var(--rule);border-radius:8px;padding:20px 24px;background:var(--white)}
+.share-label{font-family:var(--f-mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);margin-bottom:14px}
+.share-links{display:flex;flex-direction:column;gap:8px}
+.share-link{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--ink3);text-decoration:none;padding:9px 12px;border:1px solid var(--rule);border-radius:6px;transition:border-color .2s,color .2s}.share-link:hover{border-color:var(--blue);color:var(--blue)}
+.related{padding:64px 6%;border-top:1px solid var(--rule);background:var(--off)}
+.related-inner{max-width:1100px;margin:0 auto}
+.related-label{font-family:var(--f-mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);margin-bottom:32px;display:flex;align-items:center;gap:10px}
+.related-label::before{content:'';width:20px;height:1px;background:var(--blue)}
+.related-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.related-card{padding:24px;border:1px solid var(--rule);border-radius:8px;background:var(--white);box-shadow:var(--shadow-sm);transition:border-color .2s,transform .2s;text-decoration:none;display:flex;flex-direction:column;gap:12px}.related-card:hover{border-color:var(--blue);transform:translateY(-4px)}
+.rc-tag{font-family:var(--f-mono);font-size:9px;color:var(--blue);letter-spacing:.08em;text-transform:uppercase;padding:3px 8px;background:var(--blue-dim);border-radius:3px;align-self:flex-start}
+.rc-title{font-family:var(--f-head);font-size:16px;font-weight:700;letter-spacing:-.02em;color:var(--ink);line-height:1.25}
+.rc-desc{font-size:13px;color:var(--ink3);line-height:1.6;flex:1}
+.rc-footer{display:flex;align-items:center;justify-content:space-between;padding-top:12px;border-top:1px solid var(--rule)}
+.rc-read{font-family:var(--f-mono);font-size:10px;color:var(--ink4)}.rc-arrow{font-size:14px;color:var(--blue)}
+footer{padding:56px 6% 32px;border-top:1px solid var(--rule);background:var(--white)}
+.footer-inner{max-width:1160px;margin:0 auto}
+.footer-top{display:flex;justify-content:space-between;align-items:flex-start;gap:40px;flex-wrap:wrap;margin-bottom:48px}
+.footer-brand p{font-size:13px;font-weight:300;color:var(--ink3);margin-top:12px;max-width:260px;line-height:1.6}
+.footer-col h4{font-family:var(--f-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink4);margin-bottom:16px}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+.footer-col a{font-size:13px;color:var(--ink3);text-decoration:none}.footer-col a:hover{color:var(--blue)}
+.footer-bottom{padding-top:24px;border-top:1px solid var(--rule);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.footer-bottom p{font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.04em}
+.compliance-pills{display:flex;gap:6px;flex-wrap:wrap}
+.cp{font-family:var(--f-mono);font-size:9px;padding:3px 8px;border:1px solid var(--rule);border-radius:3px;color:var(--ink4);letter-spacing:.06em}
+@media(max-width:900px){.article-wrap{grid-template-columns:1fr;gap:48px}.sidebar{position:static}.related-grid{grid-template-columns:1fr}.table-scroll{margin:20px 0}}
+@media(max-width:900px){.nav-links{display:none}}
+@media(max-width:540px){nav{padding:0 4%}.nav-btn{font-size:12px;padding:8px 14px}}
+</style>
+</head>
+<body>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+<nav>
+  <a href="../index.html" class="nav-logo">
+    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" style="flex-shrink:0"><rect width="32" height="32" rx="7" fill="#0d0f12"/><rect x="8" y="7" width="16" height="16" rx="2" stroke="white" stroke-width="2.5" fill="none"/><line x1="20" y1="19" x2="26" y2="25" stroke="#0057FF" stroke-width="3" stroke-linecap="round"/></svg>
+    <span style="font-family:'Epilogue',sans-serif;font-weight:800;font-size:16px;color:#0d0f12;letter-spacing:-.03em;white-space:nowrap">QLean <span style="font-weight:300;color:#5a6172">Automation</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="../index.html#products">Products</a></li>
+    <li><a href="../index.html#framework">Framework</a></li>
+    <li><a href="blog-index.html">Knowledge Base</a></li>
+    <li><a href="../index.html#pricing">Pricing</a></li>
+    <li><a href="../about.html">About</a></li>
+    <li><a href="../index.html#faq">FAQ</a></li>
+  </ul>
+  <a href="../index.html#pricing" class="nav-btn">Get the Framework →</a>
+</nav>
+
+<header class="article-hero">
+  <div class="article-hero-inner">
+    <div class="breadcrumb"><a href="../index.html">Home</a><span>/</span><a href="blog-index.html">Knowledge Base</a><span>/</span>RBAC in Pharma SCADA</div>
+    <div class="article-tag">🖥️ SCADA Engineering</div>
+    <h1>Role-Based Access Control<br><span>in Pharma SCADA</span><br>— Design and Test</h1>
+    <p class="article-intro">RBAC in a pharma SCADA is a 21 CFR Part 11 and EU Annex 11 requirement, not an IT preference. Four roles, 16 permission boundaries, password policy parameters that must survive boundary testing, concurrent login prevention, and a full adversarial OQ regression — here's how to design it correctly and what QA will verify.</p>
+    <div class="article-meta">
+      <div class="meta-author">
+        <div class="author-avatar"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="7" r="3.5" stroke="white" stroke-width="1.5"/><path d="M2.5 16c0-3.59 2.91-6.5 6.5-6.5s6.5 2.91 6.5 6.5" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+        <div><div class="author-name">QLean Automation</div><div class="author-role">ENGINEERS WHO BUILD SYSTEMS, NOT JUST SIGN THEM</div></div>
+      </div>
+      <div class="meta-divider"></div><div class="meta-stat">7 MIN READ</div>
+      <div class="meta-divider"></div><div class="meta-stat">21 CFR PART 11 · RBAC · SCADA</div>
+    </div>
+  </div>
+</header>
+
+<div class="article-wrap">
+  <article class="article-body">
+
+    <h2 id="why-rbac-is-gmp">Why RBAC Is a GMP Requirement, Not an IT Policy</h2>
+    <p>Role-based access control sits at the intersection of two regulatory requirements. <a href="21-cfr-part-11.html">21 CFR Part 11</a> requires that system access is limited to authorised individuals and that the system uses authority checks to ensure only authorised individuals can use the system, operate input or output devices, alter records, or perform operations. EU GMP Annex 11 Clause 12 requires that access to data is restricted to authorised personnel. Both translate to the same practical design requirement: the SCADA must know who is logged in, what they are permitted to do, and must actively enforce those permissions — not just display them.</p>
+    <p>The word "enforce" is key. A SCADA system that displays a note saying "setpoint changes are for Supervisors only" but allows any authenticated user to change setpoints does not satisfy the requirement. A SCADA that greys out the setpoint field for non-Supervisor roles but allows a direct database write to bypass the HMI does not satisfy the requirement. The enforcement must be at the application layer and verified adversarially at OQ.</p>
+    <p>The other critical point that gets missed on first pharma projects: RBAC is not just about restricting GMP-critical actions. It is also about <strong>audit trail attribution</strong>. Every GMP-relevant action must be attributable to a specific, named individual. If your RBAC design permits shared accounts, group logins, or generic "Operator" accounts for any GMP function, the audit trail cannot attribute actions to individuals, and the system does not meet the ALCOA+ Attributable requirement. See the <a href="audit-trail-implementation-scada.html">audit trail implementation guide</a> for the full attribution design.</p>
+
+    <h2 id="four-roles">The Four-Role Model — What Each Role Covers</h2>
+    <p>Four roles is the standard for a GMP SCADA. More than four creates testing complexity without meaningful benefit at this system scale. Fewer than four cannot cleanly separate production operations from engineering configuration from quality oversight. The roles are cumulative — each higher role includes all permissions of the roles below it.</p>
+
+    <figure class="article-img">
+      <svg viewBox="0 0 720 310" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;background:#0d0f12;border-radius:8px 8px 0 0">
+        <text x="360" y="18" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(255,255,255,0.2)" letter-spacing="0.12em">FOUR-ROLE RBAC MODEL — CUMULATIVE PERMISSIONS</text>
+
+        <!-- Role 1: Read-Only -->
+        <rect x="20" y="30" width="155" height="262" rx="5" fill="rgba(145,153,168,0.06)" stroke="rgba(145,153,168,0.25)" stroke-width="1.5"/>
+        <rect x="20" y="30" width="155" height="32" rx="5" fill="rgba(145,153,168,0.15)"/>
+        <text x="97" y="51" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="10" fill="rgba(145,153,168,0.8)">READ-ONLY</text>
+        <text x="97" y="79" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="11" fill="rgba(255,255,255,0.55)">View process data</text>
+        <text x="97" y="97" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="11" fill="rgba(255,255,255,0.55)">View trends / history</text>
+        <text x="97" y="115" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="11" fill="rgba(255,255,255,0.55)">View reports</text>
+        <text x="97" y="133" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="11" fill="rgba(255,255,255,0.55)">View alarm status</text>
+        <text x="97" y="168" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(145,153,168,0.4)">Typical users:</text>
+        <text x="97" y="184" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(145,153,168,0.5)">QA auditors</text>
+        <text x="97" y="199" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(145,153,168,0.5)">Management review</text>
+        <text x="97" y="214" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(145,153,168,0.5)">Inspectors</text>
+        <text x="97" y="268" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(145,153,168,0.35)">NO GMP WRITES</text>
+
+        <!-- Role 2: Operator -->
+        <rect x="188" y="30" width="155" height="262" rx="5" fill="rgba(0,87,255,0.07)" stroke="rgba(0,87,255,0.28)" stroke-width="1.5"/>
+        <rect x="188" y="30" width="155" height="32" rx="5" fill="rgba(0,87,255,0.18)"/>
+        <text x="265" y="51" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="10" fill="rgba(100,160,255,0.85)">OPERATOR</text>
+        <text x="265" y="70" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(100,160,255,0.4)">+ all Read-Only</text>
+        <text x="265" y="88" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="11" fill="rgba(255,255,255,0.65)">Acknowledge alarms</text>
+        <text x="265" y="106" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="11" fill="rgba(255,255,255,0.65)">Initiate manual seqs</text>
+        <text x="265" y="124" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="11" fill="rgba(255,255,255,0.65)">Generate std reports</text>
+        <text x="265" y="168" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(100,160,255,0.35)">Typical users:</text>
+        <text x="265" y="184" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(100,160,255,0.5)">Production operators</text>
+        <text x="265" y="199" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(100,160,255,0.5)">Shift technicians</text>
+        <text x="265" y="268" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(100,160,255,0.35)">NO SETPOINT CHANGES</text>
+
+        <!-- Role 3: Supervisor -->
+        <rect x="356" y="30" width="155" height="262" rx="5" fill="rgba(217,119,6,0.07)" stroke="rgba(217,119,6,0.32)" stroke-width="1.5"/>
+        <rect x="356" y="30" width="155" height="32" rx="5" fill="rgba(217,119,6,0.18)"/>
+        <text x="433" y="51" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="10" fill="rgba(240,160,40,0.85)">SUPERVISOR</text>
+        <text x="433" y="70" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(240,160,40,0.35)">+ all Operator</text>
+        <text x="433" y="88" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="11" fill="rgba(255,255,255,0.65)">Modify setpoints</text>
+        <text x="433" y="106" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="11" fill="rgba(255,255,255,0.65)">Modify alarm setpoints</text>
+        <text x="433" y="124" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="11" fill="rgba(255,255,255,0.65)">Initiate sanitization</text>
+        <text x="433" y="142" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="11" fill="rgba(255,255,255,0.65)">Maintenance mode</text>
+        <text x="433" y="160" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="11" fill="rgba(255,255,255,0.65)">Alarm suppression</text>
+        <text x="433" y="186" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(240,160,40,0.35)">Typical users:</text>
+        <text x="433" y="202" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(240,160,40,0.5)">Production supervisors</text>
+        <text x="433" y="217" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(240,160,40,0.5)">Process engineers</text>
+        <text x="433" y="232" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(240,160,40,0.5)">Maintenance leads</text>
+        <text x="433" y="268" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(240,160,40,0.35)">NO USER MANAGEMENT</text>
+
+        <!-- Role 4: Administrator -->
+        <rect x="524" y="30" width="178" height="262" rx="5" fill="rgba(0,135,90,0.07)" stroke="rgba(0,135,90,0.32)" stroke-width="1.5"/>
+        <rect x="524" y="30" width="178" height="32" rx="5" fill="rgba(0,135,90,0.18)"/>
+        <text x="613" y="51" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="10" fill="rgba(0,201,122,0.8)">ADMINISTRATOR</text>
+        <text x="613" y="70" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(0,201,122,0.35)">+ all Supervisor</text>
+        <text x="613" y="88" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="11" fill="rgba(255,255,255,0.65)">User account mgmt</text>
+        <text x="613" y="106" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="11" fill="rgba(255,255,255,0.65)">System configuration</text>
+        <text x="613" y="124" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="11" fill="rgba(255,255,255,0.65)">Manage backup sched.</text>
+        <text x="613" y="142" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="11" fill="rgba(255,255,255,0.65)">Install approved updates</text>
+        <text x="613" y="160" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="11" fill="rgba(255,255,255,0.65)">Grant remote access</text>
+        <text x="613" y="178" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="11" fill="rgba(255,255,255,0.65)">Suppress Critical alarms</text>
+        <text x="613" y="210" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(0,201,122,0.35)">Typical users:</text>
+        <text x="613" y="226" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(0,201,122,0.45)">IT / OT system admin</text>
+        <text x="613" y="241" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(0,201,122,0.45)">Validation lead</text>
+        <text x="613" y="268" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(0,201,122,0.35)">FEWEST USERS POSSIBLE</text>
+
+        <text x="360" y="300" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(255,255,255,0.18)">ROLES ARE CUMULATIVE — EACH HIGHER ROLE INCLUDES ALL PERMISSIONS BELOW · DOCUMENTED IN FDS APPENDIX D</text>
+      </svg>
+      <figcaption>FOUR-ROLE RBAC MODEL — Roles are cumulative. The permission boundaries between Operator and Supervisor (setpoint changes) and between Supervisor and Administrator (user management) are the two boundaries most tested at OQ. Both require adversarial negative tests.</figcaption>
+    </figure>
+
+    <p>A design principle worth stating explicitly: <strong>Administrator accounts should be held by the fewest people possible</strong>. The Administrator role can create and disable user accounts, install software updates, and modify system configuration. In a GMP environment those are change-controlled activities. Having ten people with Administrator access is a design weakness, not a safety net. Two named Administrator accounts — typically the OT system administrator and the validation lead — is the right number for most systems. Both accounts are individual and named, never shared.</p>
+
+    <h2 id="permission-matrix">The Permission Matrix — Why It Must Be in the FDS</h2>
+    <p>The role permission matrix must be documented in the FDS before development begins. It is not sufficient to describe the roles in prose — QA needs a table that shows every GMP-relevant function against every role, with explicit permit or deny for each cell. This table becomes the test basis for the OQ role regression. If the matrix does not exist before the OQ, the testers are making up expected results during execution, which is a GMP documentation failure.</p>
+    <p>The matrix must cover at minimum 16 function areas: view process data and trends, alarm acknowledgement, initiate manual sequences, generate reports, modify process setpoints, modify alarm setpoints, initiate critical sequences (sanitization, CIP, etc.), activate maintenance mode, suppress non-critical alarms, mode transitions, manage user accounts, configure system parameters, manage backup schedules, install updates, grant remote access, and suppress Critical alarms. Each cell is a binary: permitted or denied. There is no "partially permitted" — a function is either within a role's authority or it is not.</p>
+
+    <div class="callout amber">
+      <div class="callout-label">The Boundary That Fails Most Often</div>
+      <p>The Supervisor-to-Administrator boundary at user account management is the most commonly misconfigured permission in first-project SCADA systems. On many platforms, whoever configures the security server during development gives themselves Administrator rights — and then doesn't restrict the Supervisor role correctly. The OQ test is simple: as a Supervisor-role account, navigate to User Account Management. It must be blocked. <strong>If a Supervisor can create, modify, or disable user accounts, the role boundary is broken</strong> — and the audit trail attribution for any account changes during that period is unverifiable.</p>
+    </div>
+
+    <h2 id="password-policy">Password Policy — The Parameters That Must Survive Boundary Testing</h2>
+    <p>Password policy is specified in the FDS and verified at OQ with boundary tests. Every parameter must be tested at its exact limit — not at a comfortable value well inside it. This is what distinguishes OQ from a functional check. The parameters and their boundary test approach:</p>
+
+    <ul class="arrow-list">
+      <li><strong>Minimum length — 10 characters:</strong> Test exactly 9 characters (must be rejected with an explicit message) then exactly 10 characters (must be accepted). Both steps are required. A system that rejects 9 characters but accepts 8 has a different actual boundary than the FDS specifies.</li>
+      <li><strong>Complexity:</strong> Uppercase, lowercase, numeric, and special character all required. Test a 10-character password that meets length but omits each complexity element in turn — each must be individually rejected with a message stating what is missing.</li>
+      <li><strong>Password history — last 12 blocked:</strong> The OQ cannot test all 12 history positions, but must at minimum verify that the current password is rejected on immediate reuse. Document the full history depth as an FDS/SDS specification item that is acceptance-tested by configuration review at IQ.</li>
+      <li><strong>Account lockout — 3 consecutive failures:</strong> Test exactly 2 failures (account must NOT be locked) then the 3rd failure (account must lock, and the lock must be total — not just a delay). The 2-failure negative test is the boundary that is most often skipped.</li>
+      <li><strong>Session timeout — 15 minutes inactivity:</strong> Leave a session idle for 15 minutes and verify the screen locks and re-authentication is required before any action can be taken. Verify that a GMP action attempted immediately before the timeout (but after 14 minutes) cannot be completed by the next user who re-authenticates on the same workstation without their own credentials.</li>
+    </ul>
+
+    <h2 id="unique-accounts">Unique Accounts and Concurrent Login Prevention</h2>
+    <p>The requirement for unique individual accounts is non-negotiable for any GMP function. FUNC-SEC-003 states this explicitly: shared accounts, group accounts, and generic accounts are not permitted for any GMP-active function. When a user leaves the organisation, their account must be disabled — not deleted. Deletion breaks audit trail attribution for historical records. An audit trail entry that references a deleted user ID cannot be attributed, and an inspector who finds deleted accounts in the system will treat every action by those accounts as unattributable.</p>
+    <p>Concurrent login prevention is a separate but related control. The SCADA must detect when the same account is active on two workstations simultaneously and either block the new login or force the existing session out. Both responses are compliant — the FDS must specify which behaviour is configured. The audit trail must record the event either way. The OQ test is straightforward: log in with a named account on workstation WS-01, then attempt to log in with the same account on WS-02. The system must respond per the configured behaviour and generate an audit trail entry.</p>
+
+    <figure class="article-img">
+      <svg viewBox="0 0 720 200" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;background:#0d0f12;border-radius:8px 8px 0 0">
+        <text x="360" y="18" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(255,255,255,0.2)" letter-spacing="0.12em">CONCURRENT LOGIN — TWO COMPLIANT RESPONSES</text>
+
+        <!-- Option A: Block -->
+        <rect x="20" y="32" width="320" height="148" rx="5" fill="rgba(0,87,255,0.06)" stroke="rgba(0,87,255,0.25)" stroke-width="1.5"/>
+        <text x="180" y="54" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="10" fill="#6699ff">OPTION A — BLOCK NEW LOGIN</text>
+
+        <rect x="40" y="64" width="80" height="36" rx="3" fill="rgba(0,135,90,0.15)" stroke="rgba(0,135,90,0.4)" stroke-width="1"/>
+        <text x="80" y="79" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="#00c97a">WS-01</text>
+        <text x="80" y="92" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="9" fill="rgba(255,255,255,0.5)">jsmith — active</text>
+
+        <rect x="200" y="64" width="80" height="36" rx="3" fill="rgba(192,57,43,0.12)" stroke="rgba(192,57,43,0.35)" stroke-width="1"/>
+        <text x="240" y="79" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(220,80,80,0.8)">WS-02</text>
+        <text x="240" y="92" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="9" fill="rgba(255,255,255,0.5)">jsmith — BLOCKED</text>
+
+        <text x="160" y="82" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="16" fill="rgba(192,57,43,0.5)">\u2717</text>
+        <text x="180" y="125" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="11" fill="rgba(255,255,255,0.5)">"Account already in use on another</text>
+        <text x="180" y="141" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="11" fill="rgba(255,255,255,0.5)">workstation" + audit trail entry</text>
+        <text x="180" y="163" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(0,87,255,0.5)">WS-01 SESSION REMAINS ACTIVE</text>
+
+        <!-- Option B: Force out -->
+        <rect x="380" y="32" width="320" height="148" rx="5" fill="rgba(0,87,255,0.06)" stroke="rgba(0,87,255,0.25)" stroke-width="1.5"/>
+        <text x="540" y="54" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="10" fill="#6699ff">OPTION B — FORCE PRIOR SESSION OUT</text>
+
+        <rect x="400" y="64" width="80" height="36" rx="3" fill="rgba(192,57,43,0.12)" stroke="rgba(192,57,43,0.35)" stroke-width="1"/>
+        <text x="440" y="79" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(220,80,80,0.8)">WS-01</text>
+        <text x="440" y="92" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="9" fill="rgba(255,255,255,0.5)">jsmith — FORCED OUT</text>
+
+        <rect x="560" y="64" width="80" height="36" rx="3" fill="rgba(0,135,90,0.15)" stroke="rgba(0,135,90,0.4)" stroke-width="1"/>
+        <text x="600" y="79" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="#00c97a">WS-02</text>
+        <text x="600" y="92" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="9" fill="rgba(255,255,255,0.5)">jsmith — active</text>
+
+        <path d="M490 82 L550 82" fill="none" stroke="rgba(192,57,43,0.4)" stroke-width="1.5" stroke-dasharray="4,3"/>
+        <polygon points="546,77 556,82 546,87" fill="rgba(192,57,43,0.4)"/>
+
+        <text x="540" y="125" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="11" fill="rgba(255,255,255,0.5)">WS-01 forced logout + audit trail</text>
+        <text x="540" y="141" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="11" fill="rgba(255,255,255,0.5)">"Concurrent session detected"</text>
+        <text x="540" y="163" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(0,87,255,0.5)">FDS MUST SPECIFY WHICH OPTION</text>
+
+        <text x="360" y="193" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(255,255,255,0.18)">BOTH OPTIONS ARE COMPLIANT — THE CHOICE MUST BE DOCUMENTED IN FDS AND CONSISTENTLY TESTED AT OQ</text>
+      </svg>
+      <figcaption>CONCURRENT LOGIN PREVENTION — Both responses are compliant. The FDS must specify which is configured. The OQ must test the configured behaviour and verify the audit trail entry — not just observe that something happened.</figcaption>
+    </figure>
+
+    <h2 id="ad-integration">Active Directory Integration — What It Changes</h2>
+    <p>Most enterprise pharma SCADA deployments integrate with Windows Active Directory for authentication rather than maintaining a separate SCADA user database. AD integration means the operator's domain credentials (the same username and password they use to log into Windows) authenticate them to the SCADA. Role assignment is managed by AD group membership — the SCADA maps AD groups to SCADA roles. In Ignition this is the Identity Provider configuration. In WinCC it is the Windows User Groups mapping. In FactoryTalk it is the FactoryTalk Directory with Windows AD authentication. In Wonderware InTouch it is the LDAP connection from the InTouch Security Server to the site domain controller.</p>
+    <p>AD integration has important implications for the validation documentation. The password policy is enforced at the AD level, not the SCADA level. The IQ must verify that the AD Group Policy Object (GPO) applied to SCADA user accounts enforces the parameters specified in the FDS. This is a configuration review item, not a functional test — the IQ tester reviews the GPO settings and records the actual values against the FDS specification. If AD is unavailable, the fallback to local SCADA accounts must be configured and tested — the OQ must verify that local accounts use the same password policy parameters as the AD-enforced policy.</p>
+
+    <h2 id="oq-regression">The OQ RBAC Regression — What a Full Test Looks Like</h2>
+    <p>The OQ RBAC regression is not a spot check. It is a systematic test of every role's permitted actions (positive tests) and every role's denied actions at the boundary above it (negative tests). At OQ the tests must use real AD accounts with the production role assignments — not test accounts created specifically for the OQ with elevated permissions. If the OQ is run with a single "Admin" test account that can do everything, nothing is proven about the role boundaries.</p>
+    <p>The minimum test sequence for a full four-role regression, in order:</p>
+
+    <ul class="checklist">
+      <li><strong>Read-Only role — four negative tests:</strong> attempt alarm acknowledgement, setpoint modification, manual sequence initiation, and User Account Management access. All four must be blocked with explicit messages. All four blocked attempts must appear in the audit trail with the Read-Only user's ID.</li>
+      <li><strong>Operator role — positive and negative:</strong> acknowledge a High alarm (positive — must succeed and be audit-trailed). Then attempt to modify the distribution pressure setpoint (negative — must be blocked). Audit trail must show the blocked attempt with the Operator user's ID.</li>
+      <li><strong>Supervisor role — positive and negative:</strong> modify a process setpoint with a reason (positive — old value, new value, user, timestamp, and reason must all appear in audit trail). Then attempt to access User Account Management (negative — must be blocked).</li>
+      <li><strong>Administrator role — positive:</strong> create a new test user account with Operator role. Audit trail must record account creation with Administrator user ID. Delete the test account after verification — account deletion must also be audit-trailed.</li>
+    </ul>
+
+    <p>Two additional test cases that belong in the OQ but are frequently omitted: the <strong>disabled account test</strong> (disable an active account in the security server or AD; attempt to log in with that account — must be rejected, and the rejection must be audit-trailed), and the <strong>role change test</strong> (change a user's role assignment from Operator to Supervisor; verify the change is audit-trailed; log in as that user and verify the new permissions apply).</p>
+
+    <div class="callout green">
+      <div class="callout-label">In the QLean Framework</div>
+      <p>The FDS-SYS-001 Appendix D contains the full 4-role × 16-function permission matrix as described in this article — every cell explicitly permitted or denied, consistent with URS-SYS-001 Appendix B. FUNC-SEC-001 through FUNC-SEC-004 define the RBAC design, password policy parameters (10-char minimum, complexity, 12-history, 3-failure lockout, 15-minute session timeout), unique account enforcement, and the e-signature design. The SDS-SYS-001 Section 7 documents the AD integration (LDAP port 389/636, fallback local accounts, AD group mapping to SCADA roles, concurrent login detection), the password policy enforcement configuration, and the unique account requirement with the account naming convention. OQ-SYS-001 contains test cases OQ-010 (full 4-role regression — 6 steps covering all role boundaries with positive and negative tests), OQ-011 (concurrent login prevention — both workstation test), and OQ-012 (password policy boundary tests — 9-character rejection, 10-character acceptance, 2-failure no lockout, 3rd failure lockout) — the exact test sequence described in this article, with expected results defined and evidence attachment fields.</p>
+    </div>
+
+  </article>
+
+  <aside class="sidebar">
+    <div class="toc-card">
+      <div class="toc-label">In This Article</div>
+      <ul class="toc-list">
+        <li><a href="#why-rbac-is-gmp" class="active">Why RBAC Is a GMP Requirement</a></li>
+        <li><a href="#four-roles">The Four-Role Model</a></li>
+        <li><a href="#permission-matrix">The Permission Matrix</a></li>
+        <li><a href="#password-policy">Password Policy</a></li>
+        <li><a href="#unique-accounts">Unique Accounts</a></li>
+        <li><a href="#ad-integration">Active Directory Integration</a></li>
+        <li><a href="#oq-regression">The OQ RBAC Regression</a></li>
+      </ul>
+    </div>
+    <div class="sidebar-cta">
+      <div class="sc-eyebrow">QLean Framework</div>
+      <div class="sc-title">29 production-ready GAMP 5 documents</div>
+      <div class="sc-body">FDS Appendix D role matrix, SDS Section 7 AD integration design, and OQ-010/011/012 full RBAC regression test cases — all included.</div>
+      <a href="../index.html#pricing" class="sc-btn">Get the Framework — €249 →</a>
+      <div class="sc-note">// INSTANT DOWNLOAD · COMPANY-WIDE LICENCE</div>
+    </div>
+    <div class="sidebar-share">
+      <div class="share-label">Share This Article</div>
+      <div class="share-links">
+        <a href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fqleanautomation.com%2Fblog%2Frbac-scada-pharma.html" target="_blank" rel="noopener" class="share-link">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          Share on LinkedIn
+        </a>
+        <a href="https://www.reddit.com/submit?url=https%3A%2F%2Fqleanautomation.com%2Fblog%2Frbac-scada-pharma.html&title=Role-Based+Access+Control+in+Pharma+SCADA+%E2%80%94+Design+and+Test" target="_blank" rel="noopener" class="share-link">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/></svg>
+          Share on Reddit
+        </a>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<section class="related">
+  <div class="related-inner">
+    <div class="related-label">More Articles</div>
+    <div class="related-grid">
+      <a href="scada-user-management-part11.html" class="related-card">
+        <div class="rc-tag">🖥️ SCADA Engineering</div>
+        <div class="rc-title">SCADA User Management for 21 CFR Part 11</div>
+        <div class="rc-desc">User account lifecycle — provisioning, role assignment, periodic review, and deactivation — and the IQ documentation that proves the access controls were verified at installation.</div>
+        <div class="rc-footer"><div class="rc-read">7 MIN READ</div><div class="rc-arrow">→</div></div>
+      </a>
+      <a href="audit-trail-implementation-scada.html" class="related-card">
+        <div class="rc-tag">🖥️ SCADA Engineering</div>
+        <div class="rc-title">Building a Part 11 Audit Trail in Your SCADA System</div>
+        <div class="rc-desc">RBAC enforcement is only as useful as the audit trail that records who did what. Every role boundary test relies on an audit trail entry as the evidence — here's how to design it correctly.</div>
+        <div class="rc-footer"><div class="rc-read">9 MIN READ</div><div class="rc-arrow">→</div></div>
+      </a>
+      <a href="21-cfr-part-11.html" class="related-card">
+        <div class="rc-tag">📋 Compliance</div>
+        <div class="rc-title">21 CFR Part 11: What You Actually Need to Implement</div>
+        <div class="rc-desc">RBAC, unique accounts, and audit trail attribution are the three pillars of Part 11 Section 11.10. This article covers the full Part 11 requirement set and how each maps to SCADA design decisions.</div>
+        <div class="rc-footer"><div class="rc-read">9 MIN READ</div><div class="rc-arrow">→</div></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="../index.html" class="nav-logo">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none" style="flex-shrink:0"><rect width="32" height="32" rx="7" fill="#0d0f12"/><rect x="8" y="7" width="16" height="16" rx="2" stroke="white" stroke-width="2.5" fill="none"/><line x1="20" y1="19" x2="26" y2="25" stroke="#0057FF" stroke-width="3" stroke-linecap="round"/></svg>
+          <span style="font-family:'Epilogue',sans-serif;font-weight:800;font-size:16px;color:#0d0f12;letter-spacing:-.03em;white-space:nowrap">QLean <span style="font-weight:300;color:#5a6172">Automation</span></span>
+        </a>
+        <p>GMP documentation tools for system integrators and automation engineers entering pharmaceutical projects.</p>
+      </div>
+      <div class="footer-col"><h4>Products</h4><ul><li><a href="../index.html#framework">GAMP 5 Framework</a></li><li><a href="../index.html#products">Technical Masterclass</a></li></ul></div>
+      <div class="footer-col"><h4>Knowledge Base</h4><ul>
+        <li><a href="blog-index.html">All Articles</a></li>
+        <li><a href="scada-user-management-part11.html">SCADA User Management</a></li>
+        <li><a href="audit-trail-implementation-scada.html">Audit Trail Implementation</a></li>
+        <li><a href="21-cfr-part-11.html">21 CFR Part 11 Guide</a></li>
+        <li><a href="scada-alarm-management-configuration.html">SCADA Alarm Management</a></li>
+        <li><a href="iq-oq-pq-guide.html">IQ OQ PQ Guide</a></li>
+        <li><a href="how-to-write-oq-protocol.html">How to Write an OQ Protocol</a></li>
+      </ul></div>
+      <div class="footer-col"><h4>Company</h4><ul><li><a href="https://www.linkedin.com/company/qlean-automation" target="_blank">LinkedIn</a></li><li><a href="mailto:hello@qleanautomation.com">Contact</a></li><li><a href="../terms.html">Terms</a></li></ul></div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 QLEAN AUTOMATION · QLEANAUTOMATION.COM</p>
+      <div class="compliance-pills"><span class="cp">21 CFR PART 11</span><span class="cp">EU ANNEX 11</span><span class="cp">GAMP 5</span><span class="cp">ISA-18.2</span></div>
+    </div>
+  </div>
+</footer>
+
+<script>
+window.addEventListener('scroll',()=>{const d=document.documentElement;document.getElementById('progress').style.width=(d.scrollTop/(d.scrollHeight-d.clientHeight)*100)+'%'});
+const obs=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting){document.querySelectorAll('.toc-list a').forEach(l=>l.classList.remove('active'));const a=document.querySelector('.toc-list a[href="#'+x.target.id+'"]');if(a)a.classList.add('active')}})  ,{rootMargin:'-20% 0px -70% 0px'});
+document.querySelectorAll('[id]').forEach(s=>obs.observe(s));
+</script>
+</body>
+</html>

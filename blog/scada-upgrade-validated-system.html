@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-JJQ1TXZJX7"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-JJQ1TXZJX7');
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>How to Validate a SCADA Upgrade Without Stopping Production | QLean Automation</title>
+<meta name="description" content="Upgrading a validated SCADA system in a live pharma environment requires a change control strategy, an impact assessment, a regression test scope, and a plan that keeps production running. Here's the three-type classification system and what each type requires from the validation team.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@300;400;500;600;700;800;900&family=Source+Sans+3:ital,wght@0,300;0,400;0,500;1,300&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--white:#ffffff;--off:#f7f8f9;--ink:#0d0f12;--ink2:#1e2128;--ink3:#3d4456;--ink4:#9199a8;--rule:#e2e5ea;--rule2:#c8cdd6;--blue:#0057ff;--blue2:#0044cc;--blue-dim:rgba(0,87,255,0.07);--green:#00875a;--green-dim:rgba(0,135,90,0.08);--amber:#d97706;--amber-dim:rgba(217,119,6,0.08);--red:#c0392b;--red-dim:rgba(192,57,43,0.08);--f-head:'Epilogue',sans-serif;--f-body:'Source Sans 3',sans-serif;--f-mono:'Roboto Mono',monospace;--shadow-sm:0 2px 8px rgba(13,15,18,0.06),0 1px 3px rgba(13,15,18,0.04)}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}body{background:var(--white);color:var(--ink);font-family:var(--f-body);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+nav{position:fixed;top:0;left:0;right:0;z-index:200;height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 6%;background:rgba(255,255,255,0.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--rule)}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;flex-shrink:0}
+.nav-links{display:flex;align-items:center;gap:36px;list-style:none}.nav-links a{font-size:14px;font-weight:400;color:var(--ink3);text-decoration:none;transition:color .2s}.nav-links a:hover{color:var(--ink)}
+.nav-btn{font-family:var(--f-body);font-size:13px;font-weight:500;padding:9px 20px;background:var(--blue);color:white;border:none;border-radius:6px;cursor:pointer;text-decoration:none;white-space:nowrap;flex-shrink:0}.nav-btn:hover{background:var(--blue2)}
+.progress-bar{position:fixed;top:64px;left:0;right:0;height:2px;background:var(--rule);z-index:199}.progress-fill{height:100%;background:var(--blue);width:0%}
+.article-hero{padding:120px 6% 64px;background:var(--white);border-bottom:1px solid var(--rule);position:relative;overflow:hidden}
+.article-hero::before{content:'';position:absolute;top:-80px;right:-80px;width:400px;height:400px;background:radial-gradient(circle,rgba(0,87,255,0.04) 0%,transparent 70%);pointer-events:none}
+.article-hero-inner{max-width:940px;margin:0 auto;position:relative;z-index:1}
+.breadcrumb{display:flex;align-items:center;gap:8px;font-family:var(--f-mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink4);margin-bottom:24px}.breadcrumb a{color:var(--ink4);text-decoration:none}.breadcrumb a:hover{color:var(--blue)}.breadcrumb span{color:var(--rule2)}
+.article-tag{display:inline-flex;align-items:center;gap:6px;font-family:var(--f-mono);font-size:10px;font-weight:500;color:var(--blue);letter-spacing:.1em;text-transform:uppercase;margin-bottom:20px;padding:4px 10px;background:var(--blue-dim);border-radius:4px}
+.article-hero h1{font-family:var(--f-head);font-size:clamp(30px,5vw,52px);font-weight:900;line-height:1.0;letter-spacing:-.04em;color:var(--ink);margin-bottom:20px}.article-hero h1 span{color:var(--blue)}
+.article-intro{font-size:18px;font-weight:400;color:var(--ink2);line-height:1.75;margin-bottom:32px;max-width:800px}
+.article-meta{display:flex;align-items:center;gap:24px;padding-top:24px;border-top:1px solid var(--rule);flex-wrap:wrap}
+.meta-author{display:flex;align-items:center;gap:10px}.author-avatar{width:36px;height:36px;border-radius:50%;background:var(--ink);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.author-name{font-size:13px;font-weight:500;color:var(--ink)}.author-role{font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.04em}
+.meta-divider{width:1px;height:28px;background:var(--rule)}.meta-stat{font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.06em}
+.article-wrap{max-width:1300px;margin:0 auto;padding:64px 6%;display:grid;grid-template-columns:1fr 300px;gap:60px;align-items:start}
+.article-body{min-width:0}
+.article-body h2{font-family:var(--f-head);font-size:26px;font-weight:800;letter-spacing:-.03em;color:var(--ink);margin:56px 0 16px;line-height:1.2}.article-body h2:first-child{margin-top:0}
+.article-body h3{font-family:var(--f-head);font-size:18px;font-weight:700;letter-spacing:-.02em;color:var(--ink);margin:32px 0 12px}
+.article-body p{font-size:16px;font-weight:400;color:var(--ink2);line-height:1.85;margin-bottom:20px}
+.article-body strong{color:var(--ink);font-weight:600}
+.article-body a{color:var(--blue);text-decoration:none;border-bottom:1px solid rgba(0,87,255,.25)}.article-body a:hover{border-color:var(--blue)}
+.callout{padding:20px 24px;border-radius:8px;margin:32px 0;border-left:3px solid}
+.callout.blue{background:var(--blue-dim);border-color:var(--blue)}.callout.amber{background:var(--amber-dim);border-color:var(--amber)}.callout.green{background:var(--green-dim);border-color:var(--green)}.callout.red{background:var(--red-dim);border-color:var(--red)}
+.callout-label{font-family:var(--f-mono);font-size:9px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px}.callout.blue .callout-label{color:var(--blue)}.callout.amber .callout-label{color:var(--amber)}.callout.green .callout-label{color:var(--green)}.callout.red .callout-label{color:var(--red)}
+.callout p{font-size:14px;color:var(--ink2);line-height:1.7;margin:0}.callout strong{color:var(--ink)}
+.article-img{width:100%;border-radius:8px;border:1px solid #1e2535;overflow:hidden;margin:36px 0}
+.article-img figcaption{padding:10px 14px;background:var(--off);font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.04em;border-top:1px solid var(--rule)}
+.arrow-list{list-style:none;display:flex;flex-direction:column;gap:8px;margin:16px 0 24px}
+.arrow-list li{display:flex;align-items:flex-start;gap:10px;font-size:15px;color:var(--ink2);line-height:1.6}
+.arrow-list li::before{content:'\2192';color:var(--blue);flex-shrink:0;font-size:12px;margin-top:3px}
+.checklist{list-style:none;display:flex;flex-direction:column;gap:8px;margin:20px 0 28px}
+.checklist li{display:flex;align-items:flex-start;gap:10px;font-size:15px;color:var(--ink2);line-height:1.6}
+.checklist li::before{content:'';width:16px;height:16px;flex-shrink:0;margin-top:3px;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 14 14' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='7' cy='7' r='6.5' fill='none' stroke='%230057ff' stroke-width='1'/%3E%3Cpath d='M4 7l2 2 4-4' stroke='%230057ff' stroke-width='1.3' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:center;background-size:contain}
+.table-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:28px 0}
+.compare-table{width:100%;border-collapse:collapse;font-size:14px}
+.compare-table th{font-family:var(--f-mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink4);padding:10px 16px;border-bottom:2px solid var(--rule);text-align:left;background:var(--off)}
+.compare-table td{padding:12px 16px;border-bottom:1px solid var(--rule);vertical-align:top;color:var(--ink2);line-height:1.6}
+.compare-table tr:last-child td{border-bottom:none}
+.compare-table td:first-child{font-weight:600;color:var(--ink);font-family:var(--f-mono);font-size:12px}
+.sidebar{position:sticky;top:88px;display:flex;flex-direction:column;gap:16px}
+.toc-card{border:1px solid var(--rule);border-radius:8px;padding:24px;background:var(--white);box-shadow:var(--shadow-sm)}
+.toc-label{font-family:var(--f-mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);margin-bottom:16px}
+.toc-list{list-style:none;display:flex;flex-direction:column;gap:2px}
+.toc-list a{display:block;font-size:13px;color:var(--ink3);text-decoration:none;padding:6px 10px;border-radius:4px;transition:all .15s;border-left:2px solid transparent}
+.toc-list a:hover,.toc-list a.active{color:var(--blue);background:var(--blue-dim);border-left-color:var(--blue)}
+.sidebar-cta{border:1px solid var(--blue);border-radius:8px;padding:24px;background:var(--blue-dim)}
+.sc-eyebrow{font-family:var(--f-mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);margin-bottom:10px}
+.sc-title{font-family:var(--f-head);font-size:17px;font-weight:800;letter-spacing:-.02em;color:var(--ink);margin-bottom:8px;line-height:1.2}
+.sc-body{font-size:13px;color:var(--ink3);line-height:1.6;margin-bottom:16px}
+.sc-btn{display:block;text-align:center;padding:11px 16px;background:var(--blue);color:white;border-radius:6px;font-family:var(--f-body);font-size:13px;font-weight:500;text-decoration:none}.sc-btn:hover{background:var(--blue2)}
+.sc-note{font-family:var(--f-mono);font-size:9px;color:var(--ink4);text-align:center;margin-top:8px;letter-spacing:.04em}
+.sidebar-share{border:1px solid var(--rule);border-radius:8px;padding:20px 24px;background:var(--white)}
+.share-label{font-family:var(--f-mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);margin-bottom:14px}
+.share-links{display:flex;flex-direction:column;gap:8px}
+.share-link{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--ink3);text-decoration:none;padding:9px 12px;border:1px solid var(--rule);border-radius:6px;transition:border-color .2s,color .2s}.share-link:hover{border-color:var(--blue);color:var(--blue)}
+.related{padding:64px 6%;border-top:1px solid var(--rule);background:var(--off)}
+.related-inner{max-width:1100px;margin:0 auto}
+.related-label{font-family:var(--f-mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);margin-bottom:32px;display:flex;align-items:center;gap:10px}
+.related-label::before{content:'';width:20px;height:1px;background:var(--blue)}
+.related-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.related-card{padding:24px;border:1px solid var(--rule);border-radius:8px;background:var(--white);box-shadow:var(--shadow-sm);transition:border-color .2s,transform .2s;text-decoration:none;display:flex;flex-direction:column;gap:12px}.related-card:hover{border-color:var(--blue);transform:translateY(-4px)}
+.rc-tag{font-family:var(--f-mono);font-size:9px;color:var(--blue);letter-spacing:.08em;text-transform:uppercase;padding:3px 8px;background:var(--blue-dim);border-radius:3px;align-self:flex-start}
+.rc-title{font-family:var(--f-head);font-size:16px;font-weight:700;letter-spacing:-.02em;color:var(--ink);line-height:1.25}
+.rc-desc{font-size:13px;color:var(--ink3);line-height:1.6;flex:1}
+.rc-footer{display:flex;align-items:center;justify-content:space-between;padding-top:12px;border-top:1px solid var(--rule)}
+.rc-read{font-family:var(--f-mono);font-size:10px;color:var(--ink4)}.rc-arrow{font-size:14px;color:var(--blue)}
+footer{padding:56px 6% 32px;border-top:1px solid var(--rule);background:var(--white)}
+.footer-inner{max-width:1160px;margin:0 auto}
+.footer-top{display:flex;justify-content:space-between;align-items:flex-start;gap:40px;flex-wrap:wrap;margin-bottom:48px}
+.footer-brand p{font-size:13px;font-weight:300;color:var(--ink3);margin-top:12px;max-width:260px;line-height:1.6}
+.footer-col h4{font-family:var(--f-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink4);margin-bottom:16px}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+.footer-col a{font-size:13px;color:var(--ink3);text-decoration:none}.footer-col a:hover{color:var(--blue)}
+.footer-bottom{padding-top:24px;border-top:1px solid var(--rule);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.footer-bottom p{font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.04em}
+.compliance-pills{display:flex;gap:6px;flex-wrap:wrap}
+.cp{font-family:var(--f-mono);font-size:9px;padding:3px 8px;border:1px solid var(--rule);border-radius:3px;color:var(--ink4);letter-spacing:.06em}
+@media(max-width:900px){.article-wrap{grid-template-columns:1fr;gap:48px}.sidebar{position:static}.related-grid{grid-template-columns:1fr}.table-scroll{margin:20px 0}}
+@media(max-width:900px){.nav-links{display:none}}
+@media(max-width:540px){nav{padding:0 4%}.nav-btn{font-size:12px;padding:8px 14px}}
+</style>
+</head>
+<body>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+<nav>
+  <a href="../index.html" class="nav-logo">
+    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" style="flex-shrink:0"><rect width="32" height="32" rx="7" fill="#0d0f12"/><rect x="8" y="7" width="16" height="16" rx="2" stroke="white" stroke-width="2.5" fill="none"/><line x1="20" y1="19" x2="26" y2="25" stroke="#0057FF" stroke-width="3" stroke-linecap="round"/></svg>
+    <span style="font-family:'Epilogue',sans-serif;font-weight:800;font-size:16px;color:#0d0f12;letter-spacing:-.03em;white-space:nowrap">QLean <span style="font-weight:300;color:#5a6172">Automation</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="../index.html#products">Products</a></li>
+    <li><a href="../index.html#framework">Framework</a></li>
+    <li><a href="blog-index.html">Knowledge Base</a></li>
+    <li><a href="../index.html#pricing">Pricing</a></li>
+    <li><a href="../about.html">About</a></li>
+    <li><a href="../index.html#faq">FAQ</a></li>
+  </ul>
+  <a href="../index.html#pricing" class="nav-btn">Get the Framework →</a>
+</nav>
+
+<header class="article-hero">
+  <div class="article-hero-inner">
+    <div class="breadcrumb"><a href="../index.html">Home</a><span>/</span><a href="blog-index.html">Knowledge Base</a><span>/</span>Validating a SCADA Upgrade</div>
+    <div class="article-tag">🖥️ SCADA Engineering</div>
+    <h1>How to Validate a SCADA<br><span>Upgrade Without</span><br>Stopping Production</h1>
+    <p class="article-intro">Every change to a validated SCADA system is a potential threat to the validated state. That doesn't mean every change requires a full revalidation — it means every change requires a documented impact assessment that determines exactly how much revalidation is needed. The three-type classification system, what each type requires, and how to keep production running while you do it.</p>
+    <div class="article-meta">
+      <div class="meta-author">
+        <div class="author-avatar"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="7" r="3.5" stroke="white" stroke-width="1.5"/><path d="M2.5 16c0-3.59 2.91-6.5 6.5-6.5s6.5 2.91 6.5 6.5" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+        <div><div class="author-name">QLean Automation</div><div class="author-role">ENGINEERS WHO BUILD SYSTEMS, NOT JUST SIGN THEM</div></div>
+      </div>
+      <div class="meta-divider"></div><div class="meta-stat">9 MIN READ</div>
+      <div class="meta-divider"></div><div class="meta-stat">CHANGE CONTROL · SCADA · VALIDATION</div>
+    </div>
+  </div>
+</header>
+
+<div class="article-wrap">
+  <article class="article-body">
+
+    <h2 id="validated-state">What "Validated State" Means and Why It Matters for Upgrades</h2>
+    <p>A SCADA system in a validated state is a system whose configuration, functionality, and performance have been documented, tested, and approved — and where the current operational configuration matches the approved baseline exactly. The validation is not a one-time event that permanently certifies the system. It certifies the system as it was at the point of validation. Any change that moves the operational configuration away from that baseline potentially invalidates the certification — which is why every change to a validated SCADA system must go through change control.</p>
+    <p>The phrase "potentially invalidates" is important. Not every change breaks the validated state. A cosmetic label correction on an HMI screen does not affect any GMP function. Adding a non-GMP historian tag does not affect any validated parameter. These changes are still subject to change control — because change control is how you prove the change was assessed, not because every change actually impacts validation. The change control process is the mechanism that documents the assessment and its conclusion, regardless of what that conclusion is.</p>
+    <p>The distinction between a change that impacts the validated state and one that doesn't is determined by the impact assessment — not by the engineer's intuition, and not by the size of the change. A one-line PLC logic modification that changes the alarm output behaviour of a GMP-critical function is a major change. A complete redesign of a non-GMP maintenance screen is a minor change. Size does not equal impact.</p>
+
+    <h2 id="three-types">The Three-Type Classification</h2>
+    <p>Most GMP change management systems for validated SCADA use a three-type classification. The types determine the approval authority, the documentation requirements, and the re-test scope. They are not a hierarchy of effort — they are a hierarchy of GMP impact.</p>
+
+    <figure class="article-img">
+      <svg viewBox="0 0 720 290" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;background:#0d0f12;border-radius:8px 8px 0 0">
+        <text x="360" y="18" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(255,255,255,0.2)" letter-spacing="0.12em">THREE-TYPE CHANGE CLASSIFICATION — GMP IMPACT AND APPROVAL REQUIREMENTS</text>
+
+        <!-- Type 1 -->
+        <rect x="16" y="30" width="218" height="242" rx="5" fill="rgba(192,57,43,0.07)" stroke="rgba(192,57,43,0.3)" stroke-width="1.5"/>
+        <rect x="16" y="30" width="218" height="34" rx="5" fill="rgba(192,57,43,0.18)"/>
+        <text x="125" y="52" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="10" fill="rgba(220,80,80,0.85)">TYPE 1 — MAJOR</text>
+        <text x="125" y="80" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="11" fill="rgba(255,255,255,0.55)">Definition:</text>
+        <text x="125" y="96" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="11" fill="rgba(255,255,255,0.7)">Affects validated state, GMP</text>
+        <text x="125" y="112" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="11" fill="rgba(255,255,255,0.7)">functionality, data integrity,</text>
+        <text x="125" y="128" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="11" fill="rgba(255,255,255,0.7)">security, or software version</text>
+        <text x="125" y="152" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(220,80,80,0.5)">Examples:</text>
+        <text x="125" y="168" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="11" fill="rgba(255,255,255,0.55)">PLC logic change</text>
+        <text x="125" y="184" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="11" fill="rgba(255,255,255,0.55)">Alarm setpoint — validated range</text>
+        <text x="125" y="200" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="11" fill="rgba(255,255,255,0.55)">SCADA software version upgrade</text>
+        <text x="125" y="216" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="11" fill="rgba(255,255,255,0.55)">New network device</text>
+        <text x="125" y="242" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(220,80,80,0.55)">QA MANAGER APPROVAL</text>
+        <text x="125" y="258" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(220,80,80,0.45)">RE-TEST BEFORE IMPLEMENTATION</text>
+
+        <!-- Type 2 -->
+        <rect x="253" y="30" width="218" height="242" rx="5" fill="rgba(217,119,6,0.06)" stroke="rgba(217,119,6,0.28)" stroke-width="1.5"/>
+        <rect x="253" y="30" width="218" height="34" rx="5" fill="rgba(217,119,6,0.16)"/>
+        <text x="362" y="52" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="10" fill="rgba(240,160,40,0.85)">TYPE 2 — MINOR</text>
+        <text x="362" y="80" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="11" fill="rgba(255,255,255,0.55)">Definition:</text>
+        <text x="362" y="96" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="11" fill="rgba(255,255,255,0.7)">No GMP impact.</text>
+        <text x="362" y="112" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="11" fill="rgba(255,255,255,0.7)">Cosmetic or non-critical</text>
+        <text x="362" y="128" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="11" fill="rgba(255,255,255,0.7)">operational changes</text>
+        <text x="362" y="152" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(240,160,40,0.45)">Examples:</text>
+        <text x="362" y="168" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="11" fill="rgba(255,255,255,0.55)">HMI colour adjustment</text>
+        <text x="362" y="184" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="11" fill="rgba(255,255,255,0.55)">Adding non-GMP historian tag</text>
+        <text x="362" y="200" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="11" fill="rgba(255,255,255,0.55)">Screen label correction</text>
+        <text x="362" y="242" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(240,160,40,0.5)">QA ACCEPTANCE</text>
+        <text x="362" y="258" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(240,160,40,0.4)">NO RE-TEST REQUIRED</text>
+
+        <!-- Type 3 -->
+        <rect x="490" y="30" width="218" height="242" rx="5" fill="rgba(0,87,255,0.07)" stroke="rgba(0,87,255,0.25)" stroke-width="1.5"/>
+        <rect x="490" y="30" width="218" height="34" rx="5" fill="rgba(0,87,255,0.18)"/>
+        <text x="599" y="52" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="10" fill="#6699ff">TYPE 3 — EMERGENCY</text>
+        <text x="599" y="80" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="11" fill="rgba(255,255,255,0.55)">Definition:</text>
+        <text x="599" y="96" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="11" fill="rgba(255,255,255,0.7)">Urgent — required to restore</text>
+        <text x="599" y="112" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="11" fill="rgba(255,255,255,0.7)">availability or prevent</text>
+        <text x="599" y="128" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="11" fill="rgba(255,255,255,0.7)">safety risk</text>
+        <text x="599" y="152" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(0,87,255,0.45)">Examples:</text>
+        <text x="599" y="168" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="11" fill="rgba(255,255,255,0.55)">Critical hardware failure</text>
+        <text x="599" y="184" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="11" fill="rgba(255,255,255,0.55)">Security vulnerability patch</text>
+        <text x="599" y="200" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="11" fill="rgba(255,255,255,0.55)">requiring immediate action</text>
+        <text x="599" y="242" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(0,87,255,0.5)">VERBAL QA APPROVAL</text>
+        <text x="599" y="258" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(0,87,255,0.4)">RETROSPECTIVE DOCS WITHIN 24H</text>
+
+        <text x="360" y="282" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(255,255,255,0.18)">ALL THREE TYPES REQUIRE A CCR — THE TYPE DETERMINES APPROVAL AUTHORITY AND RE-TEST SCOPE</text>
+      </svg>
+      <figcaption>THREE-TYPE CHANGE CLASSIFICATION — Type 1 changes require QA Manager approval and re-test before implementation. Type 2 require QA acceptance with no re-test. Type 3 allow verbal approval followed by retrospective documentation within 24 hours. All three require a CCR.</figcaption>
+    </figure>
+
+    <p>The critical design feature of this classification is that the type is determined by impact, not by urgency or convenience. A security patch that corrects a critical vulnerability in the SCADA OS is typically a Type 3 emergency change because the risk of not patching immediately outweighs the process of waiting for full Type 1 documentation. But it is still classified as Type 1 for GMP impact purposes — the retrospective documentation must address all the Type 1 requirements: full impact assessment, re-test scope, hash update, and closure sign-off by QA Manager. The "emergency" designation affects the timing of documentation and approval, not the thoroughness of it.</p>
+
+    <h2 id="impact-assessment">The Impact Assessment — What It Must Cover</h2>
+    <p>The impact assessment is Section 3 of the Change Control Request form (CCR-SYS-001). It is the technical core of every change control — the document that justifies the type classification and defines the re-test scope. A poorly written impact assessment is the most common reason change controls fail QA review. The impact assessment must answer seven questions, all of which must be explicitly addressed — not left blank or answered with "N/A" without justification.</p>
+
+    <ul class="arrow-list">
+      <li><strong>Which system components are affected?</strong> PLC, SCADA application, historian, network, HMI, security configuration, external interfaces — listed explicitly. "SCADA" as a single item is not sufficient.</li>
+      <li><strong>Does the change affect any GMP-critical function?</strong> Cross-referenced against the FDS functional descriptions. If FUNC-COND-001 (conductivity monitoring) is potentially affected, that must be stated.</li>
+      <li><strong>Does the change affect data integrity?</strong> This covers historian tag configuration, audit trail configuration, report generation, and certified copy function. Any change that touches the data pipeline from sensor to historian record must address this question.</li>
+      <li><strong>Does the change affect security?</strong> User account management, password policy, RBAC configuration, network firewall rules, remote access controls. A software version upgrade that patches a security vulnerability must address whether the new version changes any security behaviour.</li>
+      <li><strong>What re-test is required?</strong> The specific OQ test cases that must be re-executed — not "some OQ tests" — referenced by OQ test case ID. The impact assessment must identify which test cases are affected by the change scope. An upgrade that changes the SCADA historian component requires re-execution of the historian-related OQ tests. An upgrade that changes only the HMI rendering engine requires re-execution of HMI display tests, not historian tests.</li>
+      <li><strong>Does the software hash need to be recalculated?</strong> For any PLC code change, yes. The SHA-256 hash of the PLC project file must be recalculated and documented in the CCR implementation record and in the Engineering Lists hash log.</li>
+      <li><strong>Does the Traceability Matrix need to be updated?</strong> If the change adds, modifies, or removes a functional requirement, the TM must be updated before the change is closed.</li>
+    </ul>
+
+    <h2 id="scada-software-upgrade">SCADA Platform Version Upgrade — The Specific Considerations</h2>
+    <p>A SCADA platform version upgrade (for example, moving from one major version to the next on Ignition, WinCC, InTouch, or FactoryTalk) is always a Type 1 change. The platform is a GAMP Category 4 component — a configured COTS product. Upgrading the platform version means the validated software configuration has changed. The GAMP 5 principle is that changes to Category 4 components require re-qualification of the affected functions, with the extent of re-qualification proportional to the scope of the vendor's changes.</p>
+    <p>The vendor release notes are the primary input to the impact assessment for a platform version upgrade. The assessment must identify which vendor changes affect GMP-relevant functions and which do not. A version upgrade that fixes a known bug in the historian compression algorithm is a direct impact on GMP data integrity — it requires re-execution of the historian completeness tests. A version upgrade that adds a new dashboard widget type is not a GMP impact — it does not affect any validated function.</p>
+    <p>Platform upgrades should be tested in a test environment before deployment to production. Where a dedicated test environment exists, the test environment runs the upgrade first, the GMP-relevant OQ test cases are executed in the test environment, results are reviewed and approved, and then the production upgrade proceeds. This is not re-running the full OQ on the test environment — it is running the specific test cases identified in the impact assessment, in an environment that mirrors production, to generate evidence before production is touched.</p>
+
+    <div class="callout amber">
+      <div class="callout-label">Vendor Patches Are Not Automatically Compliant Updates</div>
+      <p>A vendor security patch is not a validation-free update just because the vendor issued it. Every vendor-supplied update to a validated SCADA platform — hotfix, security patch, service pack, or major version — is a Type 1 or Type 3 change that requires a CCR. <strong>Applying a vendor patch without a change control is a GMP deviation.</strong> The practical approach for routine security patches that have low GMP impact is to write a standing CCR template that covers the specific patch scope and type, reducing the documentation burden per patch while maintaining the change control record. QA and the system owner must agree on the standing CCR scope before the first patch is applied under it.</p>
+    </div>
+
+    <h2 id="keeping-production-running">Keeping Production Running During an Upgrade</h2>
+    <p>The question of how to upgrade a validated SCADA without stopping production has a straightforward structural answer: separate the upgrade window from the production window. In most continuous process environments, there is a maintenance window — typically a weekend or overnight period where production is paused for scheduled maintenance. Major SCADA upgrades should be planned to coincide with these windows. The change control timeline is built around the maintenance window: CCR raised and approved before the window, implementation during the window, re-test verification immediately after implementation and before the restart of production.</p>
+    <p>The sequence matters. Production must not restart after a Type 1 change until the re-test steps defined in the CCR have been completed and the results reviewed. Running a partial re-test and allowing production to restart "subject to completing the remaining tests tomorrow" is not a compliant approach. The re-test defines the acceptance evidence that the validated state has been restored — production is not authorised to run on an unverified validated state.</p>
+    <p>For systems that run continuously with no maintenance window (which is uncommon but exists for critical utilities), the approach is to perform the upgrade on a redundant system in a standby configuration, verify it fully, then switch over. This requires the system architecture to support redundancy — which must be a design consideration from initial commissioning, not retrofitted during the first upgrade project.</p>
+
+    <h2 id="seven-stage-process">The Seven-Stage Change Process</h2>
+    <p>The change management SOP defines a seven-stage process. Each stage has defined inputs, outputs, and responsible parties. No stage can be skipped for a Type 1 or Type 2 change — only the timing and formality differ for Type 3 emergency changes.</p>
+
+    <ul class="checklist">
+      <li><strong>Stage 1 — Initiation:</strong> Raise CCR-SYS-001 with the change description, proposed scope, and urgency. Assign a CCR reference number from the Change Control Log (CCL-SYS-001). Submit to Technical Reviewer.</li>
+      <li><strong>Stage 2 — Technical Review:</strong> Automation Engineer completes the technical assessment. Determines change type. Identifies all affected components. Estimates re-test scope and documents in Section 3 of the CCR.</li>
+      <li><strong>Stage 3 — Impact Assessment:</strong> Complete all seven impact assessment questions. Determine validation impact, re-test scope, hash update requirement, TM update requirement, and training requirement.</li>
+      <li><strong>Stage 4 — QA Review and Approval:</strong> QA reviews the impact assessment. Approves Type 2 changes directly. Escalates Type 1 to QA Manager. For Type 3: verbal QA approval is acceptable — document the QA contact name, time, and date in the CCR.</li>
+      <li><strong>Stage 5 — Implementation:</strong> Implement the change only after approval. Document all implementation steps in CCR Section 5. Update the software version tag per the SDS naming convention. Update the validated configuration archive — never overwrite the previous version.</li>
+      <li><strong>Stage 6 — Verification:</strong> Execute the re-test steps defined in the approved CCR. Document results. If any re-test step fails, raise a deviation in the Master Deviation Ledger (MDL-SYS-001) and do not close the CCR until the deviation is resolved.</li>
+      <li><strong>Stage 7 — Closure:</strong> Complete CCR Sections 5 and 6. Update the Change Control Log. Update Engineering Lists if tag, BOM, or network register changes were made. Update the Traceability Matrix if required. Recalculate and record the new SHA-256 hash. QA signs CCR closure. Production restart authorised.</li>
+    </ul>
+
+    <div class="callout green">
+      <div class="callout-label">In the QLean Framework</div>
+      <p>The SOP-CM-SYS-001 documents the full seven-stage change management process, the three-type classification with definitions and examples, the impact assessment requirements (seven questions in Section 3 of CCR-SYS-001), the version tag format ([SYS]_[Version]_[YYYYMMDD]_[CCR-XXX]), the SHA-256 hash chain maintenance requirement (three-point chain from FAT through each CCR), and the emergency change handling procedure (verbal approval, 24-hour retrospective documentation, QA Manager written approval). The CCR-SYS-001 form provides the structured template for all three change types — with pre-defined sections for impact assessment, implementation steps, re-test results, and closure sign-offs. The CCL-SYS-001 Excel workbook is the change control register — sequential CCR numbering, status tracking, and open/closed summary view. The MDL-SYS-001 Master Deviation Ledger captures any deviations raised during re-test execution, with the CCR cross-reference required for closure. The change control system ties directly to the SDS-SYS-001 version control approach: every Type 1 change increments the software version tag, and the new hash is recorded as a new row in the Engineering Lists hash log — never modifying the previous row.</p>
+    </div>
+
+  </article>
+
+  <aside class="sidebar">
+    <div class="toc-card">
+      <div class="toc-label">In This Article</div>
+      <ul class="toc-list">
+        <li><a href="#validated-state" class="active">What Validated State Means</a></li>
+        <li><a href="#three-types">The Three-Type Classification</a></li>
+        <li><a href="#impact-assessment">The Impact Assessment</a></li>
+        <li><a href="#scada-software-upgrade">SCADA Platform Upgrade</a></li>
+        <li><a href="#keeping-production-running">Keeping Production Running</a></li>
+        <li><a href="#seven-stage-process">The Seven-Stage Process</a></li>
+      </ul>
+    </div>
+    <div class="sidebar-cta">
+      <div class="sc-eyebrow">QLean Framework</div>
+      <div class="sc-title">29 production-ready GAMP 5 documents</div>
+      <div class="sc-body">SOP-CM-SYS-001 seven-stage change process, CCR-SYS-001 form with all seven impact assessment questions, and CCL-SYS-001 change control log — all included.</div>
+      <a href="../index.html#pricing" class="sc-btn">Get the Framework — €249 →</a>
+      <div class="sc-note">// INSTANT DOWNLOAD · COMPANY-WIDE LICENCE</div>
+    </div>
+    <div class="sidebar-share">
+      <div class="share-label">Share This Article</div>
+      <div class="share-links">
+        <a href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fqleanautomation.com%2Fblog%2Fscada-upgrade-validated-system.html" target="_blank" rel="noopener" class="share-link">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.065-2.064 2.064 2.064 0 112.065 2.064zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          Share on LinkedIn
+        </a>
+        <a href="https://www.reddit.com/submit?url=https%3A%2F%2Fqleanautomation.com%2Fblog%2Fscada-upgrade-validated-system.html&title=How+to+Validate+a+SCADA+Upgrade+Without+Stopping+Production" target="_blank" rel="noopener" class="share-link">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/></svg>
+          Share on Reddit
+        </a>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<section class="related">
+  <div class="related-inner">
+    <div class="related-label">More Articles</div>
+    <div class="related-grid">
+      <a href="change-control-validated-system.html" class="related-card">
+        <div class="rc-tag">📋 Validation</div>
+        <div class="rc-title">Change Control for a Validated System</div>
+        <div class="rc-desc">The change control process that governs SCADA upgrades applies equally to PLC changes, instrument swaps, and network modifications. The CCR structure, the CCL register, and what QA checks at every stage.</div>
+        <div class="rc-footer"><div class="rc-read">8 MIN READ</div><div class="rc-arrow">→</div></div>
+      </a>
+      <a href="plc-version-control-validated-systems.html" class="related-card">
+        <div class="rc-tag">⚙️ PLC Engineering</div>
+        <div class="rc-title">PLC Change Control and Version Control in a Validated System</div>
+        <div class="rc-desc">The SHA-256 hash chain, the three-point baseline (FAT → SAT → IQ), and how every post-IQ PLC change must be handled — the same hash discipline that applies to SCADA upgrades.</div>
+        <div class="rc-footer"><div class="rc-read">8 MIN READ</div><div class="rc-arrow">→</div></div>
+      </a>
+      <a href="validation-plan-what-it-must-contain.html" class="related-card">
+        <div class="rc-tag">📋 Validation</div>
+        <div class="rc-title">Validation Plan — What It Must Contain</div>
+        <div class="rc-desc">The Validation Plan defines the change control approach before the project starts. Getting the change type classification and re-test scope criteria documented at VP stage avoids arguments later.</div>
+        <div class="rc-footer"><div class="rc-read">7 MIN READ</div><div class="rc-arrow">→</div></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="../index.html" class="nav-logo">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none" style="flex-shrink:0"><rect width="32" height="32" rx="7" fill="#0d0f12"/><rect x="8" y="7" width="16" height="16" rx="2" stroke="white" stroke-width="2.5" fill="none"/><line x1="20" y1="19" x2="26" y2="25" stroke="#0057FF" stroke-width="3" stroke-linecap="round"/></svg>
+          <span style="font-family:'Epilogue',sans-serif;font-weight:800;font-size:16px;color:#0d0f12;letter-spacing:-.03em;white-space:nowrap">QLean <span style="font-weight:300;color:#5a6172">Automation</span></span>
+        </a>
+        <p>GMP documentation tools for system integrators and automation engineers entering pharmaceutical projects.</p>
+      </div>
+      <div class="footer-col"><h4>Products</h4><ul><li><a href="../index.html#framework">GAMP 5 Framework</a></li><li><a href="../index.html#products">Technical Masterclass</a></li></ul></div>
+      <div class="footer-col"><h4>Knowledge Base</h4><ul>
+        <li><a href="blog-index.html">All Articles</a></li>
+        <li><a href="change-control-validated-system.html">Change Control Guide</a></li>
+        <li><a href="plc-version-control-validated-systems.html">PLC Change Control</a></li>
+        <li><a href="validation-plan-what-it-must-contain.html">Validation Plan Guide</a></li>
+        <li><a href="gamp5-risk-assessment-how-to-score.html">GAMP 5 Risk Assessment</a></li>
+        <li><a href="iq-oq-pq-guide.html">IQ OQ PQ Guide</a></li>
+        <li><a href="v-model-pharma-validation.html">V-Model Guide</a></li>
+      </ul></div>
+      <div class="footer-col"><h4>Company</h4><ul><li><a href="https://www.linkedin.com/company/qlean-automation" target="_blank">LinkedIn</a></li><li><a href="mailto:hello@qleanautomation.com">Contact</a></li><li><a href="../terms.html">Terms</a></li></ul></div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 QLEAN AUTOMATION · QLEANAUTOMATION.COM</p>
+      <div class="compliance-pills"><span class="cp">EU ANNEX 11</span><span class="cp">GAMP 5</span><span class="cp">ICH Q9(R1)</span><span class="cp">CHANGE CONTROL</span></div>
+    </div>
+  </div>
+</footer>
+
+<script>
+window.addEventListener('scroll',()=>{const d=document.documentElement;document.getElementById('progress').style.width=(d.scrollTop/(d.scrollHeight-d.clientHeight)*100)+'%'});
+const obs=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting){document.querySelectorAll('.toc-list a').forEach(l=>l.classList.remove('active'));const a=document.querySelector('.toc-list a[href="#'+x.target.id+'"]');if(a)a.classList.add('active')}})  ,{rootMargin:'-20% 0px -70% 0px'});
+document.querySelectorAll('[id]').forEach(s=>obs.observe(s));
+</script>
+</body>
+</html>

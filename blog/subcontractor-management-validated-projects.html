@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-JJQ1TXZJX7"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-JJQ1TXZJX7');
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Subcontractor Management on Validated Pharma Projects | QLean Automation</title>
+<meta name="description" content="When you subcontract on a validated pharma project, you inherit their quality system — or its absence. Here is how to qualify subcontractors, flow down GMP requirements, and manage the documentation they produce so it holds up in your validation package.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@300;400;500;600;700;800;900&family=Source+Sans+3:ital,wght@0,300;0,400;0,500;1,300&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--white:#ffffff;--off:#f7f8f9;--ink:#0d0f12;--ink2:#1e2128;--ink3:#3d4456;--ink4:#9199a8;--rule:#e2e5ea;--rule2:#c8cdd6;--blue:#0057ff;--blue2:#0044cc;--blue-dim:rgba(0,87,255,0.07);--green:#00875a;--green-dim:rgba(0,135,90,0.08);--amber:#d97706;--amber-dim:rgba(217,119,6,0.08);--red:#c0392b;--red-dim:rgba(192,57,43,0.08);--f-head:'Epilogue',sans-serif;--f-body:'Source Sans 3',sans-serif;--f-mono:'Roboto Mono',monospace;--shadow-sm:0 2px 8px rgba(13,15,18,0.06),0 1px 3px rgba(13,15,18,0.04)}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}body{background:var(--white);color:var(--ink);font-family:var(--f-body);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+nav{position:fixed;top:0;left:0;right:0;z-index:200;height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 6%;background:rgba(255,255,255,0.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--rule)}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;flex-shrink:0}
+.nav-links{display:flex;align-items:center;gap:36px;list-style:none}.nav-links a{font-size:14px;font-weight:400;color:var(--ink3);text-decoration:none;transition:color .2s}.nav-links a:hover{color:var(--ink)}
+.nav-btn{font-family:var(--f-body);font-size:13px;font-weight:500;padding:9px 20px;background:var(--blue);color:white;border:none;border-radius:6px;cursor:pointer;text-decoration:none;white-space:nowrap;flex-shrink:0}.nav-btn:hover{background:var(--blue2)}
+.progress-bar{position:fixed;top:64px;left:0;right:0;height:2px;background:var(--rule);z-index:199}.progress-fill{height:100%;background:var(--blue);width:0%}
+.article-hero{padding:120px 6% 64px;background:var(--white);border-bottom:1px solid var(--rule);position:relative;overflow:hidden}
+.article-hero::before{content:'';position:absolute;top:-80px;right:-80px;width:400px;height:400px;background:radial-gradient(circle,rgba(0,87,255,0.04) 0%,transparent 70%);pointer-events:none}
+.article-hero-inner{max-width:940px;margin:0 auto;position:relative;z-index:1}
+.breadcrumb{display:flex;align-items:center;gap:8px;font-family:var(--f-mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink4);margin-bottom:24px}.breadcrumb a{color:var(--ink4);text-decoration:none}.breadcrumb a:hover{color:var(--blue)}.breadcrumb span{color:var(--rule2)}
+.article-tag{display:inline-flex;align-items:center;gap:6px;font-family:var(--f-mono);font-size:10px;font-weight:500;color:var(--blue);letter-spacing:.1em;text-transform:uppercase;margin-bottom:20px;padding:4px 10px;background:var(--blue-dim);border-radius:4px}
+.article-hero h1{font-family:var(--f-head);font-size:clamp(30px,5vw,52px);font-weight:900;line-height:1.0;letter-spacing:-.04em;color:var(--ink);margin-bottom:20px}.article-hero h1 span{color:var(--blue)}
+.article-intro{font-size:18px;font-weight:400;color:var(--ink2);line-height:1.75;margin-bottom:32px;max-width:800px}
+.article-meta{display:flex;align-items:center;gap:24px;padding-top:24px;border-top:1px solid var(--rule);flex-wrap:wrap}
+.meta-author{display:flex;align-items:center;gap:10px}.author-avatar{width:36px;height:36px;border-radius:50%;background:var(--ink);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.author-name{font-size:13px;font-weight:500;color:var(--ink)}.author-role{font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.04em}
+.meta-divider{width:1px;height:28px;background:var(--rule)}.meta-stat{font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.06em}
+.article-wrap{max-width:1300px;margin:0 auto;padding:64px 6%;display:grid;grid-template-columns:1fr 300px;gap:60px;align-items:start}
+.article-body{min-width:0}
+.article-body h2{font-family:var(--f-head);font-size:26px;font-weight:800;letter-spacing:-.03em;color:var(--ink);margin:56px 0 16px;line-height:1.2}.article-body h2:first-child{margin-top:0}
+.article-body h3{font-family:var(--f-head);font-size:18px;font-weight:700;letter-spacing:-.02em;color:var(--ink);margin:32px 0 12px}
+.article-body p{font-size:16px;font-weight:400;color:var(--ink2);line-height:1.85;margin-bottom:20px}
+.article-body strong{color:var(--ink);font-weight:600}
+.article-body a{color:var(--blue);text-decoration:none;border-bottom:1px solid rgba(0,87,255,.25)}.article-body a:hover{border-color:var(--blue)}
+.callout{padding:20px 24px;border-radius:8px;margin:32px 0;border-left:3px solid}
+.callout.blue{background:var(--blue-dim);border-color:var(--blue)}.callout.amber{background:var(--amber-dim);border-color:var(--amber)}.callout.green{background:var(--green-dim);border-color:var(--green)}.callout.red{background:var(--red-dim);border-color:var(--red)}
+.callout-label{font-family:var(--f-mono);font-size:9px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px}.callout.blue .callout-label{color:var(--blue)}.callout.amber .callout-label{color:var(--amber)}.callout.green .callout-label{color:var(--green)}.callout.red .callout-label{color:var(--red)}
+.callout p{font-size:14px;color:var(--ink2);line-height:1.7;margin:0}.callout strong{color:var(--ink)}
+.article-img{width:100%;border-radius:8px;border:1px solid #1e2535;overflow:hidden;margin:36px 0}
+.article-img figcaption{padding:10px 14px;background:var(--off);font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.04em;border-top:1px solid var(--rule)}
+.checklist{list-style:none;display:flex;flex-direction:column;gap:8px;margin:20px 0 28px}
+.checklist li{display:flex;align-items:flex-start;gap:10px;font-size:15px;color:var(--ink2);line-height:1.6}
+.checklist li::before{content:'';width:16px;height:16px;flex-shrink:0;margin-top:3px;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 14 14' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='7' cy='7' r='6.5' fill='none' stroke='%230057ff' stroke-width='1'/%3E%3Cpath d='M4 7l2 2 4-4' stroke='%230057ff' stroke-width='1.3' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:center;background-size:contain}
+.arrow-list{list-style:none;display:flex;flex-direction:column;gap:8px;margin:20px 0 28px}
+.arrow-list li{display:flex;align-items:flex-start;gap:10px;font-size:15px;color:var(--ink2);line-height:1.6}
+.arrow-list li::before{content:'\2192';color:var(--blue);flex-shrink:0;font-family:var(--f-mono);font-size:13px;margin-top:2px}
+.table-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:28px 0}
+.compare-table{width:100%;border-collapse:collapse;font-size:14px}
+.compare-table th{font-family:var(--f-mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink4);padding:10px 16px;border-bottom:2px solid var(--rule);text-align:left;background:var(--off)}
+.compare-table td{padding:12px 16px;border-bottom:1px solid var(--rule);vertical-align:top;color:var(--ink2);line-height:1.6}
+.compare-table tr:last-child td{border-bottom:none}
+.compare-table td:first-child{font-weight:600;color:var(--ink);font-family:var(--f-mono);font-size:12px}
+.sidebar{position:sticky;top:88px;display:flex;flex-direction:column;gap:16px}
+.toc-card{border:1px solid var(--rule);border-radius:8px;padding:24px;background:var(--white);box-shadow:var(--shadow-sm)}
+.toc-label{font-family:var(--f-mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);margin-bottom:16px}
+.toc-list{list-style:none;display:flex;flex-direction:column;gap:2px}
+.toc-list a{display:block;font-size:13px;color:var(--ink3);text-decoration:none;padding:6px 10px;border-radius:4px;transition:all .15s;border-left:2px solid transparent}
+.toc-list a:hover,.toc-list a.active{color:var(--blue);background:var(--blue-dim);border-left-color:var(--blue)}
+.sidebar-cta{border:1px solid var(--blue);border-radius:8px;padding:24px;background:var(--blue-dim)}
+.sc-eyebrow{font-family:var(--f-mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);margin-bottom:10px}
+.sc-title{font-family:var(--f-head);font-size:17px;font-weight:800;letter-spacing:-.02em;color:var(--ink);margin-bottom:8px;line-height:1.2}
+.sc-body{font-size:13px;color:var(--ink3);line-height:1.6;margin-bottom:16px}
+.sc-btn{display:block;text-align:center;padding:11px 16px;background:var(--blue);color:white;border-radius:6px;font-family:var(--f-body);font-size:13px;font-weight:500;text-decoration:none}.sc-btn:hover{background:var(--blue2)}
+.sc-note{font-family:var(--f-mono);font-size:9px;color:var(--ink4);text-align:center;margin-top:8px;letter-spacing:.04em}
+.sidebar-share{border:1px solid var(--rule);border-radius:8px;padding:20px 24px;background:var(--white)}
+.share-label{font-family:var(--f-mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);margin-bottom:14px}
+.share-links{display:flex;flex-direction:column;gap:8px}
+.share-link{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--ink3);text-decoration:none;padding:9px 12px;border:1px solid var(--rule);border-radius:6px;transition:border-color .2s,color .2s}.share-link:hover{border-color:var(--blue);color:var(--blue)}
+.related{padding:64px 6%;border-top:1px solid var(--rule);background:var(--off)}
+.related-inner{max-width:1100px;margin:0 auto}
+.related-label{font-family:var(--f-mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);margin-bottom:32px;display:flex;align-items:center;gap:10px}
+.related-label::before{content:'';width:20px;height:1px;background:var(--blue)}
+.related-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.related-card{padding:24px;border:1px solid var(--rule);border-radius:8px;background:var(--white);box-shadow:var(--shadow-sm);transition:border-color .2s,transform .2s;text-decoration:none;display:flex;flex-direction:column;gap:12px}.related-card:hover{border-color:var(--blue);transform:translateY(-4px)}
+.rc-tag{font-family:var(--f-mono);font-size:9px;color:var(--blue);letter-spacing:.08em;text-transform:uppercase;padding:3px 8px;background:var(--blue-dim);border-radius:3px;align-self:flex-start}
+.rc-title{font-family:var(--f-head);font-size:16px;font-weight:700;letter-spacing:-.02em;color:var(--ink);line-height:1.25}
+.rc-desc{font-size:13px;color:var(--ink3);line-height:1.6;flex:1}
+.rc-footer{display:flex;align-items:center;justify-content:space-between;padding-top:12px;border-top:1px solid var(--rule)}
+.rc-read{font-family:var(--f-mono);font-size:10px;color:var(--ink4)}.rc-arrow{font-size:14px;color:var(--blue)}
+footer{padding:56px 6% 32px;border-top:1px solid var(--rule);background:var(--white)}
+.footer-inner{max-width:1160px;margin:0 auto}
+.footer-top{display:flex;justify-content:space-between;align-items:flex-start;gap:40px;flex-wrap:wrap;margin-bottom:48px}
+.footer-brand p{font-size:13px;font-weight:300;color:var(--ink3);margin-top:12px;max-width:260px;line-height:1.6}
+.footer-col h4{font-family:var(--f-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink4);margin-bottom:16px}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+.footer-col a{font-size:13px;color:var(--ink3);text-decoration:none}.footer-col a:hover{color:var(--blue)}
+.footer-bottom{padding-top:24px;border-top:1px solid var(--rule);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.footer-bottom p{font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.04em}
+.compliance-pills{display:flex;gap:6px;flex-wrap:wrap}
+.cp{font-family:var(--f-mono);font-size:9px;padding:3px 8px;border:1px solid var(--rule);border-radius:3px;color:var(--ink4);letter-spacing:.06em}
+@media(max-width:900px){.article-wrap{grid-template-columns:1fr;gap:48px}.sidebar{position:static}.related-grid{grid-template-columns:1fr}.table-scroll{margin:20px 0}}
+@media(max-width:900px){.nav-links{display:none}}
+@media(max-width:540px){nav{padding:0 4%}.nav-btn{font-size:12px;padding:8px 14px}}
+</style>
+</head>
+<body>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+<nav>
+  <a href="../index.html" class="nav-logo">
+    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" style="flex-shrink:0"><rect width="32" height="32" rx="7" fill="#0d0f12"/><rect x="8" y="7" width="16" height="16" rx="2" stroke="white" stroke-width="2.5" fill="none"/><line x1="20" y1="19" x2="26" y2="25" stroke="#0057FF" stroke-width="3" stroke-linecap="round"/></svg>
+    <span style="font-family:'Epilogue',sans-serif;font-weight:800;font-size:16px;color:#0d0f12;letter-spacing:-.03em;white-space:nowrap">QLean <span style="font-weight:300;color:#5a6172">Automation</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="../index.html#products">Products</a></li>
+    <li><a href="../index.html#framework">Framework</a></li>
+    <li><a href="blog-index.html">Knowledge Base</a></li>
+    <li><a href="../index.html#pricing">Pricing</a></li>
+    <li><a href="../about.html">About</a></li>
+    <li><a href="../index.html#faq">FAQ</a></li>
+  </ul>
+  <a href="../index.html#pricing" class="nav-btn">Get the Framework &#8594;</a>
+</nav>
+
+<header class="article-hero">
+  <div class="article-hero-inner">
+    <div class="breadcrumb"><a href="../index.html">Home</a><span>/</span><a href="blog-index.html">Knowledge Base</a><span>/</span>Subcontractor Management on Validated Pharma Projects</div>
+    <div class="article-tag">&#128203; Project Management</div>
+    <h1>Subcontractor Management<br><span>on Validated</span><br>Pharma Projects</h1>
+    <p class="article-intro">When you subcontract GMP scope on a pharma project, you do not transfer accountability — you inherit risk. The panel builder who does not record wiring test results, the calibration company whose certificates are not NIST-traceable, the controls sub whose code has no version control: all of these become your documentation gaps, not theirs. Here is how to qualify, brief, and manage subcontractors so their work holds up in your validation package.</p>
+    <div class="article-meta">
+      <div class="meta-author">
+        <div class="author-avatar"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="7" r="3.5" stroke="white" stroke-width="1.5"/><path d="M2.5 16c0-3.59 2.91-6.5 6.5-6.5s6.5 2.91 6.5 6.5" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+        <div><div class="author-name">QLean Automation</div><div class="author-role">ENGINEERS WHO BUILD SYSTEMS, NOT JUST SIGN THEM</div></div>
+      </div>
+      <div class="meta-divider"></div><div class="meta-stat">6 MIN READ</div>
+      <div class="meta-divider"></div><div class="meta-stat">PROJECT MANAGEMENT &#183; SUBCONTRACTORS &#183; SUPPLIER MANAGEMENT</div>
+    </div>
+  </div>
+</header>
+
+<div class="article-wrap">
+  <article class="article-body">
+
+    <h2 id="why-subcontractor-management-is-different-in-pharma">Why Subcontractor Management Is Different in Pharma</h2>
+    <p>In standard automation projects, a subcontractor is a commercial arrangement. You hire a panel builder, they build the panel to specification, you inspect it, you accept it or reject it. The liability sits with them until acceptance. In a GMP context, that model breaks down. The liability for the quality of every component in the validated system stays with the lead SI — or more precisely, with the regulated party — regardless of who physically built it.</p>
+    <p>GAMP 5 and EU GMP Annex 11 are explicit that the regulated user must ensure their suppliers operate adequate quality management systems. This requirement flows down through the supply chain. If you are the lead SI and you subcontract panel building, you are responsible for ensuring the panel builder's work meets GMP standards. If an auditor later finds that the wiring test records do not exist because the panel builder did not keep them, that is a finding against your validation package — not against the panel builder directly.</p>
+
+    <div class="callout amber">
+      <div class="callout-label">The Inherited Gap Problem</div>
+      <p>The most common subcontractor-related audit finding is not fabricated records or deliberate non-compliance. It is simply the gap that results when a subcontractor does their job competently by general engineering standards but does not produce the GMP documentation their work requires. A panel builder who builds exactly to drawing but does not record a wiring continuity test for each I/O point has done their job — and created a hole in your IQ evidence. <strong>GMP documentation requirements must be in the subcontract before work starts, not requested retrospectively.</strong></p>
+    </div>
+
+    <h2 id="the-qualification-requirement">The Qualification Requirement</h2>
+    <p>Subcontractors performing GMP scope must be qualified before work begins. Qualification means demonstrating — in writing — that they have the capability and quality management system to produce work that meets GMP standards. The mechanism is the same as the <a href="supplier-assessment-gamp5.html">supplier assessment process</a> applied to the overall project: a questionnaire, a review of the responses, and a documented qualification decision.</p>
+    <p>The depth of qualification required scales with the risk of the subcontracted scope. A specialist calibration laboratory needs a thorough assessment including review of their ISO/IEC 17025 accreditation, scope of accreditation, and certificate format. A panel builder contributing to a GMP system needs their document control procedures, wiring test methodology, and component traceability practices reviewed. A specialist software subcontractor developing SCADA scripts needs their version control practices, code review procedures, and GMP training records assessed.</p>
+    <p>Not every subcontractor needs a formal multi-hour assessment. The proportionality principle applies — the depth of assessment should match the GMP criticality of the work being subcontracted. But every subcontractor on GMP scope should be documented somewhere, and there should be a record of why they were considered acceptable for GMP work.</p>
+
+    <figure class="article-img">
+      <svg viewBox="0 0 720 220" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;background:#0d0f12;border-radius:8px 8px 0 0">
+        <text x="360" y="18" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(255,255,255,0.2)" letter-spacing="0.12em">SUBCONTRACTOR QUALIFICATION DEPTH — SCALED TO GMP RISK</text>
+
+        <!-- Risk scale horizontal -->
+        <line x1="50" y1="110" x2="670" y2="110" stroke="rgba(0,87,255,0.2)" stroke-width="1"/>
+        <text x="50" y="126" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(255,255,255,0.25)">LOWER GMP RISK</text>
+        <text x="560" y="126" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(255,255,255,0.25)">HIGHER GMP RISK</text>
+
+        <!-- Category boxes -->
+        <!-- Civil / passive works -->
+        <rect x="30" y="40" width="140" height="58" rx="4" fill="rgba(0,87,255,0.05)" stroke="rgba(0,87,255,0.2)" stroke-width="1"/>
+        <text x="100" y="58" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(100,160,255,0.6)">CIVIL / PASSIVE</text>
+        <text x="100" y="72" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(180,200,230,0.7)">Site prep, cable trays,</text>
+        <text x="100" y="86" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(180,200,230,0.7)">structural work</text>
+        <text x="100" y="142" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7" fill="rgba(0,200,100,0.6)">Purchase order reference</text>
+        <text x="100" y="154" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7" fill="rgba(0,200,100,0.6)">only required</text>
+
+        <!-- Panel builder -->
+        <rect x="185" y="30" width="140" height="68" rx="4" fill="rgba(0,87,255,0.07)" stroke="rgba(0,87,255,0.25)" stroke-width="1"/>
+        <text x="255" y="48" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(100,160,255,0.65)">PANEL BUILDER</text>
+        <text x="255" y="62" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(180,200,230,0.7)">MCP build, terminations,</text>
+        <text x="255" y="76" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(180,200,230,0.7)">wiring, labelling</text>
+        <text x="255" y="90" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7" fill="rgba(0,200,100,0.6)">CE declaration, component certs</text>
+        <text x="255" y="142" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7" fill="rgba(217,119,6,0.7)">Doc control, wiring test method,</text>
+        <text x="255" y="154" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7" fill="rgba(217,119,6,0.7)">component traceability review</text>
+
+        <!-- Calibration lab -->
+        <rect x="340" y="25" width="140" height="78" rx="4" fill="rgba(0,87,255,0.09)" stroke="rgba(0,87,255,0.3)" stroke-width="1"/>
+        <text x="410" y="43" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(100,160,255,0.7)">CALIBRATION LAB</text>
+        <text x="410" y="57" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(180,200,230,0.7)">Instrument calibration,</text>
+        <text x="410" y="71" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(180,200,230,0.7)">certificate issue</text>
+        <text x="410" y="85" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7" fill="rgba(0,200,100,0.6)">ISO/IEC 17025 accreditation scope</text>
+        <text x="410" y="142" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7" fill="rgba(217,119,6,0.7)">Accreditation review, scope check,</text>
+        <text x="410" y="154" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7" fill="rgba(217,119,6,0.7)">sample cert format review</text>
+
+        <!-- Controls sub -->
+        <rect x="495" y="20" width="155" height="84" rx="4" fill="rgba(0,87,255,0.12)" stroke="rgba(0,87,255,0.4)" stroke-width="1"/>
+        <text x="572" y="38" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(100,160,255,0.8)">CONTROLS SUB</text>
+        <text x="572" y="52" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(180,200,230,0.7)">PLC/SCADA programming,</text>
+        <text x="572" y="66" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(180,200,230,0.7)">GMP scope software</text>
+        <text x="572" y="80" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7" fill="rgba(0,200,100,0.6)">Version control, code review,</text>
+        <text x="572" y="92" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7" fill="rgba(0,200,100,0.6)">GMP training records</text>
+        <text x="572" y="142" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7" fill="rgba(192,57,43,0.7)">Full SAQ/SAR assessment,</text>
+        <text x="572" y="154" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7" fill="rgba(192,57,43,0.7)">QMS review, prior pharma refs</text>
+
+        <!-- Qualification effort labels -->
+        <text x="100" y="170" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(0,200,100,0.5)">MINIMAL</text>
+        <text x="255" y="170" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(217,119,6,0.6)">LIGHT</text>
+        <text x="410" y="170" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(217,119,6,0.7)">MODERATE</text>
+        <text x="572" y="170" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(192,57,43,0.7)">FULL</text>
+
+        <text x="360" y="205" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(255,255,255,0.15)">All subcontractors on GMP scope must appear in the project RACI — none should be invisible in the documentation</text>
+      </svg>
+      <figcaption>FIGURE 1 — Subcontractor qualification depth scaled to GMP risk. Controls subcontractors developing validated software require a full assessment equivalent to the lead SI process; panel builders and calibration labs require proportionally lighter reviews focused on their specific GMP-relevant activities.</figcaption>
+    </figure>
+
+    <h2 id="flowing-down-gmp-requirements-to-subcontractors">Flowing Down GMP Requirements to Subcontractors</h2>
+    <p>Qualifying a subcontractor establishes that they are capable of GMP work. Flowing down requirements tells them specifically what GMP work means for your project. Both are necessary. A qualified subcontractor who is never told which document numbers, naming conventions, and evidence requirements apply to your project will produce work that is competent but not directly usable in your validation package.</p>
+    <p>A GMP requirements flowdown document — sometimes called a project quality brief or subcontractor technical requirements — should cover at minimum: the document numbering system and naming conventions used on this project; the GMP-controlled document format requirements (including approval signatures, revision history, and document control fields); the wiring test records or other evidence required from the subcontractor before their work can be incorporated into the validation package; the change control requirement (no changes to GMP scope after the agreed baseline without a change control request); and the key personnel clause (the same engineer who was assessed during qualification must remain on the project, or a replacement must be reviewed and accepted).</p>
+    <p>This flowdown should be part of the subcontract, not a separate informal briefing. A subcontractor who has signed off on GMP requirements in their contract cannot later claim they did not know documentation was required.</p>
+
+    <h2 id="what-to-require-from-panel-builders">What to Require From Panel Builders</h2>
+    <p>Panel builders are one of the most common subcontractors on pharma automation projects and one of the most common sources of IQ documentation gaps. A panel that is built correctly but not documented correctly fails the IQ. The specific requirements that should be flowed down to a panel builder on a GMP project are:</p>
+    <ul class="checklist">
+      <li>CE marking and panel builder's Declaration of Conformity — required as an IQ document verification item</li>
+      <li>Component certificates for all major components: PLC, I/O modules, HMI hardware, power supplies, safety relays — manufacturer's conformity declarations or technical data sheets</li>
+      <li>Wiring test records — a completed wiring continuity and insulation test record for every cable, signed by the test technician, with pass/fail result per conductor. This is what the IQ uses to verify correct installation</li>
+      <li>As-built markings on drawings — every change from issued-for-construction to actual installation must be marked on the drawings before they leave the panel builder's facility</li>
+      <li>Component labelling standards — every terminal block, cable, DIN rail component, and indicator must be labelled per the project labelling standard, consistent with the HDS</li>
+    </ul>
+
+    <h2 id="what-to-require-from-calibration-subcontractors">What to Require From Calibration Subcontractors</h2>
+    <p>Calibration is the most regulated subcontracted activity on a pharma project. The requirements are well-defined by ISO/IEC 17025 and the GMP expectations flowing from EU GMP Annex 11 and FDA 21 CFR Part 211.68. What an SI needs from a calibration subcontractor is straightforward but must be confirmed before the first instrument is calibrated:</p>
+    <ul class="arrow-list">
+      <li><strong>ISO/IEC 17025 accreditation</strong> — the specific calibration activity must be within the laboratory's accredited scope. An accredited laboratory performing calibration outside their scope produces a non-accredited certificate that does not satisfy GMP.</li>
+      <li><strong>Certificate format</strong> — the certificate must include the calibration date (not the issue date), the reference standard used with its traceability chain, the measurement results at each calibration point, the instrument serial number, and the technician's identification. Review a sample certificate before commissioning the calibration work.</li>
+      <li><strong>Instrument-specific calibration procedure</strong> — particularly for complex instruments like conductivity sensors and TOC analysers, confirm that the calibration laboratory has the capability to calibrate the specific instrument type, not just the signal type.</li>
+      <li><strong>Turnaround time</strong> — calibration certificates must be available before IQ begins. Confirm certificate turnaround time in the subcontract and build the IQ start date around it, not around an optimistic assumption.</li>
+    </ul>
+
+    <h2 id="managing-subcontractor-documentation-in-the-validation-package">Managing Subcontractor Documentation in the Validation Package</h2>
+    <p>Subcontractor-produced documents that form part of the validation evidence — panel builder wiring test records, calibration certificates, CE declarations — are referenced in the IQ protocol by their document numbers and filing locations. These documents are not owned by the SI in the sense that the SI wrote them, but the SI is responsible for ensuring they are present, complete, and retrievable when the IQ is executed.</p>
+    <p>A practical approach is to maintain a subcontractor evidence log — a simple register that tracks, for each subcontracted activity, what evidence is required, what has been received, and where it is filed. This log becomes the checklist during IQ pre-conditions verification: before IQ begins, confirm that all subcontractor evidence required for IQ is on file. The <a href="validation-project-plan-system-integrator.html">Validation Plan</a> should reference subcontractor evidence requirements explicitly so there is no ambiguity about what must be in place before IQ starts.</p>
+    <p>Changes made by subcontractors after the validation baseline is established — a last-minute component substitution by the panel builder, a firmware update applied to a calibrated transmitter during installation — require the same <a href="change-control-validated-system.html">change control process</a> as any other post-baseline change. Subcontractors who are not briefed on this requirement will make what they consider routine engineering decisions that are, in a validated context, formal change events requiring documentation and impact assessment.</p>
+
+    <div class="callout green">
+      <div class="callout-label">In the QLean Framework</div>
+      <p>The Supplier Assessment Questionnaire (SAQ-SYS-001) and Assessment Report (SAR-SYS-001) are the formal tools for qualifying subcontractors as well as primary suppliers. The SAQ includes a dedicated section (Q6.3.3) on subcontractor use — asking whether the supplier uses subcontractors for GMP scope and how they are qualified and supervised. The SAR provides the gap analysis and conditions framework that applies equally to a controls subcontractor as to a primary SI. <strong>The framework documents the qualification process; the GMP requirements flowdown for the specific project — naming conventions, document formats, evidence requirements — is what you add per project.</strong></p>
+    </div>
+
+  </article>
+
+  <aside class="sidebar">
+    <div class="toc-card">
+      <div class="toc-label">In This Article</div>
+      <ul class="toc-list">
+        <li><a href="#why-subcontractor-management-is-different-in-pharma" class="active">Why It's Different in Pharma</a></li>
+        <li><a href="#the-qualification-requirement">The Qualification Requirement</a></li>
+        <li><a href="#flowing-down-gmp-requirements-to-subcontractors">Flowing Down Requirements</a></li>
+        <li><a href="#what-to-require-from-panel-builders">Panel Builders</a></li>
+        <li><a href="#what-to-require-from-calibration-subcontractors">Calibration Subcontractors</a></li>
+        <li><a href="#managing-subcontractor-documentation-in-the-validation-package">Managing the Documentation</a></li>
+      </ul>
+    </div>
+
+    <div class="sidebar-cta">
+      <div class="sc-eyebrow">QLean Framework</div>
+      <div class="sc-title">29 production-ready GAMP 5 documents</div>
+      <div class="sc-body">SAQ and SAR templates for qualifying any supplier or subcontractor — with scoring framework, gap analysis structure, and conditions mechanism. Qualification on record before work starts.</div>
+      <a href="../index.html#pricing" class="sc-btn">Get the Framework &#8212; &#8364;249 &#8594;</a>
+      <div class="sc-note">// INSTANT DOWNLOAD &middot; COMPANY-WIDE LICENCE</div>
+    </div>
+
+    <div class="sidebar-share">
+      <div class="share-label">Share This Article</div>
+      <div class="share-links">
+        <a href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fqleanautomation.com%2Fblog%2Fsubcontractor-management-validated-projects.html" target="_blank" rel="noopener" class="share-link">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          Share on LinkedIn
+        </a>
+        <a href="https://www.reddit.com/submit?url=https%3A%2F%2Fqleanautomation.com%2Fblog%2Fsubcontractor-management-validated-projects.html&title=Subcontractor+Management+on+Validated+Pharma+Projects" target="_blank" rel="noopener" class="share-link">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/></svg>
+          Share on Reddit
+        </a>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<section class="related">
+  <div class="related-inner">
+    <div class="related-label">Continue Reading</div>
+    <div class="related-grid">
+      <a href="supplier-assessment-gamp5.html" class="related-card">
+        <span class="rc-tag">&#128203; Project Management</span>
+        <div class="rc-title">Supplier Assessment Under GAMP 5</div>
+        <div class="rc-desc">The full SAQ and SAR process — what questions to ask, how to score responses, and how to translate gaps into conditions that must be resolved before project award.</div>
+        <div class="rc-footer"><span class="rc-read">7 MIN READ</span><span class="rc-arrow">&#8594;</span></div>
+      </a>
+      <a href="validation-project-plan-system-integrator.html" class="related-card">
+        <span class="rc-tag">&#128203; Project Management</span>
+        <div class="rc-title">Writing a Validation Project Plan as a System Integrator</div>
+        <div class="rc-desc">Where subcontractors appear in the RACI, the deliverable register, and the phase gate criteria — and how to define their scope to avoid ambiguity.</div>
+        <div class="rc-footer"><span class="rc-read">7 MIN READ</span><span class="rc-arrow">&#8594;</span></div>
+      </a>
+      <a href="managing-pharma-fat-multiple-suppliers.html" class="related-card">
+        <span class="rc-tag">&#128203; Project Management</span>
+        <div class="rc-title">Managing a Pharma FAT With Multiple Suppliers</div>
+        <div class="rc-desc">When subcontractors contribute to the FAT scope, the evidence structure gets complex. Here is how to run an integration FAT that produces coherent GMP evidence across all supplier scopes.</div>
+        <div class="rc-footer"><span class="rc-read">7 MIN READ</span><span class="rc-arrow">&#8594;</span></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="../index.html" class="nav-logo" style="text-decoration:none">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="7" fill="#0d0f12"/><rect x="8" y="7" width="16" height="16" rx="2" stroke="white" stroke-width="2.5" fill="none"/><line x1="20" y1="19" x2="26" y2="25" stroke="#0057FF" stroke-width="3" stroke-linecap="round"/></svg>
+          <span style="font-family:'Epilogue',sans-serif;font-weight:800;font-size:16px;color:#0d0f12;letter-spacing:-.03em">QLean <span style="font-weight:300;color:#5a6172">Automation</span></span>
+        </a>
+        <p>GMP validation documentation tools for automation engineers and system integrators.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Products</h4>
+        <ul>
+          <li><a href="../index.html#products">GAMP 5 Framework Pack</a></li>
+          <li><a href="../index.html#products">Technical Ebook</a></li>
+          <li><a href="../index.html#pricing">Pricing</a></li>
+          <li><a href="../index.html#faq">FAQ</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Knowledge Base</h4>
+        <ul>
+          <li><a href="blog-index.html">All Articles</a></li>
+          <li><a href="cluster-project-mgmt.html">Project Management</a></li>
+          <li><a href="supplier-assessment-gamp5.html">Supplier Assessment</a></li>
+          <li><a href="managing-pharma-fat-multiple-suppliers.html">Multi-Supplier FAT</a></li>
+          <li><a href="validation-project-plan-system-integrator.html">Validation Project Plan</a></li>
+          <li><a href="change-control-validated-system.html">Change Control</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="../index.html#framework">Framework</a></li>
+          <li><a href="../terms.html">Terms of Service</a></li>
+          <li><a href="../privacy.html">Privacy Policy</a></li>
+          <li><a href="mailto:hello@qleanautomation.com">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 QLean Automation. All rights reserved.</p>
+      <div class="compliance-pills">
+        <span class="cp">GAMP 5</span>
+        <span class="cp">EU GMP ANNEX 11</span>
+        <span class="cp">21 CFR PART 11</span>
+        <span class="cp">GXP</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+window.addEventListener('scroll',function(){
+  var s=document.getElementById('progress');
+  var h=document.documentElement;
+  var p=(h.scrollTop||document.body.scrollTop)/(h.scrollHeight-h.clientHeight)*100;
+  s.style.width=p+'%';
+});
+var tl=document.querySelectorAll('.toc-list a');
+window.addEventListener('scroll',function(){
+  var headings=document.querySelectorAll('.article-body h2[id]');
+  var scrollY=window.scrollY+120;
+  var current='';
+  headings.forEach(function(h){if(h.offsetTop<=scrollY)current=h.id;});
+  tl.forEach(function(a){
+    a.classList.remove('active');
+    if(a.getAttribute('href')==='#'+current)a.classList.add('active');
+  });
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-JJQ1TXZJX7"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-JJQ1TXZJX7');
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Instrument Loop Diagrams as IQ Evidence — What They Must Show | QLean Automation</title>
+<meta name="description" content="An instrument loop diagram is more than a wiring drawing. In a pharma IQ, it is traceability evidence that ties a field tag to a calibrated sensor, a PLC I/O address, and a SCADA record — all in one document. Here is what it must contain.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@300;400;500;600;700;800;900&family=Source+Sans+3:ital,wght@0,300;0,400;0,500;1,300&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--white:#ffffff;--off:#f7f8f9;--ink:#0d0f12;--ink2:#1e2128;--ink3:#3d4456;--ink4:#9199a8;--rule:#e2e5ea;--rule2:#c8cdd6;--blue:#0057ff;--blue2:#0044cc;--blue-dim:rgba(0,87,255,0.07);--green:#00875a;--green-dim:rgba(0,135,90,0.08);--amber:#d97706;--amber-dim:rgba(217,119,6,0.08);--red:#c0392b;--red-dim:rgba(192,57,43,0.08);--f-head:'Epilogue',sans-serif;--f-body:'Source Sans 3',sans-serif;--f-mono:'Roboto Mono',monospace;--shadow-sm:0 2px 8px rgba(13,15,18,0.06),0 1px 3px rgba(13,15,18,0.04)}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}body{background:var(--white);color:var(--ink);font-family:var(--f-body);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+nav{position:fixed;top:0;left:0;right:0;z-index:200;height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 6%;background:rgba(255,255,255,0.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--rule)}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;flex-shrink:0}
+.nav-links{display:flex;align-items:center;gap:36px;list-style:none}.nav-links a{font-size:14px;font-weight:400;color:var(--ink3);text-decoration:none;transition:color .2s}.nav-links a:hover{color:var(--ink)}
+.nav-btn{font-family:var(--f-body);font-size:13px;font-weight:500;padding:9px 20px;background:var(--blue);color:white;border:none;border-radius:6px;cursor:pointer;text-decoration:none;white-space:nowrap;flex-shrink:0}.nav-btn:hover{background:var(--blue2)}
+.progress-bar{position:fixed;top:64px;left:0;right:0;height:2px;background:var(--rule);z-index:199}.progress-fill{height:100%;background:var(--blue);width:0%}
+.article-hero{padding:120px 6% 64px;background:var(--white);border-bottom:1px solid var(--rule);position:relative;overflow:hidden}
+.article-hero::before{content:'';position:absolute;top:-80px;right:-80px;width:400px;height:400px;background:radial-gradient(circle,rgba(0,87,255,0.04) 0%,transparent 70%);pointer-events:none}
+.article-hero-inner{max-width:940px;margin:0 auto;position:relative;z-index:1}
+.breadcrumb{display:flex;align-items:center;gap:8px;font-family:var(--f-mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink4);margin-bottom:24px}.breadcrumb a{color:var(--ink4);text-decoration:none}.breadcrumb a:hover{color:var(--blue)}.breadcrumb span{color:var(--rule2)}
+.article-tag{display:inline-flex;align-items:center;gap:6px;font-family:var(--f-mono);font-size:10px;font-weight:500;color:var(--blue);letter-spacing:.1em;text-transform:uppercase;margin-bottom:20px;padding:4px 10px;background:var(--blue-dim);border-radius:4px}
+.article-hero h1{font-family:var(--f-head);font-size:clamp(30px,5vw,52px);font-weight:900;line-height:1.0;letter-spacing:-.04em;color:var(--ink);margin-bottom:20px}.article-hero h1 span{color:var(--blue)}
+.article-intro{font-size:18px;font-weight:400;color:var(--ink2);line-height:1.75;margin-bottom:32px;max-width:800px}
+.article-meta{display:flex;align-items:center;gap:24px;padding-top:24px;border-top:1px solid var(--rule);flex-wrap:wrap}
+.meta-author{display:flex;align-items:center;gap:10px}.author-avatar{width:36px;height:36px;border-radius:50%;background:var(--ink);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.author-name{font-size:13px;font-weight:500;color:var(--ink)}.author-role{font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.04em}
+.meta-divider{width:1px;height:28px;background:var(--rule)}.meta-stat{font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.06em}
+.article-wrap{max-width:1300px;margin:0 auto;padding:64px 6%;display:grid;grid-template-columns:1fr 300px;gap:60px;align-items:start}
+.article-body{min-width:0}
+.article-body h2{font-family:var(--f-head);font-size:26px;font-weight:800;letter-spacing:-.03em;color:var(--ink);margin:56px 0 16px;line-height:1.2}.article-body h2:first-child{margin-top:0}
+.article-body h3{font-family:var(--f-head);font-size:18px;font-weight:700;letter-spacing:-.02em;color:var(--ink);margin:32px 0 12px}
+.article-body p{font-size:16px;font-weight:400;color:var(--ink2);line-height:1.85;margin-bottom:20px}
+.article-body strong{color:var(--ink);font-weight:600}
+.article-body a{color:var(--blue);text-decoration:none;border-bottom:1px solid rgba(0,87,255,.25)}.article-body a:hover{border-color:var(--blue)}
+.callout{padding:20px 24px;border-radius:8px;margin:32px 0;border-left:3px solid}
+.callout.blue{background:var(--blue-dim);border-color:var(--blue)}.callout.amber{background:var(--amber-dim);border-color:var(--amber)}.callout.green{background:var(--green-dim);border-color:var(--green)}.callout.red{background:var(--red-dim);border-color:var(--red)}
+.callout-label{font-family:var(--f-mono);font-size:9px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px}.callout.blue .callout-label{color:var(--blue)}.callout.amber .callout-label{color:var(--amber)}.callout.green .callout-label{color:var(--green)}.callout.red .callout-label{color:var(--red)}
+.callout p{font-size:14px;color:var(--ink2);line-height:1.7;margin:0}.callout strong{color:var(--ink)}
+.article-img{width:100%;border-radius:8px;border:1px solid #1e2535;overflow:hidden;margin:36px 0}
+.article-img figcaption{padding:10px 14px;background:var(--off);font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.04em;border-top:1px solid var(--rule)}
+.checklist{list-style:none;display:flex;flex-direction:column;gap:8px;margin:20px 0 28px}
+.checklist li{display:flex;align-items:flex-start;gap:10px;font-size:15px;color:var(--ink2);line-height:1.6}
+.checklist li::before{content:'';width:16px;height:16px;flex-shrink:0;margin-top:3px;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 14 14' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='7' cy='7' r='6.5' fill='none' stroke='%230057ff' stroke-width='1'/%3E%3Cpath d='M4 7l2 2 4-4' stroke='%230057ff' stroke-width='1.3' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:center;background-size:contain}
+.arrow-list{list-style:none;display:flex;flex-direction:column;gap:8px;margin:20px 0 28px}
+.arrow-list li{display:flex;align-items:flex-start;gap:10px;font-size:15px;color:var(--ink2);line-height:1.6}
+.arrow-list li::before{content:'\2192';color:var(--blue);flex-shrink:0;font-family:var(--f-mono);font-size:13px;margin-top:2px}
+.table-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:28px 0}
+.compare-table{width:100%;border-collapse:collapse;font-size:14px}
+.compare-table th{font-family:var(--f-mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink4);padding:10px 16px;border-bottom:2px solid var(--rule);text-align:left;background:var(--off)}
+.compare-table td{padding:12px 16px;border-bottom:1px solid var(--rule);vertical-align:top;color:var(--ink2);line-height:1.6}
+.compare-table tr:last-child td{border-bottom:none}
+.compare-table td:first-child{font-weight:600;color:var(--ink);font-family:var(--f-mono);font-size:12px}
+.sidebar{position:sticky;top:88px;display:flex;flex-direction:column;gap:16px}
+.toc-card{border:1px solid var(--rule);border-radius:8px;padding:24px;background:var(--white);box-shadow:var(--shadow-sm)}
+.toc-label{font-family:var(--f-mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);margin-bottom:16px}
+.toc-list{list-style:none;display:flex;flex-direction:column;gap:2px}
+.toc-list a{display:block;font-size:13px;color:var(--ink3);text-decoration:none;padding:6px 10px;border-radius:4px;transition:all .15s;border-left:2px solid transparent}
+.toc-list a:hover,.toc-list a.active{color:var(--blue);background:var(--blue-dim);border-left-color:var(--blue)}
+.sidebar-cta{border:1px solid var(--blue);border-radius:8px;padding:24px;background:var(--blue-dim)}
+.sc-eyebrow{font-family:var(--f-mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);margin-bottom:10px}
+.sc-title{font-family:var(--f-head);font-size:17px;font-weight:800;letter-spacing:-.02em;color:var(--ink);margin-bottom:8px;line-height:1.2}
+.sc-body{font-size:13px;color:var(--ink3);line-height:1.6;margin-bottom:16px}
+.sc-btn{display:block;text-align:center;padding:11px 16px;background:var(--blue);color:white;border-radius:6px;font-family:var(--f-body);font-size:13px;font-weight:500;text-decoration:none}.sc-btn:hover{background:var(--blue2)}
+.sc-note{font-family:var(--f-mono);font-size:9px;color:var(--ink4);text-align:center;margin-top:8px;letter-spacing:.04em}
+.sidebar-share{border:1px solid var(--rule);border-radius:8px;padding:20px 24px;background:var(--white)}
+.share-label{font-family:var(--f-mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);margin-bottom:14px}
+.share-links{display:flex;flex-direction:column;gap:8px}
+.share-link{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--ink3);text-decoration:none;padding:9px 12px;border:1px solid var(--rule);border-radius:6px;transition:border-color .2s,color .2s}.share-link:hover{border-color:var(--blue);color:var(--blue)}
+.related{padding:64px 6%;border-top:1px solid var(--rule);background:var(--off)}
+.related-inner{max-width:1100px;margin:0 auto}
+.related-label{font-family:var(--f-mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);margin-bottom:32px;display:flex;align-items:center;gap:10px}
+.related-label::before{content:'';width:20px;height:1px;background:var(--blue)}
+.related-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.related-card{padding:24px;border:1px solid var(--rule);border-radius:8px;background:var(--white);box-shadow:var(--shadow-sm);transition:border-color .2s,transform .2s;text-decoration:none;display:flex;flex-direction:column;gap:12px}.related-card:hover{border-color:var(--blue);transform:translateY(-4px)}
+.rc-tag{font-family:var(--f-mono);font-size:9px;color:var(--blue);letter-spacing:.08em;text-transform:uppercase;padding:3px 8px;background:var(--blue-dim);border-radius:3px;align-self:flex-start}
+.rc-title{font-family:var(--f-head);font-size:16px;font-weight:700;letter-spacing:-.02em;color:var(--ink);line-height:1.25}
+.rc-desc{font-size:13px;color:var(--ink3);line-height:1.6;flex:1}
+.rc-footer{display:flex;align-items:center;justify-content:space-between;padding-top:12px;border-top:1px solid var(--rule)}
+.rc-read{font-family:var(--f-mono);font-size:10px;color:var(--ink4)}.rc-arrow{font-size:14px;color:var(--blue)}
+footer{padding:56px 6% 32px;border-top:1px solid var(--rule);background:var(--white)}
+.footer-inner{max-width:1160px;margin:0 auto}
+.footer-top{display:flex;justify-content:space-between;align-items:flex-start;gap:40px;flex-wrap:wrap;margin-bottom:48px}
+.footer-brand p{font-size:13px;font-weight:300;color:var(--ink3);margin-top:12px;max-width:260px;line-height:1.6}
+.footer-col h4{font-family:var(--f-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink4);margin-bottom:16px}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+.footer-col a{font-size:13px;color:var(--ink3);text-decoration:none}.footer-col a:hover{color:var(--blue)}
+.footer-bottom{padding-top:24px;border-top:1px solid var(--rule);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.footer-bottom p{font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.04em}
+.compliance-pills{display:flex;gap:6px;flex-wrap:wrap}
+.cp{font-family:var(--f-mono);font-size:9px;padding:3px 8px;border:1px solid var(--rule);border-radius:3px;color:var(--ink4);letter-spacing:.06em}
+@media(max-width:900px){.article-wrap{grid-template-columns:1fr;gap:48px}.sidebar{position:static}.related-grid{grid-template-columns:1fr}.table-scroll{margin:20px 0}}
+@media(max-width:900px){.nav-links{display:none}}
+@media(max-width:540px){nav{padding:0 4%}.nav-btn{font-size:12px;padding:8px 14px}}
+</style>
+</head>
+<body>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+<nav>
+  <a href="../index.html" class="nav-logo">
+    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" style="flex-shrink:0"><rect width="32" height="32" rx="7" fill="#0d0f12"/><rect x="8" y="7" width="16" height="16" rx="2" stroke="white" stroke-width="2.5" fill="none"/><line x1="20" y1="19" x2="26" y2="25" stroke="#0057FF" stroke-width="3" stroke-linecap="round"/></svg>
+    <span style="font-family:'Epilogue',sans-serif;font-weight:800;font-size:16px;color:#0d0f12;letter-spacing:-.03em;white-space:nowrap">QLean <span style="font-weight:300;color:#5a6172">Automation</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="../index.html#products">Products</a></li>
+    <li><a href="../index.html#framework">Framework</a></li>
+    <li><a href="blog-index.html">Knowledge Base</a></li>
+    <li><a href="../index.html#pricing">Pricing</a></li>
+    <li><a href="../about.html">About</a></li>
+    <li><a href="../index.html#faq">FAQ</a></li>
+  </ul>
+  <a href="../index.html#pricing" class="nav-btn">Get the Framework &#8594;</a>
+</nav>
+
+<header class="article-hero">
+  <div class="article-hero-inner">
+    <div class="breadcrumb"><a href="../index.html">Home</a><span>/</span><a href="blog-index.html">Knowledge Base</a><span>/</span>Instrument Loop Diagrams as IQ Evidence</div>
+    <div class="article-tag">&#128207; Instrumentation &amp; Calibration</div>
+    <h1>Instrument Loop Diagrams<br><span>as IQ Evidence</span><br>What They Must Show</h1>
+    <p class="article-intro">A loop diagram is more than a wiring drawing. In a pharma IQ, it is the document that ties a field tag number to a calibrated sensor, a specific PLC I/O address, a signal range, and ultimately a SCADA historian record — all in one place. Most engineers produce loop diagrams that satisfy electrical installation; far fewer produce ones that satisfy a pharma IQ reviewer. Here is the difference.</p>
+    <div class="article-meta">
+      <div class="meta-author">
+        <div class="author-avatar"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="7" r="3.5" stroke="white" stroke-width="1.5"/><path d="M2.5 16c0-3.59 2.91-6.5 6.5-6.5s6.5 2.91 6.5 6.5" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+        <div><div class="author-name">QLean Automation</div><div class="author-role">ENGINEERS WHO BUILD SYSTEMS, NOT JUST SIGN THEM</div></div>
+      </div>
+      <div class="meta-divider"></div><div class="meta-stat">6 MIN READ</div>
+      <div class="meta-divider"></div><div class="meta-stat">LOOP DIAGRAM &#183; IQ &#183; INSTRUMENTATION &#183; TRACEABILITY</div>
+    </div>
+  </div>
+</header>
+
+<div class="article-wrap">
+  <article class="article-body">
+
+    <h2 id="what-makes-a-loop-diagram-gmp-evidence">What Makes a Loop Diagram GMP Evidence</h2>
+    <p>In standard automation practice, a loop diagram shows how a field instrument is wired through to a control system. That is useful for commissioning engineers — but it is not enough for a pharma IQ. In a GMP context, the loop diagram is a piece of controlled evidence. It must demonstrate, in a single drawing, that the installed measurement path is complete, traceable, and consistent with every other document in the validation package.</p>
+    <p>When a QA reviewer picks up your IQ protocol, they expect to be able to look at one loop diagram and answer these questions without leaving that drawing: What is the instrument tag? What is it measuring? What is the calibrated range? What PLC I/O address does it connect to? What is the signal type? Is the tag name consistent with the SCADA historian? If any of those questions requires pulling a second document to answer, the loop diagram is incomplete as IQ evidence.</p>
+
+    <div class="callout amber">
+      <div class="callout-label">The Consistency Test</div>
+      <p>The tag number on a loop diagram must match exactly across: the P&ID, the <a href="field-instrumentation-iq-documentation.html">instrument list in the Engineering Lists</a>, the PLC I/O list, the SCADA tag database, the calibration certificate, and the IQ protocol. One mismatch fails the IQ. Not as a technicality — as a genuine traceability break. <strong>If the documents disagree on what tag number is measuring what, no one can be certain which certificate covers which installed device.</strong></p>
+    </div>
+
+    <h2 id="anatomy-of-a-pharma-loop-diagram">Anatomy of a Pharma-Grade Loop Diagram</h2>
+    <p>The structure of an instrument loop diagram for pharma IQ differs from a standard ISA 5.4 loop sheet in a few important ways. The core wiring information is the same, but the GMP-relevant metadata must be explicitly shown — not left to cross-reference elsewhere.</p>
+    <p>Every pharma loop diagram should carry the following information as a minimum:</p>
+
+    <figure class="article-img">
+      <svg viewBox="0 0 720 380" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;background:#0d0f12;border-radius:8px 8px 0 0">
+        <defs>
+          <marker id="arr" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><polygon points="0 0, 7 3.5, 0 7" fill="rgba(0,87,255,0.7)"/></marker>
+        </defs>
+        <text x="360" y="18" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(255,255,255,0.2)" letter-spacing="0.12em">ANATOMY OF A PHARMA LOOP DIAGRAM — REQUIRED INFORMATION ZONES</text>
+
+        <!-- Title block zone -->
+        <rect x="10" y="30" width="700" height="48" rx="4" fill="rgba(0,87,255,0.06)" stroke="rgba(0,87,255,0.25)" stroke-width="1"/>
+        <text x="20" y="48" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(0,135,255,0.7)" letter-spacing="0.08em">TITLE BLOCK</text>
+        <text x="20" y="62" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(180,200,230,0.65)">Tag No: TT-001  |  Description: WFI Distribution Supply Temperature  |  P&amp;ID Ref: P&amp;ID-001  |  Drawing No: LD-001  |  Rev: A  |  Status: As-Built  |  Approved: [signature]</text>
+
+        <!-- Field zone -->
+        <rect x="10" y="90" width="190" height="230" rx="4" fill="rgba(0,87,255,0.05)" stroke="rgba(0,87,255,0.2)" stroke-width="1"/>
+        <text x="105" y="108" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(0,135,255,0.6)" letter-spacing="0.08em">FIELD</text>
+        <!-- Sensor symbol -->
+        <circle cx="105" cy="155" r="28" fill="none" stroke="rgba(0,87,255,0.5)" stroke-width="1.5"/>
+        <text x="105" y="151" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="white">TT</text>
+        <text x="105" y="164" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="white">001</text>
+        <!-- Instrument details -->
+        <text x="105" y="205" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7" fill="rgba(100,160,255,0.7)">Endress+Hauser</text>
+        <text x="105" y="216" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7" fill="rgba(100,160,255,0.7)">iTHERM TM371</text>
+        <text x="105" y="229" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7" fill="rgba(100,160,255,0.55)">Pt100 RTD 4-wire</text>
+        <text x="105" y="242" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7" fill="rgba(100,160,255,0.55)">Range: 0–150&#176;C</text>
+        <text x="105" y="255" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7" fill="rgba(100,160,255,0.55)">Cal cert: CAL-TT001-01</text>
+        <text x="105" y="268" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7" fill="rgba(100,160,255,0.55)">Next due: [date]</text>
+        <text x="105" y="281" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7" fill="rgba(100,160,255,0.55)">Serial: [S/N]</text>
+        <text x="105" y="296" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7" fill="rgba(0,200,100,0.6)">GMP-CRITICAL</text>
+
+        <!-- Wiring line field to JB -->
+        <line x1="200" y1="155" x2="240" y2="155" stroke="rgba(0,87,255,0.5)" stroke-width="1.5" marker-end="url(#arr)"/>
+
+        <!-- Junction box zone -->
+        <rect x="240" y="90" width="140" height="230" rx="4" fill="rgba(0,87,255,0.04)" stroke="rgba(0,87,255,0.18)" stroke-width="1"/>
+        <text x="310" y="108" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(0,135,255,0.5)" letter-spacing="0.08em">JB / MARSHALLING</text>
+        <rect x="268" y="130" width="84" height="80" rx="3" fill="rgba(0,87,255,0.08)" stroke="rgba(0,87,255,0.3)" stroke-width="1"/>
+        <text x="310" y="162" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7" fill="rgba(150,190,255,0.7)">JB-001</text>
+        <text x="310" y="175" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7" fill="rgba(150,190,255,0.55)">TB-12 (+)</text>
+        <text x="310" y="186" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7" fill="rgba(150,190,255,0.55)">TB-13 (–)</text>
+        <text x="310" y="197" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7" fill="rgba(150,190,255,0.55)">Shield: TB-14</text>
+        <text x="310" y="220" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7" fill="rgba(150,190,255,0.45)">Cable: C-TT001</text>
+        <text x="310" y="231" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7" fill="rgba(150,190,255,0.45)">2&#215;0.5mm&#178; shielded</text>
+
+        <!-- Wiring line JB to panel -->
+        <line x1="380" y1="155" x2="420" y2="155" stroke="rgba(0,87,255,0.5)" stroke-width="1.5" marker-end="url(#arr)"/>
+
+        <!-- Panel / PLC zone -->
+        <rect x="420" y="90" width="160" height="230" rx="4" fill="rgba(0,87,255,0.05)" stroke="rgba(0,87,255,0.2)" stroke-width="1"/>
+        <text x="500" y="108" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(0,135,255,0.6)" letter-spacing="0.08em">MCP-01 / PLC I/O</text>
+        <rect x="445" y="125" width="110" height="100" rx="3" fill="rgba(0,87,255,0.08)" stroke="rgba(0,87,255,0.3)" stroke-width="1"/>
+        <text x="500" y="145" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7" fill="rgba(150,190,255,0.7)">AI Module</text>
+        <text x="500" y="158" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7" fill="rgba(150,190,255,0.7)">SM 531 Ch.0</text>
+        <text x="500" y="171" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7" fill="rgba(150,190,255,0.55)">Signal: 4-20mA</text>
+        <text x="500" y="183" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7" fill="rgba(150,190,255,0.55)">Range: 0–150&#176;C</text>
+        <text x="500" y="195" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7" fill="rgba(150,190,255,0.55)">DB addr: %IW256</text>
+        <text x="500" y="207" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7" fill="rgba(100,160,255,0.5)">Marshalling:</text>
+        <text x="500" y="218" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7" fill="rgba(100,160,255,0.5)">MCP-01 TB-A12/13</text>
+
+        <!-- Wiring line panel to SCADA -->
+        <line x1="580" y1="155" x2="620" y2="155" stroke="rgba(0,87,255,0.5)" stroke-width="1.5" marker-end="url(#arr)"/>
+
+        <!-- SCADA zone -->
+        <rect x="620" y="90" width="90" height="230" rx="4" fill="rgba(0,87,255,0.05)" stroke="rgba(0,87,255,0.2)" stroke-width="1"/>
+        <text x="665" y="108" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(0,135,255,0.5)" letter-spacing="0.06em">SCADA</text>
+        <text x="665" y="145" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7" fill="rgba(150,190,255,0.7)">Tag name:</text>
+        <text x="665" y="157" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7" fill="white">PWS_DIST_</text>
+        <text x="665" y="169" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7" fill="white">TT001_PV</text>
+        <text x="665" y="185" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7" fill="rgba(150,190,255,0.55)">EGU: &#176;C</text>
+        <text x="665" y="197" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7" fill="rgba(150,190,255,0.55)">HH: 85&#176;C</text>
+        <text x="665" y="209" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7" fill="rgba(150,190,255,0.55)">H: 80&#176;C</text>
+        <text x="665" y="221" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7" fill="rgba(150,190,255,0.55)">L: 65&#176;C</text>
+        <text x="665" y="233" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7" fill="rgba(150,190,255,0.55)">LL: 60&#176;C</text>
+        <text x="665" y="249" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7" fill="rgba(0,200,100,0.6)">Historian</text>
+        <text x="665" y="261" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7" fill="rgba(0,200,100,0.5)">Exception</text>
+        <text x="665" y="273" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7" fill="rgba(0,200,100,0.5)">DB: 0.5&#176;C</text>
+        <text x="665" y="285" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7" fill="rgba(0,200,100,0.5)">Ret: 7yr</text>
+
+        <!-- Zone labels at bottom -->
+        <text x="105" y="340" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(255,255,255,0.25)">Sensor + cal data</text>
+        <text x="310" y="340" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(255,255,255,0.25)">Terminal refs</text>
+        <text x="500" y="340" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(255,255,255,0.25)">I/O address + signal</text>
+        <text x="665" y="340" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(255,255,255,0.25)">SCADA tag + alarms</text>
+
+        <!-- Traceability arrows at bottom -->
+        <text x="360" y="368" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(0,135,255,0.4)" letter-spacing="0.08em">COMPLETE MEASUREMENT PATH — FIELD TO HISTORIAN — ON ONE DRAWING</text>
+      </svg>
+      <figcaption>FIGURE 1 — A pharma-grade loop diagram covers four zones: field instrument with calibration data, junction box terminal references, PLC I/O address and signal type, and SCADA tag name with alarm setpoints and historian configuration.</figcaption>
+    </figure>
+
+    <h2 id="the-four-zones-every-loop-diagram-needs">The Four Zones Every Loop Diagram Needs</h2>
+    <p>Breaking a loop diagram into four functional zones makes it easy to check completeness against IQ requirements. Each zone corresponds to a different system layer — and a different IQ verification step.</p>
+
+    <h3>Zone 1 — Field Instrument</h3>
+    <p>The field instrument zone must show the instrument symbol (ISA 5.1 compliant), the tag number, the manufacturer and model number, the sensor type and configuration (Pt100 4-wire, 4-20mA, HART, etc.), the calibrated range with engineering units, the calibration certificate reference, the certificate next-due date, the serial number, and the GMP criticality classification. The serial number is particularly important — it is what links this specific drawing to this specific calibration certificate for this specific installed device.</p>
+
+    <h3>Zone 2 — Junction Box and Marshalling</h3>
+    <p>The wiring zone must show every terminal block number along the signal path — from the instrument head through the junction box to the panel marshalling terminals. Cable references, conductor cross-sections, and shield earthing arrangements belong here. This is the zone that allows a commissioning engineer to physically trace the loop during <a href="field-instrumentation-iq-documentation.html">IQ loop checks</a> without referring to any other drawing.</p>
+
+    <h3>Zone 3 — PLC I/O</h3>
+    <p>The PLC I/O zone must show the I/O module type, the specific channel number, the PLC data block address or memory address, the signal type (4-20mA, Pt100 direct, digital), and the configured range in engineering units as seen at the PLC. If there is a separate transmitter performing range conversion, the output signal type and range must be explicitly shown — not assumed to match the sensor range. This zone feeds directly into the <a href="plc-io-mapping-iq-documentation.html">IQ I/O verification table</a>.</p>
+
+    <h3>Zone 4 — SCADA Tag</h3>
+    <p>The SCADA zone is where most loop diagrams produced by automation engineers fall short. In a pharma IQ, the SCADA tag name must appear explicitly on the loop diagram — not just implied by the tag number. The engineering unit displayed on the HMI, the alarm setpoints (HH, H, L, LL), and the historian configuration (storage type, deadband, retention period) all belong in this zone. This is what makes a loop diagram a complete audit trail from field to record.</p>
+
+    <div class="callout blue">
+      <div class="callout-label">Why SCADA Tag Names Matter</div>
+      <p>If the loop diagram shows tag TT-001 but does not show the SCADA tag name, a reviewer cannot verify that PWS_DIST_TT001_PV in the historian is actually reading the signal from TT-001 and not from a differently wired channel. <strong>The SCADA tag name on the loop diagram is the link between the physical installation and the GMP electronic record.</strong></p>
+    </div>
+
+    <h2 id="title-block-requirements">Title Block Requirements for IQ</h2>
+    <p>The title block of a loop diagram in a GMP context carries more weight than in standard engineering practice. It must include the drawing number (consistent with the document register in the IQ protocol), the instrument tag number, a plain-language description of what is being measured and where, the P&ID reference drawing number, the current revision letter, and the approval status — specifically whether the drawing has been approved as "As-Built" before IQ execution.</p>
+    <p>The "As-Built" status matters because IQ verifies the installed state, not the design intent. A loop diagram at revision A that was issued for construction is not the same document as the same drawing at revision A stamped "As-Built" after physical verification. If the drawing has not been through an as-built review, it should not be used as IQ evidence.</p>
+
+    <div class="callout red">
+      <div class="callout-label">Common IQ Failure</div>
+      <p>Presenting loop diagrams at their "Issued for Construction" revision during IQ is one of the most common documentation findings. <strong>The IQ checks what is installed, not what was designed.</strong> Every loop diagram submitted as IQ evidence must be approved at its as-built revision before the IQ sign-off date. If field changes were made during commissioning, those changes must be incorporated and the drawing re-approved before IQ proceeds.</p>
+    </div>
+
+    <h2 id="linking-loop-diagrams-to-iq-test-cases">Linking Loop Diagrams to IQ Test Cases</h2>
+    <p>Loop diagrams do not stand alone in an IQ package. They are the drawing evidence that supports specific IQ test cases. Understanding which IQ checks reference the loop diagram helps you build the right content into each drawing from the start.</p>
+
+    <div class="table-scroll">
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th>IQ Check Type</th>
+            <th>What It Verifies</th>
+            <th>Loop Diagram Zone Used</th>
+            <th>Cross-Reference</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Document Check</td>
+            <td>As-built loop diagrams are approved, revision-controlled, and consistent with the P&ID and instrument list</td>
+            <td>Title block</td>
+            <td>IQ-DOC-003, IQ-DOC-006, EL-SYS-001</td>
+          </tr>
+          <tr>
+            <td>Calibration Certificate Verification</td>
+            <td>Each GMP-critical instrument has a current, NIST-traceable certificate matching the installed device serial number</td>
+            <td>Zone 1 — Serial No + Cert Ref</td>
+            <td>IQ Section 7 calibration table</td>
+          </tr>
+          <tr>
+            <td>I/O Loop Check</td>
+            <td>Signal reaches the correct PLC I/O channel at the expected address and correctly scales to engineering units</td>
+            <td>Zones 1, 2, 3</td>
+            <td>IQ Section 8 I/O verification</td>
+          </tr>
+          <tr>
+            <td>Tag Consistency Check</td>
+            <td>Tag number is identical across: P&ID, instrument list, loop diagram, PLC variable table, SCADA tag database, calibration certificate</td>
+            <td>All zones</td>
+            <td>EL-SYS-001 Instrument List + IQ-DOC-003</td>
+          </tr>
+          <tr>
+            <td>Alarm Setpoint Verification</td>
+            <td>Alarm setpoints configured in SCADA match the approved setpoints in the loop diagram and FDS</td>
+            <td>Zone 4 — SCADA alarms</td>
+            <td>OQ alarm test cases</td>
+          </tr>
+          <tr>
+            <td>Historian Configuration Check</td>
+            <td>Tag is historised with correct deadband, engineering units, and retention period matching design specifications</td>
+            <td>Zone 4 — Historian config</td>
+            <td>EL-SYS-001 Historian Tag List</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2 id="loop-diagrams-and-p-ids-how-they-relate">Loop Diagrams and P&IDs — How They Relate</h2>
+    <p>Loop diagrams and P&IDs serve different but complementary purposes in the IQ evidence package. The P&ID shows process connectivity — where instruments are located in the process flow, how they relate to vessels and pipework, and what functional role they serve. The loop diagram shows signal connectivity — how the measurement travels electrically from the sensor to the control system.</p>
+    <p>Both documents must exist, and they must be consistent. A tag shown as TT-001 on the P&ID must appear as TT-001 on the loop diagram. The process connection shown on the P&ID (3/4" tri-clamp, for example) must be consistent with the sensor specification on the loop diagram. If the P&ID shows TT-001 as a temperature transmitter with local indication and the loop diagram shows a bare RTD with a remote transmitter, those two documents are in conflict and neither is usable as IQ evidence until the discrepancy is resolved.</p>
+
+    <figure class="article-img">
+      <svg viewBox="0 0 720 220" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;background:#0d0f12;border-radius:8px 8px 0 0">
+        <defs>
+          <marker id="arr2" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><polygon points="0 0, 7 3.5, 0 7" fill="rgba(0,87,255,0.7)"/></marker>
+        </defs>
+        <text x="360" y="18" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(255,255,255,0.2)" letter-spacing="0.12em">DOCUMENT TRACEABILITY — LOOP DIAGRAM AS CONSISTENCY HUB</text>
+
+        <!-- Central loop diagram box -->
+        <rect x="285" y="70" width="150" height="60" rx="5" fill="rgba(0,87,255,0.14)" stroke="#0057ff" stroke-width="1.5"/>
+        <text x="360" y="96" text-anchor="middle" font-family="Epilogue,sans-serif" font-weight="800" font-size="12" fill="white">LOOP DIAGRAM</text>
+        <text x="360" y="112" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(100,160,255,0.7)">LD-TT001 Rev A As-Built</text>
+
+        <!-- Surrounding documents -->
+        <!-- P&ID -->
+        <rect x="20" y="35" width="130" height="44" rx="4" fill="rgba(0,87,255,0.06)" stroke="rgba(0,87,255,0.3)" stroke-width="1"/>
+        <text x="85" y="55" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(100,160,255,0.7)">P&amp;ID</text>
+        <text x="85" y="68" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7" fill="rgba(150,190,255,0.5)">Process location + function</text>
+        <line x1="150" y1="57" x2="285" y2="90" stroke="rgba(0,87,255,0.35)" stroke-width="1" stroke-dasharray="4,3"/>
+
+        <!-- Instrument list -->
+        <rect x="20" y="105" width="130" height="44" rx="4" fill="rgba(0,87,255,0.06)" stroke="rgba(0,87,255,0.3)" stroke-width="1"/>
+        <text x="85" y="125" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(100,160,255,0.7)">INSTRUMENT LIST</text>
+        <text x="85" y="138" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7" fill="rgba(150,190,255,0.5)">Tag, type, range, location</text>
+        <line x1="150" y1="127" x2="285" y2="110" stroke="rgba(0,87,255,0.35)" stroke-width="1" stroke-dasharray="4,3"/>
+
+        <!-- Cal certificate -->
+        <rect x="20" y="170" width="130" height="44" rx="4" fill="rgba(0,87,255,0.06)" stroke="rgba(0,87,255,0.3)" stroke-width="1"/>
+        <text x="85" y="189" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(100,160,255,0.7)">CAL CERTIFICATE</text>
+        <text x="85" y="202" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7" fill="rgba(150,190,255,0.5)">Serial, range, traceability</text>
+        <line x1="150" y1="192" x2="285" y2="120" stroke="rgba(0,87,255,0.35)" stroke-width="1" stroke-dasharray="4,3"/>
+
+        <!-- PLC I/O list -->
+        <rect x="570" y="35" width="130" height="44" rx="4" fill="rgba(0,87,255,0.06)" stroke="rgba(0,87,255,0.3)" stroke-width="1"/>
+        <text x="635" y="55" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(100,160,255,0.7)">PLC I/O LIST</text>
+        <text x="635" y="68" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7" fill="rgba(150,190,255,0.5)">Address, signal, module</text>
+        <line x1="435" y1="90" x2="570" y2="57" stroke="rgba(0,87,255,0.35)" stroke-width="1" stroke-dasharray="4,3"/>
+
+        <!-- SCADA tag DB -->
+        <rect x="570" y="105" width="130" height="44" rx="4" fill="rgba(0,87,255,0.06)" stroke="rgba(0,87,255,0.3)" stroke-width="1"/>
+        <text x="635" y="125" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(100,160,255,0.7)">SCADA TAG DB</text>
+        <text x="635" y="138" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7" fill="rgba(150,190,255,0.5)">Tag name, EGU, alarms</text>
+        <line x1="435" y1="100" x2="570" y2="117" stroke="rgba(0,87,255,0.35)" stroke-width="1" stroke-dasharray="4,3"/>
+
+        <!-- IQ Protocol -->
+        <rect x="570" y="170" width="130" height="44" rx="4" fill="rgba(0,87,255,0.06)" stroke="rgba(0,87,255,0.3)" stroke-width="1"/>
+        <text x="635" y="189" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(100,160,255,0.7)">IQ PROTOCOL</text>
+        <text x="635" y="202" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7" fill="rgba(150,190,255,0.5)">Document + loop checks</text>
+        <line x1="435" y1="120" x2="570" y2="185" stroke="rgba(0,87,255,0.35)" stroke-width="1" stroke-dasharray="4,3"/>
+
+        <text x="360" y="206" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(255,255,255,0.15)">All six documents must agree on tag number, range, and manufacturer — or IQ fails</text>
+      </svg>
+      <figcaption>FIGURE 2 — The loop diagram is the consistency hub of the IQ evidence package. Any mismatch between it and the surrounding documents is a traceability failure that must be resolved before IQ can be signed off.</figcaption>
+    </figure>
+
+    <h2 id="managing-loop-diagrams-through-the-project-lifecycle">Managing Loop Diagrams Through the Project Lifecycle</h2>
+    <p>Loop diagrams typically go through three distinct states during a pharma automation project, and each state has different documentation implications.</p>
+    <p><strong>Issued for Construction (IFC):</strong> These are design-intent drawings used during panel build and field installation. They reflect what the engineer intended. They are not IQ evidence. Using an IFC drawing during IQ is a documentation gap — even if nothing changed between IFC and as-built.</p>
+    <p><strong>As-Built:</strong> After commissioning and loop checking, the drawings are updated to reflect what was actually installed — including any field changes made during installation that were not captured in the IFC revision. These drawings are approved and stamped as-built before IQ begins. These are IQ evidence.</p>
+    <p><strong>Post-Change:</strong> After the system goes live, any wiring change, instrument replacement, or I/O reassignment that affects a loop diagram requires a <a href="change-control-validated-system.html">change control record</a> and a new approved revision of the affected drawing before the change is implemented in a validated environment. The loop diagram revision history becomes part of the equipment change log.</p>
+
+    <div class="callout green">
+      <div class="callout-label">In the QLean Framework</div>
+      <p>The IQ protocol (IQ-SYS-001) includes a document verification section (IQ-DOC-003) that confirms as-built P&IDs are approved and tag numbers match the field — and a separate calibration certificate verification table where each GMP-critical instrument's certificate reference, calibration date, and next-due date is recorded. The Hardware Design Specification (HDS-SYS-001 Appendix C) provides the instrument location plan template that forms the drawing package these loop checks reference. <strong>The loop diagram itself is a drawing you produce for your specific project — the framework provides the IQ checks that verify it and the structure that confirms consistency across all six documents shown above.</strong></p>
+    </div>
+
+    <h2 id="what-auditors-actually-look-for">What Auditors Actually Look For</h2>
+    <p>In a GMP audit of your instrumentation package, an auditor reviewing loop diagrams is not checking whether you followed ISA 5.4. They are checking whether they can trust the data that came out of this measurement loop. Their mental checklist is essentially:</p>
+    <ul class="checklist">
+      <li>Can I find a calibration certificate for the device that was physically installed — not just a generic certificate for a device of this type?</li>
+      <li>Does the serial number on the certificate match what is written on the loop diagram and what is physically tagged in the field?</li>
+      <li>Was the certificate current (within calibration date) when the IQ was executed?</li>
+      <li>Is the SCADA tag name on this drawing the same one that appears in the historian export I am looking at?</li>
+      <li>Are the alarm setpoints on this drawing the same ones configured in the system at the time of the OQ?</li>
+      <li>If a field wiring change was made after IQ, is there a change control record and an updated drawing revision?</li>
+    </ul>
+    <p>Every one of these questions is answerable from a well-constructed loop diagram package. None of them are answerable from a loop diagram that only shows the sensor symbol, a cable line, and an I/O module.</p>
+
+    <h2 id="practical-approach-to-building-your-loop-diagram-set">Practical Approach to Building Your Loop Diagram Set</h2>
+    <p>The most efficient approach on a real project is to build loop diagram templates that force all four zones to be completed. Engineers who leave the SCADA zone blank because "that is the controls team's job" are creating IQ gaps. On a project where the SI is responsible for the complete IQ package, the loop diagram is the SI's document — and all four zones are the SI's responsibility.</p>
+    <p>Build the loop diagram in parallel with the <a href="plc-io-mapping-iq-documentation.html">I/O list</a> and the instrument list. All three documents should be populated from the same source data — typically the tag register maintained throughout the project. If you maintain these in parallel, inconsistencies surface during engineering rather than during the IQ. A tag number discrepancy found during drawing review costs one engineer one hour. The same discrepancy found during the IQ execution costs a deviation, a root cause investigation, a corrective action, and potentially a delayed IQ sign-off.</p>
+    <p>For GMP-critical instruments specifically, plan to have calibration certificates reviewed against loop diagrams before the IQ start date. The IQ pre-condition check (verifying that all certificates are current) is not the place to discover that two tag numbers were inadvertently swapped in the instrument list.</p>
+
+    <div class="callout amber">
+      <div class="callout-label">Replacement Instruments After IQ Baseline</div>
+      <p>When an instrument is replaced after the IQ has been signed off, the loop diagram must be updated to reflect the new serial number and the new calibration certificate must be filed. This is not just good practice — it is a data integrity requirement. If the historian is recording data attributed to TT-001 and the device physically installed at that connection point has a different serial number to the one in the IQ evidence package, there is a broken chain of traceability that affects every GMP record produced since the replacement. <strong>Instrument replacements are change control events, not maintenance events.</strong></p>
+    </div>
+
+  </article>
+
+  <aside class="sidebar">
+    <div class="toc-card">
+      <div class="toc-label">In This Article</div>
+      <ul class="toc-list">
+        <li><a href="#what-makes-a-loop-diagram-gmp-evidence" class="active">What Makes It GMP Evidence</a></li>
+        <li><a href="#anatomy-of-a-pharma-loop-diagram">Anatomy of a Pharma Loop Diagram</a></li>
+        <li><a href="#the-four-zones-every-loop-diagram-needs">The Four Zones</a></li>
+        <li><a href="#title-block-requirements">Title Block Requirements</a></li>
+        <li><a href="#linking-loop-diagrams-to-iq-test-cases">Linking to IQ Test Cases</a></li>
+        <li><a href="#loop-diagrams-and-p-ids-how-they-relate">Loop Diagrams and P&IDs</a></li>
+        <li><a href="#managing-loop-diagrams-through-the-project-lifecycle">Managing Through the Lifecycle</a></li>
+        <li><a href="#what-auditors-actually-look-for">What Auditors Look For</a></li>
+        <li><a href="#practical-approach-to-building-your-loop-diagram-set">Practical Approach</a></li>
+      </ul>
+    </div>
+
+    <div class="sidebar-cta">
+      <div class="sc-eyebrow">QLean Framework</div>
+      <div class="sc-title">29 production-ready GAMP 5 documents</div>
+      <div class="sc-body">IQ protocol with calibration certificate verification table, as-built drawing checks, and I/O loop verification — everything your instrumentation IQ package needs to reference.</div>
+      <a href="../index.html#pricing" class="sc-btn">Get the Framework &#8212; &#8364;249 &#8594;</a>
+      <div class="sc-note">// INSTANT DOWNLOAD &middot; COMPANY-WIDE LICENCE</div>
+    </div>
+
+    <div class="sidebar-share">
+      <div class="share-label">Share This Article</div>
+      <div class="share-links">
+        <a href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fqleanautomation.com%2Fblog%2Finstrument-loop-diagram-pharma-iq.html" target="_blank" rel="noopener" class="share-link">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          Share on LinkedIn
+        </a>
+        <a href="https://www.reddit.com/submit?url=https%3A%2F%2Fqleanautomation.com%2Fblog%2Finstrument-loop-diagram-pharma-iq.html&title=Instrument+Loop+Diagrams+as+IQ+Evidence+%E2%80%94+What+They+Must+Show" target="_blank" rel="noopener" class="share-link">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/></svg>
+          Share on Reddit
+        </a>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<section class="related">
+  <div class="related-inner">
+    <div class="related-label">Continue Reading</div>
+    <div class="related-grid">
+      <a href="field-instrumentation-iq-documentation.html" class="related-card">
+        <span class="rc-tag">&#128207; Instrumentation</span>
+        <div class="rc-title">How to Document Field Instrumentation for a Pharma IQ</div>
+        <div class="rc-desc">The complete IQ documentation package for field instruments — instrument list, datasheet cross-reference, loop check record, and calibration certificate table.</div>
+        <div class="rc-footer"><span class="rc-read">7 MIN READ</span><span class="rc-arrow">&#8594;</span></div>
+      </a>
+      <a href="plc-io-mapping-iq-documentation.html" class="related-card">
+        <span class="rc-tag">&#9881; PLC Engineering</span>
+        <div class="rc-title">PLC I/O Mapping for IQ Documentation</div>
+        <div class="rc-desc">How to produce an I/O list that satisfies a pharma IQ — address format, signal type verification, tag name consistency, and what the IQ test case actually checks.</div>
+        <div class="rc-footer"><span class="rc-read">6 MIN READ</span><span class="rc-arrow">&#8594;</span></div>
+      </a>
+      <a href="calibration-management-pharma-iq.html" class="related-card">
+        <span class="rc-tag">&#128207; Instrumentation</span>
+        <div class="rc-title">Calibration Management for Pharma Automation</div>
+        <div class="rc-desc">Certificate traceability requirements, calibration intervals, OOT response procedure, and how calibration status is tracked across the validated system lifecycle.</div>
+        <div class="rc-footer"><span class="rc-read">7 MIN READ</span><span class="rc-arrow">&#8594;</span></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="../index.html" class="nav-logo" style="text-decoration:none">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="7" fill="#0d0f12"/><rect x="8" y="7" width="16" height="16" rx="2" stroke="white" stroke-width="2.5" fill="none"/><line x1="20" y1="19" x2="26" y2="25" stroke="#0057FF" stroke-width="3" stroke-linecap="round"/></svg>
+          <span style="font-family:'Epilogue',sans-serif;font-weight:800;font-size:16px;color:#0d0f12;letter-spacing:-.03em">QLean <span style="font-weight:300;color:#5a6172">Automation</span></span>
+        </a>
+        <p>GMP validation documentation tools for automation engineers and system integrators.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Products</h4>
+        <ul>
+          <li><a href="../index.html#products">GAMP 5 Framework Pack</a></li>
+          <li><a href="../index.html#products">Technical Ebook</a></li>
+          <li><a href="../index.html#pricing">Pricing</a></li>
+          <li><a href="../index.html#faq">FAQ</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Knowledge Base</h4>
+        <ul>
+          <li><a href="blog-index.html">All Articles</a></li>
+          <li><a href="cluster-instrumentation.html">Instrumentation &amp; Calibration</a></li>
+          <li><a href="field-instrumentation-iq-documentation.html">Field Instrumentation IQ</a></li>
+          <li><a href="calibration-management-pharma-iq.html">Calibration Management</a></li>
+          <li><a href="calibration-certificates-gmp-requirements.html">Calibration Certificates</a></li>
+          <li><a href="plc-io-mapping-iq-documentation.html">PLC I/O Mapping</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="../index.html#framework">Framework</a></li>
+          <li><a href="../terms.html">Terms of Service</a></li>
+          <li><a href="../privacy.html">Privacy Policy</a></li>
+          <li><a href="mailto:hello@qleanautomation.com">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 QLean Automation. All rights reserved.</p>
+      <div class="compliance-pills">
+        <span class="cp">GAMP 5</span>
+        <span class="cp">EU GMP ANNEX 11</span>
+        <span class="cp">21 CFR PART 11</span>
+        <span class="cp">ISA 5.4</span>
+        <span class="cp">GXP</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+window.addEventListener('scroll',function(){
+  var s=document.getElementById('progress');
+  var h=document.documentElement;
+  var p=(h.scrollTop||document.body.scrollTop)/(h.scrollHeight-h.clientHeight)*100;
+  s.style.width=p+'%';
+});
+var tl=document.querySelectorAll('.toc-list a');
+window.addEventListener('scroll',function(){
+  var headings=document.querySelectorAll('.article-body h2[id]');
+  var scrollY=window.scrollY+120;
+  var current='';
+  headings.forEach(function(h){if(h.offsetTop<=scrollY)current=h.id;});
+  tl.forEach(function(a){
+    a.classList.remove('active');
+    if(a.getAttribute('href')==='#'+current)a.classList.add('active');
+  });
+});
+</script>
+</body>
+</html>

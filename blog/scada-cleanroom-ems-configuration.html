@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-JJQ1TXZJX7"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-JJQ1TXZJX7');
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Configuring SCADA for Cleanroom Environmental Monitoring | QLean Automation</title>
+<meta name="description" content="Configuring a SCADA as an Environmental Monitoring System for GMP cleanrooms requires EU GMP Annex 1 alert and action limits, multi-parameter historian configuration, and a validation approach that covers both the instruments and the software. Here's how to design and configure it correctly.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@300;400;500;600;700;800;900&family=Source+Sans+3:ital,wght@0,300;0,400;0,500;1,300&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--white:#ffffff;--off:#f7f8f9;--ink:#0d0f12;--ink2:#1e2128;--ink3:#3d4456;--ink4:#9199a8;--rule:#e2e5ea;--rule2:#c8cdd6;--blue:#0057ff;--blue2:#0044cc;--blue-dim:rgba(0,87,255,0.07);--green:#00875a;--green-dim:rgba(0,135,90,0.08);--amber:#d97706;--amber-dim:rgba(217,119,6,0.08);--red:#c0392b;--red-dim:rgba(192,57,43,0.08);--f-head:'Epilogue',sans-serif;--f-body:'Source Sans 3',sans-serif;--f-mono:'Roboto Mono',monospace;--shadow-sm:0 2px 8px rgba(13,15,18,0.06),0 1px 3px rgba(13,15,18,0.04)}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}body{background:var(--white);color:var(--ink);font-family:var(--f-body);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+nav{position:fixed;top:0;left:0;right:0;z-index:200;height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 6%;background:rgba(255,255,255,0.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--rule)}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;flex-shrink:0}
+.nav-links{display:flex;align-items:center;gap:36px;list-style:none}.nav-links a{font-size:14px;font-weight:400;color:var(--ink3);text-decoration:none;transition:color .2s}.nav-links a:hover{color:var(--ink)}
+.nav-btn{font-family:var(--f-body);font-size:13px;font-weight:500;padding:9px 20px;background:var(--blue);color:white;border:none;border-radius:6px;cursor:pointer;text-decoration:none;white-space:nowrap;flex-shrink:0}.nav-btn:hover{background:var(--blue2)}
+.progress-bar{position:fixed;top:64px;left:0;right:0;height:2px;background:var(--rule);z-index:199}.progress-fill{height:100%;background:var(--blue);width:0%}
+.article-hero{padding:120px 6% 64px;background:var(--white);border-bottom:1px solid var(--rule);position:relative;overflow:hidden}
+.article-hero::before{content:'';position:absolute;top:-80px;right:-80px;width:400px;height:400px;background:radial-gradient(circle,rgba(0,87,255,0.04) 0%,transparent 70%);pointer-events:none}
+.article-hero-inner{max-width:940px;margin:0 auto;position:relative;z-index:1}
+.breadcrumb{display:flex;align-items:center;gap:8px;font-family:var(--f-mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink4);margin-bottom:24px}.breadcrumb a{color:var(--ink4);text-decoration:none}.breadcrumb a:hover{color:var(--blue)}.breadcrumb span{color:var(--rule2)}
+.article-tag{display:inline-flex;align-items:center;gap:6px;font-family:var(--f-mono);font-size:10px;font-weight:500;color:var(--blue);letter-spacing:.1em;text-transform:uppercase;margin-bottom:20px;padding:4px 10px;background:var(--blue-dim);border-radius:4px}
+.article-hero h1{font-family:var(--f-head);font-size:clamp(30px,5vw,52px);font-weight:900;line-height:1.0;letter-spacing:-.04em;color:var(--ink);margin-bottom:20px}.article-hero h1 span{color:var(--blue)}
+.article-intro{font-size:18px;font-weight:400;color:var(--ink2);line-height:1.75;margin-bottom:32px;max-width:800px}
+.article-meta{display:flex;align-items:center;gap:24px;padding-top:24px;border-top:1px solid var(--rule);flex-wrap:wrap}
+.meta-author{display:flex;align-items:center;gap:10px}.author-avatar{width:36px;height:36px;border-radius:50%;background:var(--ink);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.author-name{font-size:13px;font-weight:500;color:var(--ink)}.author-role{font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.04em}
+.meta-divider{width:1px;height:28px;background:var(--rule)}.meta-stat{font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.06em}
+.article-wrap{max-width:1300px;margin:0 auto;padding:64px 6%;display:grid;grid-template-columns:1fr 300px;gap:60px;align-items:start}
+.article-body{min-width:0}
+.article-body h2{font-family:var(--f-head);font-size:26px;font-weight:800;letter-spacing:-.03em;color:var(--ink);margin:56px 0 16px;line-height:1.2}.article-body h2:first-child{margin-top:0}
+.article-body h3{font-family:var(--f-head);font-size:18px;font-weight:700;letter-spacing:-.02em;color:var(--ink);margin:32px 0 12px}
+.article-body p{font-size:16px;font-weight:400;color:var(--ink2);line-height:1.85;margin-bottom:20px}
+.article-body strong{color:var(--ink);font-weight:600}
+.article-body a{color:var(--blue);text-decoration:none;border-bottom:1px solid rgba(0,87,255,.25)}.article-body a:hover{border-color:var(--blue)}
+.callout{padding:20px 24px;border-radius:8px;margin:32px 0;border-left:3px solid}
+.callout.blue{background:var(--blue-dim);border-color:var(--blue)}.callout.amber{background:var(--amber-dim);border-color:var(--amber)}.callout.green{background:var(--green-dim);border-color:var(--green)}.callout.red{background:var(--red-dim);border-color:var(--red)}
+.callout-label{font-family:var(--f-mono);font-size:9px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px}.callout.blue .callout-label{color:var(--blue)}.callout.amber .callout-label{color:var(--amber)}.callout.green .callout-label{color:var(--green)}.callout.red .callout-label{color:var(--red)}
+.callout p{font-size:14px;color:var(--ink2);line-height:1.7;margin:0}.callout strong{color:var(--ink)}
+.article-img{width:100%;border-radius:8px;border:1px solid #1e2535;overflow:hidden;margin:36px 0}
+.article-img figcaption{padding:10px 14px;background:var(--off);font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.04em;border-top:1px solid var(--rule)}
+.arrow-list{list-style:none;display:flex;flex-direction:column;gap:8px;margin:16px 0 24px}
+.arrow-list li{display:flex;align-items:flex-start;gap:10px;font-size:15px;color:var(--ink2);line-height:1.6}
+.arrow-list li::before{content:'\2192';color:var(--blue);flex-shrink:0;font-size:12px;margin-top:3px}
+.checklist{list-style:none;display:flex;flex-direction:column;gap:8px;margin:20px 0 28px}
+.checklist li{display:flex;align-items:flex-start;gap:10px;font-size:15px;color:var(--ink2);line-height:1.6}
+.checklist li::before{content:'';width:16px;height:16px;flex-shrink:0;margin-top:3px;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 14 14' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='7' cy='7' r='6.5' fill='none' stroke='%230057ff' stroke-width='1'/%3E%3Cpath d='M4 7l2 2 4-4' stroke='%230057ff' stroke-width='1.3' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:center;background-size:contain}
+.table-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:28px 0}
+.compare-table{width:100%;border-collapse:collapse;font-size:14px}
+.compare-table th{font-family:var(--f-mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink4);padding:10px 16px;border-bottom:2px solid var(--rule);text-align:left;background:var(--off)}
+.compare-table td{padding:12px 16px;border-bottom:1px solid var(--rule);vertical-align:top;color:var(--ink2);line-height:1.6}
+.compare-table tr:last-child td{border-bottom:none}
+.compare-table td:first-child{font-weight:600;color:var(--ink);font-family:var(--f-mono);font-size:12px}
+.sidebar{position:sticky;top:88px;display:flex;flex-direction:column;gap:16px}
+.toc-card{border:1px solid var(--rule);border-radius:8px;padding:24px;background:var(--white);box-shadow:var(--shadow-sm)}
+.toc-label{font-family:var(--f-mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);margin-bottom:16px}
+.toc-list{list-style:none;display:flex;flex-direction:column;gap:2px}
+.toc-list a{display:block;font-size:13px;color:var(--ink3);text-decoration:none;padding:6px 10px;border-radius:4px;transition:all .15s;border-left:2px solid transparent}
+.toc-list a:hover,.toc-list a.active{color:var(--blue);background:var(--blue-dim);border-left-color:var(--blue)}
+.sidebar-cta{border:1px solid var(--blue);border-radius:8px;padding:24px;background:var(--blue-dim)}
+.sc-eyebrow{font-family:var(--f-mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);margin-bottom:10px}
+.sc-title{font-family:var(--f-head);font-size:17px;font-weight:800;letter-spacing:-.02em;color:var(--ink);margin-bottom:8px;line-height:1.2}
+.sc-body{font-size:13px;color:var(--ink3);line-height:1.6;margin-bottom:16px}
+.sc-btn{display:block;text-align:center;padding:11px 16px;background:var(--blue);color:white;border-radius:6px;font-family:var(--f-body);font-size:13px;font-weight:500;text-decoration:none}.sc-btn:hover{background:var(--blue2)}
+.sc-note{font-family:var(--f-mono);font-size:9px;color:var(--ink4);text-align:center;margin-top:8px;letter-spacing:.04em}
+.sidebar-share{border:1px solid var(--rule);border-radius:8px;padding:20px 24px;background:var(--white)}
+.share-label{font-family:var(--f-mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);margin-bottom:14px}
+.share-links{display:flex;flex-direction:column;gap:8px}
+.share-link{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--ink3);text-decoration:none;padding:9px 12px;border:1px solid var(--rule);border-radius:6px;transition:border-color .2s,color .2s}.share-link:hover{border-color:var(--blue);color:var(--blue)}
+.related{padding:64px 6%;border-top:1px solid var(--rule);background:var(--off)}
+.related-inner{max-width:1100px;margin:0 auto}
+.related-label{font-family:var(--f-mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);margin-bottom:32px;display:flex;align-items:center;gap:10px}
+.related-label::before{content:'';width:20px;height:1px;background:var(--blue)}
+.related-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.related-card{padding:24px;border:1px solid var(--rule);border-radius:8px;background:var(--white);box-shadow:var(--shadow-sm);transition:border-color .2s,transform .2s;text-decoration:none;display:flex;flex-direction:column;gap:12px}.related-card:hover{border-color:var(--blue);transform:translateY(-4px)}
+.rc-tag{font-family:var(--f-mono);font-size:9px;color:var(--blue);letter-spacing:.08em;text-transform:uppercase;padding:3px 8px;background:var(--blue-dim);border-radius:3px;align-self:flex-start}
+.rc-title{font-family:var(--f-head);font-size:16px;font-weight:700;letter-spacing:-.02em;color:var(--ink);line-height:1.25}
+.rc-desc{font-size:13px;color:var(--ink3);line-height:1.6;flex:1}
+.rc-footer{display:flex;align-items:center;justify-content:space-between;padding-top:12px;border-top:1px solid var(--rule)}
+.rc-read{font-family:var(--f-mono);font-size:10px;color:var(--ink4)}.rc-arrow{font-size:14px;color:var(--blue)}
+footer{padding:56px 6% 32px;border-top:1px solid var(--rule);background:var(--white)}
+.footer-inner{max-width:1160px;margin:0 auto}
+.footer-top{display:flex;justify-content:space-between;align-items:flex-start;gap:40px;flex-wrap:wrap;margin-bottom:48px}
+.footer-brand p{font-size:13px;font-weight:300;color:var(--ink3);margin-top:12px;max-width:260px;line-height:1.6}
+.footer-col h4{font-family:var(--f-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink4);margin-bottom:16px}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+.footer-col a{font-size:13px;color:var(--ink3);text-decoration:none}.footer-col a:hover{color:var(--blue)}
+.footer-bottom{padding-top:24px;border-top:1px solid var(--rule);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.footer-bottom p{font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.04em}
+.compliance-pills{display:flex;gap:6px;flex-wrap:wrap}
+.cp{font-family:var(--f-mono);font-size:9px;padding:3px 8px;border:1px solid var(--rule);border-radius:3px;color:var(--ink4);letter-spacing:.06em}
+@media(max-width:900px){.article-wrap{grid-template-columns:1fr;gap:48px}.sidebar{position:static}.related-grid{grid-template-columns:1fr}.table-scroll{margin:20px 0}}
+@media(max-width:900px){.nav-links{display:none}}
+@media(max-width:540px){nav{padding:0 4%}.nav-btn{font-size:12px;padding:8px 14px}}
+</style>
+</head>
+<body>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+<nav>
+  <a href="../index.html" class="nav-logo">
+    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" style="flex-shrink:0"><rect width="32" height="32" rx="7" fill="#0d0f12"/><rect x="8" y="7" width="16" height="16" rx="2" stroke="white" stroke-width="2.5" fill="none"/><line x1="20" y1="19" x2="26" y2="25" stroke="#0057FF" stroke-width="3" stroke-linecap="round"/></svg>
+    <span style="font-family:'Epilogue',sans-serif;font-weight:800;font-size:16px;color:#0d0f12;letter-spacing:-.03em;white-space:nowrap">QLean <span style="font-weight:300;color:#5a6172">Automation</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="../index.html#products">Products</a></li>
+    <li><a href="../index.html#framework">Framework</a></li>
+    <li><a href="blog-index.html">Knowledge Base</a></li>
+    <li><a href="../index.html#pricing">Pricing</a></li>
+    <li><a href="../about.html">About</a></li>
+    <li><a href="../index.html#faq">FAQ</a></li>
+  </ul>
+  <a href="../index.html#pricing" class="nav-btn">Get the Framework →</a>
+</nav>
+
+<header class="article-hero">
+  <div class="article-hero-inner">
+    <div class="breadcrumb"><a href="../index.html">Home</a><span>/</span><a href="blog-index.html">Knowledge Base</a><span>/</span>SCADA for Cleanroom EMS</div>
+    <div class="article-tag">🖥️ SCADA Engineering</div>
+    <h1>Configuring SCADA for<br><span>Cleanroom Environmental</span><br>Monitoring</h1>
+    <p class="article-intro">A cleanroom EMS on a SCADA platform is not just a historian with temperature tags. EU GMP Annex 1 requires alert and action limits with separate alarm strategies, continuous recording with no data gaps, and an excursion response workflow that generates a deviation record. Configuring all of this correctly — and validating it — requires design decisions that most SCADA engineers don't encounter outside cleanroom projects.</p>
+    <div class="article-meta">
+      <div class="meta-author">
+        <div class="author-avatar"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="7" r="3.5" stroke="white" stroke-width="1.5"/><path d="M2.5 16c0-3.59 2.91-6.5 6.5-6.5s6.5 2.91 6.5 6.5" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+        <div><div class="author-name">QLean Automation</div><div class="author-role">ENGINEERS WHO BUILD SYSTEMS, NOT JUST SIGN THEM</div></div>
+      </div>
+      <div class="meta-divider"></div><div class="meta-stat">8 MIN READ</div>
+      <div class="meta-divider"></div><div class="meta-stat">EMS · EU GMP ANNEX 1 · CLEANROOM</div>
+    </div>
+  </div>
+</header>
+
+<div class="article-wrap">
+  <article class="article-body">
+
+    <h2 id="ems-vs-standard-scada">EMS vs Standard Process SCADA — What's Different</h2>
+    <p>A standard process SCADA monitors and controls a process. A cleanroom EMS monitors an environment — the controlled space that surrounds the process. The instruments are passive (sensors only, no actuators in most configurations). The data is continuous. The alarm strategy is two-tiered. And the records generated by the EMS are used to release product — which means the data integrity requirements are as high as any GMP process record.</p>
+    <p>The key regulatory driver for a GMP cleanroom EMS is EU GMP Annex 1 (Manufacture of Sterile Medicinal Products), which defines the environmental monitoring requirements for clean areas. Annex 1 requires continuous or frequent monitoring of critical environmental parameters, defined alert limits and action limits for each parameter and each room, a documented response procedure for limit exceedances, and records retained for the required period. The SCADA configuration must implement all of these — not as nice-to-have features but as validated functions with OQ test cases.</p>
+    <p>The distinction between alert limits and action limits is the most important design decision for an EMS SCADA configuration, and the one most commonly collapsed into a single alarm level by engineers who haven't worked on EMS projects before.</p>
+
+    <h2 id="alert-vs-action-limits">Alert Limits and Action Limits — Two Separate Alarm Levels</h2>
+    <p>Annex 1 defines two separate limit types for environmental parameters. Alert limits indicate that something may be drifting out of control — they trigger investigation and increased monitoring, not immediate production stop. Action limits indicate that the environment has exceeded the acceptable operating range — they trigger immediate action including potential product quarantine. The SCADA must implement these as two distinct alarm levels with different priority settings, different required responses, and different audit trail entries.</p>
+
+    <figure class="article-img">
+      <svg viewBox="0 0 720 260" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;background:#0d0f12;border-radius:8px 8px 0 0">
+        <text x="360" y="18" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(255,255,255,0.2)" letter-spacing="0.12em">EMS TWO-TIER LIMIT STRATEGY — ALERT AND ACTION LIMITS</text>
+
+        <!-- Y-axis label -->
+        <text x="20" y="140" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(255,255,255,0.3)" transform="rotate(-90,20,140)">PARAMETER VALUE</text>
+
+        <!-- Action limit upper -->
+        <line x1="55" y1="55" x2="695" y2="55" stroke="rgba(220,80,80,0.6)" stroke-width="1.5" stroke-dasharray="6,3"/>
+        <text x="60" y="48" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(220,80,80,0.7)">ACTION LIMIT (HIGH)</text>
+        <text x="600" y="48" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(220,80,80,0.5)">Priority: HIGH alarm</text>
+
+        <!-- Alert limit upper -->
+        <line x1="55" y1="95" x2="695" y2="95" stroke="rgba(240,160,40,0.5)" stroke-width="1.5" stroke-dasharray="4,3"/>
+        <text x="60" y="88" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(240,160,40,0.65)">ALERT LIMIT (HIGH)</text>
+        <text x="600" y="88" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(240,160,40,0.45)">Priority: MEDIUM alarm</text>
+
+        <!-- Normal operating band -->
+        <rect x="55" y="95" width="640" height="80" fill="rgba(0,135,90,0.06)"/>
+        <text x="360" y="140" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(0,135,90,0.4)">NORMAL OPERATING BAND</text>
+
+        <!-- Alert limit lower -->
+        <line x1="55" y1="175" x2="695" y2="175" stroke="rgba(240,160,40,0.5)" stroke-width="1.5" stroke-dasharray="4,3"/>
+        <text x="60" y="187" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(240,160,40,0.65)">ALERT LIMIT (LOW)</text>
+
+        <!-- Action limit lower -->
+        <line x1="55" y1="215" x2="695" y2="215" stroke="rgba(220,80,80,0.6)" stroke-width="1.5" stroke-dasharray="6,3"/>
+        <text x="60" y="227" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(220,80,80,0.7)">ACTION LIMIT (LOW)</text>
+
+        <!-- Example process line -->
+        <polyline points="55,140 110,138 165,135 220,132 265,128 295,118 320,108 345,100 360,98 380,93 400,89 420,97 450,105 480,115 510,125 540,130 580,135 620,138 660,140 695,141" fill="none" stroke="rgba(0,87,255,0.7)" stroke-width="2"/>
+
+        <!-- Exceedance zone shading -->
+        <rect x="360" y="55" width="80" height="38" fill="rgba(240,160,40,0.08)"/>
+        <text x="400" y="79" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(240,160,40,0.55)">ALERT</text>
+
+        <!-- Response annotations -->
+        <text x="360" y="246" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(255,255,255,0.18)">ALERT: INVESTIGATE + INCREASE MONITORING — ACTION: IMMEDIATE RESPONSE + POTENTIAL PRODUCT QUARANTINE</text>
+      </svg>
+      <figcaption>EMS TWO-TIER LIMIT STRATEGY — Alert limits trigger investigation and increased monitoring frequency (Medium alarm priority). Action limits trigger immediate response including potential product quarantine (High alarm priority). Both must be separately configured in the SCADA historian and alarm management system.</figcaption>
+    </figure>
+
+    <p>In the SCADA configuration, alert limits must be configured as Medium priority alarms — they require acknowledgement and investigation but do not stop production. Action limits must be configured as High priority alarms — they require immediate response, and the standard operating procedure linked to the alarm must define the product quarantine decision criteria. The acknowledgement of an action limit alarm must include a mandatory reason field — the operator must document what action was taken, not just click acknowledge.</p>
+    <p>Both limit types must be stored in the historian as configuration parameters with their own audit trail — any change to an alert or action limit is a GMP configuration change that requires change control, impacts the validated state, and must be audit-trailed with old value, new value, user, timestamp, and reason. A site that updates alert and action limits without change control every time a cleaning validation baseline is established is accumulating undocumented changes to a validated configuration.</p>
+
+    <h2 id="parameters-and-intervals">Parameters, Recording Intervals, and Data Gap Prevention</h2>
+    <p>The standard parameter set for a GMP cleanroom EMS is temperature, relative humidity, and differential pressure. Sterile manufacturing facilities add particle counts (viable and non-viable). Each parameter has different monitoring requirements under Annex 1, and each requires a separate historian tag configuration.</p>
+
+    <ul class="arrow-list">
+      <li><strong>Temperature:</strong> Continuous monitoring at 60-second recording interval. Alert and action limits specified per room classification (typically ±2°C for alert, ±3°C for action from operating setpoint). Time-based storage — no deadband. Annex 1 requires evidence of continuous monitoring throughout manufacturing operations.</li>
+      <li><strong>Relative humidity:</strong> Continuous monitoring at 60-second recording interval. Alert and action limits specified per room. Typical limits differ between product-contact areas and corridor areas. Same storage requirements as temperature.</li>
+      <li><strong>Differential pressure:</strong> Continuous monitoring at 60-second recording interval. Differential pressure between adjacent cleanroom grades must be positive in the specified direction (higher grade to lower grade). A differential pressure reversal — even momentary — is an action limit exceedance. The recording interval must be short enough to capture transient reversals. 60 seconds may not be sufficient for high-traffic door zones — 10-second intervals are common for critical pressure differentials.</li>
+      <li><strong>Particle counts:</strong> Not typically continuous in a SCADA EMS configuration — particle counters are usually sampled on a schedule (during operations, at defined frequencies per ISO 14644-1). The SCADA may integrate with particle counters via OPC or serial interface and log the sample results as scheduled events rather than continuous data.</li>
+    </ul>
+
+    <p>Data gap prevention is an Annex 1 requirement. The EMS must not have gaps in the environmental record during manufacturing operations. The SCADA configuration must include a data gap detection alarm — if a sensor tag has not updated within a defined staleness threshold (typically 5 times the normal recording interval), an alarm is generated. This mirrors the data gap detection approach in a process SCADA historian, but the consequence in an EMS context is more significant: a gap in the environmental record during sterile operations must be investigated and documented as a potential environmental excursion, even if the sensor was simply disconnected for maintenance. See the <a href="scada-historian-gmp-configuration.html">SCADA historian configuration article</a> for the technical data gap detection implementation.</p>
+
+    <div class="callout amber">
+      <div class="callout-label">Differential Pressure Reversal — The Most Commonly Missed Configuration</div>
+      <p>Most first-project EMS configurations set a simple low alarm on differential pressure (e.g., alarm if dP &lt; 10 Pa). This misses the transient reversal case: dP drops to -2 Pa for 8 seconds when a door is opened, then recovers. At a 60-second recording interval, this reversal may produce no alarm if the measurement happens to fall between the two 60-second samples. <strong>For critical differential pressure monitoring, the recording interval must be short enough to capture transients, and the alarm must be configured with a minimal deadband — any reading below the alert limit must trigger an alarm regardless of duration.</strong> The OQ must adversarially test this by simulating a brief pressure drop and verifying the alarm fires.</p>
+    </div>
+
+    <h2 id="excursion-workflow">The Excursion Response Workflow</h2>
+    <p>When an action limit is breached, the EMS SCADA must not just annunciate an alarm — it must support the excursion response workflow. This is the sequence of steps from alarm acknowledgement through to deviation record closure. The SCADA does not perform the QA investigation, but it must capture the evidence that the investigation requires.</p>
+    <p>At minimum, the SCADA excursion workflow must: generate the alarm with the correct priority and mandatory reason field on acknowledgement, create an automatic excursion report that captures the parameter, location, time of exceedance, duration, peak value, area classification, and the products potentially exposed during the excursion window, and retain this report as an unalterable GMP record linked to the alarm event. The excursion report is the primary evidence for the QA investigation. If it can be modified, deleted, or regenerated after the fact, it fails as a GMP record.</p>
+    <p>The SCADA can also support the deviation management workflow by generating a pre-populated deviation record form or integrating with the site's electronic deviation management system via an OPC-UA or database interface. This integration, if implemented, must itself be validated — the data flowing from the EMS SCADA to the deviation system must be verified to be accurate and complete in the OQ.</p>
+
+    <h2 id="historian-configuration">Historian Configuration for EMS Data</h2>
+    <p>The historian configuration for an EMS follows the same principles as for any GMP process SCADA, with a few EMS-specific additions. The core requirements — time-based storage, no deadband for continuous parameters, write-once architecture, 7-year retention — are identical. See the <a href="trending-historisation-gmp.html">historisation article</a> for the full historian design.</p>
+    <p>The EMS-specific additions are: each monitoring location must be a distinct historian tag (not a shared tag with a location field), the room classification must be stored as a descriptor field on each tag (ISO 14644 grade or EU GMP classification), and the alert and action limits must be stored as configuration parameters in the historian rather than only in the alarm database. Storing limits in both places ensures that a historical excursion analysis can determine what the limits were at the time of the exceedance — not just what they are today. If limits have changed since an exceedance occurred, the historian must be able to show which limits were in force at the time.</p>
+
+    <h2 id="validation-approach">Validation Approach for a SCADA EMS</h2>
+    <p>A SCADA-based EMS is a GAMP Category 4 computerised system — configured COTS software — and is validated using the same V-model approach as any other SCADA. The specific validation considerations for an EMS are as follows.</p>
+
+    <h3>URS</h3>
+    <p>The URS must specify all monitored parameters, the room classification for each monitoring location, the alert and action limits (or reference to the environmental monitoring specification that defines them), the recording interval per parameter, the data gap detection requirement, the excursion report content, and the retention period. Annex 1 does not specify exact limit values — the URS must reference the site's environmental monitoring specification, which is the document that defines the limits for each cleanroom grade based on the facility qualification data.</p>
+
+    <h3>OQ Test Cases</h3>
+    <p>The EMS OQ requires specific test cases that differ from a standard process SCADA. Beyond the standard historian completeness and data integrity tests, the EMS OQ must include: alert limit alarm activation with verification that the alarm priority is Medium (not High), action limit alarm activation with verification that priority is High and mandatory reason is enforced, differential pressure reversal test (adversarial — brief reversal must fire the alarm), data gap alarm test (disconnect a sensor, verify alarm fires within the configured staleness window), excursion report content verification (all required fields present and correct), and excursion report unalterability test (attempt to modify the excursion report after generation — must be rejected).</p>
+
+    <div class="callout green">
+      <div class="callout-label">In the QLean Framework</div>
+      <p>The QLean GAMP 5 Framework is built around a Purified Water distribution system — a continuous process system, not a cleanroom EMS. The framework does not contain EMS-specific templates (no room classification tables, no Annex 1 alert/action limit structures, no excursion report templates). What the framework provides that directly applies to an EMS project: the <strong>historian configuration design</strong> (FUNC-DATA-001/002, SDS Section 7) — time-based storage, no deadband, write-once architecture, and data gap detection — is the same architecture an EMS historian must use. The <strong>two-tier alarm strategy</strong> (FUNC-ALM-001/002 in FDS, FB_AlarmManager in SDS) covers the same Medium/High priority split that EMS alert/action limits require. The <strong>auto-generated report pattern</strong> (FUNC-REP-002) — triggered by a system event, fixed content, unalterable after generation — is the same design pattern an EMS excursion report must follow. The <strong>audit trail UDT</strong> (typ_AuditEntry_GxP) with 8 required fields covers configuration changes to alert and action limits with the same attribution and write-once architecture. These are the validated design patterns to adapt for an EMS project — the EMS-specific content (room classifications, parameter limits, Annex 1 requirements) is layered on top of these foundations.</p>
+    </div>
+
+  </article>
+
+  <aside class="sidebar">
+    <div class="toc-card">
+      <div class="toc-label">In This Article</div>
+      <ul class="toc-list">
+        <li><a href="#ems-vs-standard-scada" class="active">EMS vs Standard SCADA</a></li>
+        <li><a href="#alert-vs-action-limits">Alert vs Action Limits</a></li>
+        <li><a href="#parameters-and-intervals">Parameters and Intervals</a></li>
+        <li><a href="#excursion-workflow">Excursion Response Workflow</a></li>
+        <li><a href="#historian-configuration">Historian Configuration</a></li>
+        <li><a href="#validation-approach">Validation Approach</a></li>
+      </ul>
+    </div>
+    <div class="sidebar-cta">
+      <div class="sc-eyebrow">QLean Framework</div>
+      <div class="sc-title">29 production-ready GAMP 5 documents</div>
+      <div class="sc-body">The historian, alarm, report, and audit trail design patterns in the framework are directly applicable to EMS projects — the validated foundations an EMS configuration builds on.</div>
+      <a href="../index.html#pricing" class="sc-btn">Get the Framework — €249 →</a>
+      <div class="sc-note">// INSTANT DOWNLOAD · COMPANY-WIDE LICENCE</div>
+    </div>
+    <div class="sidebar-share">
+      <div class="share-label">Share This Article</div>
+      <div class="share-links">
+        <a href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fqleanautomation.com%2Fblog%2Fscada-cleanroom-ems-configuration.html" target="_blank" rel="noopener" class="share-link">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          Share on LinkedIn
+        </a>
+        <a href="https://www.reddit.com/submit?url=https%3A%2F%2Fqleanautomation.com%2Fblog%2Fscada-cleanroom-ems-configuration.html&title=Configuring+SCADA+for+Cleanroom+Environmental+Monitoring" target="_blank" rel="noopener" class="share-link">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/></svg>
+          Share on Reddit
+        </a>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<section class="related">
+  <div class="related-inner">
+    <div class="related-label">More Articles</div>
+    <div class="related-grid">
+      <a href="21-cfr-part-11-temperature-monitoring.html" class="related-card">
+        <div class="rc-tag">📋 Compliance</div>
+        <div class="rc-title">21 CFR Part 11 for Temperature Monitoring Systems</div>
+        <div class="rc-desc">Standalone temperature monitoring systems and data loggers have the same Part 11 requirements as a full SCADA EMS — audit trail, access control, and alarm records. Here's the full requirement set.</div>
+        <div class="rc-footer"><div class="rc-read">7 MIN READ</div><div class="rc-arrow">→</div></div>
+      </a>
+      <a href="scada-historian-gmp-configuration.html" class="related-card">
+        <div class="rc-tag">🖥️ SCADA Engineering</div>
+        <div class="rc-title">SCADA Historian Configuration for GMP</div>
+        <div class="rc-desc">The data gap detection, time-based storage, and write-once architecture that an EMS historian requires are configured identically to any GMP process historian. The design is covered in full here.</div>
+        <div class="rc-footer"><div class="rc-read">8 MIN READ</div><div class="rc-arrow">→</div></div>
+      </a>
+      <a href="trending-historisation-gmp.html" class="related-card">
+        <div class="rc-tag">🖥️ SCADA Engineering</div>
+        <div class="rc-title">Trending and Historisation for GMP — What Must Be Retained</div>
+        <div class="rc-desc">EMS parameters are GMP-critical historian tags. The classification, storage mode, recording interval, and retention requirements that apply to all GMP historian data apply directly to EMS configuration.</div>
+        <div class="rc-footer"><div class="rc-read">7 MIN READ</div><div class="rc-arrow">→</div></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="../index.html" class="nav-logo">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none" style="flex-shrink:0"><rect width="32" height="32" rx="7" fill="#0d0f12"/><rect x="8" y="7" width="16" height="16" rx="2" stroke="white" stroke-width="2.5" fill="none"/><line x1="20" y1="19" x2="26" y2="25" stroke="#0057FF" stroke-width="3" stroke-linecap="round"/></svg>
+          <span style="font-family:'Epilogue',sans-serif;font-weight:800;font-size:16px;color:#0d0f12;letter-spacing:-.03em;white-space:nowrap">QLean <span style="font-weight:300;color:#5a6172">Automation</span></span>
+        </a>
+        <p>GMP documentation tools for system integrators and automation engineers entering pharmaceutical projects.</p>
+      </div>
+      <div class="footer-col"><h4>Products</h4><ul><li><a href="../index.html#framework">GAMP 5 Framework</a></li><li><a href="../index.html#products">Technical Masterclass</a></li></ul></div>
+      <div class="footer-col"><h4>Knowledge Base</h4><ul>
+        <li><a href="blog-index.html">All Articles</a></li>
+        <li><a href="21-cfr-part-11-temperature-monitoring.html">Temperature Monitoring</a></li>
+        <li><a href="scada-historian-gmp-configuration.html">Historian Configuration</a></li>
+        <li><a href="trending-historisation-gmp.html">Trending and Historisation</a></li>
+        <li><a href="scada-alarm-management-configuration.html">Alarm Management</a></li>
+        <li><a href="iq-oq-pq-guide.html">IQ OQ PQ Guide</a></li>
+        <li><a href="gamp5-categories.html">GAMP 5 Categories</a></li>
+      </ul></div>
+      <div class="footer-col"><h4>Company</h4><ul><li><a href="https://www.linkedin.com/company/qlean-automation" target="_blank">LinkedIn</a></li><li><a href="mailto:hello@qleanautomation.com">Contact</a></li><li><a href="../terms.html">Terms</a></li></ul></div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 QLEAN AUTOMATION · QLEANAUTOMATION.COM</p>
+      <div class="compliance-pills"><span class="cp">EU GMP ANNEX 1</span><span class="cp">ISO 14644</span><span class="cp">GAMP 5</span><span class="cp">21 CFR PART 11</span></div>
+    </div>
+  </div>
+</footer>
+
+<script>
+window.addEventListener('scroll',()=>{const d=document.documentElement;document.getElementById('progress').style.width=(d.scrollTop/(d.scrollHeight-d.clientHeight)*100)+'%'});
+const obs=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting){document.querySelectorAll('.toc-list a').forEach(l=>l.classList.remove('active'));const a=document.querySelector('.toc-list a[href="#'+x.target.id+'"]');if(a)a.classList.add('active')}})  ,{rootMargin:'-20% 0px -70% 0px'});
+document.querySelectorAll('[id]').forEach(s=>obs.observe(s));
+</script>
+</body>
+</html>

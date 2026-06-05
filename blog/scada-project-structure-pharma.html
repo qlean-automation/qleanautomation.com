@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-JJQ1TXZJX7"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-JJQ1TXZJX7');
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>How to Structure a SCADA Project for Pharma Validation | QLean Automation</title>
+<meta name="description" content="A pharma SCADA project needs more than working screens — it needs a defined screen hierarchy, an enforced tag naming convention, ISA-101 colour standards, version control on every configuration item, and a code review record before FAT. Here is how to build one.">
+<link rel="canonical" href="https://qleanautomation.com/blog/scada-project-structure-pharma.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@300;400;500;600;700;800;900&family=Source+Sans+3:ital,wght@0,300;0,400;0,500;1,300&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--white:#ffffff;--off:#f7f8f9;--ink:#0d0f12;--ink2:#1e2128;--ink3:#3d4456;--ink4:#9199a8;--rule:#e2e5ea;--rule2:#c8cdd6;--blue:#0057ff;--blue2:#0044cc;--blue-dim:rgba(0,87,255,0.07);--green:#00875a;--green-dim:rgba(0,135,90,0.08);--amber:#d97706;--amber-dim:rgba(217,119,6,0.08);--red:#c0392b;--red-dim:rgba(192,57,43,0.08);--f-head:'Epilogue',sans-serif;--f-body:'Source Sans 3',sans-serif;--f-mono:'Roboto Mono',monospace;--shadow-sm:0 2px 8px rgba(13,15,18,0.06),0 1px 3px rgba(13,15,18,0.04)}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}body{background:var(--white);color:var(--ink);font-family:var(--f-body);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+nav{position:fixed;top:0;left:0;right:0;z-index:200;height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 6%;background:rgba(255,255,255,0.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--rule)}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;flex-shrink:0}
+.nav-links{display:flex;align-items:center;gap:36px;list-style:none}.nav-links a{font-size:14px;font-weight:400;color:var(--ink3);text-decoration:none;transition:color .2s}.nav-links a:hover{color:var(--ink)}
+.nav-btn{font-family:var(--f-body);font-size:13px;font-weight:500;padding:9px 20px;background:var(--blue);color:white;border:none;border-radius:6px;cursor:pointer;text-decoration:none;white-space:nowrap;flex-shrink:0}.nav-btn:hover{background:var(--blue2)}
+.progress-bar{position:fixed;top:64px;left:0;right:0;height:2px;background:var(--rule);z-index:199}.progress-fill{height:100%;background:var(--blue);width:0%}
+.article-hero{padding:120px 6% 64px;background:var(--white);border-bottom:1px solid var(--rule);position:relative;overflow:hidden}
+.article-hero::before{content:'';position:absolute;top:-80px;right:-80px;width:400px;height:400px;background:radial-gradient(circle,rgba(0,87,255,0.04) 0%,transparent 70%);pointer-events:none}
+.article-hero-inner{max-width:940px;margin:0 auto;position:relative;z-index:1}
+.breadcrumb{display:flex;align-items:center;gap:8px;font-family:var(--f-mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink4);margin-bottom:24px}.breadcrumb a{color:var(--ink4);text-decoration:none}.breadcrumb a:hover{color:var(--blue)}.breadcrumb span{color:var(--rule2)}
+.article-tag{display:inline-flex;align-items:center;gap:6px;font-family:var(--f-mono);font-size:10px;font-weight:500;color:var(--blue);letter-spacing:.1em;text-transform:uppercase;margin-bottom:20px;padding:4px 10px;background:var(--blue-dim);border-radius:4px}
+.article-hero h1{font-family:var(--f-head);font-size:clamp(30px,5vw,52px);font-weight:900;line-height:1.0;letter-spacing:-.04em;color:var(--ink);margin-bottom:20px}.article-hero h1 span{color:var(--blue)}
+.article-intro{font-size:18px;font-weight:400;color:var(--ink2);line-height:1.75;margin-bottom:32px;max-width:800px}
+.article-meta{display:flex;align-items:center;gap:24px;padding-top:24px;border-top:1px solid var(--rule);flex-wrap:wrap}
+.meta-author{display:flex;align-items:center;gap:10px}.author-avatar{width:36px;height:36px;border-radius:50%;background:var(--ink);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.author-name{font-size:13px;font-weight:500;color:var(--ink)}.author-role{font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.04em}
+.meta-divider{width:1px;height:28px;background:var(--rule)}.meta-stat{font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.06em}
+.article-wrap{max-width:1300px;margin:0 auto;padding:64px 6%;display:grid;grid-template-columns:1fr 300px;gap:60px;align-items:start}
+.article-body{min-width:0}
+.article-body h2{font-family:var(--f-head);font-size:26px;font-weight:800;letter-spacing:-.03em;color:var(--ink);margin:56px 0 16px;line-height:1.2}.article-body h2:first-child{margin-top:0}
+.article-body h3{font-family:var(--f-head);font-size:18px;font-weight:700;letter-spacing:-.02em;color:var(--ink);margin:32px 0 12px}
+.article-body p{font-size:16px;font-weight:400;color:var(--ink2);line-height:1.85;margin-bottom:20px}
+.article-body strong{color:var(--ink);font-weight:600}
+.article-body a{color:var(--blue);text-decoration:none;border-bottom:1px solid rgba(0,87,255,.25)}.article-body a:hover{border-color:var(--blue)}
+.callout{padding:20px 24px;border-radius:8px;margin:32px 0;border-left:3px solid}
+.callout.blue{background:var(--blue-dim);border-color:var(--blue)}.callout.amber{background:var(--amber-dim);border-color:var(--amber)}.callout.green{background:var(--green-dim);border-color:var(--green)}.callout.red{background:var(--red-dim);border-color:var(--red)}
+.callout-label{font-family:var(--f-mono);font-size:9px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px}.callout.blue .callout-label{color:var(--blue)}.callout.amber .callout-label{color:var(--amber)}.callout.green .callout-label{color:var(--green)}.callout.red .callout-label{color:var(--red)}
+.callout p{font-size:14px;color:var(--ink2);line-height:1.7;margin:0}.callout strong{color:var(--ink)}
+.article-img{width:100%;border-radius:8px;border:1px solid #1e2535;overflow:hidden;margin:36px 0}
+.article-img figcaption{padding:10px 14px;background:var(--off);font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.04em;border-top:1px solid var(--rule)}
+.arrow-list{list-style:none;display:flex;flex-direction:column;gap:8px;margin:16px 0 24px}
+.arrow-list li{display:flex;align-items:flex-start;gap:10px;font-size:15px;color:var(--ink2);line-height:1.6}
+.arrow-list li::before{content:'\2192';color:var(--blue);flex-shrink:0;font-size:12px;margin-top:3px}
+.checklist{list-style:none;display:flex;flex-direction:column;gap:8px;margin:20px 0 28px}
+.checklist li{display:flex;align-items:flex-start;gap:10px;font-size:15px;color:var(--ink2);line-height:1.6}
+.checklist li::before{content:'';width:16px;height:16px;flex-shrink:0;margin-top:3px;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 14 14' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='7' cy='7' r='6.5' fill='none' stroke='%230057ff' stroke-width='1'/%3E%3Cpath d='M4 7l2 2 4-4' stroke='%230057ff' stroke-width='1.3' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:center;background-size:contain}
+.table-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:28px 0}
+.compare-table{width:100%;border-collapse:collapse;font-size:14px}
+.compare-table th{font-family:var(--f-mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink4);padding:10px 16px;border-bottom:2px solid var(--rule);text-align:left;background:var(--off)}
+.compare-table td{padding:12px 16px;border-bottom:1px solid var(--rule);vertical-align:top;color:var(--ink2);line-height:1.6}
+.compare-table tr:last-child td{border-bottom:none}
+.compare-table td:first-child{font-weight:600;color:var(--ink);font-family:var(--f-mono);font-size:12px}
+.sidebar{position:sticky;top:88px;display:flex;flex-direction:column;gap:16px}
+.toc-card{border:1px solid var(--rule);border-radius:8px;padding:24px;background:var(--white);box-shadow:var(--shadow-sm)}
+.toc-label{font-family:var(--f-mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);margin-bottom:16px}
+.toc-list{list-style:none;display:flex;flex-direction:column;gap:2px}
+.toc-list a{display:block;font-size:13px;color:var(--ink3);text-decoration:none;padding:6px 10px;border-radius:4px;transition:all .15s;border-left:2px solid transparent}
+.toc-list a:hover,.toc-list a.active{color:var(--blue);background:var(--blue-dim);border-left-color:var(--blue)}
+.sidebar-cta{border:1px solid var(--blue);border-radius:8px;padding:24px;background:var(--blue-dim)}
+.sc-eyebrow{font-family:var(--f-mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);margin-bottom:10px}
+.sc-title{font-family:var(--f-head);font-size:17px;font-weight:800;letter-spacing:-.02em;color:var(--ink);margin-bottom:8px;line-height:1.2}
+.sc-body{font-size:13px;color:var(--ink3);line-height:1.6;margin-bottom:16px}
+.sc-btn{display:block;text-align:center;padding:11px 16px;background:var(--blue);color:white;border-radius:6px;font-family:var(--f-body);font-size:13px;font-weight:500;text-decoration:none}.sc-btn:hover{background:var(--blue2)}
+.sc-note{font-family:var(--f-mono);font-size:9px;color:var(--ink4);text-align:center;margin-top:8px;letter-spacing:.04em}
+.sidebar-share{border:1px solid var(--rule);border-radius:8px;padding:20px 24px;background:var(--white)}
+.share-label{font-family:var(--f-mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);margin-bottom:14px}
+.share-links{display:flex;flex-direction:column;gap:8px}
+.share-link{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--ink3);text-decoration:none;padding:9px 12px;border:1px solid var(--rule);border-radius:6px;transition:border-color .2s,color .2s}.share-link:hover{border-color:var(--blue);color:var(--blue)}
+.related{padding:64px 6%;border-top:1px solid var(--rule);background:var(--off)}
+.related-inner{max-width:1100px;margin:0 auto}
+.related-label{font-family:var(--f-mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);margin-bottom:32px;display:flex;align-items:center;gap:10px}
+.related-label::before{content:'';width:20px;height:1px;background:var(--blue)}
+.related-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.related-card{padding:24px;border:1px solid var(--rule);border-radius:8px;background:var(--white);box-shadow:var(--shadow-sm);transition:border-color .2s,transform .2s;text-decoration:none;display:flex;flex-direction:column;gap:12px}.related-card:hover{border-color:var(--blue);transform:translateY(-4px)}
+.rc-tag{font-family:var(--f-mono);font-size:9px;color:var(--blue);letter-spacing:.08em;text-transform:uppercase;padding:3px 8px;background:var(--blue-dim);border-radius:3px;align-self:flex-start}
+.rc-title{font-family:var(--f-head);font-size:16px;font-weight:700;letter-spacing:-.02em;color:var(--ink);line-height:1.25}
+.rc-desc{font-size:13px;color:var(--ink3);line-height:1.6;flex:1}
+.rc-footer{display:flex;align-items:center;justify-content:space-between;padding-top:12px;border-top:1px solid var(--rule)}
+.rc-read{font-family:var(--f-mono);font-size:10px;color:var(--ink4)}.rc-arrow{font-size:14px;color:var(--blue)}
+footer{padding:56px 6% 32px;border-top:1px solid var(--rule);background:var(--white)}
+.footer-inner{max-width:1160px;margin:0 auto}
+.footer-top{display:flex;justify-content:space-between;align-items:flex-start;gap:40px;flex-wrap:wrap;margin-bottom:48px}
+.footer-brand p{font-size:13px;font-weight:300;color:var(--ink3);margin-top:12px;max-width:260px;line-height:1.6}
+.footer-col h4{font-family:var(--f-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink4);margin-bottom:16px}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+.footer-col a{font-size:13px;color:var(--ink3);text-decoration:none}.footer-col a:hover{color:var(--blue)}
+.footer-bottom{padding-top:24px;border-top:1px solid var(--rule);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.footer-bottom p{font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.04em}
+.compliance-pills{display:flex;gap:6px;flex-wrap:wrap}
+.cp{font-family:var(--f-mono);font-size:9px;padding:3px 8px;border:1px solid var(--rule);border-radius:3px;color:var(--ink4);letter-spacing:.06em}
+@media(max-width:900px){.article-wrap{grid-template-columns:1fr;gap:48px}.sidebar{position:static}.related-grid{grid-template-columns:1fr}.table-scroll{margin:20px 0}}
+@media(max-width:900px){.nav-links{display:none}}
+@media(max-width:540px){nav{padding:0 4%}.nav-btn{font-size:12px;padding:8px 14px}}
+</style>
+</head>
+<body>
+
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+
+<nav>
+  <a href="../index.html" class="nav-logo">
+    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" style="flex-shrink:0"><rect width="32" height="32" rx="7" fill="#0d0f12"/><rect x="8" y="7" width="16" height="16" rx="2" stroke="white" stroke-width="2.5" fill="none"/><line x1="20" y1="19" x2="26" y2="25" stroke="#0057FF" stroke-width="3" stroke-linecap="round"/></svg>
+    <span style="font-family:'Epilogue',sans-serif;font-weight:800;font-size:16px;color:#0d0f12;letter-spacing:-.03em;white-space:nowrap">QLean <span style="font-weight:300;color:#5a6172">Automation</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="../index.html#products">Products</a></li>
+    <li><a href="../index.html#framework">Framework</a></li>
+    <li><a href="blog-index.html">Knowledge Base</a></li>
+    <li><a href="../index.html#pricing">Pricing</a></li>
+    <li><a href="../about.html">About</a></li>
+    <li><a href="../index.html#faq">FAQ</a></li>
+  </ul>
+  <a href="../index.html#pricing" class="nav-btn">Get the Framework &#8594;</a>
+</nav>
+
+<header class="article-hero">
+  <div class="article-hero-inner">
+    <div class="breadcrumb"><a href="../index.html">Home</a><span>/</span><a href="blog-index.html">Knowledge Base</a><span>/</span>SCADA Project Structure for Pharma</div>
+    <div class="article-tag">&#128205; SCADA Engineering</div>
+    <h1>How to Structure a SCADA Project<br><span>for Pharma Validation</span></h1>
+    <p class="article-intro">A pharma SCADA project needs more than working screens. It needs a documented screen hierarchy that QA can review, a consistent tag naming convention that every test protocol references, ISA-101 colour standards enforced across all graphics, version control on every configuration item, and a code review record before FAT can start. Here is how to build the structure before you build the screens.</p>
+    <div class="article-meta">
+      <div class="meta-author">
+        <div class="author-avatar"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="7" r="3.5" stroke="white" stroke-width="1.5"/><path d="M2.5 16c0-3.59 2.91-6.5 6.5-6.5s6.5 2.91 6.5 6.5" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+        <div><div class="author-name">QLean Automation</div><div class="author-role">ENGINEERS WHO BUILD SYSTEMS, NOT JUST SIGN THEM</div></div>
+      </div>
+      <div class="meta-divider"></div><div class="meta-stat">8 MIN READ</div>
+      <div class="meta-divider"></div><div class="meta-stat">SCADA &#183; SDS &#183; FAT</div>
+    </div>
+  </div>
+</header>
+
+<div class="article-wrap">
+  <article class="article-body">
+
+    <h2 id="why-structure-matters">Why Structure Matters More Than Functionality</h2>
+    <p>A SCADA developer who has not worked on pharma projects before will approach the build in a familiar way: start with the main overview screen, add process areas as they go, name tags based on what feels logical at the time, and clean it all up later. That approach produces systems that work perfectly but fail qualification because the documentation cannot describe them.</p>
+    <p>On a pharma project, the SCADA structure — screen hierarchy, tag naming, graphic standards, alarm configuration, version control — must be defined in the SDS before development begins. The FAT protocol then tests the system against that specification. If what was built does not match what the SDS says, that is a deviation in the FAT record, not a configuration issue to fix in production.</p>
+    <p>The SDS is the engineering contract between the developer and QA. Every element of SCADA structure described in this article belongs in the SDS, must be reviewed and approved before development starts, and must be traceable back to the <a href="functional-design-specification-guide.html">FDS functional descriptions</a> it implements.</p>
+
+    <h2 id="screen-hierarchy">Screen Hierarchy — Define It Before You Build It</h2>
+    <p>The screen hierarchy defines every screen in the application, its level in the navigation structure, its purpose, and how it is accessed. It must be complete before development begins. Adding screens during build because "the client asked for it" without updating the SDS is an undocumented design change — it creates a gap between the approved design and the built system that the FAT then has to navigate.</p>
+
+    <figure class="article-img">
+      <svg viewBox="0 0 720 270" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;background:#0d0f12;border-radius:8px 8px 0 0">
+        <text x="360" y="18" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(255,255,255,0.2)" letter-spacing="0.12em">SCADA SCREEN HIERARCHY &#8212; PHARMA PROJECT STRUCTURE</text>
+
+        <!-- Level 0: Login -->
+        <rect x="290" y="28" width="140" height="30" rx="4" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
+        <text x="360" y="48" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(255,255,255,0.4)">L0 — STARTUP / LOGIN</text>
+
+        <!-- Arrow down -->
+        <line x1="360" y1="58" x2="360" y2="74" stroke="rgba(255,255,255,0.15)" stroke-width="1.5"/>
+
+        <!-- Level 1: Main Overview -->
+        <rect x="270" y="74" width="180" height="30" rx="4" fill="rgba(0,87,255,0.15)" stroke="#0057ff" stroke-width="1.5"/>
+        <text x="360" y="94" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="#6699ff">L1 &#8212; MAIN OVERVIEW</text>
+
+        <!-- Branches from L1 -->
+        <line x1="360" y1="104" x2="360" y2="116" stroke="rgba(0,87,255,0.4)" stroke-width="1"/>
+        <line x1="100" y1="116" x2="620" y2="116" stroke="rgba(0,87,255,0.3)" stroke-width="1"/>
+        <line x1="100" y1="116" x2="100" y2="128" stroke="rgba(0,87,255,0.3)" stroke-width="1"/>
+        <line x1="220" y1="116" x2="220" y2="128" stroke="rgba(0,87,255,0.3)" stroke-width="1"/>
+        <line x1="360" y1="116" x2="360" y2="128" stroke="rgba(0,87,255,0.3)" stroke-width="1"/>
+        <line x1="500" y1="116" x2="500" y2="128" stroke="rgba(0,87,255,0.3)" stroke-width="1"/>
+        <line x1="620" y1="116" x2="620" y2="128" stroke="rgba(0,87,255,0.3)" stroke-width="1"/>
+
+        <!-- Level 2 screens -->
+        <rect x="30" y="128" width="140" height="30" rx="4" fill="rgba(0,87,255,0.08)" stroke="rgba(0,87,255,0.25)" stroke-width="1"/>
+        <text x="100" y="147" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="#6699ff">WATER GENERATION</text>
+
+        <rect x="150" y="128" width="140" height="30" rx="4" fill="rgba(0,87,255,0.08)" stroke="rgba(0,87,255,0.25)" stroke-width="1"/>
+        <text x="220" y="147" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="#6699ff">DISTRIBUTION LOOP</text>
+
+        <rect x="290" y="128" width="140" height="30" rx="4" fill="rgba(0,87,255,0.08)" stroke="rgba(0,87,255,0.25)" stroke-width="1"/>
+        <text x="360" y="147" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="#6699ff">QUALITY MONITORING</text>
+
+        <rect x="430" y="128" width="140" height="30" rx="4" fill="rgba(0,87,255,0.08)" stroke="rgba(0,87,255,0.25)" stroke-width="1"/>
+        <text x="500" y="147" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="#6699ff">ALARM MANAGEMENT</text>
+
+        <rect x="550" y="128" width="140" height="30" rx="4" fill="rgba(0,87,255,0.08)" stroke="rgba(0,87,255,0.25)" stroke-width="1"/>
+        <text x="620" y="147" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="#6699ff">SANITIZATION CTRL</text>
+
+        <!-- Level 3 branches from selected L2 -->
+        <line x1="220" y1="158" x2="220" y2="170" stroke="rgba(0,135,90,0.4)" stroke-width="1"/>
+        <line x1="150" y1="170" x2="290" y2="170" stroke="rgba(0,135,90,0.3)" stroke-width="1"/>
+        <line x1="150" y1="170" x2="150" y2="182" stroke="rgba(0,135,90,0.3)" stroke-width="1"/>
+        <line x1="220" y1="170" x2="220" y2="182" stroke="rgba(0,135,90,0.3)" stroke-width="1"/>
+        <line x1="290" y1="170" x2="290" y2="182" stroke="rgba(0,135,90,0.3)" stroke-width="1"/>
+
+        <rect x="80" y="182" width="140" height="28" rx="4" fill="rgba(0,135,90,0.08)" stroke="rgba(0,135,90,0.2)" stroke-width="1"/>
+        <text x="150" y="200" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="#00c97a">EQUIP. DETAIL POPUP</text>
+
+        <rect x="150" y="182" width="140" height="28" rx="4" fill="rgba(0,135,90,0.08)" stroke="rgba(0,135,90,0.2)" stroke-width="1"/>
+        <text x="220" y="200" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="#00c97a">TREND VIEWER</text>
+
+        <rect x="220" y="182" width="140" height="28" rx="4" fill="rgba(0,135,90,0.08)" stroke="rgba(0,135,90,0.2)" stroke-width="1"/>
+        <text x="290" y="200" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="#00c97a">REPORTS</text>
+
+        <!-- Level 4: Admin only -->
+        <rect x="450" y="182" width="130" height="28" rx="4" fill="rgba(217,119,6,0.08)" stroke="rgba(217,119,6,0.25)" stroke-width="1"/>
+        <text x="515" y="197" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(240,160,40,0.8)">MAINTENANCE</text>
+        <text x="515" y="207" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7" fill="rgba(240,160,40,0.5)">(Supervisor+ only)</text>
+
+        <rect x="590" y="182" width="110" height="28" rx="4" fill="rgba(192,57,43,0.08)" stroke="rgba(192,57,43,0.2)" stroke-width="1"/>
+        <text x="645" y="197" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(220,80,80,0.8)">SEC. ADMIN</text>
+        <text x="645" y="207" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7" fill="rgba(220,80,80,0.5)">(Admin only)</text>
+
+        <!-- Note -->
+        <text x="360" y="240" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(255,255,255,0.2)">EVERY SCREEN IN THIS HIERARCHY IS LISTED IN SDS SECTION 4.1 WITH PURPOSE, NAVIGATION PATH, AND FDS REFERENCE</text>
+        <text x="360" y="256" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(255,255,255,0.2)">ADDING SCREENS AFTER SDS APPROVAL = UNDOCUMENTED DESIGN CHANGE &#8594; REQUIRES CHANGE CONTROL</text>
+      </svg>
+      <figcaption>// THE SCREEN HIERARCHY DEFINES EVERY SCREEN BEFORE BUILD. FAT TEST CASES REFERENCE SPECIFIC SCREEN NAMES FROM THIS TABLE. A SCREEN THAT IS NOT IN THE SDS CANNOT APPEAR IN THE FAT PROTOCOL.</figcaption>
+    </figure>
+
+    <p>The screen hierarchy table must include at minimum: the level (0 to 4), the screen name, its purpose in plain language, how it is navigated to, and the FDS functional description reference it satisfies. Access restrictions go in the same table — a screen visible only to Supervisor and above must say so here, not just be configured silently in the security server.</p>
+    <p>Level 0 is always the login screen — it loads automatically at workstation start. Level 1 is the Main Overview: always visible, always accessible from any other screen, showing the top-level process status and alarm count. Level 2 screens are process area views navigated from the Main Overview. Level 3 screens are detail popups and utility views (trend viewer, reports) accessed from Level 2. Level 4 screens are restricted administration functions — Maintenance (Supervisor and above) and Security Administration (Administrator only).</p>
+
+    <h2 id="tag-naming">Tag Naming Convention — The Rule That Everything Else Depends On</h2>
+    <p>The tag naming convention is the most consequential structural decision on a SCADA project. Every test protocol reference, every historian query, every audit trail entry, every alarm tag in the FDS alarm table — all of them depend on tag names being consistent. Inconsistency between tag names in the SDS and tag names in the test protocol is a test authoring error that generates protocol deviations at FAT.</p>
+    <p>The convention must be defined in the SDS and frozen before development begins. It must cover every tag type: process values, setpoints, commands, status, alarm bits, configuration parameters. A workable format for a pharma SCADA follows a four-segment structure: <strong>[SYSTEM]_[AREA]_[DESCRIPTION]_[TYPE]</strong>.</p>
+    <p>For a purified water system, worked examples look like this: <code>PWS_QAL_Conductivity_PV</code> (conductivity processed value), <code>PWS_QAL_Conductivity_SP_Critical</code> (conductivity critical alarm setpoint), <code>PWS_DST_Pump001_STS_Run</code> (pump P-001 run status), <code>PWS_STO_Sanit_STS_Phase</code> (sanitization sequence phase state), <code>PWS_SEC_Session_STS_ActiveUser</code> (authenticated user name tag for audit trail attribution).</p>
+    <p>The SDS must include a worked example table — not just the format rule, but examples covering every tag type and every process area. During FAT, the test protocol author populates the exact tag names they will verify. If the convention was defined clearly with examples, the protocol author picks the right tag. If it was defined vaguely, the protocol author guesses — and the guess may not match what was actually built.</p>
+
+    <div class="callout amber">
+      <div class="callout-label">Critical: Never Rename a Tag After FAT</div>
+      <p>Tag name changes after FAT baseline invalidate historian data queries, alarm history records, and audit trail entries for the changed tag — because historical records reference the old name and new records will reference the new name. A tag rename is a significant validated state change: it requires Change Control, an assessment of impact on all test protocols that reference the tag, and OQ retesting of affected historian reports. The SDS must state this explicitly so the developer understands the consequences before making what looks like a cosmetic change.</p>
+    </div>
+
+    <h2 id="colour-standards">ISA-101 Colour Standards — Not a Style Preference</h2>
+    <p>ISA-101 (Human Machine Interfaces for Process Automation Systems) defines colour conventions for HMI displays. On a pharma project, following ISA-101 is not optional — it is a documented design standard that QA will review and FAT will verify. Inconsistent colour usage creates ambiguity for operators: if grey sometimes means off and sometimes means an unknown state, the display is unreliable as an operational tool.</p>
+    <p>The mandatory colour assignments for a GMP SCADA are: grey for off, inactive, or unknown state; green for running, normal, or in-specification; yellow for advisory or medium alarm; orange for high alarm; red for critical alarm or trip; blue for manual mode or manual override active; purple for out-of-service or maintenance mode. These assignments apply to every equipment symbol, every status indicator, and every alarm indicator across every screen in the application. No deviations without engineering change.</p>
+    <p>The ISA-101 high-performance HMI philosophy also specifies a grey background for process screens — this is important because it provides maximum contrast for the status colour indicators. A dark process screen background makes it harder to see the grey off-state of equipment, which is the most common state. FAT will verify colour compliance on representative screens from each process area.</p>
+    <p>The colour standard belongs in the SDS graphic display standards section, not just in a style guide that the developer may or may not have read. It must be reviewable and approvable as part of the SDS sign-off.</p>
+
+    <h2 id="configuration-management">Configuration Management — The Three Items That Need Version Control</h2>
+    <p>Three SCADA configuration items must be under version control, each managed differently:</p>
+    <ul class="arrow-list">
+      <li><strong>The SCADA application itself</strong> — in InTouch, the Galaxy Application Server maintains object versions. An application snapshot is taken at FAT baseline and archived per the <a href="plc-disaster-recovery-backup.html">validated configuration archive</a> procedure. The SHA-256 hash of the FAT baseline is the anchor of the hash chain that flows through SAT, IQ, OQ, and PQ. Every subsequent change goes through change control and generates a new hash.</li>
+      <li><strong>The historian tag configuration</strong> — the export of which tags are being historised, at what scan rates, with what deadbands, and for what retention period. This is not automatically captured in the SCADA application snapshot on all platforms. It must be explicitly exported and version-dated as a separate archive item. If the tag configuration drifts from the validated baseline — because someone added a tag without change control — historian queries will return results for tags that were never validated.</li>
+      <li><strong>The SDS document itself</strong> — any software configuration change that is not reflected in the SDS is an undocumented design change. The SDS revision history must track every design change, and the revision must be approved before the change is implemented. "Updated the SDS to reflect what was actually built" is an audit red flag; "implemented the design described in the approved SDS revision" is the correct sequence.</li>
+    </ul>
+
+    <h2 id="scripting-standards">Scripting Standards and Code Review</h2>
+    <p>SCADA scripts — QuickScripts in InTouch, VBScript in WinCC, Python scripts in Ignition — are software. On a GAMP Category 4 or 5 system, scripts that implement GMP-critical functions must be reviewed before FAT. This is not optional and it is not the same as testing the function in a FAT test case.</p>
+    <p>The code review is a peer technical review: someone other than the script author reviews the script against defined criteria. The review record is signed by the reviewer and QA-witnessed. The criteria must be defined in the SDS — what the reviewer will check: script has a header comment with purpose and version, script handles database write errors without silent failure, audit trail write calls are present for every GMP action, no hardcoded setpoints or credentials in script logic.</p>
+    <p>The code review output is a record that can be presented as evidence at qualification — not a memory that "someone looked at it." If the FAT begins without a completed code review record, the FAT has started without a pre-condition being met. That is a phase gate failure.</p>
+
+    <h2 id="gamp-category">GAMP Category and What It Means for Structure</h2>
+    <p>SCADA platforms like InTouch, WinCC, Ignition, and FactoryTalk View are GAMP Category 4: configured commercial off-the-shelf software. The platform itself is not validated by you — the supplier does that. What you validate is your configuration of it. This distinction is important for scoping the design documentation and the FAT.</p>
+    <p>Category 4 means: you do not need to validate that InTouch correctly processes OPC-DA data (the supplier has done that). You do need to validate that your tag database is correct, your historian configuration captures the right parameters at the right rates, your alarm database matches the <a href="functional-design-specification-guide.html">FDS alarm table</a>, and your access control configuration matches the FDS user role matrix. The SDS describes your configuration decisions. The FAT tests that those decisions are correctly implemented.</p>
+    <p>If your project adds significant scripted logic — custom data export routines, complex alarm suppression scripts, e-signature workflows — those scripts elevate the configuration toward Category 5 territory. The SDS must identify which scripts contain GMP-critical logic, and those scripts require the full code review and pre-FAT verification treatment described above.</p>
+
+    <div class="callout green">
+      <div class="callout-label">In the QLean Framework</div>
+      <p>The SDS (SDS-SYS-001) Section 4 covers the SCADA application design in full: Section 4.1 is the complete screen hierarchy table with 12 screens across 5 levels, each with purpose, navigation path, role restriction, and FDS reference. Section 4.2 defines the tag naming convention with the four-segment format [SYSTEM]_[AREA]_[DESCRIPTION]_[TYPE] and a worked example table covering all tag types — including the critical warning that tag names must not change after FAT. Section 4.3 covers graphic display standards including the complete ISA-101 colour assignment table and the Grey/ISA-101 High Performance background standard. Section 1.3 covers software configuration management for all three version-controlled items (SCADA application, historian tag config, SDS document). Section 11.1 is the code review checklist with 10 items including the audit trail write check for every GxP action. The framework is structured for InTouch but the SDS design patterns apply directly to WinCC, Ignition, FactoryTalk, and Citect with platform-specific implementation details substituted in.</p>
+    </div>
+
+  </article>
+
+  <aside class="sidebar">
+    <div class="toc-card">
+      <div class="toc-label">In This Article</div>
+      <ul class="toc-list">
+        <li><a href="#why-structure-matters" class="active">Why structure matters</a></li>
+        <li><a href="#screen-hierarchy">Screen hierarchy</a></li>
+        <li><a href="#tag-naming">Tag naming convention</a></li>
+        <li><a href="#colour-standards">ISA-101 colour standards</a></li>
+        <li><a href="#configuration-management">Configuration management</a></li>
+        <li><a href="#scripting-standards">Scripting standards and code review</a></li>
+        <li><a href="#gamp-category">GAMP category and scope</a></li>
+      </ul>
+    </div>
+    <div class="sidebar-cta">
+      <div class="sc-eyebrow">QLean Framework</div>
+      <div class="sc-title">29 production-ready GAMP 5 documents</div>
+      <div class="sc-body">SDS with 12-screen hierarchy table, tag naming convention with worked examples, ISA-101 colour standards, and 10-item code review checklist — all included.</div>
+      <a href="../index.html#pricing" class="sc-btn">Get the Framework &#8212; &#8364;249 &#8594;</a>
+      <div class="sc-note">// INSTANT DOWNLOAD &#183; COMPANY-WIDE LICENCE</div>
+    </div>
+    <div class="sidebar-share">
+      <div class="share-label">Share This Article</div>
+      <div class="share-links">
+        <a href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fqleanautomation.com%2Fblog%2Fscada-project-structure-pharma.html" target="_blank" rel="noopener" class="share-link">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          Share on LinkedIn
+        </a>
+        <a href="https://www.reddit.com/submit?url=https%3A%2F%2Fqleanautomation.com%2Fblog%2Fscada-project-structure-pharma.html&title=How+to+Structure+a+SCADA+Project+for+Pharma+Validation" target="_blank" rel="noopener" class="share-link">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/></svg>
+          Share on Reddit
+        </a>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<section class="related">
+  <div class="related-inner">
+    <div class="related-label">More Articles</div>
+    <div class="related-grid">
+      <a href="functional-design-specification-guide.html" class="related-card">
+        <div class="rc-tag">&#128196; Design Docs</div>
+        <div class="rc-title">How to Write an FDS for a PLC/SCADA System</div>
+        <div class="rc-desc">The SDS describes how the SCADA is built. The FDS describes what it must do. Every screen, tag, and alarm in the SDS traces back to an FDS functional description.</div>
+        <div class="rc-footer"><div class="rc-read">8 MIN READ</div><div class="rc-arrow">&#8594;</div></div>
+      </a>
+      <a href="audit-trail-implementation-scada.html" class="related-card">
+        <div class="rc-tag">&#128205; SCADA Engineering</div>
+        <div class="rc-title">Building a Part 11 Audit Trail in Your SCADA System</div>
+        <div class="rc-desc">The audit trail is one of the most critical structural elements of the SCADA. Here is how to design the write-once architecture and test it in OQ.</div>
+        <div class="rc-footer"><div class="rc-read">9 MIN READ</div><div class="rc-arrow">&#8594;</div></div>
+      </a>
+      <a href="plc-disaster-recovery-backup.html" class="related-card">
+        <div class="rc-tag">&#9881;&#65039; PLC Engineering</div>
+        <div class="rc-title">PLC Disaster Recovery — Backup, Restore and Testing</div>
+        <div class="rc-desc">The validated configuration archive for the SCADA application is one of the three backup items this article covers — including how to version and hash each one.</div>
+        <div class="rc-footer"><div class="rc-read">7 MIN READ</div><div class="rc-arrow">&#8594;</div></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="../index.html" class="nav-logo">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none" style="flex-shrink:0"><rect width="32" height="32" rx="7" fill="#0d0f12"/><rect x="8" y="7" width="16" height="16" rx="2" stroke="white" stroke-width="2.5" fill="none"/><line x1="20" y1="19" x2="26" y2="25" stroke="#0057FF" stroke-width="3" stroke-linecap="round"/></svg>
+          <span style="font-family:'Epilogue',sans-serif;font-weight:800;font-size:16px;color:#0d0f12;letter-spacing:-.03em;white-space:nowrap">QLean <span style="font-weight:300;color:#5a6172">Automation</span></span>
+        </a>
+        <p>GMP documentation tools for system integrators and automation engineers entering pharmaceutical projects.</p>
+      </div>
+      <div class="footer-col"><h4>Products</h4><ul><li><a href="../index.html#framework">GAMP 5 Framework</a></li><li><a href="../index.html#products">Technical Masterclass</a></li></ul></div>
+      <div class="footer-col"><h4>Knowledge Base</h4><ul>
+        <li><a href="blog-index.html">All Articles</a></li>
+        <li><a href="functional-design-specification-guide.html">How to Write an FDS</a></li>
+        <li><a href="audit-trail-implementation-scada.html">SCADA Audit Trail</a></li>
+        <li><a href="scada-user-management-part11.html">SCADA User Management</a></li>
+        <li><a href="pharma-fat-guide.html">FAT Guide</a></li>
+        <li><a href="iq-oq-pq-guide.html">IQ OQ PQ Guide</a></li>
+        <li><a href="gamp5-categories.html">GAMP 5 Categories</a></li>
+      </ul></div>
+      <div class="footer-col"><h4>Company</h4><ul><li><a href="https://www.linkedin.com/company/qlean-automation" target="_blank">LinkedIn</a></li><li><a href="mailto:hello@qleanautomation.com">Contact</a></li><li><a href="../terms.html">Terms</a></li></ul></div>
+    </div>
+    <div class="footer-bottom">
+      <p>&#169; 2026 QLEAN AUTOMATION &#183; QLEANAUTOMATION.COM</p>
+      <div class="compliance-pills"><span class="cp">GAMP 5</span><span class="cp">ISA-101</span><span class="cp">21 CFR PART 11</span><span class="cp">EU ANNEX 11</span></div>
+    </div>
+  </div>
+</footer>
+
+<script>
+window.addEventListener('scroll',()=>{const d=document.documentElement;document.getElementById('progress').style.width=(d.scrollTop/(d.scrollHeight-d.clientHeight)*100)+'%'});
+const obs=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting){document.querySelectorAll('.toc-list a').forEach(l=>l.classList.remove('active'));const a=document.querySelector('.toc-list a[href="#'+x.target.id+'"]');if(a)a.classList.add('active')}})  ,{rootMargin:'-20% 0px -70% 0px'});
+document.querySelectorAll('[id]').forEach(s=>obs.observe(s));
+</script>
+</body>
+</html>

@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-JJQ1TXZJX7"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-JJQ1TXZJX7');
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PLC Program Version Control on Validated Systems | QLean Automation</title>
+<meta name="description" content="Version control for a validated PLC isn't just about tracking changes — it's about knowing exactly what code was in the controller when the OQ was signed. Here's the system that satisfies GMP and survives an audit.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@300;400;500;600;700;800;900&family=Source+Sans+3:ital,wght@0,300;0,400;0,500;1,300&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--white:#ffffff;--off:#f7f8f9;--ink:#0d0f12;--ink2:#1e2128;--ink3:#3d4456;--ink4:#9199a8;--rule:#e2e5ea;--rule2:#c8cdd6;--blue:#0057ff;--blue2:#0044cc;--blue-dim:rgba(0,87,255,0.07);--green:#00875a;--green-dim:rgba(0,135,90,0.08);--amber:#d97706;--amber-dim:rgba(217,119,6,0.08);--f-head:'Epilogue',sans-serif;--f-body:'Source Sans 3',sans-serif;--f-mono:'Roboto Mono',monospace;--shadow-sm:0 2px 8px rgba(13,15,18,0.06),0 1px 3px rgba(13,15,18,0.04);--shadow-md:0 4px 16px rgba(13,15,18,0.08),0 2px 6px rgba(13,15,18,0.05)}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}body{background:var(--white);color:var(--ink);font-family:var(--f-body);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+nav{position:fixed;top:0;left:0;right:0;z-index:200;height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 6%;background:rgba(255,255,255,0.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--rule)}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;flex-shrink:0}
+.nav-links{display:flex;align-items:center;gap:36px;list-style:none}.nav-links a{font-size:14px;font-weight:400;color:var(--ink3);text-decoration:none;transition:color .2s}.nav-links a:hover{color:var(--ink)}
+.nav-btn{font-family:var(--f-body);font-size:13px;font-weight:500;padding:9px 20px;background:var(--blue);color:white;border:none;border-radius:6px;cursor:pointer;text-decoration:none;white-space:nowrap;flex-shrink:0}.nav-btn:hover{background:var(--blue2)}
+.progress-bar{position:fixed;top:64px;left:0;right:0;height:2px;background:var(--rule);z-index:199}.progress-fill{height:100%;background:var(--blue);width:0%}
+.article-hero{padding:120px 6% 64px;background:var(--white);border-bottom:1px solid var(--rule);position:relative;overflow:hidden}
+.article-hero::before{content:'';position:absolute;top:-80px;right:-80px;width:400px;height:400px;background:radial-gradient(circle,rgba(0,87,255,0.04) 0%,transparent 70%);pointer-events:none}
+.article-hero-inner{max-width:940px;margin:0 auto;position:relative;z-index:1}
+.breadcrumb{display:flex;align-items:center;gap:8px;font-family:var(--f-mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink4);margin-bottom:24px}.breadcrumb a{color:var(--ink4);text-decoration:none}.breadcrumb a:hover{color:var(--blue)}.breadcrumb span{color:var(--rule2)}
+.article-tag{display:inline-flex;align-items:center;gap:6px;font-family:var(--f-mono);font-size:10px;font-weight:500;color:var(--blue);letter-spacing:.1em;text-transform:uppercase;margin-bottom:20px;padding:4px 10px;background:var(--blue-dim);border-radius:4px}
+.article-hero h1{font-family:var(--f-head);font-size:clamp(30px,5vw,52px);font-weight:900;line-height:1.0;letter-spacing:-.04em;color:var(--ink);margin-bottom:20px}.article-hero h1 span{color:var(--blue)}
+.article-intro{font-size:18px;font-weight:400;color:var(--ink2);line-height:1.75;margin-bottom:32px;max-width:800px}
+.article-meta{display:flex;align-items:center;gap:24px;padding-top:24px;border-top:1px solid var(--rule);flex-wrap:wrap}
+.meta-author{display:flex;align-items:center;gap:10px}.author-avatar{width:36px;height:36px;border-radius:50%;background:var(--ink);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.author-name{font-size:13px;font-weight:500;color:var(--ink)}.author-role{font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.04em}
+.meta-divider{width:1px;height:28px;background:var(--rule)}.meta-stat{font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.06em}
+.article-wrap{max-width:1300px;margin:0 auto;padding:64px 6%;display:grid;grid-template-columns:1fr 300px;gap:60px;align-items:start}
+.article-body{min-width:0}
+.article-body h2{font-family:var(--f-head);font-size:26px;font-weight:800;letter-spacing:-.03em;color:var(--ink);margin:56px 0 16px;line-height:1.2}.article-body h2:first-child{margin-top:0}
+.article-body h3{font-family:var(--f-head);font-size:18px;font-weight:700;letter-spacing:-.02em;color:var(--ink);margin:32px 0 12px}
+.article-body p{font-size:16px;font-weight:400;color:var(--ink2);line-height:1.85;margin-bottom:20px}
+.article-body strong{color:var(--ink);font-weight:600}
+.article-body a{color:var(--blue);text-decoration:none;border-bottom:1px solid rgba(0,87,255,.25)}.article-body a:hover{border-color:var(--blue)}
+.callout{padding:20px 24px;border-radius:8px;margin:32px 0;border-left:3px solid}
+.callout.blue{background:var(--blue-dim);border-color:var(--blue)}.callout.amber{background:var(--amber-dim);border-color:var(--amber)}.callout.green{background:var(--green-dim);border-color:var(--green)}
+.callout-label{font-family:var(--f-mono);font-size:9px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px}.callout.blue .callout-label{color:var(--blue)}.callout.amber .callout-label{color:var(--amber)}.callout.green .callout-label{color:var(--green)}
+.callout p{font-size:14px;color:var(--ink2);line-height:1.7;margin:0}.callout strong{color:var(--ink)}
+.article-img{width:100%;border-radius:8px;border:1px solid #1e2535;overflow:hidden;margin:36px 0}
+.article-img figcaption{padding:10px 14px;background:var(--off);font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.04em;border-top:1px solid var(--rule)}
+.arrow-list{list-style:none;display:flex;flex-direction:column;gap:8px;margin:16px 0 24px}
+.arrow-list li{display:flex;align-items:flex-start;gap:10px;font-size:15px;color:var(--ink2);line-height:1.6}
+.arrow-list li::before{content:'\2192';color:var(--blue);flex-shrink:0;font-size:12px;margin-top:3px}
+.checklist{list-style:none;display:flex;flex-direction:column;gap:8px;margin:20px 0 28px}
+.checklist li{display:flex;align-items:flex-start;gap:10px;font-size:15px;color:var(--ink2);line-height:1.6}
+.checklist li::before{content:'';width:16px;height:16px;flex-shrink:0;margin-top:3px;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 14 14' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='7' cy='7' r='6.5' fill='none' stroke='%230057ff' stroke-width='1'/%3E%3Cpath d='M4 7l2 2 4-4' stroke='%230057ff' stroke-width='1.3' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:center;background-size:contain}
+.mono-block{background:var(--ink);border-radius:8px;padding:20px 24px;margin:24px 0;font-family:var(--f-mono);font-size:12px;color:rgba(255,255,255,.85);line-height:1.8;overflow-x:auto}
+.mono-block .label{color:rgba(255,255,255,.35);font-size:10px;letter-spacing:.1em;margin-bottom:10px;display:block}
+.mono-block .hi{color:#6699ff}.mono-block .val{color:#33cc80}.mono-block .dim{color:rgba(255,255,255,.5)}
+.table-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:28px 0}
+.compare-table{width:100%;border-collapse:collapse;font-size:14px}
+.compare-table th{font-family:var(--f-mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink4);padding:10px 16px;border-bottom:2px solid var(--rule);text-align:left;background:var(--off)}
+.compare-table td{padding:12px 16px;border-bottom:1px solid var(--rule);vertical-align:top;color:var(--ink2);line-height:1.6}
+.compare-table tr:last-child td{border-bottom:none}
+.compare-table td:first-child{font-weight:600;color:var(--ink);font-family:var(--f-mono);font-size:12px}
+.sidebar{position:sticky;top:88px;display:flex;flex-direction:column;gap:16px}
+.toc-card{border:1px solid var(--rule);border-radius:8px;padding:24px;background:var(--white);box-shadow:var(--shadow-sm)}
+.toc-label{font-family:var(--f-mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);margin-bottom:16px}
+.toc-list{list-style:none;display:flex;flex-direction:column;gap:2px}
+.toc-list a{display:block;font-size:13px;color:var(--ink3);text-decoration:none;padding:6px 10px;border-radius:4px;transition:all .15s;border-left:2px solid transparent}
+.toc-list a:hover,.toc-list a.active{color:var(--blue);background:var(--blue-dim);border-left-color:var(--blue)}
+.sidebar-cta{border:1px solid var(--blue);border-radius:8px;padding:24px;background:var(--blue-dim)}
+.sc-eyebrow{font-family:var(--f-mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);margin-bottom:10px}
+.sc-title{font-family:var(--f-head);font-size:17px;font-weight:800;letter-spacing:-.02em;color:var(--ink);margin-bottom:8px;line-height:1.2}
+.sc-body{font-size:13px;color:var(--ink3);line-height:1.6;margin-bottom:16px}
+.sc-btn{display:block;text-align:center;padding:11px 16px;background:var(--blue);color:white;border-radius:6px;font-family:var(--f-body);font-size:13px;font-weight:500;text-decoration:none}.sc-btn:hover{background:var(--blue2)}
+.sc-note{font-family:var(--f-mono);font-size:9px;color:var(--ink4);text-align:center;margin-top:8px;letter-spacing:.04em}
+.sidebar-share{border:1px solid var(--rule);border-radius:8px;padding:20px 24px;background:var(--white)}
+.share-label{font-family:var(--f-mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);margin-bottom:14px}
+.share-links{display:flex;flex-direction:column;gap:8px}
+.share-link{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--ink3);text-decoration:none;padding:9px 12px;border:1px solid var(--rule);border-radius:6px;transition:border-color .2s,color .2s}.share-link:hover{border-color:var(--blue);color:var(--blue)}
+.related{padding:64px 6%;border-top:1px solid var(--rule);background:var(--off)}
+.related-inner{max-width:1100px;margin:0 auto}
+.related-label{font-family:var(--f-mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);margin-bottom:32px;display:flex;align-items:center;gap:10px}
+.related-label::before{content:'';width:20px;height:1px;background:var(--blue)}
+.related-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.related-card{padding:24px;border:1px solid var(--rule);border-radius:8px;background:var(--white);box-shadow:var(--shadow-sm);transition:border-color .2s,transform .2s;text-decoration:none;display:flex;flex-direction:column;gap:12px}.related-card:hover{border-color:var(--blue);transform:translateY(-4px)}
+.rc-tag{font-family:var(--f-mono);font-size:9px;color:var(--blue);letter-spacing:.08em;text-transform:uppercase;padding:3px 8px;background:var(--blue-dim);border-radius:3px;align-self:flex-start}
+.rc-title{font-family:var(--f-head);font-size:16px;font-weight:700;letter-spacing:-.02em;color:var(--ink);line-height:1.25}
+.rc-desc{font-size:13px;color:var(--ink3);line-height:1.6;flex:1}
+.rc-footer{display:flex;align-items:center;justify-content:space-between;padding-top:12px;border-top:1px solid var(--rule)}
+.rc-read{font-family:var(--f-mono);font-size:10px;color:var(--ink4)}.rc-arrow{font-size:14px;color:var(--blue)}
+footer{padding:56px 6% 32px;border-top:1px solid var(--rule);background:var(--white)}
+.footer-inner{max-width:1160px;margin:0 auto}
+.footer-top{display:flex;justify-content:space-between;align-items:flex-start;gap:40px;flex-wrap:wrap;margin-bottom:48px}
+.footer-brand p{font-size:13px;font-weight:300;color:var(--ink3);margin-top:12px;max-width:260px;line-height:1.6}
+.footer-col h4{font-family:var(--f-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink4);margin-bottom:16px}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+.footer-col a{font-size:13px;color:var(--ink3);text-decoration:none}.footer-col a:hover{color:var(--blue)}
+.footer-bottom{padding-top:24px;border-top:1px solid var(--rule);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.footer-bottom p{font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.04em}
+.compliance-pills{display:flex;gap:6px;flex-wrap:wrap}
+.cp{font-family:var(--f-mono);font-size:9px;padding:3px 8px;border:1px solid var(--rule);border-radius:3px;color:var(--ink4);letter-spacing:.06em}
+@media(max-width:900px){.article-wrap{grid-template-columns:1fr;gap:48px}.sidebar{position:static}.related-grid{grid-template-columns:1fr}.table-scroll{margin:20px 0}}
+@media(max-width:900px){.nav-links{display:none}}
+@media(max-width:540px){nav{padding:0 4%}.nav-btn{font-size:12px;padding:8px 14px}}
+</style>
+</head>
+<body>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+<nav>
+  <a href="../index.html" class="nav-logo">
+    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" style="flex-shrink:0"><rect width="32" height="32" rx="7" fill="#0d0f12"/><rect x="8" y="7" width="16" height="16" rx="2" stroke="white" stroke-width="2.5" fill="none"/><line x1="20" y1="19" x2="26" y2="25" stroke="#0057FF" stroke-width="3" stroke-linecap="round"/></svg>
+    <span style="font-family:'Epilogue',sans-serif;font-weight:800;font-size:16px;color:#0d0f12;letter-spacing:-.03em;white-space:nowrap">QLean <span style="font-weight:300;color:#5a6172">Automation</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="../index.html#products">Products</a></li>
+    <li><a href="../index.html#framework">Framework</a></li>
+    <li><a href="blog-index.html">Knowledge Base</a></li>
+    <li><a href="../index.html#pricing">Pricing</a></li>
+    <li><a href="../about.html">About</a></li>
+    <li><a href="../index.html#faq">FAQ</a></li>
+  </ul>
+  <a href="../index.html#pricing" class="nav-btn">Get the Framework →</a>
+</nav>
+
+<header class="article-hero">
+  <div class="article-hero-inner">
+    <div class="breadcrumb"><a href="../index.html">Home</a><span>/</span><a href="blog-index.html">Knowledge Base</a><span>/</span>PLC Version Control</div>
+    <div class="article-tag">⚙️ PLC Engineering</div>
+    <h1>PLC Program Version Control<br><span>on Validated Systems</span></h1>
+    <p class="article-intro">Version control for a validated PLC isn't just about tracking changes — it's about being able to prove, at any point in time, exactly what code was in the controller when the OQ was executed and signed. That's a different requirement from ordinary version control, and it demands a different discipline.</p>
+    <div class="article-meta">
+      <div class="meta-author">
+        <div class="author-avatar"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="7" r="3.5" stroke="white" stroke-width="1.5"/><path d="M2.5 16c0-3.59 2.91-6.5 6.5-6.5s6.5 2.91 6.5 6.5" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+        <div><div class="author-name">QLean Automation</div><div class="author-role">ENGINEERS WHO BUILD SYSTEMS, NOT JUST SIGN THEM</div></div>
+      </div>
+      <div class="meta-divider"></div><div class="meta-stat">7 MIN READ</div>
+      <div class="meta-divider"></div><div class="meta-stat">PLC · VERSION CONTROL · GAMP 5</div>
+    </div>
+  </div>
+</header>
+
+<div class="article-wrap">
+  <article class="article-body">
+
+    <h2 id="the-real-requirement">The Real Requirement — It's Not About Git</h2>
+    <p>Most version control discussions for PLC code focus on tooling: should you use Git, TFS, or the archive method built into TIA Portal? That's the wrong starting point. The GMP requirement that drives version control on validated systems is much more specific: <strong>you must be able to demonstrate, at any future audit, that the code in the controller today is the code that was qualified, and that any changes since qualification were made through change control.</strong></p>
+    <p>EU GMP Annex 11 and the GAMP 5 framework both require that validated computerised systems — including the PLC software — are controlled such that unauthorised changes cannot be made and that every authorised change is documented with a full record of what changed, why, and who approved it. The version control system is the mechanism that enforces this. It is not an engineering productivity tool on a pharma project — it is a compliance control.</p>
+
+    <div class="callout amber">
+      <div class="callout-label">The Audit Question</div>
+      <p>The question an auditor asks is not "do you use version control?" It is: <strong>"Show me the code that was in the controller when OQ was signed, and show me every change made to it since then with the associated change control records."</strong> Your version control system either answers that question cleanly or it doesn't. If it doesn't, you have a gap.</p>
+    </div>
+
+    <h2 id="baselines">Validation Baselines — The Fixed Points</h2>
+    <p>The foundation of version control on a validated system is the concept of a <strong>baseline</strong> — a labelled, frozen version of the programme that corresponds to a specific validation event. Baselines are not just the latest tagged commit; they are the versions that are referenced in controlled documents and that cannot be modified after they are set.</p>
+    <p>There are three mandatory baselines on every pharma PLC project:</p>
+    <ul class="arrow-list">
+      <li><strong>FAT Baseline</strong> — the programme version used during the Factory Acceptance Test. This version is identified in the FAT protocol cover page and the executed FAT record. Any deviations raised during the FAT that require code changes result in a new minor version before IQ, not a modification of the FAT baseline.</li>
+      <li><strong>IQ Baseline</strong> — the programme version that was loaded in the controller when the <a href="iq-oq-pq-guide.html">IQ</a> was executed. The IQ protocol includes a step that records the programme version and verifies it matches the expected version before IQ activities begin. This version is also recorded in the IQ execution record.</li>
+      <li><strong>OQ Baseline (Validated State)</strong> — the programme version in the controller when the OQ was executed and the system was declared validated. This version is recorded in the <a href="validation-summary-report-guide.html">Validation Summary Report</a> as the validated baseline. All post-validation changes are measured against this baseline via <a href="change-control-validated-system.html">change control</a>.</li>
+    </ul>
+    <p>The principle is that once a baseline is set, it is permanent. You can create new versions after it, but you cannot retroactively modify what the baseline was. If an auditor asks to see the OQ baseline, you must be able to produce it exactly — not an approximation.</p>
+
+    <figure class="article-img">
+      <svg viewBox="0 0 720 200" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;background:#0d0f12;border-radius:8px 8px 0 0">
+        <defs>
+          <marker id="arr32" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
+            <path d="M0,0 L6,3 L0,6 Z" fill="rgba(0,87,255,0.6)"/>
+          </marker>
+        </defs>
+        <text x="360" y="18" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(255,255,255,0.2)" letter-spacing="0.12em">VERSION LIFECYCLE — PHARMA PLC PROJECT</text>
+
+        <!-- Timeline line -->
+        <line x1="30" y1="100" x2="690" y2="100" stroke="rgba(255,255,255,0.1)" stroke-width="2"/>
+
+        <!-- v1.0 FAT -->
+        <circle cx="100" cy="100" r="8" fill="rgba(0,87,255,0.3)" stroke="#0057ff" stroke-width="2"/>
+        <text x="100" y="80" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="#6699ff">v1.0</text>
+        <text x="100" y="66" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(255,255,255,0.4)">FAT BASELINE</text>
+        <text x="100" y="122" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(255,255,255,0.4)">FAT Start</text>
+
+        <!-- v1.1 post-FAT deviation fix -->
+        <circle cx="230" cy="100" r="6" fill="rgba(217,119,6,0.2)" stroke="rgba(217,119,6,0.6)" stroke-width="1.5"/>
+        <text x="230" y="80" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(217,119,6,0.8)">v1.1</text>
+        <text x="230" y="66" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(217,119,6,0.5)">CCR-001</text>
+        <text x="230" y="122" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(255,255,255,0.4)">FAT Dev. Fix</text>
+
+        <!-- v2.0 IQ -->
+        <circle cx="370" cy="100" r="8" fill="rgba(0,87,255,0.3)" stroke="#0057ff" stroke-width="2"/>
+        <text x="370" y="80" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="#6699ff">v2.0</text>
+        <text x="370" y="66" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(255,255,255,0.4)">IQ BASELINE</text>
+        <text x="370" y="122" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(255,255,255,0.4)">IQ Execution</text>
+
+        <!-- v2.1 post-IQ deviation -->
+        <circle cx="480" cy="100" r="6" fill="rgba(217,119,6,0.2)" stroke="rgba(217,119,6,0.6)" stroke-width="1.5"/>
+        <text x="480" y="80" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(217,119,6,0.8)">v2.1</text>
+        <text x="480" y="66" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(217,119,6,0.5)">CCR-004</text>
+        <text x="480" y="122" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(255,255,255,0.4)">OQ Dev. Fix</text>
+
+        <!-- v3.0 OQ -->
+        <circle cx="610" cy="100" r="10" fill="rgba(0,135,90,0.25)" stroke="#00875a" stroke-width="2.5"/>
+        <text x="610" y="78" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="#00c97a">v3.0</text>
+        <text x="610" y="64" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(0,201,122,0.6)">OQ BASELINE</text>
+        <text x="610" y="50" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(0,201,122,0.5)">VALIDATED STATE</text>
+        <text x="610" y="122" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(0,201,122,0.6)">OQ Signed / VSR</text>
+
+        <!-- Arrows -->
+        <line x1="108" y1="100" x2="222" y2="100" stroke="rgba(0,87,255,0.3)" stroke-width="1.5" stroke-dasharray="4,3"/>
+        <line x1="236" y1="100" x2="362" y2="100" stroke="rgba(0,87,255,0.3)" stroke-width="1.5" stroke-dasharray="4,3"/>
+        <line x1="378" y1="100" x2="472" y2="100" stroke="rgba(0,87,255,0.3)" stroke-width="1.5" stroke-dasharray="4,3"/>
+        <line x1="486" y1="100" x2="600" y2="100" stroke="rgba(0,87,255,0.3)" stroke-width="1.5" stroke-dasharray="4,3"/>
+
+        <!-- Post-OQ label -->
+        <text x="360" y="170" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="11" fill="rgba(255,255,255,0.3)">Every change after v3.0 requires Change Control — version increments to v3.1, v3.2, etc.</text>
+        <text x="360" y="186" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="11" fill="rgba(255,255,255,0.25)">Baselines at v1.0, v2.0, and v3.0 are permanent and immutable</text>
+      </svg>
+      <figcaption>// EVERY INTERMEDIATE VERSION BETWEEN BASELINES IS LINKED TO A CHANGE CONTROL RECORD. THE BASELINE VERSIONS AT FAT, IQ, AND OQ ARE IMMUTABLE — THEY EXIST AS PERMANENT REFERENCE POINTS.</figcaption>
+    </figure>
+
+    <h2 id="version-tag-format">The Version Tag Format</h2>
+    <p>A version tag on a pharma PLC project carries more information than a semantic version number alone. It must encode enough context to locate the associated change control or validation event without searching through separate records. The format used consistently in <a href="plc-project-structure-pharma-validation.html">well-structured PLC projects</a> combines three elements:</p>
+
+    <div class="mono-block">
+      <span class="label">VERSION TAG FORMAT — v[MAJOR].[MINOR]_[YYYYMMDD]_[EVENT-REF]</span>
+      <span class="hi">v1.0_20260115_FAT-BASELINE    </span><span class="dim">// Initial FAT version — no CCR (first issue)</span>
+      <span class="hi">v1.1_20260128_CCR-001          </span><span class="dim">// FAT deviation correction (alarm setpoint)</span>
+      <span class="hi">v1.2_20260205_CCR-002          </span><span class="dim">// FAT deviation correction (interlock logic)</span>
+      <span class="hi">v2.0_20260310_IQ-BASELINE      </span><span class="dim">// Version loaded at IQ execution — matches IQ record</span>
+      <span class="hi">v2.1_20260322_CCR-004          </span><span class="dim">// OQ deviation correction during testing</span>
+      <span class="hi">v3.0_20260415_OQ-BASELINE      </span><span class="dim">// Validated state — matches VSR and OQ record</span>
+      <span class="hi">v3.1_20260901_CCR-012          </span><span class="dim">// Post-validation change (recipe parameter)</span>
+    </div>
+
+    <p>The major version number increments at each validation baseline. Minor version numbers track interim changes between baselines. The date and event reference make the tag self-documenting — anyone reading the tag can immediately identify what validation stage it relates to without cross-referencing a separate log.</p>
+    <p>One rule applies without exception: <strong>the version tag is applied before the code is loaded into the controller, not after.</strong> Tagging retroactively — adding a tag to a commit after the code has already been deployed — is not reliable evidence. The tag must exist before deployment, and the deployment record must reference the tag. This is what creates an unambiguous chain from version control to controller to qualification record.</p>
+
+    <h2 id="tooling-options">Tooling — Three Approaches That Work</h2>
+    <p>There is no single mandated tooling approach for PLC version control in pharma. What matters is that whatever system you use produces evidence that satisfies the GMP requirements. Three approaches are commonly used, each with different trade-offs.</p>
+
+    <h3>Approach 1 — Vendor Archive Method (TIA Portal, Studio 5000)</h3>
+    <p>Every major PLC development environment has a built-in archive or backup function. In TIA Portal this is the project archive (.zap file). In Studio 5000 it is the ACD archive. The archive method is simple and requires no additional tooling: at each version point, create an archive, name it according to the version tag format, and store it in a controlled network location.</p>
+    <p>This approach works well for smaller projects or teams without established DevOps infrastructure. The weaknesses are: archives are binary files, so you cannot diff them to see exactly what changed between versions; the "controlled network location" must actually be controlled (backed up, access-restricted, not a local hard drive); and there is no automated enforcement of the naming convention — human discipline is the only control.</p>
+
+    <h3>Approach 2 — Git with Exported Source Files</h3>
+    <p>TIA Portal and some other platforms support export of the project to XML or text-based formats that can be tracked in Git. Codesys-based platforms have better native Git integration. The advantage is a full diff history — you can see exactly which rungs or function block parameters changed between any two versions. The disadvantage is that the export/import workflow adds steps and the XML exports from TIA Portal are not always clean enough for reliable diff output.</p>
+    <p>For teams already using Git for other code, this approach scales better across multiple projects and provides a true audit trail with commit messages, author information, and timestamps that are not editable after the fact.</p>
+
+    <h3>Approach 3 — Dedicated Configuration Management Tools</h3>
+    <p>Some organisations use dedicated configuration management tools designed for OT environments — products that handle PLC programme versioning, compare deployed firmware against the approved version in real time, and generate configuration audit reports. These tools are particularly valuable in post-validation operations where regular code comparison verification is a periodic review requirement. The cost is higher, but the compliance evidence they generate is stronger than either of the first two approaches.</p>
+
+    <div class="callout blue">
+      <div class="callout-label">Platform Note</div>
+      <p>Regardless of tooling: the version that matters for compliance is <strong>what is in the controller</strong>, not what is in the version control system. Both must agree. A common failure mode is that someone makes a "quick fix" by loading directly to the controller without going through version control first. The controller then contains code that has no corresponding version control entry. This is an unauthorised change under GAMP 5 — the fix to this situation is a retrospective change control, not a quiet re-archive. Prevent it by making direct-to-controller downloads require a documented reason, even during development.</p>
+    </div>
+
+    <h2 id="what-gets-versioned">What Gets Versioned — Not Just the Programme</h2>
+    <p>A common gap is treating version control as applying only to the PLC programme (the .ap15 or .ACD file). On a validated system, version control applies to everything that constitutes the configured state of the controller:</p>
+    <ul class="checklist">
+      <li><strong>PLC programme</strong> — all function blocks, data blocks, organisation blocks, and the OB structure</li>
+      <li><strong>Hardware configuration</strong> — rack configuration, module assignments, I/O addresses, firmware versions of each module</li>
+      <li><strong>Drive and motion parameters</strong> — any VFD or servo parameters configured from the engineering tool that could affect process behaviour</li>
+      <li><strong>Safety programme</strong> — F-CPU programme is a separate compilation unit and must be versioned independently with its own safety CRC verification</li>
+      <li><strong>Failsafe parameter sets</strong> — the values that the outputs default to on CPU fault are a configurable item and must be documented and versioned</li>
+      <li><strong>Communication configuration</strong> — OPC server configuration, Profibus/Profinet device configuration, network addresses</li>
+    </ul>
+    <p>The IQ protocol includes steps that verify each of these configuration items against the approved version. An IQ that only checks the programme version and not the hardware configuration, module firmware, or safety CRC is incomplete. The validated state is the entire configured system, not just the application logic.</p>
+
+    <h2 id="post-validation">Post-Validation Version Control — The Ongoing Discipline</h2>
+    <p>Version control requirements don't end at OQ sign-off. In many ways they become more important post-validation, because now every change must go through formal change control and the version control record is part of the change control evidence package.</p>
+    <p>The process for a post-validation code change is: raise a change control record, get it approved, make the code change, tag the new version referencing the CCR number, load the verified version to the controller, execute the required testing per the change control risk assessment, update the change control record with the result, and update the Validation Summary Report to reflect the new baseline if the change is major. The version tag is the link that connects the change control record to the code archive and to the controller state.</p>
+
+    <div class="callout amber">
+      <div class="callout-label">The Version Drift Problem</div>
+      <p>Version drift happens when the code in the controller gradually diverges from what is in the version control archive — usually through small "emergency" fixes made directly to the controller without going through change control. Over time, the version in the archive no longer represents what is actually running. The system is no longer in a validated state in any meaningful sense, even if the validation documentation says it is. The fix is a formal re-baseline through change control — not a quiet re-archive to match what is in the controller.</p>
+    </div>
+
+    <h2 id="what-vsrneeds">What the VSR Needs From Version Control</h2>
+    <p>The <a href="validation-summary-report-guide.html">Validation Summary Report</a> must include a section that identifies the validated baseline — specifically, the programme version number that was verified in the controller at OQ completion, with a statement that this version is the validated state. It also lists any programme versions that existed during the qualification lifecycle (FAT baseline, any deviation corrections) and confirms that each interim version change was handled through the appropriate process (change control for post-FAT changes, deviation management for changes made during active protocol execution).</p>
+    <p>If the VSR version baseline and the version control archive don't tell the same story — if the VSR says v3.0 is the validated state but the archive shows no tag for v3.0 or the tag date is after the OQ completion date — you have a documentation nonconformance that will require a corrective action record to resolve.</p>
+
+    <div class="callout green">
+      <div class="callout-label">In the QLean Framework</div>
+      <p>The VSR template includes a system configuration baseline section that references the hardware configuration stored per HDS-SYS-001 and the software hashes on file — the anchor for recording the validated state. The version tagging convention, archive schedule, and pre-deployment tagging requirement described in this article are the practices you define in your project-specific SOP-ADMIN or a dedicated software configuration management procedure; the framework gives you the document structure, the version control discipline is what your team implements against that baseline.</p>
+    </div>
+
+  </article>
+
+  <aside class="sidebar">
+    <div class="toc-card">
+      <div class="toc-label">In This Article</div>
+      <ul class="toc-list">
+        <li><a href="#the-real-requirement" class="active">The Real Requirement</a></li>
+        <li><a href="#baselines">Validation Baselines</a></li>
+        <li><a href="#version-tag-format">Version Tag Format</a></li>
+        <li><a href="#tooling-options">Tooling Options</a></li>
+        <li><a href="#what-gets-versioned">What Gets Versioned</a></li>
+        <li><a href="#post-validation">Post-Validation Discipline</a></li>
+        <li><a href="#what-vsrneeds">What the VSR Needs</a></li>
+      </ul>
+    </div>
+    <div class="sidebar-cta">
+      <div class="sc-eyebrow">QLean Framework</div>
+      <div class="sc-title">29 production-ready GAMP 5 documents</div>
+      <div class="sc-body">Every document referenced in this article — templates, protocols, and registers — ready to adapt for your project.</div>
+      <a href="../index.html#pricing" class="sc-btn">Get the Framework — €249 →</a>
+      <div class="sc-note">// INSTANT DOWNLOAD · COMPANY-WIDE LICENCE</div>
+    </div>
+    <div class="sidebar-share">
+      <div class="share-label">Share This Article</div>
+      <div class="share-links">
+        <a href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fqleanautomation.com%2Fblog%2Fplc-version-control-validated-systems.html" target="_blank" rel="noopener" class="share-link">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          Share on LinkedIn
+        </a>
+        <a href="https://www.reddit.com/submit?url=https%3A%2F%2Fqleanautomation.com%2Fblog%2Fplc-version-control-validated-systems.html&title=PLC+Program+Version+Control+on+Validated+Systems" target="_blank" rel="noopener" class="share-link">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/></svg>
+          Share on Reddit
+        </a>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<section class="related">
+  <div class="related-inner">
+    <div class="related-label">More Articles</div>
+    <div class="related-grid">
+      <a href="plc-project-structure-pharma-validation.html" class="related-card">
+        <div class="rc-tag">⚙️ PLC Engineering</div>
+        <div class="rc-title">How to Structure a PLC Project for Pharma Validation</div>
+        <div class="rc-desc">The programme structure — OB assignment, FB naming, UDT design — determines what your version control system is actually tracking.</div>
+        <div class="rc-footer"><div class="rc-read">8 MIN READ</div><div class="rc-arrow">→</div></div>
+      </a>
+      <a href="change-control-validated-system.html" class="related-card">
+        <div class="rc-tag">🔄 Change Control</div>
+        <div class="rc-title">Change Control for Validated Systems</div>
+        <div class="rc-desc">Every post-validation code change is a change control event. The version tag links the CCR to the archive and to the controller state.</div>
+        <div class="rc-footer"><div class="rc-read">7 MIN READ</div><div class="rc-arrow">→</div></div>
+      </a>
+      <a href="validation-summary-report-guide.html" class="related-card">
+        <div class="rc-tag">📋 VSR</div>
+        <div class="rc-title">The Validation Summary Report</div>
+        <div class="rc-desc">The VSR records the validated baseline version. If that version doesn't exist in your archive, you have a documentation nonconformance.</div>
+        <div class="rc-footer"><div class="rc-read">6 MIN READ</div><div class="rc-arrow">→</div></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="../index.html" class="nav-logo">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none" style="flex-shrink:0"><rect width="32" height="32" rx="7" fill="#0d0f12"/><rect x="8" y="7" width="16" height="16" rx="2" stroke="white" stroke-width="2.5" fill="none"/><line x1="20" y1="19" x2="26" y2="25" stroke="#0057FF" stroke-width="3" stroke-linecap="round"/></svg>
+          <span style="font-family:'Epilogue',sans-serif;font-weight:800;font-size:16px;color:#0d0f12;letter-spacing:-.03em;white-space:nowrap">QLean <span style="font-weight:300;color:#5a6172">Automation</span></span>
+        </a>
+        <p>GMP documentation tools for system integrators and automation engineers entering pharmaceutical projects.</p>
+      </div>
+      <div class="footer-col"><h4>Products</h4><ul><li><a href="../index.html#framework">GAMP 5 Framework</a></li><li><a href="../index.html#products">Technical Masterclass</a></li></ul></div>
+      <div class="footer-col"><h4>Knowledge Base</h4><ul>
+        <li><a href="blog-index.html">All Articles</a></li>
+        <li><a href="iq-oq-pq-guide.html">IQ OQ PQ Guide</a></li>
+        <li><a href="plc-project-structure-pharma-validation.html">PLC Project Structure</a></li>
+        <li><a href="change-control-validated-system.html">Change Control</a></li>
+        <li><a href="validation-summary-report-guide.html">Validation Summary Report</a></li>
+        <li><a href="v-model-pharma-validation.html">The V-Model</a></li>
+        <li><a href="21-cfr-part-11.html">21 CFR Part 11</a></li>
+      </ul></div>
+      <div class="footer-col"><h4>Company</h4><ul><li><a href="https://www.linkedin.com/company/qlean-automation" target="_blank">LinkedIn</a></li><li><a href="mailto:hello@qleanautomation.com">Contact</a></li><li><a href="../terms.html">Terms</a></li></ul></div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 QLEAN AUTOMATION · QLEANAUTOMATION.COM</p>
+      <div class="compliance-pills"><span class="cp">GAMP 5</span><span class="cp">EU ANNEX 11</span><span class="cp">21 CFR PART 11</span></div>
+    </div>
+  </div>
+</footer>
+
+<script>
+window.addEventListener('scroll',()=>{const d=document.documentElement;document.getElementById('progress').style.width=(d.scrollTop/(d.scrollHeight-d.clientHeight)*100)+'%'});
+const obs=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting){document.querySelectorAll('.toc-list a').forEach(l=>l.classList.remove('active'));const a=document.querySelector('.toc-list a[href="#'+x.target.id+'"]');if(a)a.classList.add('active')}})  ,{rootMargin:'-20% 0px -70% 0px'});
+document.querySelectorAll('[id]').forEach(s=>obs.observe(s));
+</script>
+</body>
+</html>

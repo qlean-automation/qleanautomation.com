@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-JJQ1TXZJX7"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-JJQ1TXZJX7');
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HART Communicators on Pharma Projects — What's Permitted | QLean Automation</title>
+<meta name="description" content="A HART communicator is one of the most useful tools on a pharma project and one of the most misunderstood from a GMP perspective. Here is exactly what you can do, what you must document, and what requires change control when using a HART communicator on a validated system.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@300;400;500;600;700;800;900&family=Source+Sans+3:ital,wght@0,300;0,400;0,500;1,300&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--white:#ffffff;--off:#f7f8f9;--ink:#0d0f12;--ink2:#1e2128;--ink3:#3d4456;--ink4:#9199a8;--rule:#e2e5ea;--rule2:#c8cdd6;--blue:#0057ff;--blue2:#0044cc;--blue-dim:rgba(0,87,255,0.07);--green:#00875a;--green-dim:rgba(0,135,90,0.08);--amber:#d97706;--amber-dim:rgba(217,119,6,0.08);--red:#c0392b;--red-dim:rgba(192,57,43,0.08);--f-head:'Epilogue',sans-serif;--f-body:'Source Sans 3',sans-serif;--f-mono:'Roboto Mono',monospace;--shadow-sm:0 2px 8px rgba(13,15,18,0.06),0 1px 3px rgba(13,15,18,0.04)}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}body{background:var(--white);color:var(--ink);font-family:var(--f-body);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+nav{position:fixed;top:0;left:0;right:0;z-index:200;height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 6%;background:rgba(255,255,255,0.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--rule)}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;flex-shrink:0}
+.nav-links{display:flex;align-items:center;gap:36px;list-style:none}.nav-links a{font-size:14px;font-weight:400;color:var(--ink3);text-decoration:none;transition:color .2s}.nav-links a:hover{color:var(--ink)}
+.nav-btn{font-family:var(--f-body);font-size:13px;font-weight:500;padding:9px 20px;background:var(--blue);color:white;border:none;border-radius:6px;cursor:pointer;text-decoration:none;white-space:nowrap;flex-shrink:0}.nav-btn:hover{background:var(--blue2)}
+.progress-bar{position:fixed;top:64px;left:0;right:0;height:2px;background:var(--rule);z-index:199}.progress-fill{height:100%;background:var(--blue);width:0%}
+.article-hero{padding:120px 6% 64px;background:var(--white);border-bottom:1px solid var(--rule);position:relative;overflow:hidden}
+.article-hero::before{content:'';position:absolute;top:-80px;right:-80px;width:400px;height:400px;background:radial-gradient(circle,rgba(0,87,255,0.04) 0%,transparent 70%);pointer-events:none}
+.article-hero-inner{max-width:940px;margin:0 auto;position:relative;z-index:1}
+.breadcrumb{display:flex;align-items:center;gap:8px;font-family:var(--f-mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink4);margin-bottom:24px}.breadcrumb a{color:var(--ink4);text-decoration:none}.breadcrumb a:hover{color:var(--blue)}.breadcrumb span{color:var(--rule2)}
+.article-tag{display:inline-flex;align-items:center;gap:6px;font-family:var(--f-mono);font-size:10px;font-weight:500;color:var(--blue);letter-spacing:.1em;text-transform:uppercase;margin-bottom:20px;padding:4px 10px;background:var(--blue-dim);border-radius:4px}
+.article-hero h1{font-family:var(--f-head);font-size:clamp(30px,5vw,52px);font-weight:900;line-height:1.0;letter-spacing:-.04em;color:var(--ink);margin-bottom:20px}.article-hero h1 span{color:var(--blue)}
+.article-intro{font-size:18px;font-weight:400;color:var(--ink2);line-height:1.75;margin-bottom:32px;max-width:800px}
+.article-meta{display:flex;align-items:center;gap:24px;padding-top:24px;border-top:1px solid var(--rule);flex-wrap:wrap}
+.meta-author{display:flex;align-items:center;gap:10px}.author-avatar{width:36px;height:36px;border-radius:50%;background:var(--ink);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.author-name{font-size:13px;font-weight:500;color:var(--ink)}.author-role{font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.04em}
+.meta-divider{width:1px;height:28px;background:var(--rule)}.meta-stat{font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.06em}
+.article-wrap{max-width:1300px;margin:0 auto;padding:64px 6%;display:grid;grid-template-columns:1fr 300px;gap:60px;align-items:start}
+.article-body{min-width:0}
+.article-body h2{font-family:var(--f-head);font-size:26px;font-weight:800;letter-spacing:-.03em;color:var(--ink);margin:56px 0 16px;line-height:1.2}.article-body h2:first-child{margin-top:0}
+.article-body h3{font-family:var(--f-head);font-size:18px;font-weight:700;letter-spacing:-.02em;color:var(--ink);margin:32px 0 12px}
+.article-body p{font-size:16px;font-weight:400;color:var(--ink2);line-height:1.85;margin-bottom:20px}
+.article-body strong{color:var(--ink);font-weight:600}
+.article-body a{color:var(--blue);text-decoration:none;border-bottom:1px solid rgba(0,87,255,.25)}.article-body a:hover{border-color:var(--blue)}
+.callout{padding:20px 24px;border-radius:8px;margin:32px 0;border-left:3px solid}
+.callout.blue{background:var(--blue-dim);border-color:var(--blue)}.callout.amber{background:var(--amber-dim);border-color:var(--amber)}.callout.green{background:var(--green-dim);border-color:var(--green)}.callout.red{background:var(--red-dim);border-color:var(--red)}
+.callout-label{font-family:var(--f-mono);font-size:9px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px}.callout.blue .callout-label{color:var(--blue)}.callout.amber .callout-label{color:var(--amber)}.callout.green .callout-label{color:var(--green)}.callout.red .callout-label{color:var(--red)}
+.callout p{font-size:14px;color:var(--ink2);line-height:1.7;margin:0}.callout strong{color:var(--ink)}
+.article-img{width:100%;border-radius:8px;border:1px solid #1e2535;overflow:hidden;margin:36px 0}
+.article-img figcaption{padding:10px 14px;background:var(--off);font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.04em;border-top:1px solid var(--rule)}
+.checklist{list-style:none;display:flex;flex-direction:column;gap:8px;margin:20px 0 28px}
+.checklist li{display:flex;align-items:flex-start;gap:10px;font-size:15px;color:var(--ink2);line-height:1.6}
+.checklist li::before{content:'';width:16px;height:16px;flex-shrink:0;margin-top:3px;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 14 14' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='7' cy='7' r='6.5' fill='none' stroke='%230057ff' stroke-width='1'/%3E%3Cpath d='M4 7l2 2 4-4' stroke='%230057ff' stroke-width='1.3' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:center;background-size:contain}
+.arrow-list{list-style:none;display:flex;flex-direction:column;gap:8px;margin:20px 0 28px}
+.arrow-list li{display:flex;align-items:flex-start;gap:10px;font-size:15px;color:var(--ink2);line-height:1.6}
+.arrow-list li::before{content:'\2192';color:var(--blue);flex-shrink:0;font-family:var(--f-mono);font-size:13px;margin-top:2px}
+.table-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:28px 0}
+.compare-table{width:100%;border-collapse:collapse;font-size:14px}
+.compare-table th{font-family:var(--f-mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink4);padding:10px 16px;border-bottom:2px solid var(--rule);text-align:left;background:var(--off)}
+.compare-table td{padding:12px 16px;border-bottom:1px solid var(--rule);vertical-align:top;color:var(--ink2);line-height:1.6}
+.compare-table tr:last-child td{border-bottom:none}
+.compare-table td:first-child{font-weight:600;color:var(--ink);font-family:var(--f-mono);font-size:12px}
+.sidebar{position:sticky;top:88px;display:flex;flex-direction:column;gap:16px}
+.toc-card{border:1px solid var(--rule);border-radius:8px;padding:24px;background:var(--white);box-shadow:var(--shadow-sm)}
+.toc-label{font-family:var(--f-mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);margin-bottom:16px}
+.toc-list{list-style:none;display:flex;flex-direction:column;gap:2px}
+.toc-list a{display:block;font-size:13px;color:var(--ink3);text-decoration:none;padding:6px 10px;border-radius:4px;transition:all .15s;border-left:2px solid transparent}
+.toc-list a:hover,.toc-list a.active{color:var(--blue);background:var(--blue-dim);border-left-color:var(--blue)}
+.sidebar-cta{border:1px solid var(--blue);border-radius:8px;padding:24px;background:var(--blue-dim)}
+.sc-eyebrow{font-family:var(--f-mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);margin-bottom:10px}
+.sc-title{font-family:var(--f-head);font-size:17px;font-weight:800;letter-spacing:-.02em;color:var(--ink);margin-bottom:8px;line-height:1.2}
+.sc-body{font-size:13px;color:var(--ink3);line-height:1.6;margin-bottom:16px}
+.sc-btn{display:block;text-align:center;padding:11px 16px;background:var(--blue);color:white;border-radius:6px;font-family:var(--f-body);font-size:13px;font-weight:500;text-decoration:none}.sc-btn:hover{background:var(--blue2)}
+.sc-note{font-family:var(--f-mono);font-size:9px;color:var(--ink4);text-align:center;margin-top:8px;letter-spacing:.04em}
+.sidebar-share{border:1px solid var(--rule);border-radius:8px;padding:20px 24px;background:var(--white)}
+.share-label{font-family:var(--f-mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);margin-bottom:14px}
+.share-links{display:flex;flex-direction:column;gap:8px}
+.share-link{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--ink3);text-decoration:none;padding:9px 12px;border:1px solid var(--rule);border-radius:6px;transition:border-color .2s,color .2s}.share-link:hover{border-color:var(--blue);color:var(--blue)}
+.related{padding:64px 6%;border-top:1px solid var(--rule);background:var(--off)}
+.related-inner{max-width:1100px;margin:0 auto}
+.related-label{font-family:var(--f-mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);margin-bottom:32px;display:flex;align-items:center;gap:10px}
+.related-label::before{content:'';width:20px;height:1px;background:var(--blue)}
+.related-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.related-card{padding:24px;border:1px solid var(--rule);border-radius:8px;background:var(--white);box-shadow:var(--shadow-sm);transition:border-color .2s,transform .2s;text-decoration:none;display:flex;flex-direction:column;gap:12px}.related-card:hover{border-color:var(--blue);transform:translateY(-4px)}
+.rc-tag{font-family:var(--f-mono);font-size:9px;color:var(--blue);letter-spacing:.08em;text-transform:uppercase;padding:3px 8px;background:var(--blue-dim);border-radius:3px;align-self:flex-start}
+.rc-title{font-family:var(--f-head);font-size:16px;font-weight:700;letter-spacing:-.02em;color:var(--ink);line-height:1.25}
+.rc-desc{font-size:13px;color:var(--ink3);line-height:1.6;flex:1}
+.rc-footer{display:flex;align-items:center;justify-content:space-between;padding-top:12px;border-top:1px solid var(--rule)}
+.rc-read{font-family:var(--f-mono);font-size:10px;color:var(--ink4)}.rc-arrow{font-size:14px;color:var(--blue)}
+footer{padding:56px 6% 32px;border-top:1px solid var(--rule);background:var(--white)}
+.footer-inner{max-width:1160px;margin:0 auto}
+.footer-top{display:flex;justify-content:space-between;align-items:flex-start;gap:40px;flex-wrap:wrap;margin-bottom:48px}
+.footer-brand p{font-size:13px;font-weight:300;color:var(--ink3);margin-top:12px;max-width:260px;line-height:1.6}
+.footer-col h4{font-family:var(--f-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink4);margin-bottom:16px}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+.footer-col a{font-size:13px;color:var(--ink3);text-decoration:none}.footer-col a:hover{color:var(--blue)}
+.footer-bottom{padding-top:24px;border-top:1px solid var(--rule);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.footer-bottom p{font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.04em}
+.compliance-pills{display:flex;gap:6px;flex-wrap:wrap}
+.cp{font-family:var(--f-mono);font-size:9px;padding:3px 8px;border:1px solid var(--rule);border-radius:3px;color:var(--ink4);letter-spacing:.06em}
+@media(max-width:900px){.article-wrap{grid-template-columns:1fr;gap:48px}.sidebar{position:static}.related-grid{grid-template-columns:1fr}.table-scroll{margin:20px 0}}
+@media(max-width:900px){.nav-links{display:none}}
+@media(max-width:540px){nav{padding:0 4%}.nav-btn{font-size:12px;padding:8px 14px}}
+</style>
+</head>
+<body>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+<nav>
+  <a href="../index.html" class="nav-logo">
+    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" style="flex-shrink:0"><rect width="32" height="32" rx="7" fill="#0d0f12"/><rect x="8" y="7" width="16" height="16" rx="2" stroke="white" stroke-width="2.5" fill="none"/><line x1="20" y1="19" x2="26" y2="25" stroke="#0057FF" stroke-width="3" stroke-linecap="round"/></svg>
+    <span style="font-family:'Epilogue',sans-serif;font-weight:800;font-size:16px;color:#0d0f12;letter-spacing:-.03em;white-space:nowrap">QLean <span style="font-weight:300;color:#5a6172">Automation</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="../index.html#products">Products</a></li>
+    <li><a href="../index.html#framework">Framework</a></li>
+    <li><a href="blog-index.html">Knowledge Base</a></li>
+    <li><a href="../index.html#pricing">Pricing</a></li>
+    <li><a href="../about.html">About</a></li>
+    <li><a href="../index.html#faq">FAQ</a></li>
+  </ul>
+  <a href="../index.html#pricing" class="nav-btn">Get the Framework &#8594;</a>
+</nav>
+
+<header class="article-hero">
+  <div class="article-hero-inner">
+    <div class="breadcrumb"><a href="../index.html">Home</a><span>/</span><a href="blog-index.html">Knowledge Base</a><span>/</span>HART Communicators on Pharma Projects</div>
+    <div class="article-tag">&#128207; Instrumentation &amp; Calibration</div>
+    <h1>HART Communicators<br><span>on Pharma Projects</span><br>What's Permitted</h1>
+    <p class="article-intro">A HART communicator is the field engineer's most powerful diagnostic tool — and the source of more inadvertent change control violations than almost any other instrument. Connect one to a validated transmitter, change the wrong parameter, and you have made an undocumented change to a validated system. Understanding which HART operations are read-only, which require change control, and how to document HART usage during commissioning and maintenance is what separates engineers who stay out of audit trouble from those who create it.</p>
+    <div class="article-meta">
+      <div class="meta-author">
+        <div class="author-avatar"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="7" r="3.5" stroke="white" stroke-width="1.5"/><path d="M2.5 16c0-3.59 2.91-6.5 6.5-6.5s6.5 2.91 6.5 6.5" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+        <div><div class="author-name">QLean Automation</div><div class="author-role">ENGINEERS WHO BUILD SYSTEMS, NOT JUST SIGN THEM</div></div>
+      </div>
+      <div class="meta-divider"></div><div class="meta-stat">5 MIN READ</div>
+      <div class="meta-divider"></div><div class="meta-stat">HART &#183; FIELD INSTRUMENTS &#183; CHANGE CONTROL</div>
+    </div>
+  </div>
+</header>
+
+<div class="article-wrap">
+  <article class="article-body">
+
+    <h2 id="what-hart-communicators-do">What HART Communicators Do</h2>
+    <p>HART (Highway Addressable Remote Transducer) is a communication protocol that runs on top of the standard 4–20 mA analogue signal. A HART communicator — handheld devices like the Emerson 475 or 375 Field Communicator — connects to the loop via a pair of probes clipped to the signal wires anywhere along the 4–20 mA loop. It allows two-way digital communication with the transmitter while the analogue signal continues to carry the process value undisturbed.</p>
+    <p>Through a HART communicator, an engineer can read all transmitter configuration parameters (tag, range, units, damping, output mode), read diagnostic variables (device status, sensor temperature, loop current), perform loop tests, and — critically — write new configuration values to the transmitter. The write capability is what creates the GMP risk on a validated system.</p>
+
+    <h2 id="permitted-vs-requires-change-control">Permitted vs Requires Change Control</h2>
+    <p>The key question for any HART communicator operation on a validated system is: does this action change any parameter that is documented in the HDS or SDS, or affect the measurement accuracy the IQ calibration verification was based on? If yes, it is a change to the validated state and requires change control. If no, it is a read or diagnostic operation that can be performed with appropriate documentation but without formal change control.</p>
+
+    <div class="table-scroll">
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th>HART Operation</th>
+            <th>GMP Impact</th>
+            <th>Status</th>
+            <th>Documentation Required</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Read tag number, descriptor, manufacturer info</td>
+            <td>None — read-only</td>
+            <td style="color:var(--green);font-weight:600">Permitted freely</td>
+            <td>None required (IQ/commissioning: record for verification)</td>
+          </tr>
+          <tr>
+            <td>Read process variable, loop current, % range</td>
+            <td>None — read-only diagnostic</td>
+            <td style="color:var(--green);font-weight:600">Permitted freely</td>
+            <td>None required</td>
+          </tr>
+          <tr>
+            <td>Read device status and diagnostics</td>
+            <td>None — read-only</td>
+            <td style="color:var(--green);font-weight:600">Permitted freely</td>
+            <td>None required</td>
+          </tr>
+          <tr>
+            <td>Read all configuration parameters (range, units, damping)</td>
+            <td>None — read-only; useful for IQ verification</td>
+            <td style="color:var(--green);font-weight:600">Permitted; useful for IQ</td>
+            <td>Record output in IQ protocol for configuration verification</td>
+          </tr>
+          <tr>
+            <td>Loop test (force fixed output mA)</td>
+            <td>Temporarily disrupts the live 4–20 mA signal to PLC — PLC reads a forced value, not the process</td>
+            <td style="color:var(--amber);font-weight:600">Permitted during commissioning / maintenance window</td>
+            <td>Coordinate with control room; document test; verify transmitter returned to normal mode after</td>
+          </tr>
+          <tr>
+            <td>Write tag number or descriptor</td>
+            <td>Changes a parameter documented in HDS instrument register — affects IQ traceability</td>
+            <td style="color:var(--amber);font-weight:600">Requires change control if system is validated</td>
+            <td>CCR required; update HDS and Engineering Lists</td>
+          </tr>
+          <tr>
+            <td>Write measurement range (LRV / URV)</td>
+            <td>Changes calibrated measurement range — directly affects accuracy and IQ calibration basis</td>
+            <td style="color:var(--red);font-weight:600">Requires change control</td>
+            <td>CCR required; new calibration certificate required; partial IQ re-verification required</td>
+          </tr>
+          <tr>
+            <td>Write engineering units</td>
+            <td>Changes output units — affects SCADA display and all derived calculations</td>
+            <td style="color:var(--red);font-weight:600">Requires change control</td>
+            <td>CCR required; update SDS/SCADA configuration; partial OQ re-verification required</td>
+          </tr>
+          <tr>
+            <td>Write damping value</td>
+            <td>Changes signal response time — may affect alarm response time compliance</td>
+            <td style="color:var(--amber);font-weight:600">Requires change control if validated</td>
+            <td>CCR required if damping is specified in HDS or affects validated alarm response</td>
+          </tr>
+          <tr>
+            <td>Trim / zero calibration</td>
+            <td>Changes the internal calibration of the transmitter — breaks traceability of existing certificate</td>
+            <td style="color:var(--red);font-weight:600">Requires change control; new certificate required</td>
+            <td>CCR required; arrange re-calibration by accredited lab; new certificate; partial IQ update</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2 id="the-loop-test-hazard">The Loop Test Hazard — Most Common Incident</h2>
+    <p>The loop test is the HART operation that most commonly causes unexpected problems on pharma projects. When a loop test is initiated, the communicator commands the transmitter to output a fixed 4–20 mA value — typically 4 mA (0%), 12 mA (50%), or 20 mA (100%) — regardless of the actual process value. The PLC receives this fixed value and acts on it as if it were a real process measurement.</p>
+    <p>If the PLC sees a 4 mA signal (0%) from a level transmitter during a loop test while the tank is actually half full, the PLC may trigger the low-level alarm and potentially the low-low interlock — stopping the distribution pump. If the system is in production during this test, the pump trip may cause a process interruption. If the test is performed without coordinating with the control room, the alarm appears in the audit trail with no context, and the next person who reviews the historian data sees a level alarm event with no corresponding process disturbance — which looks like a data integrity anomaly.</p>
+
+    <div class="callout amber">
+      <div class="callout-label">Always Coordinate Loop Tests with the Control Room</div>
+      <p>Before initiating any HART loop test on a live GMP system: <strong>inform the control room operator</strong> that you are about to force the output on a specific instrument, <strong>agree on the test value</strong> (low enough to avoid triggering interlocks, or accept the interlock will need to be bypassed with proper authorisation), and <strong>confirm the instrument has returned to normal mode</strong> after the test. Document the test in the maintenance log with start time, end time, test values used, and the confirming operator initials.</p>
+    </div>
+
+    <h2 id="hart-during-iq-commissioning">HART During IQ and Commissioning</h2>
+    <p>During the IQ and commissioning phase — before the system is formally validated — HART communicator use is more flexible because the validated state has not yet been established. However, the configuration read-back during IQ is a valuable verification tool, and the discipline of documentation should be established from the start.</p>
+    <p>During IQ, HART communicator read operations are useful for:</p>
+    <ul class="checklist">
+      <li><strong>Configuration verification:</strong> read back the transmitter's current LRV (lower range value), URV (upper range value), and engineering units and record them in the IQ protocol as evidence that the transmitter is configured per the HDS specification. This is faster and more accurate than reading the transmitter display, and the read-back is a formal IQ step.</li>
+      <li><strong>HART address verification:</strong> confirm the HART address matches the value specified in the SDS (typically address 0 for point-to-point connections). A HART address mismatch means the PLC cannot communicate with the transmitter via HART if the system uses a HART-capable I/O module.</li>
+      <li><strong>Descriptor and tag verification:</strong> confirm the transmitter's internal tag matches the P&ID tag number. This is an additional nameplate verification step beyond the physical label.</li>
+      <li><strong>Diagnostic check before calibration sign-off:</strong> read device status to confirm no active diagnostic flags before accepting the calibration certificate as valid for IQ purposes.</li>
+    </ul>
+
+    <figure class="article-img">
+      <svg viewBox="0 0 720 200" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;background:#0d0f12;border-radius:8px 8px 0 0">
+        <text x="360" y="18" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(255,255,255,0.2)" letter-spacing="0.12em">HART COMMUNICATOR — DECISION TREE FOR GMP USE</text>
+
+        <!-- Start -->
+        <rect x="290" y="30" width="140" height="32" rx="16" fill="rgba(0,87,255,0.15)" stroke="rgba(0,87,255,0.5)" stroke-width="1.5"/>
+        <text x="360" y="50" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="11" fill="rgba(200,215,240,0.9)">HART operation planned</text>
+
+        <!-- Arrow down -->
+        <line x1="360" y1="62" x2="360" y2="80" stroke="rgba(0,87,255,0.4)" stroke-width="1.5"/>
+        <polygon points="356,77 360,86 364,77" fill="rgba(0,87,255,0.5)"/>
+
+        <!-- Decision diamond -->
+        <polygon points="360,88 440,120 360,152 280,120" fill="rgba(0,87,255,0.08)" stroke="rgba(0,87,255,0.4)" stroke-width="1.5"/>
+        <text x="360" y="115" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(200,215,240,0.8)">Does it write</text>
+        <text x="360" y="128" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(200,215,240,0.8)">any parameter?</text>
+
+        <!-- NO branch (left) -->
+        <line x1="280" y1="120" x2="170" y2="120" stroke="rgba(0,135,90,0.5)" stroke-width="1.5"/>
+        <polygon points="173,116 164,120 173,124" fill="rgba(0,135,90,0.5)"/>
+        <text x="225" y="113" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(0,200,100,0.7)">NO</text>
+        <rect x="90" y="100" width="80" height="40" rx="5" fill="rgba(0,135,90,0.12)" stroke="rgba(0,135,90,0.4)" stroke-width="1.5"/>
+        <text x="130" y="118" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(0,200,100,0.9)">Read / diagnose</text>
+        <text x="130" y="132" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(0,200,100,0.9)">freely</text>
+
+        <!-- YES branch (right) -->
+        <line x1="440" y1="120" x2="550" y2="120" stroke="rgba(192,57,43,0.5)" stroke-width="1.5"/>
+        <polygon points="547,116 556,120 547,124" fill="rgba(192,57,43,0.5)"/>
+        <text x="495" y="113" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(220,80,60,0.7)">YES</text>
+
+        <!-- Second decision -->
+        <polygon points="610,100 660,120 610,140 560,120" fill="rgba(0,87,255,0.08)" stroke="rgba(0,87,255,0.35)" stroke-width="1.5"/>
+        <text x="610" y="116" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="9" fill="rgba(200,215,240,0.7)">System</text>
+        <text x="610" y="128" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="9" fill="rgba(200,215,240,0.7)">validated?</text>
+
+        <!-- YES to CCR -->
+        <line x1="610" y1="100" x2="610" y2="55" stroke="rgba(192,57,43,0.5)" stroke-width="1.5"/>
+        <polygon points="606,58 610,49 614,58" fill="rgba(192,57,43,0.5)"/>
+        <text x="618" y="80" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(220,80,60,0.7)">YES</text>
+        <rect x="545" y="30" width="130" height="19" rx="4" fill="rgba(192,57,43,0.15)" stroke="rgba(192,57,43,0.5)" stroke-width="1.5"/>
+        <text x="610" y="43" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(255,120,100,0.9)">Raise CCR first</text>
+
+        <!-- NO to document -->
+        <line x1="660" y1="120" x2="700" y2="120" stroke="rgba(217,119,6,0.5)" stroke-width="1.5"/>
+        <text x="680" y="113" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(230,150,20,0.7)">NO</text>
+        <rect x="700" y="100" width="0" height="0"/>
+        <text x="715" y="118" font-family="Source Sans 3,sans-serif" font-size="9" fill="rgba(230,170,50,0.8)">Document</text>
+        <text x="715" y="130" font-family="Source Sans 3,sans-serif" font-size="9" fill="rgba(230,170,50,0.8)">in log</text>
+      </svg>
+      <figcaption>HART COMMUNICATOR — GMP DECISION TREE: READ OPERATIONS ARE FREELY PERMITTED; WRITE OPERATIONS ON A VALIDATED SYSTEM REQUIRE CHANGE CONTROL</figcaption>
+    </figure>
+
+    <h2 id="hart-after-validation">HART Use After Validation — the Rules</h2>
+    <p>Once a system is validated, the rules tighten. The transmitter's configuration is part of the validated state — every parameter documented in the HDS is frozen at the IQ-verified value. Any write operation that changes a documented parameter is a change to the validated state and requires a Change Control Request (CCR) to be raised and approved before the change is made.</p>
+    <p>The practical implication: a maintenance engineer using a HART communicator to "just adjust the damping a little" on a validated transmitter has made an undocumented change to a validated system. That the change was well-intentioned does not change the fact that the HDS now describes a transmitter configured differently from what is actually installed. If an auditor asks to verify the transmitter configuration against the HDS, the mismatch is a finding.</p>
+    <p>For situations where HART operations on a validated system are genuinely needed — reconfiguring a transmitter after a range change, adjusting the HART polling address when adding a second HART master, trimming after an OOT finding — the change control process described in the article on <a href="validate-new-field-instrument.html">validating a new field instrument after installation</a> applies. The HART-performed change is one step in that sequence, not a standalone action.</p>
+
+    <h2 id="hart-address-iq">HART Address — The IQ Verification That People Miss</h2>
+    <p>In a standard point-to-point 4–20 mA installation with HART, each transmitter is typically configured at HART address 0. Address 0 is required for the PLC's HART I/O module to poll the transmitter for digital variables — if the address is anything other than 0 in a point-to-point system, the HART polling fails silently and the PLC cannot read the HART digital values (only the 4–20 mA analogue signal works).</p>
+    <p>At IQ, read back the HART address of each transmitter using the communicator and verify it matches the SDS specification. Record the address in the IQ protocol. If any transmitter has been incorrectly configured at address 1 or higher during factory setup, correct it during the IQ commissioning phase — this is an as-built correction that should be recorded as a minor deviation if it differs from the SDS, or simply noted if the SDS specifies "address to be set during commissioning."</p>
+
+    <h2 id="control-philosophy-for-hart">Defining HART Permissions in the Control Philosophy</h2>
+    <p>Some sites include a short section in their Control Philosophy or System Administration SOP that defines who is authorised to use a HART communicator on the validated system, what operations are permitted without change control, and what documentation is required. This is good practice — it prevents the situation where different engineers make different assumptions about what HART operations are acceptable.</p>
+    <p>A practical three-rule HART policy for a validated system:</p>
+    <ul class="arrow-list">
+      <li><strong>Read operations:</strong> permitted at any time by any authorised engineer. No documentation required beyond a note in the maintenance log if performed during a scheduled maintenance window.</li>
+      <li><strong>Loop tests:</strong> permitted during maintenance windows with control room coordination and documented start/end time and test values.</li>
+      <li><strong>Write operations:</strong> require a CCR approved by QA before the operation is performed. The specific parameters to be written, the new values, and the reason must be documented in the CCR. After the write, the new configuration is verified by reading it back and recording the read-back values as evidence in the change control record.</li>
+    </ul>
+
+  </article>
+
+  <aside class="sidebar">
+    <div class="toc-card">
+      <div class="toc-label">On This Page</div>
+      <ul class="toc-list">
+        <li><a href="#what-hart-communicators-do">What HART Communicators Do</a></li>
+        <li><a href="#permitted-vs-requires-change-control">Permitted vs Change Control</a></li>
+        <li><a href="#the-loop-test-hazard">The Loop Test Hazard</a></li>
+        <li><a href="#hart-during-iq-commissioning">During IQ and Commissioning</a></li>
+        <li><a href="#hart-after-validation">After Validation</a></li>
+        <li><a href="#hart-address-iq">HART Address IQ Check</a></li>
+        <li><a href="#control-philosophy-for-hart">HART Policy</a></li>
+      </ul>
+    </div>
+
+    <div class="sidebar-cta">
+      <div class="sc-eyebrow">QLean Framework</div>
+      <div class="sc-title">29 production-ready GAMP 5 documents</div>
+      <p class="sc-body">IQ protocol with HART address verification step, CCR template for configuration changes, and System Administration SOP with maintenance window procedures — all included.</p>
+      <a href="../index.html#pricing" class="sc-btn">Get the Framework &#8594;</a>
+      <div class="sc-note">COMPANY-WIDE LICENCE &#183; NO PER-SEAT FEES</div>
+    </div>
+
+    <div class="sidebar-share">
+      <div class="share-label">Share This Article</div>
+      <div class="share-links">
+        <a href="https://www.linkedin.com/sharing/share-offsite/?url=https://qleanautomation.com/blog/hart-communicators-pharma.html" target="_blank" rel="noopener" class="share-link">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          Share on LinkedIn
+        </a>
+        <a href="https://reddit.com/submit?url=https://qleanautomation.com/blog/hart-communicators-pharma.html&title=HART%20Communicators%20on%20Pharma%20Projects%20%E2%80%94%20What%27s%20Permitted" target="_blank" rel="noopener" class="share-link">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/></svg>
+          Share on Reddit
+        </a>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<section class="related">
+  <div class="related-inner">
+    <div class="related-label">Continue Reading</div>
+    <div class="related-grid">
+      <a href="field-instrumentation-iq-documentation.html" class="related-card">
+        <span class="rc-tag">&#128207; Instrumentation</span>
+        <div class="rc-title">How to Document Field Instrumentation for a Pharma IQ</div>
+        <div class="rc-desc">The four IQ verification steps — including how HART read-back of tag, range, and address provides additional configuration verification evidence beyond physical nameplate check.</div>
+        <div class="rc-footer"><span class="rc-read">7 MIN READ</span><span class="rc-arrow">&#8594;</span></div>
+      </a>
+      <a href="validate-new-field-instrument.html" class="related-card">
+        <span class="rc-tag">&#128207; Instrumentation</span>
+        <div class="rc-title">How to Validate a New Field Instrument After Installation</div>
+        <div class="rc-desc">The eight-step sequence for adding an instrument to a validated system — the same process that applies when a HART write operation requires a configuration change and partial re-IQ.</div>
+        <div class="rc-footer"><span class="rc-read">7 MIN READ</span><span class="rc-arrow">&#8594;</span></div>
+      </a>
+      <a href="change-control-validated-system.html" class="related-card">
+        <span class="rc-tag">&#9881;&#65039; GAMP 5</span>
+        <div class="rc-title">Change Control for Validated Systems</div>
+        <div class="rc-desc">Why any HART write operation on a validated transmitter triggers a CCR — and how to raise, execute, and close the change control record correctly.</div>
+        <div class="rc-footer"><span class="rc-read">8 MIN READ</span><span class="rc-arrow">&#8594;</span></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="../index.html" class="nav-logo" style="text-decoration:none">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="7" fill="#0d0f12"/><rect x="8" y="7" width="16" height="16" rx="2" stroke="white" stroke-width="2.5" fill="none"/><line x1="20" y1="19" x2="26" y2="25" stroke="#0057FF" stroke-width="3" stroke-linecap="round"/></svg>
+          <span style="font-family:'Epilogue',sans-serif;font-weight:800;font-size:16px;color:#0d0f12;letter-spacing:-.03em">QLean <span style="font-weight:300;color:#5a6172">Automation</span></span>
+        </a>
+        <p>GMP validation documentation tools for automation engineers and system integrators.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Products</h4>
+        <ul>
+          <li><a href="../index.html#products">GAMP 5 Framework Pack</a></li>
+          <li><a href="../index.html#products">Technical Ebook</a></li>
+          <li><a href="../index.html#pricing">Pricing</a></li>
+          <li><a href="../index.html#faq">FAQ</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Knowledge Base</h4>
+        <ul>
+          <li><a href="blog-index.html">All Articles</a></li>
+          <li><a href="cluster-instrumentation.html">Instrumentation &amp; Calibration</a></li>
+          <li><a href="field-instrumentation-iq-documentation.html">Field Instrumentation IQ</a></li>
+          <li><a href="validate-new-field-instrument.html">New Instrument Validation</a></li>
+          <li><a href="change-control-validated-system.html">Change Control</a></li>
+          <li><a href="calibration-management-pharma-iq.html">Calibration Management</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="../index.html#framework">Framework</a></li>
+          <li><a href="../terms.html">Terms of Service</a></li>
+          <li><a href="../privacy.html">Privacy Policy</a></li>
+          <li><a href="mailto:hello@qleanautomation.com">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 QLean Automation. All rights reserved.</p>
+      <div class="compliance-pills">
+        <span class="cp">GAMP 5</span>
+        <span class="cp">EU GMP ANNEX 11</span>
+        <span class="cp">21 CFR PART 11</span>
+        <span class="cp">HART</span>
+        <span class="cp">GXP</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+window.addEventListener('scroll',function(){
+  var s=document.getElementById('progress');
+  var h=document.documentElement;
+  var p=(h.scrollTop||document.body.scrollTop)/(h.scrollHeight-h.clientHeight)*100;
+  s.style.width=p+'%';
+});
+var tl=document.querySelectorAll('.toc-list a');
+window.addEventListener('scroll',function(){
+  var headings=document.querySelectorAll('.article-body h2[id]');
+  var scrollY=window.scrollY+120;
+  var current='';
+  headings.forEach(function(h){if(h.offsetTop<=scrollY)current=h.id;});
+  tl.forEach(function(a){
+    a.classList.remove('active');
+    if(a.getAttribute('href')==='#'+current)a.classList.add('active');
+  });
+});
+</script>
+</body>
+</html>

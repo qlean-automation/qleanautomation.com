@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-JJQ1TXZJX7"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-JJQ1TXZJX7');
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Level Instrumentation in Pharma — Calibration and IQ Documentation | QLean Automation</title>
+<meta name="description" content="Hydrostatic, guided wave radar, and ultrasonic level transmitters each need a specific calibration approach in pharmaceutical storage tanks. Here is what IQ verifies, how each technology is calibrated, and what the GMP implications of level measurement errors actually are.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@300;400;500;600;700;800;900&family=Source+Sans+3:ital,wght@0,300;0,400;0,500;1,300&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--white:#ffffff;--off:#f7f8f9;--ink:#0d0f12;--ink2:#1e2128;--ink3:#3d4456;--ink4:#9199a8;--rule:#e2e5ea;--rule2:#c8cdd6;--blue:#0057ff;--blue2:#0044cc;--blue-dim:rgba(0,87,255,0.07);--green:#00875a;--green-dim:rgba(0,135,90,0.08);--amber:#d97706;--amber-dim:rgba(217,119,6,0.08);--red:#c0392b;--red-dim:rgba(192,57,43,0.08);--f-head:'Epilogue',sans-serif;--f-body:'Source Sans 3',sans-serif;--f-mono:'Roboto Mono',monospace;--shadow-sm:0 2px 8px rgba(13,15,18,0.06),0 1px 3px rgba(13,15,18,0.04)}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}body{background:var(--white);color:var(--ink);font-family:var(--f-body);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+nav{position:fixed;top:0;left:0;right:0;z-index:200;height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 6%;background:rgba(255,255,255,0.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--rule)}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;flex-shrink:0}
+.nav-links{display:flex;align-items:center;gap:36px;list-style:none}.nav-links a{font-size:14px;font-weight:400;color:var(--ink3);text-decoration:none;transition:color .2s}.nav-links a:hover{color:var(--ink)}
+.nav-btn{font-family:var(--f-body);font-size:13px;font-weight:500;padding:9px 20px;background:var(--blue);color:white;border:none;border-radius:6px;cursor:pointer;text-decoration:none;white-space:nowrap;flex-shrink:0}.nav-btn:hover{background:var(--blue2)}
+.progress-bar{position:fixed;top:64px;left:0;right:0;height:2px;background:var(--rule);z-index:199}.progress-fill{height:100%;background:var(--blue);width:0%}
+.article-hero{padding:120px 6% 64px;background:var(--white);border-bottom:1px solid var(--rule);position:relative;overflow:hidden}
+.article-hero::before{content:'';position:absolute;top:-80px;right:-80px;width:400px;height:400px;background:radial-gradient(circle,rgba(0,87,255,0.04) 0%,transparent 70%);pointer-events:none}
+.article-hero-inner{max-width:940px;margin:0 auto;position:relative;z-index:1}
+.breadcrumb{display:flex;align-items:center;gap:8px;font-family:var(--f-mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink4);margin-bottom:24px}.breadcrumb a{color:var(--ink4);text-decoration:none}.breadcrumb a:hover{color:var(--blue)}.breadcrumb span{color:var(--rule2)}
+.article-tag{display:inline-flex;align-items:center;gap:6px;font-family:var(--f-mono);font-size:10px;font-weight:500;color:var(--blue);letter-spacing:.1em;text-transform:uppercase;margin-bottom:20px;padding:4px 10px;background:var(--blue-dim);border-radius:4px}
+.article-hero h1{font-family:var(--f-head);font-size:clamp(30px,5vw,52px);font-weight:900;line-height:1.0;letter-spacing:-.04em;color:var(--ink);margin-bottom:20px}.article-hero h1 span{color:var(--blue)}
+.article-intro{font-size:18px;font-weight:400;color:var(--ink2);line-height:1.75;margin-bottom:32px;max-width:800px}
+.article-meta{display:flex;align-items:center;gap:24px;padding-top:24px;border-top:1px solid var(--rule);flex-wrap:wrap}
+.meta-author{display:flex;align-items:center;gap:10px}.author-avatar{width:36px;height:36px;border-radius:50%;background:var(--ink);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.author-name{font-size:13px;font-weight:500;color:var(--ink)}.author-role{font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.04em}
+.meta-divider{width:1px;height:28px;background:var(--rule)}.meta-stat{font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.06em}
+.article-wrap{max-width:1300px;margin:0 auto;padding:64px 6%;display:grid;grid-template-columns:1fr 300px;gap:60px;align-items:start}
+.article-body{min-width:0}
+.article-body h2{font-family:var(--f-head);font-size:26px;font-weight:800;letter-spacing:-.03em;color:var(--ink);margin:56px 0 16px;line-height:1.2}.article-body h2:first-child{margin-top:0}
+.article-body h3{font-family:var(--f-head);font-size:18px;font-weight:700;letter-spacing:-.02em;color:var(--ink);margin:32px 0 12px}
+.article-body p{font-size:16px;font-weight:400;color:var(--ink2);line-height:1.85;margin-bottom:20px}
+.article-body strong{color:var(--ink);font-weight:600}
+.article-body a{color:var(--blue);text-decoration:none;border-bottom:1px solid rgba(0,87,255,.25)}.article-body a:hover{border-color:var(--blue)}
+.callout{padding:20px 24px;border-radius:8px;margin:32px 0;border-left:3px solid}
+.callout.blue{background:var(--blue-dim);border-color:var(--blue)}.callout.amber{background:var(--amber-dim);border-color:var(--amber)}.callout.green{background:var(--green-dim);border-color:var(--green)}.callout.red{background:var(--red-dim);border-color:var(--red)}
+.callout-label{font-family:var(--f-mono);font-size:9px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px}.callout.blue .callout-label{color:var(--blue)}.callout.amber .callout-label{color:var(--amber)}.callout.green .callout-label{color:var(--green)}.callout.red .callout-label{color:var(--red)}
+.callout p{font-size:14px;color:var(--ink2);line-height:1.7;margin:0}.callout strong{color:var(--ink)}
+.article-img{width:100%;border-radius:8px;border:1px solid #1e2535;overflow:hidden;margin:36px 0}
+.article-img figcaption{padding:10px 14px;background:var(--off);font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.04em;border-top:1px solid var(--rule)}
+.checklist{list-style:none;display:flex;flex-direction:column;gap:8px;margin:20px 0 28px}
+.checklist li{display:flex;align-items:flex-start;gap:10px;font-size:15px;color:var(--ink2);line-height:1.6}
+.checklist li::before{content:'';width:16px;height:16px;flex-shrink:0;margin-top:3px;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 14 14' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='7' cy='7' r='6.5' fill='none' stroke='%230057ff' stroke-width='1'/%3E%3Cpath d='M4 7l2 2 4-4' stroke='%230057ff' stroke-width='1.3' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:center;background-size:contain}
+.arrow-list{list-style:none;display:flex;flex-direction:column;gap:8px;margin:20px 0 28px}
+.arrow-list li{display:flex;align-items:flex-start;gap:10px;font-size:15px;color:var(--ink2);line-height:1.6}
+.arrow-list li::before{content:'\2192';color:var(--blue);flex-shrink:0;font-family:var(--f-mono);font-size:13px;margin-top:2px}
+.table-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:28px 0}
+.compare-table{width:100%;border-collapse:collapse;font-size:14px}
+.compare-table th{font-family:var(--f-mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink4);padding:10px 16px;border-bottom:2px solid var(--rule);text-align:left;background:var(--off)}
+.compare-table td{padding:12px 16px;border-bottom:1px solid var(--rule);vertical-align:top;color:var(--ink2);line-height:1.6}
+.compare-table tr:last-child td{border-bottom:none}
+.compare-table td:first-child{font-weight:600;color:var(--ink);font-family:var(--f-mono);font-size:12px}
+.sidebar{position:sticky;top:88px;display:flex;flex-direction:column;gap:16px}
+.toc-card{border:1px solid var(--rule);border-radius:8px;padding:24px;background:var(--white);box-shadow:var(--shadow-sm)}
+.toc-label{font-family:var(--f-mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);margin-bottom:16px}
+.toc-list{list-style:none;display:flex;flex-direction:column;gap:2px}
+.toc-list a{display:block;font-size:13px;color:var(--ink3);text-decoration:none;padding:6px 10px;border-radius:4px;transition:all .15s;border-left:2px solid transparent}
+.toc-list a:hover,.toc-list a.active{color:var(--blue);background:var(--blue-dim);border-left-color:var(--blue)}
+.sidebar-cta{border:1px solid var(--blue);border-radius:8px;padding:24px;background:var(--blue-dim)}
+.sc-eyebrow{font-family:var(--f-mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);margin-bottom:10px}
+.sc-title{font-family:var(--f-head);font-size:17px;font-weight:800;letter-spacing:-.02em;color:var(--ink);margin-bottom:8px;line-height:1.2}
+.sc-body{font-size:13px;color:var(--ink3);line-height:1.6;margin-bottom:16px}
+.sc-btn{display:block;text-align:center;padding:11px 16px;background:var(--blue);color:white;border-radius:6px;font-family:var(--f-body);font-size:13px;font-weight:500;text-decoration:none}.sc-btn:hover{background:var(--blue2)}
+.sc-note{font-family:var(--f-mono);font-size:9px;color:var(--ink4);text-align:center;margin-top:8px;letter-spacing:.04em}
+.sidebar-share{border:1px solid var(--rule);border-radius:8px;padding:20px 24px;background:var(--white)}
+.share-label{font-family:var(--f-mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);margin-bottom:14px}
+.share-links{display:flex;flex-direction:column;gap:8px}
+.share-link{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--ink3);text-decoration:none;padding:9px 12px;border:1px solid var(--rule);border-radius:6px;transition:border-color .2s,color .2s}.share-link:hover{border-color:var(--blue);color:var(--blue)}
+.related{padding:64px 6%;border-top:1px solid var(--rule);background:var(--off)}
+.related-inner{max-width:1100px;margin:0 auto}
+.related-label{font-family:var(--f-mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);margin-bottom:32px;display:flex;align-items:center;gap:10px}
+.related-label::before{content:'';width:20px;height:1px;background:var(--blue)}
+.related-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.related-card{padding:24px;border:1px solid var(--rule);border-radius:8px;background:var(--white);box-shadow:var(--shadow-sm);transition:border-color .2s,transform .2s;text-decoration:none;display:flex;flex-direction:column;gap:12px}.related-card:hover{border-color:var(--blue);transform:translateY(-4px)}
+.rc-tag{font-family:var(--f-mono);font-size:9px;color:var(--blue);letter-spacing:.08em;text-transform:uppercase;padding:3px 8px;background:var(--blue-dim);border-radius:3px;align-self:flex-start}
+.rc-title{font-family:var(--f-head);font-size:16px;font-weight:700;letter-spacing:-.02em;color:var(--ink);line-height:1.25}
+.rc-desc{font-size:13px;color:var(--ink3);line-height:1.6;flex:1}
+.rc-footer{display:flex;align-items:center;justify-content:space-between;padding-top:12px;border-top:1px solid var(--rule)}
+.rc-read{font-family:var(--f-mono);font-size:10px;color:var(--ink4)}.rc-arrow{font-size:14px;color:var(--blue)}
+footer{padding:56px 6% 32px;border-top:1px solid var(--rule);background:var(--white)}
+.footer-inner{max-width:1160px;margin:0 auto}
+.footer-top{display:flex;justify-content:space-between;align-items:flex-start;gap:40px;flex-wrap:wrap;margin-bottom:48px}
+.footer-brand p{font-size:13px;font-weight:300;color:var(--ink3);margin-top:12px;max-width:260px;line-height:1.6}
+.footer-col h4{font-family:var(--f-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink4);margin-bottom:16px}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+.footer-col a{font-size:13px;color:var(--ink3);text-decoration:none}.footer-col a:hover{color:var(--blue)}
+.footer-bottom{padding-top:24px;border-top:1px solid var(--rule);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.footer-bottom p{font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.04em}
+.compliance-pills{display:flex;gap:6px;flex-wrap:wrap}
+.cp{font-family:var(--f-mono);font-size:9px;padding:3px 8px;border:1px solid var(--rule);border-radius:3px;color:var(--ink4);letter-spacing:.06em}
+@media(max-width:900px){.article-wrap{grid-template-columns:1fr;gap:48px}.sidebar{position:static}.related-grid{grid-template-columns:1fr}.table-scroll{margin:20px 0}}
+@media(max-width:900px){.nav-links{display:none}}
+@media(max-width:540px){nav{padding:0 4%}.nav-btn{font-size:12px;padding:8px 14px}}
+</style>
+</head>
+<body>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+<nav>
+  <a href="../index.html" class="nav-logo">
+    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" style="flex-shrink:0"><rect width="32" height="32" rx="7" fill="#0d0f12"/><rect x="8" y="7" width="16" height="16" rx="2" stroke="white" stroke-width="2.5" fill="none"/><line x1="20" y1="19" x2="26" y2="25" stroke="#0057FF" stroke-width="3" stroke-linecap="round"/></svg>
+    <span style="font-family:'Epilogue',sans-serif;font-weight:800;font-size:16px;color:#0d0f12;letter-spacing:-.03em;white-space:nowrap">QLean <span style="font-weight:300;color:#5a6172">Automation</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="../index.html#products">Products</a></li>
+    <li><a href="../index.html#framework">Framework</a></li>
+    <li><a href="blog-index.html">Knowledge Base</a></li>
+    <li><a href="../index.html#pricing">Pricing</a></li>
+    <li><a href="../about.html">About</a></li>
+    <li><a href="../index.html#faq">FAQ</a></li>
+  </ul>
+  <a href="../index.html#pricing" class="nav-btn">Get the Framework &#8594;</a>
+</nav>
+
+<header class="article-hero">
+  <div class="article-hero-inner">
+    <div class="breadcrumb"><a href="../index.html">Home</a><span>/</span><a href="blog-index.html">Knowledge Base</a><span>/</span>Level Instrumentation in Pharma</div>
+    <div class="article-tag">&#128207; Instrumentation &amp; Calibration</div>
+    <h1>Level Instrumentation<br><span>in Pharma</span><br>Calibration and IQ Documentation</h1>
+    <p class="article-intro">Level measurement in pharmaceutical storage tanks does more than tell the operator how much product is in the vessel. It drives high-level alarms that prevent pump cavitation, low-level alarms that protect heating elements, and protection interlocks that prevent overfill. The calibration of a level transmitter must account for the geometry of the specific vessel it is installed on — which means the calibration is never purely a laboratory exercise. Here is what that means for IQ, and what you need to document.</p>
+    <div class="article-meta">
+      <div class="meta-author">
+        <div class="author-avatar"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="7" r="3.5" stroke="white" stroke-width="1.5"/><path d="M2.5 16c0-3.59 2.91-6.5 6.5-6.5s6.5 2.91 6.5 6.5" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+        <div><div class="author-name">QLean Automation</div><div class="author-role">ENGINEERS WHO BUILD SYSTEMS, NOT JUST SIGN THEM</div></div>
+      </div>
+      <div class="meta-divider"></div><div class="meta-stat">6 MIN READ</div>
+      <div class="meta-divider"></div><div class="meta-stat">LEVEL &#183; HYDROSTATIC &#183; RADAR &#183; IQ CALIBRATION</div>
+    </div>
+  </div>
+</header>
+
+<div class="article-wrap">
+  <article class="article-body">
+
+    <h2 id="gmp-role-of-level">The GMP Role of Level Measurement</h2>
+    <p>Level measurement in a pharmaceutical storage tank is typically classified as Important Monitoring or Critical Process Control — depending on whether the level directly affects a product quality parameter or serves primarily as a protection and process management function. In a WFI or purified water storage system, level is Critical Process Control: the level controls when the generation system feeds the tank, protects the distribution pump from running dry, and prevents overfill that would contaminate the vent filter. Getting it wrong is not just an operational issue — a pump run-dry event damages the pump, potentially introduces contamination, and may invalidate a batch of product in distribution.</p>
+    <p>The GMP criticality of the alarm setpoints tied to level measurement is the key issue. A level transmitter that reads 5% high means all level-triggered alarms and interlocks fire at the wrong point. High-level alarms fire too late; low-level alarms fire too early or too late depending on whether high or low is the concern. The calibration must be accurate enough that the alarm setpoints in the Control Philosophy are actually enforced at the stated conditions.</p>
+
+    <h2 id="level-measurement-technologies">Level Measurement Technologies in Pharma</h2>
+
+    <div class="table-scroll">
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th>Technology</th>
+            <th>Principle</th>
+            <th>Typical Pharma Use</th>
+            <th>Key Calibration Factor</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Hydrostatic pressure</td>
+            <td>Pressure at tank bottom proportional to liquid head height and fluid density</td>
+            <td>WFI/PW storage tanks, buffer vessels, bulk liquid tanks</td>
+            <td>Fluid density and mounting position must be specified; density changes affect reading</td>
+          </tr>
+          <tr>
+            <td>Guided wave radar (GWR)</td>
+            <td>Microwave pulse reflected from liquid surface via immersed probe</td>
+            <td>Tanks with agitation, foam, or vapour; high-hygiene applications</td>
+            <td>Empty tank and full tank reference levels must be set at installation — vessel-specific calibration</td>
+          </tr>
+          <tr>
+            <td>Non-contact radar</td>
+            <td>Microwave pulse reflected from liquid surface through air</td>
+            <td>Large open tanks, buffer preparation vessels</td>
+            <td>Antenna-to-liquid distance at known level; blocking distance above probe must be respected</td>
+          </tr>
+          <tr>
+            <td>Ultrasonic</td>
+            <td>Sound pulse reflected from liquid surface</td>
+            <td>Non-critical utility tanks, WFI generation pre-treatment</td>
+            <td>Sound velocity affected by temperature and vapour — correction factor needed for hot liquids</td>
+          </tr>
+          <tr>
+            <td>Float / displacer</td>
+            <td>Mechanical buoyancy</td>
+            <td>Point level switches (high-high, low-low alarms) — not continuous measurement</td>
+            <td>Float density must match fluid density; calibration is functional test of trip point</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2 id="hydrostatic-calibration">Hydrostatic Level Transmitters — Calibration in Practice</h2>
+    <p>The E+H Deltapilot FMB50B hydrostatic transmitter (LT-001 in the QLean Framework template system) is a flush-diaphragm pressure transmitter mounted at the base of the storage tank. It measures the pressure of the liquid column above it. The displayed level is this pressure divided by the product of fluid density and gravitational acceleration — the transmitter converts pressure to level using a configured density value.</p>
+
+    <p>This creates a critical calibration dependency: <strong>the calibration of a hydrostatic level transmitter is only valid for the specific fluid density it was configured for.</strong> For water at 20°C, the density is approximately 998 kg/m³. For WFI at 80°C (hot storage/distribution), the density drops to approximately 972 kg/m³ — a 2.6% difference. If the transmitter was configured for cold water density and the tank stores hot WFI, the displayed level is 2.6% lower than the actual level across the entire measurement range.</p>
+
+    <div class="callout amber">
+      <div class="callout-label">Hot WFI Density Correction</div>
+      <p>This is a real problem on WFI projects. The transmitter arrives factory-calibrated for water density at 20°C. The tank stores WFI at 80°C. Nobody updates the density value in the transmitter configuration. The level reads approximately 2.6% low across the range — which means a 10 m³ tank showing 5.0 m³ actually contains 5.13 m³. The high-level alarm fires late. <strong>Always verify the density configured in the transmitter matches the actual operating fluid temperature, and document this in the IQ calibration step.</strong></p>
+    </div>
+
+    <h3>The Calibration Process for a Hydrostatic Transmitter</h3>
+    <p>Hydrostatic level transmitters are calibrated by applying known pressures equivalent to specific liquid levels. The calibration converts the pressure measurement to a level output in engineering units (metres or percentage). For the factory calibration, this is done in a calibration rig using a deadweight tester or pressure calibrator. For IQ verification, the calibration is confirmed by checking the transmitter output at one or more known reference levels.</p>
+
+    <figure class="article-img">
+      <svg viewBox="0 0 720 260" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;background:#0d0f12;border-radius:8px 8px 0 0">
+        <text x="360" y="18" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(255,255,255,0.2)" letter-spacing="0.12em">HYDROSTATIC LEVEL MEASUREMENT — KEY PARAMETERS FOR CALIBRATION</text>
+
+        <!-- Tank outline -->
+        <rect x="240" y="35" width="240" height="200" rx="4" fill="rgba(0,87,255,0.05)" stroke="rgba(0,87,255,0.3)" stroke-width="1.5"/>
+
+        <!-- Liquid fill -->
+        <rect x="241" y="95" width="238" height="139" rx="0" fill="rgba(0,87,255,0.12)"/>
+        <line x1="241" y1="95" x2="479" y2="95" stroke="rgba(0,87,255,0.6)" stroke-width="1.5"/>
+
+        <!-- Tank labels -->
+        <text x="360" y="55" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(100,160,255,0.7)" letter-spacing="0.06em">STORAGE TANK</text>
+        <text x="360" y="70" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(100,160,255,0.5)">LT-001 reference</text>
+
+        <!-- Empty / zero reference line -->
+        <line x1="200" y1="235" x2="480" y2="235" stroke="rgba(255,255,255,0.15)" stroke-width="1" stroke-dasharray="4,3"/>
+        <text x="195" y="239" text-anchor="end" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(100,160,255,0.5)">ZERO</text>
+        <text x="195" y="249" text-anchor="end" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(100,160,255,0.4)">(4 mA)</text>
+
+        <!-- Full reference line -->
+        <line x1="200" y1="40" x2="480" y2="40" stroke="rgba(255,255,255,0.15)" stroke-width="1" stroke-dasharray="4,3"/>
+        <text x="195" y="44" text-anchor="end" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(100,160,255,0.5)">SPAN</text>
+        <text x="195" y="54" text-anchor="end" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(100,160,255,0.4)">(20 mA)</text>
+
+        <!-- Current level -->
+        <text x="500" y="99" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(0,87,255,0.8)">&#8592; CURRENT LEVEL</text>
+        <text x="500" y="111" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(100,160,255,0.6)">IQ verification point</text>
+
+        <!-- Transmitter at bottom -->
+        <rect x="340" y="228" width="40" height="18" rx="3" fill="rgba(0,87,255,0.2)" stroke="rgba(0,87,255,0.5)" stroke-width="1.2"/>
+        <text x="360" y="240" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7" fill="rgba(100,160,255,0.9)">LT-001</text>
+        <line x1="360" y1="246" x2="360" y2="254" stroke="rgba(0,87,255,0.4)" stroke-width="1.5"/>
+
+        <!-- Key parameters right side -->
+        <rect x="530" y="50" width="160" height="140" rx="5" fill="rgba(255,255,255,0.02)" stroke="rgba(0,87,255,0.2)" stroke-width="1"/>
+        <text x="610" y="70" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(100,160,255,0.6)" letter-spacing="0.06em">IQ MUST VERIFY</text>
+        <line x1="540" y1="76" x2="680" y2="76" stroke="rgba(0,87,255,0.15)" stroke-width="1"/>
+        <text x="544" y="92" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(180,200,230,0.7)">Mounting position (m)</text>
+        <text x="544" y="108" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(180,200,230,0.7)">Configured density</text>
+        <text x="544" y="124" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(180,200,230,0.7)">Zero / span settings</text>
+        <text x="544" y="140" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(180,200,230,0.7)">Cal range (m H&#8322;O)</text>
+        <text x="544" y="156" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(180,200,230,0.7)">4 mA = empty level</text>
+        <text x="544" y="172" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(180,200,230,0.7)">20 mA = full level</text>
+        <text x="544" y="184" font-family="Source Sans 3,sans-serif" font-size="9" fill="rgba(100,160,255,0.5)">must match HDS §4.5</text>
+
+        <!-- Dimension arrows -->
+        <line x1="225" y1="235" x2="225" y2="40" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+        <polygon points="221,44 225,35 229,44" fill="rgba(255,255,255,0.2)"/>
+        <polygon points="221,231 225,240 229,231" fill="rgba(255,255,255,0.2)"/>
+        <text x="218" y="142" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(255,255,255,0.3)" transform="rotate(-90,218,142)">SPAN (m)</text>
+      </svg>
+      <figcaption>HYDROSTATIC LEVEL TRANSMITTER — ZERO, SPAN, AND FLUID DENSITY ARE THE THREE CALIBRATION PARAMETERS THAT MUST BE VERIFIED AT IQ</figcaption>
+    </figure>
+
+    <h2 id="iq-level-verification">IQ Verification for Level Transmitters</h2>
+    <p>The IQ verification for a level transmitter goes beyond the standard four-step instrument check described in the <a href="field-instrumentation-iq-documentation.html">field instrumentation IQ documentation article</a>. The additional steps are specific to level measurement because the calibration is vessel-dependent:</p>
+
+    <ul class="checklist">
+      <li><strong>Mounting position verification:</strong> the transmitter mounting height (the zero reference point) must be verified against the HDS dimensional drawing. For a flush-mounted hydrostatic transmitter, this is the height of the process connection above the vessel floor datum. If the transmitter is relocated during installation — even by a few centimetres — the calibration zero must be recalculated and the transmitter reconfigured.</li>
+      <li><strong>Density value verification:</strong> using a HART communicator or the transmitter display, read back the configured fluid density value and verify it matches the HDS specification. For hot WFI storage, confirm the density value accounts for operating temperature (approximately 972 kg/m³ at 80°C, not 998 kg/m³ at 20°C).</li>
+      <li><strong>Zero and span verification:</strong> confirm that the 4 mA point (empty) corresponds to the correct physical level (typically the transmitter mounting height or tank floor) and the 20 mA point (full) corresponds to the maximum operating level specified in the HDS.</li>
+      <li><strong>Wet reference check:</strong> if the tank can be filled to a known reference level during IQ (typically by measuring the physical liquid level with a calibrated dip tape), compare the SCADA-displayed level against the physical measurement. This is the end-to-end accuracy check that confirms the transmitter, the I/O conversion, and the SCADA engineering unit scaling are all consistent.</li>
+      <li><strong>Alarm setpoint verification at OQ:</strong> the actual alarm trigger points are verified in OQ, not IQ. IQ confirms the physical installation and calibration. OQ injects a simulated level signal to verify that the high, high-high, low, and low-low alarms trigger at the setpoints specified in the FDS.</li>
+    </ul>
+
+    <h2 id="guided-wave-radar">Guided Wave Radar — Vessel-Specific Calibration</h2>
+    <p>Guided wave radar (GWR) level transmitters use a microwave pulse that travels down an immersed probe and reflects from the liquid surface. The time of flight gives the distance from the probe reference point to the surface, which is converted to level. The key advantage over hydrostatic measurement is that GWR is not affected by fluid density changes — the measurement is purely time-of-flight, not pressure-based.</p>
+    <p>However, GWR transmitters must be calibrated for the specific vessel they are installed in. The calibration parameters are:</p>
+    <ul class="arrow-list">
+      <li><strong>Empty distance:</strong> the distance from the probe reference flange to the vessel floor (or the lowest measurable level point) — corresponds to 0% or 4 mA output</li>
+      <li><strong>Full distance:</strong> the distance from the probe reference flange to the highest operating level — corresponds to 100% or 20 mA output</li>
+      <li><strong>Blocking distance:</strong> the zone immediately below the probe flange where the transmitter cannot measure (typically 100–300 mm depending on transmitter model) — this must be above the maximum process level or false echoes will cause erratic readings</li>
+    </ul>
+    <p>These parameters are set during transmitter commissioning, not during factory calibration. The factory calibration establishes the internal electronics accuracy; the site commissioning sets the vessel-specific parameters. IQ must verify that the as-commissioned parameters match the HDS specification — not just that a factory calibration certificate exists.</p>
+
+    <h2 id="level-alarm-setpoints">Level Alarm Setpoints — The GMP Connection</h2>
+    <p>Level alarm setpoints in a pharmaceutical storage system are defined in the FDS and the Control Philosophy. They represent specific operational and safety boundaries — the low-low level that triggers pump shutdown to prevent dry running, the high-high level that closes the inlet valve to prevent overfill. These setpoints must be verifiable against the as-calibrated level measurement.</p>
+    <p>If a hydrostatic level transmitter has a ±2% FS accuracy specification on a 3-metre measurement range, the level display has a maximum error of ±60 mm. The alarm setpoints must be set with this uncertainty in mind — if the low-low alarm is intended to protect the pump at a level of 200 mm, it should be set at 260 mm to ensure it triggers before the actual level drops below the 200 mm protection threshold, even if the transmitter is reading at the negative end of its accuracy range. This setpoint tolerance analysis should be documented in the FDS or the risk assessment.</p>
+
+    <div class="callout green">
+      <div class="callout-label">In the QLean Framework</div>
+      <p>The HDS (HDS-SYS-001) Section 4.5 specifies the E+H Deltapilot FMB50B hydrostatic level transmitter (LT-001) for the WFI storage tank, with a 6-month calibration interval, flush-mount G ½" process connection, and range calibrated for the specific tank geometry. The IQ protocol (IQ-SYS-001) Section 7 includes LT-001 in the instrument calibration verification table with columns for certificate reference, calibration date, and next due date. The FDS (FDS-SYS-001) Section 2.4 defines the level alarm setpoints (high-high, high, low, low-low) that the OQ protocol verifies. <strong>The three-document chain from HDS specification through IQ calibration verification to OQ functional test is already built into the framework architecture.</strong></p>
+    </div>
+
+    <h2 id="level-oot-implications">OOT Findings — What They Mean for Level Measurement</h2>
+    <p>When a level transmitter fails its periodic calibration check, the impact assessment must consider what protection functions relied on that measurement. For a WFI storage tank level transmitter, this typically means:</p>
+    <ul class="arrow-list">
+      <li>Was the pump low-level interlock triggered at the correct actual level, or was the pump potentially running on insufficient NPSH because the level was reading higher than actual?</li>
+      <li>Was the high-level alarm triggered at the correct actual level, or was an overfill event masked by a transmitter reading lower than actual?</li>
+      <li>Were there any batch quantity decisions made based on level-derived volume calculations during the suspect period?</li>
+    </ul>
+    <p>The direction of drift is critical — a transmitter reading higher than actual (positive drift) will cause protection alarms to fire late on the low side (low-low alarm triggers when actual level is already below the specified minimum) and early on the high side (high-high alarm triggers before actual level reaches the maximum). This analysis must be completed as part of the OOT deviation assessment before the transmitter can be returned to service. See the dedicated article on <a href="calibration-management-pharma-iq.html">calibration management for pharma automation</a> for the full OOT response procedure.</p>
+
+  </article>
+
+  <aside class="sidebar">
+    <div class="toc-card">
+      <div class="toc-label">On This Page</div>
+      <ul class="toc-list">
+        <li><a href="#gmp-role-of-level">GMP Role of Level</a></li>
+        <li><a href="#level-measurement-technologies">Technologies</a></li>
+        <li><a href="#hydrostatic-calibration">Hydrostatic Calibration</a></li>
+        <li><a href="#iq-level-verification">IQ Verification</a></li>
+        <li><a href="#guided-wave-radar">Guided Wave Radar</a></li>
+        <li><a href="#level-alarm-setpoints">Alarm Setpoints</a></li>
+        <li><a href="#level-oot-implications">OOT Implications</a></li>
+      </ul>
+    </div>
+
+    <div class="sidebar-cta">
+      <div class="sc-eyebrow">QLean Framework</div>
+      <div class="sc-title">29 production-ready GAMP 5 documents</div>
+      <p class="sc-body">HDS with level instrument specification, IQ protocol with calibration verification table, and FDS with level alarm setpoints — all cross-referenced and consistent for WFI distribution systems.</p>
+      <a href="../index.html#pricing" class="sc-btn">Get the Framework &#8594;</a>
+      <div class="sc-note">COMPANY-WIDE LICENCE &#183; NO PER-SEAT FEES</div>
+    </div>
+
+    <div class="sidebar-share">
+      <div class="share-label">Share This Article</div>
+      <div class="share-links">
+        <a href="https://www.linkedin.com/sharing/share-offsite/?url=https://qleanautomation.com/blog/level-instrumentation-pharma.html" target="_blank" rel="noopener" class="share-link">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          Share on LinkedIn
+        </a>
+        <a href="https://reddit.com/submit?url=https://qleanautomation.com/blog/level-instrumentation-pharma.html&title=Level%20Instrumentation%20in%20Pharma%20%E2%80%94%20Calibration%20and%20IQ%20Documentation" target="_blank" rel="noopener" class="share-link">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/></svg>
+          Share on Reddit
+        </a>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<section class="related">
+  <div class="related-inner">
+    <div class="related-label">Continue Reading</div>
+    <div class="related-grid">
+      <a href="field-instrumentation-iq-documentation.html" class="related-card">
+        <span class="rc-tag">&#128207; Instrumentation</span>
+        <div class="rc-title">How to Document Field Instrumentation for a Pharma IQ</div>
+        <div class="rc-desc">The four standard IQ verification steps for all field instruments — and the additional level-specific checks for mounting position, density configuration, and zero/span settings.</div>
+        <div class="rc-footer"><span class="rc-read">7 MIN READ</span><span class="rc-arrow">&#8594;</span></div>
+      </a>
+      <a href="calibration-management-pharma-iq.html" class="related-card">
+        <span class="rc-tag">&#128207; Instrumentation</span>
+        <div class="rc-title">Calibration Management for Pharma Automation</div>
+        <div class="rc-desc">Certificate traceability, OOT procedures, calibration intervals, and the calibration register that anchors the IQ evidence package for all instrument types including level transmitters.</div>
+        <div class="rc-footer"><span class="rc-read">7 MIN READ</span><span class="rc-arrow">&#8594;</span></div>
+      </a>
+      <a href="pressure-transmitter-calibration-pharma.html" class="related-card">
+        <span class="rc-tag">&#128207; Instrumentation</span>
+        <div class="rc-title">Pressure Transmitter Calibration on Validated Systems</div>
+        <div class="rc-desc">How hydrostatic level measurement shares calibration principles with gauge pressure transmitters — and where the two diverge in installation and OOT impact assessment.</div>
+        <div class="rc-footer"><span class="rc-read">6 MIN READ</span><span class="rc-arrow">&#8594;</span></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="../index.html" class="nav-logo" style="text-decoration:none">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="7" fill="#0d0f12"/><rect x="8" y="7" width="16" height="16" rx="2" stroke="white" stroke-width="2.5" fill="none"/><line x1="20" y1="19" x2="26" y2="25" stroke="#0057FF" stroke-width="3" stroke-linecap="round"/></svg>
+          <span style="font-family:'Epilogue',sans-serif;font-weight:800;font-size:16px;color:#0d0f12;letter-spacing:-.03em">QLean <span style="font-weight:300;color:#5a6172">Automation</span></span>
+        </a>
+        <p>GMP validation documentation tools for automation engineers and system integrators.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Products</h4>
+        <ul>
+          <li><a href="../index.html#products">GAMP 5 Framework Pack</a></li>
+          <li><a href="../index.html#products">Technical Ebook</a></li>
+          <li><a href="../index.html#pricing">Pricing</a></li>
+          <li><a href="../index.html#faq">FAQ</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Knowledge Base</h4>
+        <ul>
+          <li><a href="blog-index.html">All Articles</a></li>
+          <li><a href="cluster-instrumentation.html">Instrumentation &amp; Calibration</a></li>
+          <li><a href="calibration-management-pharma-iq.html">Calibration Management</a></li>
+          <li><a href="field-instrumentation-iq-documentation.html">Field Instrumentation IQ</a></li>
+          <li><a href="pressure-transmitter-calibration-pharma.html">Pressure Transmitter Cal.</a></li>
+          <li><a href="temperature-sensor-calibration-gmp.html">Temperature Sensor Cal.</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="../index.html#framework">Framework</a></li>
+          <li><a href="../terms.html">Terms of Service</a></li>
+          <li><a href="../privacy.html">Privacy Policy</a></li>
+          <li><a href="mailto:hello@qleanautomation.com">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 QLean Automation. All rights reserved.</p>
+      <div class="compliance-pills">
+        <span class="cp">GAMP 5</span>
+        <span class="cp">EU GMP ANNEX 11</span>
+        <span class="cp">21 CFR PART 11</span>
+        <span class="cp">ISO/IEC 17025</span>
+        <span class="cp">GXP</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+window.addEventListener('scroll',function(){
+  var s=document.getElementById('progress');
+  var h=document.documentElement;
+  var p=(h.scrollTop||document.body.scrollTop)/(h.scrollHeight-h.clientHeight)*100;
+  s.style.width=p+'%';
+});
+var tl=document.querySelectorAll('.toc-list a');
+window.addEventListener('scroll',function(){
+  var headings=document.querySelectorAll('.article-body h2[id]');
+  var scrollY=window.scrollY+120;
+  var current='';
+  headings.forEach(function(h){if(h.offsetTop<=scrollY)current=h.id;});
+  tl.forEach(function(a){
+    a.classList.remove('active');
+    if(a.getAttribute('href')==='#'+current)a.classList.add('active');
+  });
+});
+</script>
+</body>
+</html>

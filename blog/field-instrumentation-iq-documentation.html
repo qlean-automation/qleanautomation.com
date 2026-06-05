@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-JJQ1TXZJX7"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-JJQ1TXZJX7');
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>How to Document Field Instrumentation for a Pharma IQ | QLean Automation</title>
+<meta name="description" content="Field instruments need more than a tag number on the IQ checklist. Here is exactly what documentation you need per instrument — nameplate data, calibration certificates, loop verification, and the engineering lists that tie it all together.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@300;400;500;600;700;800;900&family=Source+Sans+3:ital,wght@0,300;0,400;0,500;1,300&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--white:#ffffff;--off:#f7f8f9;--ink:#0d0f12;--ink2:#1e2128;--ink3:#3d4456;--ink4:#9199a8;--rule:#e2e5ea;--rule2:#c8cdd6;--blue:#0057ff;--blue2:#0044cc;--blue-dim:rgba(0,87,255,0.07);--green:#00875a;--green-dim:rgba(0,135,90,0.08);--amber:#d97706;--amber-dim:rgba(217,119,6,0.08);--red:#c0392b;--red-dim:rgba(192,57,43,0.08);--f-head:'Epilogue',sans-serif;--f-body:'Source Sans 3',sans-serif;--f-mono:'Roboto Mono',monospace;--shadow-sm:0 2px 8px rgba(13,15,18,0.06),0 1px 3px rgba(13,15,18,0.04)}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}body{background:var(--white);color:var(--ink);font-family:var(--f-body);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+nav{position:fixed;top:0;left:0;right:0;z-index:200;height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 6%;background:rgba(255,255,255,0.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--rule)}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;flex-shrink:0}
+.nav-links{display:flex;align-items:center;gap:36px;list-style:none}.nav-links a{font-size:14px;font-weight:400;color:var(--ink3);text-decoration:none;transition:color .2s}.nav-links a:hover{color:var(--ink)}
+.nav-btn{font-family:var(--f-body);font-size:13px;font-weight:500;padding:9px 20px;background:var(--blue);color:white;border:none;border-radius:6px;cursor:pointer;text-decoration:none;white-space:nowrap;flex-shrink:0}.nav-btn:hover{background:var(--blue2)}
+.progress-bar{position:fixed;top:64px;left:0;right:0;height:2px;background:var(--rule);z-index:199}.progress-fill{height:100%;background:var(--blue);width:0%}
+.article-hero{padding:120px 6% 64px;background:var(--white);border-bottom:1px solid var(--rule);position:relative;overflow:hidden}
+.article-hero::before{content:'';position:absolute;top:-80px;right:-80px;width:400px;height:400px;background:radial-gradient(circle,rgba(0,87,255,0.04) 0%,transparent 70%);pointer-events:none}
+.article-hero-inner{max-width:940px;margin:0 auto;position:relative;z-index:1}
+.breadcrumb{display:flex;align-items:center;gap:8px;font-family:var(--f-mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink4);margin-bottom:24px}.breadcrumb a{color:var(--ink4);text-decoration:none}.breadcrumb a:hover{color:var(--blue)}.breadcrumb span{color:var(--rule2)}
+.article-tag{display:inline-flex;align-items:center;gap:6px;font-family:var(--f-mono);font-size:10px;font-weight:500;color:var(--blue);letter-spacing:.1em;text-transform:uppercase;margin-bottom:20px;padding:4px 10px;background:var(--blue-dim);border-radius:4px}
+.article-hero h1{font-family:var(--f-head);font-size:clamp(30px,5vw,52px);font-weight:900;line-height:1.0;letter-spacing:-.04em;color:var(--ink);margin-bottom:20px}.article-hero h1 span{color:var(--blue)}
+.article-intro{font-size:18px;font-weight:400;color:var(--ink2);line-height:1.75;margin-bottom:32px;max-width:800px}
+.article-meta{display:flex;align-items:center;gap:24px;padding-top:24px;border-top:1px solid var(--rule);flex-wrap:wrap}
+.meta-author{display:flex;align-items:center;gap:10px}.author-avatar{width:36px;height:36px;border-radius:50%;background:var(--ink);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.author-name{font-size:13px;font-weight:500;color:var(--ink)}.author-role{font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.04em}
+.meta-divider{width:1px;height:28px;background:var(--rule)}.meta-stat{font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.06em}
+.article-wrap{max-width:1300px;margin:0 auto;padding:64px 6%;display:grid;grid-template-columns:1fr 300px;gap:60px;align-items:start}
+.article-body{min-width:0}
+.article-body h2{font-family:var(--f-head);font-size:26px;font-weight:800;letter-spacing:-.03em;color:var(--ink);margin:56px 0 16px;line-height:1.2}.article-body h2:first-child{margin-top:0}
+.article-body h3{font-family:var(--f-head);font-size:18px;font-weight:700;letter-spacing:-.02em;color:var(--ink);margin:32px 0 12px}
+.article-body p{font-size:16px;font-weight:400;color:var(--ink2);line-height:1.85;margin-bottom:20px}
+.article-body strong{color:var(--ink);font-weight:600}
+.article-body a{color:var(--blue);text-decoration:none;border-bottom:1px solid rgba(0,87,255,.25)}.article-body a:hover{border-color:var(--blue)}
+.callout{padding:20px 24px;border-radius:8px;margin:32px 0;border-left:3px solid}
+.callout.blue{background:var(--blue-dim);border-color:var(--blue)}.callout.amber{background:var(--amber-dim);border-color:var(--amber)}.callout.green{background:var(--green-dim);border-color:var(--green)}.callout.red{background:var(--red-dim);border-color:var(--red)}
+.callout-label{font-family:var(--f-mono);font-size:9px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px}.callout.blue .callout-label{color:var(--blue)}.callout.amber .callout-label{color:var(--amber)}.callout.green .callout-label{color:var(--green)}.callout.red .callout-label{color:var(--red)}
+.callout p{font-size:14px;color:var(--ink2);line-height:1.7;margin:0}.callout strong{color:var(--ink)}
+.article-img{width:100%;border-radius:8px;border:1px solid #1e2535;overflow:hidden;margin:36px 0}
+.article-img figcaption{padding:10px 14px;background:var(--off);font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.04em;border-top:1px solid var(--rule)}
+.checklist{list-style:none;display:flex;flex-direction:column;gap:8px;margin:20px 0 28px}
+.checklist li{display:flex;align-items:flex-start;gap:10px;font-size:15px;color:var(--ink2);line-height:1.6}
+.checklist li::before{content:'';width:16px;height:16px;flex-shrink:0;margin-top:3px;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 14 14' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='7' cy='7' r='6.5' fill='none' stroke='%230057ff' stroke-width='1'/%3E%3Cpath d='M4 7l2 2 4-4' stroke='%230057ff' stroke-width='1.3' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:center;background-size:contain}
+.arrow-list{list-style:none;display:flex;flex-direction:column;gap:8px;margin:20px 0 28px}
+.arrow-list li{display:flex;align-items:flex-start;gap:10px;font-size:15px;color:var(--ink2);line-height:1.6}
+.arrow-list li::before{content:'\2192';color:var(--blue);flex-shrink:0;font-family:var(--f-mono);font-size:13px;margin-top:2px}
+.table-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:28px 0}
+.compare-table{width:100%;border-collapse:collapse;font-size:14px}
+.compare-table th{font-family:var(--f-mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink4);padding:10px 16px;border-bottom:2px solid var(--rule);text-align:left;background:var(--off)}
+.compare-table td{padding:12px 16px;border-bottom:1px solid var(--rule);vertical-align:top;color:var(--ink2);line-height:1.6}
+.compare-table tr:last-child td{border-bottom:none}
+.compare-table td:first-child{font-weight:600;color:var(--ink);font-family:var(--f-mono);font-size:12px}
+.sidebar{position:sticky;top:88px;display:flex;flex-direction:column;gap:16px}
+.toc-card{border:1px solid var(--rule);border-radius:8px;padding:24px;background:var(--white);box-shadow:var(--shadow-sm)}
+.toc-label{font-family:var(--f-mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);margin-bottom:16px}
+.toc-list{list-style:none;display:flex;flex-direction:column;gap:2px}
+.toc-list a{display:block;font-size:13px;color:var(--ink3);text-decoration:none;padding:6px 10px;border-radius:4px;transition:all .15s;border-left:2px solid transparent}
+.toc-list a:hover,.toc-list a.active{color:var(--blue);background:var(--blue-dim);border-left-color:var(--blue)}
+.sidebar-cta{border:1px solid var(--blue);border-radius:8px;padding:24px;background:var(--blue-dim)}
+.sc-eyebrow{font-family:var(--f-mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);margin-bottom:10px}
+.sc-title{font-family:var(--f-head);font-size:17px;font-weight:800;letter-spacing:-.02em;color:var(--ink);margin-bottom:8px;line-height:1.2}
+.sc-body{font-size:13px;color:var(--ink3);line-height:1.6;margin-bottom:16px}
+.sc-btn{display:block;text-align:center;padding:11px 16px;background:var(--blue);color:white;border-radius:6px;font-family:var(--f-body);font-size:13px;font-weight:500;text-decoration:none}.sc-btn:hover{background:var(--blue2)}
+.sc-note{font-family:var(--f-mono);font-size:9px;color:var(--ink4);text-align:center;margin-top:8px;letter-spacing:.04em}
+.sidebar-share{border:1px solid var(--rule);border-radius:8px;padding:20px 24px;background:var(--white)}
+.share-label{font-family:var(--f-mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);margin-bottom:14px}
+.share-links{display:flex;flex-direction:column;gap:8px}
+.share-link{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--ink3);text-decoration:none;padding:9px 12px;border:1px solid var(--rule);border-radius:6px;transition:border-color .2s,color .2s}.share-link:hover{border-color:var(--blue);color:var(--blue)}
+.related{padding:64px 6%;border-top:1px solid var(--rule);background:var(--off)}
+.related-inner{max-width:1100px;margin:0 auto}
+.related-label{font-family:var(--f-mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);margin-bottom:32px;display:flex;align-items:center;gap:10px}
+.related-label::before{content:'';width:20px;height:1px;background:var(--blue)}
+.related-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.related-card{padding:24px;border:1px solid var(--rule);border-radius:8px;background:var(--white);box-shadow:var(--shadow-sm);transition:border-color .2s,transform .2s;text-decoration:none;display:flex;flex-direction:column;gap:12px}.related-card:hover{border-color:var(--blue);transform:translateY(-4px)}
+.rc-tag{font-family:var(--f-mono);font-size:9px;color:var(--blue);letter-spacing:.08em;text-transform:uppercase;padding:3px 8px;background:var(--blue-dim);border-radius:3px;align-self:flex-start}
+.rc-title{font-family:var(--f-head);font-size:16px;font-weight:700;letter-spacing:-.02em;color:var(--ink);line-height:1.25}
+.rc-desc{font-size:13px;color:var(--ink3);line-height:1.6;flex:1}
+.rc-footer{display:flex;align-items:center;justify-content:space-between;padding-top:12px;border-top:1px solid var(--rule)}
+.rc-read{font-family:var(--f-mono);font-size:10px;color:var(--ink4)}.rc-arrow{font-size:14px;color:var(--blue)}
+footer{padding:56px 6% 32px;border-top:1px solid var(--rule);background:var(--white)}
+.footer-inner{max-width:1160px;margin:0 auto}
+.footer-top{display:flex;justify-content:space-between;align-items:flex-start;gap:40px;flex-wrap:wrap;margin-bottom:48px}
+.footer-brand p{font-size:13px;font-weight:300;color:var(--ink3);margin-top:12px;max-width:260px;line-height:1.6}
+.footer-col h4{font-family:var(--f-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink4);margin-bottom:16px}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+.footer-col a{font-size:13px;color:var(--ink3);text-decoration:none}.footer-col a:hover{color:var(--blue)}
+.footer-bottom{padding-top:24px;border-top:1px solid var(--rule);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.footer-bottom p{font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.04em}
+.compliance-pills{display:flex;gap:6px;flex-wrap:wrap}
+.cp{font-family:var(--f-mono);font-size:9px;padding:3px 8px;border:1px solid var(--rule);border-radius:3px;color:var(--ink4);letter-spacing:.06em}
+@media(max-width:900px){.article-wrap{grid-template-columns:1fr;gap:48px}.sidebar{position:static}.related-grid{grid-template-columns:1fr}.table-scroll{margin:20px 0}}
+@media(max-width:900px){.nav-links{display:none}}
+@media(max-width:540px){nav{padding:0 4%}.nav-btn{font-size:12px;padding:8px 14px}}
+</style>
+</head>
+<body>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+<nav>
+  <a href="../index.html" class="nav-logo">
+    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" style="flex-shrink:0"><rect width="32" height="32" rx="7" fill="#0d0f12"/><rect x="8" y="7" width="16" height="16" rx="2" stroke="white" stroke-width="2.5" fill="none"/><line x1="20" y1="19" x2="26" y2="25" stroke="#0057FF" stroke-width="3" stroke-linecap="round"/></svg>
+    <span style="font-family:'Epilogue',sans-serif;font-weight:800;font-size:16px;color:#0d0f12;letter-spacing:-.03em;white-space:nowrap">QLean <span style="font-weight:300;color:#5a6172">Automation</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="../index.html#products">Products</a></li>
+    <li><a href="../index.html#framework">Framework</a></li>
+    <li><a href="blog-index.html">Knowledge Base</a></li>
+    <li><a href="../index.html#pricing">Pricing</a></li>
+    <li><a href="../about.html">About</a></li>
+    <li><a href="../index.html#faq">FAQ</a></li>
+  </ul>
+  <a href="../index.html#pricing" class="nav-btn">Get the Framework &#8594;</a>
+</nav>
+
+<header class="article-hero">
+  <div class="article-hero-inner">
+    <div class="breadcrumb"><a href="../index.html">Home</a><span>/</span><a href="blog-index.html">Knowledge Base</a><span>/</span>Field Instrumentation IQ Documentation</div>
+    <div class="article-tag">&#128207; Instrumentation &amp; Calibration</div>
+    <h1>How to Document<br><span>Field Instrumentation</span><br>for a Pharma IQ</h1>
+    <p class="article-intro">Field instruments are where the process meets the data record. Every transmitter, sensor, and analyser in a GMP system needs a documentation trail that proves it was specified correctly, installed as designed, calibrated against a traceable standard, and wired to the right I/O point. The IQ team verifies all of it. Here is exactly what they check, what documents they check it against, and how to build the instrument register that anchors the whole package.</p>
+    <div class="article-meta">
+      <div class="meta-author">
+        <div class="author-avatar"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="7" r="3.5" stroke="white" stroke-width="1.5"/><path d="M2.5 16c0-3.59 2.91-6.5 6.5-6.5s6.5 2.91 6.5 6.5" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+        <div><div class="author-name">QLean Automation</div><div class="author-role">ENGINEERS WHO BUILD SYSTEMS, NOT JUST SIGN THEM</div></div>
+      </div>
+      <div class="meta-divider"></div><div class="meta-stat">7 MIN READ</div>
+      <div class="meta-divider"></div><div class="meta-stat">FIELD INSTRUMENTS &#183; IQ &#183; ENGINEERING LISTS</div>
+    </div>
+  </div>
+</header>
+
+<div class="article-wrap">
+  <article class="article-body">
+
+    <h2 id="what-iq-actually-checks">What IQ Actually Checks for Field Instruments</h2>
+    <p>An IQ for field instrumentation is not a functional test. It is a documentation and installation verification. The IQ team is not checking whether the transmitter reads the correct value — that is OQ work. They are checking whether the correct transmitter is installed in the correct location, with the correct tag number, wired to the correct I/O channel, with a valid calibration certificate on file, and whether all of this matches the HDS specification.</p>
+    <p>That distinction matters when you are building the IQ protocol. Every IQ step for a field instrument has two inputs: the specification (what the HDS says) and the as-built reality (what is physically present). The step passes when they match. When they do not match — wrong model installed, serial number not in the BOM, calibration certificate missing — it is a nonconformance that must be logged, assessed, and resolved before IQ can close.</p>
+
+    <div class="callout amber">
+      <div class="callout-label">The Most Common Field Instrument IQ Failure</div>
+      <p>The instrument was substituted during procurement — the exact model in the HDS was out of stock, and the site team installed an equivalent. Nobody updated the HDS. On IQ day the nameplate data does not match the specification. <strong>The as-built update is not an IQ task — it is a pre-IQ task.</strong> All HDS substitutions must be formally processed through change control and the HDS updated before IQ execution begins.</p>
+    </div>
+
+    <h2 id="the-instrument-register">The Instrument Register — The Anchor Document</h2>
+    <p>The instrument register is the master list that IQ works from. It lives in the Engineering Lists (EL-SYS-001 in the QLean Framework, typically the Instrument List tab) and in the HDS field instrument section. For every GMP-critical instrument in the system, the register must contain:</p>
+
+    <ul class="checklist">
+      <li><strong>Tag number</strong> — unique identifier matching the P&ID, the HDS, and the physical label on the instrument and the field junction box</li>
+      <li><strong>Description</strong> — what is being measured and where (e.g. "Temperature — Distribution Return, TT-004")</li>
+      <li><strong>P&ID reference</strong> — the drawing number and sheet where the instrument appears</li>
+      <li><strong>Manufacturer and model number</strong> — exact model as installed, including any suffixes that define wetted materials, process connection, output type</li>
+      <li><strong>Serial number</strong> — the physical serial on the nameplate, verified during IQ walk-down</li>
+      <li><strong>Measurement range</strong> — engineering units and span (e.g. 0–150°C)</li>
+      <li><strong>Output signal</strong> — 4–20 mA HART, Profibus PA, Foundation Fieldbus, digital I/O</li>
+      <li><strong>I/O channel assignment</strong> — PLC rack, slot, channel — linking to the <a href="plc-io-mapping-iq-documentation.html">I/O mapping table</a></li>
+      <li><strong>GMP classification</strong> — Critical Primary Quality / Critical Process Control / Important Monitoring / Non-GMP</li>
+      <li><strong>Calibration certificate reference</strong> — certificate number, calibration date, next due date</li>
+      <li><strong>Installation location</strong> — physical location on P&ID (e.g. "Distribution loop, return leg, after heat exchanger HX-001")</li>
+    </ul>
+
+    <p>This register is the single document that IQ, calibration management, and change control all reference. It must be kept current throughout the project lifecycle. When an instrument is replaced under change control, the register is updated as part of closing the change.</p>
+
+    <h2 id="iq-verification-steps-per-instrument">The IQ Verification Steps Per Instrument</h2>
+    <p>For each GMP-critical instrument in the register, the IQ protocol generates a set of verification steps. These are executed during the physical IQ walk-down and completed in sequence:</p>
+
+    <figure class="article-img">
+      <svg viewBox="0 0 720 320" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;background:#0d0f12;border-radius:8px 8px 0 0">
+        <text x="360" y="18" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(255,255,255,0.2)" letter-spacing="0.12em">IQ VERIFICATION SEQUENCE — FIELD INSTRUMENT</text>
+
+        <!-- Step boxes -->
+        <!-- Step 1 -->
+        <rect x="30" y="32" width="148" height="62" rx="5" fill="rgba(0,87,255,0.12)" stroke="rgba(0,87,255,0.4)" stroke-width="1.5"/>
+        <text x="104" y="56" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(100,160,255,0.9)" letter-spacing="0.06em">STEP 1</text>
+        <text x="104" y="70" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="11" fill="rgba(200,215,240,0.8)">Nameplate</text>
+        <text x="104" y="84" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="11" fill="rgba(200,215,240,0.8)">Verification</text>
+
+        <!-- Arrow -->
+        <line x1="178" y1="63" x2="198" y2="63" stroke="rgba(0,87,255,0.5)" stroke-width="1.5"/>
+        <polygon points="195,59 204,63 195,67" fill="rgba(0,87,255,0.6)"/>
+
+        <!-- Step 2 -->
+        <rect x="204" y="32" width="148" height="62" rx="5" fill="rgba(0,87,255,0.10)" stroke="rgba(0,87,255,0.35)" stroke-width="1.5"/>
+        <text x="278" y="56" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(100,160,255,0.8)" letter-spacing="0.06em">STEP 2</text>
+        <text x="278" y="70" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="11" fill="rgba(200,215,240,0.7)">Installation</text>
+        <text x="278" y="84" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="11" fill="rgba(200,215,240,0.7)">Inspection</text>
+
+        <!-- Arrow -->
+        <line x1="352" y1="63" x2="372" y2="63" stroke="rgba(0,87,255,0.5)" stroke-width="1.5"/>
+        <polygon points="369,59 378,63 369,67" fill="rgba(0,87,255,0.6)"/>
+
+        <!-- Step 3 -->
+        <rect x="378" y="32" width="148" height="62" rx="5" fill="rgba(0,87,255,0.10)" stroke="rgba(0,87,255,0.35)" stroke-width="1.5"/>
+        <text x="452" y="56" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(100,160,255,0.8)" letter-spacing="0.06em">STEP 3</text>
+        <text x="452" y="70" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="11" fill="rgba(200,215,240,0.7)">Calibration</text>
+        <text x="452" y="84" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="11" fill="rgba(200,215,240,0.7)">Certificate</text>
+
+        <!-- Arrow -->
+        <line x1="526" y1="63" x2="546" y2="63" stroke="rgba(0,87,255,0.5)" stroke-width="1.5"/>
+        <polygon points="543,59 552,63 543,67" fill="rgba(0,87,255,0.6)"/>
+
+        <!-- Step 4 -->
+        <rect x="552" y="32" width="148" height="62" rx="5" fill="rgba(0,87,255,0.08)" stroke="rgba(0,87,255,0.3)" stroke-width="1.5"/>
+        <text x="626" y="56" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(100,160,255,0.7)" letter-spacing="0.06em">STEP 4</text>
+        <text x="626" y="70" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="11" fill="rgba(200,215,240,0.65)">I/O Channel</text>
+        <text x="626" y="84" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="11" fill="rgba(200,215,240,0.65)">Continuity</text>
+
+        <!-- Step detail boxes -->
+        <rect x="30" y="118" width="148" height="88" rx="4" fill="rgba(255,255,255,0.02)" stroke="rgba(0,87,255,0.15)" stroke-width="1"/>
+        <text x="104" y="136" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(100,160,255,0.5)">VERIFY</text>
+        <text x="104" y="152" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(160,175,200,0.6)">Tag no. vs P&amp;ID</text>
+        <text x="104" y="166" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(160,175,200,0.6)">Manufacturer / model</text>
+        <text x="104" y="180" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(160,175,200,0.6)">Serial no. vs BOM</text>
+        <text x="104" y="196" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(160,175,200,0.6)">Range vs HDS</text>
+
+        <rect x="204" y="118" width="148" height="88" rx="4" fill="rgba(255,255,255,0.02)" stroke="rgba(0,87,255,0.15)" stroke-width="1"/>
+        <text x="278" y="136" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(100,160,255,0.5)">VERIFY</text>
+        <text x="278" y="152" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(160,175,200,0.6)">Physical location</text>
+        <text x="278" y="166" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(160,175,200,0.6)">Process connection</text>
+        <text x="278" y="180" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(160,175,200,0.6)">Orientation / support</text>
+        <text x="278" y="196" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(160,175,200,0.6)">Cable entry / sealing</text>
+
+        <rect x="378" y="118" width="148" height="88" rx="4" fill="rgba(255,255,255,0.02)" stroke="rgba(0,87,255,0.15)" stroke-width="1"/>
+        <text x="452" y="136" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(100,160,255,0.5)">VERIFY</text>
+        <text x="452" y="152" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(160,175,200,0.6)">Cert reference no.</text>
+        <text x="452" y="166" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(160,175,200,0.6)">Calibration date</text>
+        <text x="452" y="180" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(160,175,200,0.6)">Due date (not expired)</text>
+        <text x="452" y="196" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(160,175,200,0.6)">Traceability statement</text>
+
+        <rect x="552" y="118" width="148" height="88" rx="4" fill="rgba(255,255,255,0.02)" stroke="rgba(0,87,255,0.15)" stroke-width="1"/>
+        <text x="626" y="136" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(100,160,255,0.5)">VERIFY</text>
+        <text x="626" y="152" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(160,175,200,0.6)">I/O rack / slot / ch</text>
+        <text x="626" y="166" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(160,175,200,0.6)">Cable label at panel</text>
+        <text x="626" y="180" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(160,175,200,0.6)">Signal type matches</text>
+        <text x="626" y="196" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(160,175,200,0.6)">I/O mapping table</text>
+
+        <!-- Bottom note -->
+        <rect x="30" y="226" width="660" height="78" rx="5" fill="rgba(0,87,255,0.06)" stroke="rgba(0,87,255,0.2)" stroke-width="1"/>
+        <text x="360" y="248" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(100,160,255,0.7)" letter-spacing="0.06em">IQ PASS CRITERION PER INSTRUMENT</text>
+        <text x="360" y="264" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="11" fill="rgba(180,195,220,0.7)">All four steps pass with no nonconformances</text>
+        <text x="360" y="280" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(100,160,255,0.5)">Any step fail &#8594; Nonconformance raised &#8594; MDL entry &#8594; Resolution required before IQ closure</text>
+        <text x="360" y="294" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(100,160,255,0.5)">All Category A (Critical) deviations must be closed before IQ report approval</text>
+      </svg>
+      <figcaption>IQ VERIFICATION SEQUENCE FOR A SINGLE FIELD INSTRUMENT — FOUR DISCRETE STEPS, EACH WITH SPECIFIC PASS CRITERIA</figcaption>
+    </figure>
+
+    <h2 id="nameplate-verification">Step 1 — Nameplate Verification</h2>
+    <p>Nameplate verification is the physical confirmation that the instrument installed matches the HDS specification. The IQ engineer walks to the instrument with the instrument register, reads the nameplate data, and records it against the expected values in the protocol.</p>
+
+    <p>For each instrument, the following nameplate data is verified against the HDS:</p>
+
+    <ul class="checklist">
+      <li>Tag number — the tag label on the instrument body must match the instrument register and the P&ID. Missing or illegible labels are a nonconformance.</li>
+      <li>Manufacturer — as specified in the HDS BOM. A substituted manufacturer requires a change control record and HDS update before IQ.</li>
+      <li>Model number — including all suffixes. A different output type (e.g. mA vs HART) or different wetted material suffix is a specification nonconformance even if the base model looks the same.</li>
+      <li>Serial number — recorded in the IQ protocol and cross-referenced against the HDS BOM. The serial number becomes the permanent record linking this specific physical instrument to all subsequent calibration and maintenance history.</li>
+      <li>Measurement range — the range printed on the nameplate or visible on the tag must match the HDS specification range.</li>
+    </ul>
+
+    <h2 id="installation-inspection">Step 2 — Installation Inspection</h2>
+    <p>Installation inspection verifies that the instrument is physically installed correctly — in the right location, with the correct process connection, oriented correctly, adequately supported, and with cable entries properly sealed. These are the things that the HDS installation notes and the relevant standards (e.g. P&ID notes, vendor installation guidelines) specify.</p>
+
+    <p>Common installation inspection points for pharma field instruments:</p>
+
+    <ul class="arrow-list">
+      <li><strong>Location on P&ID:</strong> the instrument is installed at the process connection point shown on the P&ID, not upstream or downstream of it. A temperature transmitter installed on the wrong leg of a distribution loop measures a different process variable.</li>
+      <li><strong>Process connection integrity:</strong> connections are tight, correct gasket or seal type, correct face-to-face orientation for flow elements. Leaking connections are a safety and process deviation issue, not just an IQ note.</li>
+      <li><strong>Orientation:</strong> pressure transmitters must be installed with the correct orientation to avoid liquid trapping in impulse lines. Level transmitters must be plumb. Flow elements must be installed with the correct flow direction relative to the arrow on the body.</li>
+      <li><strong>Mechanical support:</strong> instruments are supported independently of the process connection where required — particularly for heavy transmitters on small-bore tubing.</li>
+      <li><strong>Cable entry and sealing:</strong> conduit or cable gland entries correctly sealed, IP rating maintained. Open cable glands are a contamination risk in cleanroom environments and a safety issue in hazardous areas.</li>
+      <li><strong>Physical labelling:</strong> instrument tag label is present, legible, and durable (not a handwritten label on masking tape).</li>
+    </ul>
+
+    <h2 id="calibration-certificate-step">Step 3 — Calibration Certificate Verification</h2>
+    <p>This step is covered in detail in the <a href="calibration-management-pharma-iq.html">calibration management article</a>, but the IQ protocol mechanics are worth stating explicitly here. For each GMP-critical instrument, the IQ engineer:</p>
+
+    <ul class="arrow-list">
+      <li>Locates the calibration certificate for this specific instrument (identified by serial number — not a generic certificate for the model)</li>
+      <li>Verifies the certificate reference number matches the entry in the instrument register</li>
+      <li>Confirms the calibration date and that the next due date has not been exceeded</li>
+      <li>Confirms the certificate contains a traceability statement referencing a national or international metrology standard</li>
+      <li>Records the certificate reference, calibration date, and next due date in the IQ protocol instrument table</li>
+      <li>Attaches a copy of the certificate (or certificate reference) to the IQ evidence package</li>
+    </ul>
+
+    <div class="callout blue">
+      <div class="callout-label">Certificate vs. Calibration Execution</div>
+      <p>IQ verifies the certificate — it does not repeat the calibration. The calibration was performed before IQ by the calibration lab or the site calibration team. IQ confirms the certificate is valid, current, and traceable. <strong>Do not confuse IQ calibration verification with the calibration activity itself</strong> — they are different steps performed at different times by different people, and both must be documented separately.</p>
+    </div>
+
+    <h2 id="io-channel-continuity">Step 4 — I/O Channel and Wiring Verification</h2>
+    <p>The final IQ step for each field instrument verifies that the instrument is wired to the correct I/O channel in the correct PLC rack and slot, and that the signal type is compatible with the I/O module configured for that channel. This step links the field instrument verification to the <a href="plc-io-mapping-iq-documentation.html">I/O mapping IQ documentation</a>.</p>
+
+    <p>The verification checks:</p>
+
+    <ul class="checklist">
+      <li>The cable label at the field junction box and at the panel terminal strip both show the correct tag number and I/O address</li>
+      <li>The I/O address (rack, slot, channel) matches the I/O mapping table in the HDS</li>
+      <li>The I/O module type at that address is compatible with the signal type (e.g. a 4–20 mA transmitter is wired to an analogue input module, not a digital input module)</li>
+      <li>For HART instruments: the HART address is set correctly and matches the configuration documented in the SDS</li>
+      <li>Cable segregation rules are observed — signal cables run separately from power cables where specified in the HDS cable routing notes</li>
+    </ul>
+
+    <p>This step is often the one that catches installation errors that survive FAT and SAT — a cable labelled correctly at both ends but physically routed to the wrong terminal. The only way to catch it is to trace the cable from the instrument to the panel and verify the I/O address in the PLC I/O configuration matches what the mapping table says.</p>
+
+    <h2 id="engineering-lists-as-iq-source">Engineering Lists as the IQ Source Document</h2>
+    <p>The instrument register used during IQ execution is drawn from the Engineering Lists. In the QLean Framework, the Engineering Lists workbook (EL-SYS-001) contains an Instrument List tab that serves as the master source for all instrument data — tag numbers, descriptions, manufacturers, models, ranges, I/O addresses, P&ID references, and calibration status. The HDS references this list; the IQ protocol is built from it.</p>
+
+    <p>Keeping the Engineering Lists current throughout the project is critical. If a procurement substitution occurs, the Engineering Lists must be updated at the same time the change is recorded in the change control log. If an instrument is added to the scope, the Engineering Lists entry is created before the instrument appears in any design document. The IQ protocol is generated from the Engineering Lists — if the list is wrong, the IQ protocol is wrong, and the walk-down will produce a series of unnecessary nonconformances that slow the qualification schedule.</p>
+
+    <div class="callout green">
+      <div class="callout-label">In the QLean Framework</div>
+      <p>The Engineering Lists workbook (EL-SYS-001) includes an Instrument List tab with all field instrument data for the water distribution system template — tag numbers, descriptions, manufacturers, models (E+H transmitters as specified in the HDS BOM), measurement ranges, I/O address assignments, and P&ID references. The IQ protocol (IQ-SYS-001) Section 7 — Instrument Calibration Verification — provides the pre-built instrument register table ready to populate with serial numbers, certificate references, and calibration dates. <strong>Both documents are structured so that IQ preparation is a population exercise, not a document-building exercise</strong> — the structure, the tag numbers, and the verification columns are already in place.</p>
+    </div>
+
+    <h2 id="loop-diagrams-as-evidence">Loop Diagrams as Supporting IQ Evidence</h2>
+    <p>The instrument loop diagram is the drawing that shows the complete signal path for a single measurement or control loop — from the field instrument through the junction box, through the cable, to the I/O module, and into the PLC tag. It is the drawing the IQ team uses to trace wiring and verify I/O channel assignments. For more on what loop diagrams must contain to serve as valid IQ evidence, see the dedicated article on <a href="instrument-loop-diagram-pharma-iq.html">instrument loop diagrams for pharma IQ</a>.</p>
+
+    <p>At minimum, an IQ-grade loop diagram must show the instrument tag, the I/O address, the signal type (mA, digital, HART), all intermediate terminal blocks with terminal numbers, cable identifiers, and the PLC module reference. A loop diagram that shows the field instrument and the PLC but omits the junction box terminal numbering does not provide enough traceability to verify the wiring during an IQ walk-down.</p>
+
+    <h2 id="pre-iq-checklist">Pre-IQ Readiness Checklist for Field Instrumentation</h2>
+    <p>The most efficient IQ execution is one where all pre-IQ preparation is complete before the walk-down begins. For field instrumentation, pre-IQ readiness means:</p>
+
+    <ul class="checklist">
+      <li>Instrument register complete — every GMP-critical instrument entered with all specification data and serial numbers populated from physical inspection</li>
+      <li>All calibration certificates on file — for every GMP-critical instrument, with serial numbers cross-referenced to the register</li>
+      <li>All calibration due dates current — no expired certificates at the planned IQ execution date (allow margin for schedule slippage)</li>
+      <li>HDS as-built — all procurement substitutions processed through change control and HDS updated to reflect what is actually installed</li>
+      <li>Engineering Lists current — instrument list matches the HDS and the physical installation</li>
+      <li>Loop diagrams issued as construction-complete or as-built — not held in draft</li>
+      <li>Physical labelling complete — all instrument tag labels installed and legible</li>
+      <li>I/O mapping table verified — at least one engineer has traced each field cable to the panel terminal and confirmed the I/O address before IQ execution day</li>
+    </ul>
+
+  </article>
+
+  <aside class="sidebar">
+    <div class="toc-card">
+      <div class="toc-label">On This Page</div>
+      <ul class="toc-list">
+        <li><a href="#what-iq-actually-checks">What IQ Actually Checks</a></li>
+        <li><a href="#the-instrument-register">The Instrument Register</a></li>
+        <li><a href="#iq-verification-steps-per-instrument">IQ Verification Steps</a></li>
+        <li><a href="#nameplate-verification">Step 1 — Nameplate</a></li>
+        <li><a href="#installation-inspection">Step 2 — Installation</a></li>
+        <li><a href="#calibration-certificate-step">Step 3 — Certificate</a></li>
+        <li><a href="#io-channel-continuity">Step 4 — I/O Channel</a></li>
+        <li><a href="#engineering-lists-as-iq-source">Engineering Lists</a></li>
+        <li><a href="#loop-diagrams-as-evidence">Loop Diagrams</a></li>
+        <li><a href="#pre-iq-checklist">Pre-IQ Checklist</a></li>
+      </ul>
+    </div>
+
+    <div class="sidebar-cta">
+      <div class="sc-eyebrow">QLean Framework</div>
+      <div class="sc-title">29 production-ready GAMP 5 documents</div>
+      <p class="sc-body">Engineering Lists with instrument register, HDS with field instrument BOM, and IQ protocol with calibration verification table — everything needed to run a clean field instrumentation IQ.</p>
+      <a href="../index.html#pricing" class="sc-btn">Get the Framework &#8594;</a>
+      <div class="sc-note">COMPANY-WIDE LICENCE &#183; NO PER-SEAT FEES</div>
+    </div>
+
+    <div class="sidebar-share">
+      <div class="share-label">Share This Article</div>
+      <div class="share-links">
+        <a href="https://www.linkedin.com/sharing/share-offsite/?url=https://qleanautomation.com/blog/field-instrumentation-iq-documentation.html" target="_blank" rel="noopener" class="share-link">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          Share on LinkedIn
+        </a>
+        <a href="https://reddit.com/submit?url=https://qleanautomation.com/blog/field-instrumentation-iq-documentation.html&title=How%20to%20Document%20Field%20Instrumentation%20for%20a%20Pharma%20IQ" target="_blank" rel="noopener" class="share-link">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/></svg>
+          Share on Reddit
+        </a>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<section class="related">
+  <div class="related-inner">
+    <div class="related-label">Continue Reading</div>
+    <div class="related-grid">
+      <a href="calibration-management-pharma-iq.html" class="related-card">
+        <span class="rc-tag">&#128207; Instrumentation</span>
+        <div class="rc-title">Calibration Management for Pharma Automation — What IQ Requires</div>
+        <div class="rc-desc">Certificate traceability, calibration intervals, the OOT procedure, and how calibration status is tracked across the validated system lifecycle.</div>
+        <div class="rc-footer"><span class="rc-read">7 MIN READ</span><span class="rc-arrow">&#8594;</span></div>
+      </a>
+      <a href="plc-io-mapping-iq-documentation.html" class="related-card">
+        <span class="rc-tag">&#9881;&#65039; PLC Engineering</span>
+        <div class="rc-title">PLC I/O Mapping and IQ Documentation</div>
+        <div class="rc-desc">The I/O mapping table that field instrument wiring verification is checked against — and how it links to the HDS and the IQ protocol.</div>
+        <div class="rc-footer"><span class="rc-read">7 MIN READ</span><span class="rc-arrow">&#8594;</span></div>
+      </a>
+      <a href="instrument-loop-diagram-pharma-iq.html" class="related-card">
+        <span class="rc-tag">&#128207; Instrumentation</span>
+        <div class="rc-title">Instrument Loop Diagrams as IQ Evidence — What They Must Show</div>
+        <div class="rc-desc">What a loop diagram must contain to serve as valid IQ evidence — signal path, terminal numbers, I/O address, and cable identifiers across every junction.</div>
+        <div class="rc-footer"><span class="rc-read">6 MIN READ</span><span class="rc-arrow">&#8594;</span></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="../index.html" class="nav-logo" style="text-decoration:none">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="7" fill="#0d0f12"/><rect x="8" y="7" width="16" height="16" rx="2" stroke="white" stroke-width="2.5" fill="none"/><line x1="20" y1="19" x2="26" y2="25" stroke="#0057FF" stroke-width="3" stroke-linecap="round"/></svg>
+          <span style="font-family:'Epilogue',sans-serif;font-weight:800;font-size:16px;color:#0d0f12;letter-spacing:-.03em">QLean <span style="font-weight:300;color:#5a6172">Automation</span></span>
+        </a>
+        <p>GMP validation documentation tools for automation engineers and system integrators.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Products</h4>
+        <ul>
+          <li><a href="../index.html#products">GAMP 5 Framework Pack</a></li>
+          <li><a href="../index.html#products">Technical Ebook</a></li>
+          <li><a href="../index.html#pricing">Pricing</a></li>
+          <li><a href="../index.html#faq">FAQ</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Knowledge Base</h4>
+        <ul>
+          <li><a href="blog-index.html">All Articles</a></li>
+          <li><a href="cluster-instrumentation.html">Instrumentation &amp; Calibration</a></li>
+          <li><a href="calibration-management-pharma-iq.html">Calibration Management</a></li>
+          <li><a href="plc-io-mapping-iq-documentation.html">PLC I/O Mapping IQ</a></li>
+          <li><a href="instrument-loop-diagram-pharma-iq.html">Loop Diagrams IQ</a></li>
+          <li><a href="iq-oq-pq-guide.html">IQ OQ PQ Guide</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="../index.html#framework">Framework</a></li>
+          <li><a href="../terms.html">Terms of Service</a></li>
+          <li><a href="../privacy.html">Privacy Policy</a></li>
+          <li><a href="mailto:hello@qleanautomation.com">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 QLean Automation. All rights reserved.</p>
+      <div class="compliance-pills">
+        <span class="cp">GAMP 5</span>
+        <span class="cp">EU GMP ANNEX 11</span>
+        <span class="cp">21 CFR PART 11</span>
+        <span class="cp">ISO/IEC 17025</span>
+        <span class="cp">GXP</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+window.addEventListener('scroll',function(){
+  var s=document.getElementById('progress');
+  var h=document.documentElement;
+  var p=(h.scrollTop||document.body.scrollTop)/(h.scrollHeight-h.clientHeight)*100;
+  s.style.width=p+'%';
+});
+var tl=document.querySelectorAll('.toc-list a');
+window.addEventListener('scroll',function(){
+  var headings=document.querySelectorAll('.article-body h2[id]');
+  var scrollY=window.scrollY+120;
+  var current='';
+  headings.forEach(function(h){if(h.offsetTop<=scrollY)current=h.id;});
+  tl.forEach(function(a){
+    a.classList.remove('active');
+    if(a.getAttribute('href')==='#'+current)a.classList.add('active');
+  });
+});
+</script>
+</body>
+</html>

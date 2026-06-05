@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-JJQ1TXZJX7"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-JJQ1TXZJX7');
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Implementing Electronic Signatures at PLC Level | QLean Automation</title>
+<meta name="description" content="21 CFR Part 11 electronic signatures at PLC level are not a SCADA-only concern. If a PLC-level action — recipe approval, setpoint authorisation, batch record sign-off — has regulatory significance, it needs a compliant e-signature mechanism. Here's how to design and validate it.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@300;400;500;600;700;800;900&family=Source+Sans+3:ital,wght@0,300;0,400;0,500;1,300&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--white:#ffffff;--off:#f7f8f9;--ink:#0d0f12;--ink2:#1e2128;--ink3:#3d4456;--ink4:#9199a8;--rule:#e2e5ea;--rule2:#c8cdd6;--blue:#0057ff;--blue2:#0044cc;--blue-dim:rgba(0,87,255,0.07);--green:#00875a;--green-dim:rgba(0,135,90,0.08);--amber:#d97706;--amber-dim:rgba(217,119,6,0.08);--f-head:'Epilogue',sans-serif;--f-body:'Source Sans 3',sans-serif;--f-mono:'Roboto Mono',monospace;--shadow-sm:0 2px 8px rgba(13,15,18,0.06),0 1px 3px rgba(13,15,18,0.04)}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}body{background:var(--white);color:var(--ink);font-family:var(--f-body);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+nav{position:fixed;top:0;left:0;right:0;z-index:200;height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 6%;background:rgba(255,255,255,0.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--rule)}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;flex-shrink:0}
+.nav-links{display:flex;align-items:center;gap:36px;list-style:none}.nav-links a{font-size:14px;font-weight:400;color:var(--ink3);text-decoration:none;transition:color .2s}.nav-links a:hover{color:var(--ink)}
+.nav-btn{font-family:var(--f-body);font-size:13px;font-weight:500;padding:9px 20px;background:var(--blue);color:white;border:none;border-radius:6px;cursor:pointer;text-decoration:none;white-space:nowrap;flex-shrink:0}.nav-btn:hover{background:var(--blue2)}
+.progress-bar{position:fixed;top:64px;left:0;right:0;height:2px;background:var(--rule);z-index:199}.progress-fill{height:100%;background:var(--blue);width:0%}
+.article-hero{padding:120px 6% 64px;background:var(--white);border-bottom:1px solid var(--rule);position:relative;overflow:hidden}
+.article-hero::before{content:'';position:absolute;top:-80px;right:-80px;width:400px;height:400px;background:radial-gradient(circle,rgba(0,87,255,0.04) 0%,transparent 70%);pointer-events:none}
+.article-hero-inner{max-width:940px;margin:0 auto;position:relative;z-index:1}
+.breadcrumb{display:flex;align-items:center;gap:8px;font-family:var(--f-mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink4);margin-bottom:24px}.breadcrumb a{color:var(--ink4);text-decoration:none}.breadcrumb a:hover{color:var(--blue)}.breadcrumb span{color:var(--rule2)}
+.article-tag{display:inline-flex;align-items:center;gap:6px;font-family:var(--f-mono);font-size:10px;font-weight:500;color:var(--blue);letter-spacing:.1em;text-transform:uppercase;margin-bottom:20px;padding:4px 10px;background:var(--blue-dim);border-radius:4px}
+.article-hero h1{font-family:var(--f-head);font-size:clamp(30px,5vw,52px);font-weight:900;line-height:1.0;letter-spacing:-.04em;color:var(--ink);margin-bottom:20px}.article-hero h1 span{color:var(--blue)}
+.article-intro{font-size:18px;font-weight:400;color:var(--ink2);line-height:1.75;margin-bottom:32px;max-width:800px}
+.article-meta{display:flex;align-items:center;gap:24px;padding-top:24px;border-top:1px solid var(--rule);flex-wrap:wrap}
+.meta-author{display:flex;align-items:center;gap:10px}.author-avatar{width:36px;height:36px;border-radius:50%;background:var(--ink);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.author-name{font-size:13px;font-weight:500;color:var(--ink)}.author-role{font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.04em}
+.meta-divider{width:1px;height:28px;background:var(--rule)}.meta-stat{font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.06em}
+.article-wrap{max-width:1300px;margin:0 auto;padding:64px 6%;display:grid;grid-template-columns:1fr 300px;gap:60px;align-items:start}
+.article-body{min-width:0}
+.article-body h2{font-family:var(--f-head);font-size:26px;font-weight:800;letter-spacing:-.03em;color:var(--ink);margin:56px 0 16px;line-height:1.2}.article-body h2:first-child{margin-top:0}
+.article-body h3{font-family:var(--f-head);font-size:18px;font-weight:700;letter-spacing:-.02em;color:var(--ink);margin:32px 0 12px}
+.article-body p{font-size:16px;font-weight:400;color:var(--ink2);line-height:1.85;margin-bottom:20px}
+.article-body strong{color:var(--ink);font-weight:600}
+.article-body a{color:var(--blue);text-decoration:none;border-bottom:1px solid rgba(0,87,255,.25)}.article-body a:hover{border-color:var(--blue)}
+.callout{padding:20px 24px;border-radius:8px;margin:32px 0;border-left:3px solid}
+.callout.blue{background:var(--blue-dim);border-color:var(--blue)}.callout.amber{background:var(--amber-dim);border-color:var(--amber)}.callout.green{background:var(--green-dim);border-color:var(--green)}
+.callout-label{font-family:var(--f-mono);font-size:9px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px}.callout.blue .callout-label{color:var(--blue)}.callout.amber .callout-label{color:var(--amber)}.callout.green .callout-label{color:var(--green)}
+.callout p{font-size:14px;color:var(--ink2);line-height:1.7;margin:0}.callout strong{color:var(--ink)}
+.article-img{width:100%;border-radius:8px;border:1px solid #1e2535;overflow:hidden;margin:36px 0}
+.article-img figcaption{padding:10px 14px;background:var(--off);font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.04em;border-top:1px solid var(--rule)}
+.arrow-list{list-style:none;display:flex;flex-direction:column;gap:8px;margin:16px 0 24px}
+.arrow-list li{display:flex;align-items:flex-start;gap:10px;font-size:15px;color:var(--ink2);line-height:1.6}
+.arrow-list li::before{content:'\2192';color:var(--blue);flex-shrink:0;font-size:12px;margin-top:3px}
+.checklist{list-style:none;display:flex;flex-direction:column;gap:8px;margin:20px 0 28px}
+.checklist li{display:flex;align-items:flex-start;gap:10px;font-size:15px;color:var(--ink2);line-height:1.6}
+.checklist li::before{content:'';width:16px;height:16px;flex-shrink:0;margin-top:3px;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 14 14' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='7' cy='7' r='6.5' fill='none' stroke='%230057ff' stroke-width='1'/%3E%3Cpath d='M4 7l2 2 4-4' stroke='%230057ff' stroke-width='1.3' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:center;background-size:contain}
+.mono-block{background:var(--ink);border-radius:8px;padding:20px 24px;margin:24px 0;font-family:var(--f-mono);font-size:12px;color:rgba(255,255,255,.85);line-height:1.8;overflow-x:auto}
+.mono-block .label{color:rgba(255,255,255,.35);font-size:10px;letter-spacing:.1em;margin-bottom:10px;display:block}
+.mono-block .hi{color:#6699ff}.mono-block .val{color:#33cc80}.mono-block .dim{color:rgba(255,255,255,.5)}.mono-block .warn{color:rgba(217,119,6,0.9)}
+.table-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:28px 0}
+.compare-table{width:100%;border-collapse:collapse;font-size:14px}
+.compare-table th{font-family:var(--f-mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink4);padding:10px 16px;border-bottom:2px solid var(--rule);text-align:left;background:var(--off)}
+.compare-table td{padding:12px 16px;border-bottom:1px solid var(--rule);vertical-align:top;color:var(--ink2);line-height:1.6}
+.compare-table tr:last-child td{border-bottom:none}
+.compare-table td:first-child{font-weight:600;color:var(--ink);font-family:var(--f-mono);font-size:12px}
+.sidebar{position:sticky;top:88px;display:flex;flex-direction:column;gap:16px}
+.toc-card{border:1px solid var(--rule);border-radius:8px;padding:24px;background:var(--white);box-shadow:var(--shadow-sm)}
+.toc-label{font-family:var(--f-mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);margin-bottom:16px}
+.toc-list{list-style:none;display:flex;flex-direction:column;gap:2px}
+.toc-list a{display:block;font-size:13px;color:var(--ink3);text-decoration:none;padding:6px 10px;border-radius:4px;transition:all .15s;border-left:2px solid transparent}
+.toc-list a:hover,.toc-list a.active{color:var(--blue);background:var(--blue-dim);border-left-color:var(--blue)}
+.sidebar-cta{border:1px solid var(--blue);border-radius:8px;padding:24px;background:var(--blue-dim)}
+.sc-eyebrow{font-family:var(--f-mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);margin-bottom:10px}
+.sc-title{font-family:var(--f-head);font-size:17px;font-weight:800;letter-spacing:-.02em;color:var(--ink);margin-bottom:8px;line-height:1.2}
+.sc-body{font-size:13px;color:var(--ink3);line-height:1.6;margin-bottom:16px}
+.sc-btn{display:block;text-align:center;padding:11px 16px;background:var(--blue);color:white;border-radius:6px;font-family:var(--f-body);font-size:13px;font-weight:500;text-decoration:none}.sc-btn:hover{background:var(--blue2)}
+.sc-note{font-family:var(--f-mono);font-size:9px;color:var(--ink4);text-align:center;margin-top:8px;letter-spacing:.04em}
+.sidebar-share{border:1px solid var(--rule);border-radius:8px;padding:20px 24px;background:var(--white)}
+.share-label{font-family:var(--f-mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);margin-bottom:14px}
+.share-links{display:flex;flex-direction:column;gap:8px}
+.share-link{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--ink3);text-decoration:none;padding:9px 12px;border:1px solid var(--rule);border-radius:6px;transition:border-color .2s,color .2s}.share-link:hover{border-color:var(--blue);color:var(--blue)}
+.related{padding:64px 6%;border-top:1px solid var(--rule);background:var(--off)}
+.related-inner{max-width:1100px;margin:0 auto}
+.related-label{font-family:var(--f-mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);margin-bottom:32px;display:flex;align-items:center;gap:10px}
+.related-label::before{content:'';width:20px;height:1px;background:var(--blue)}
+.related-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.related-card{padding:24px;border:1px solid var(--rule);border-radius:8px;background:var(--white);box-shadow:var(--shadow-sm);transition:border-color .2s,transform .2s;text-decoration:none;display:flex;flex-direction:column;gap:12px}.related-card:hover{border-color:var(--blue);transform:translateY(-4px)}
+.rc-tag{font-family:var(--f-mono);font-size:9px;color:var(--blue);letter-spacing:.08em;text-transform:uppercase;padding:3px 8px;background:var(--blue-dim);border-radius:3px;align-self:flex-start}
+.rc-title{font-family:var(--f-head);font-size:16px;font-weight:700;letter-spacing:-.02em;color:var(--ink);line-height:1.25}
+.rc-desc{font-size:13px;color:var(--ink3);line-height:1.6;flex:1}
+.rc-footer{display:flex;align-items:center;justify-content:space-between;padding-top:12px;border-top:1px solid var(--rule)}
+.rc-read{font-family:var(--f-mono);font-size:10px;color:var(--ink4)}.rc-arrow{font-size:14px;color:var(--blue)}
+footer{padding:56px 6% 32px;border-top:1px solid var(--rule);background:var(--white)}
+.footer-inner{max-width:1160px;margin:0 auto}
+.footer-top{display:flex;justify-content:space-between;align-items:flex-start;gap:40px;flex-wrap:wrap;margin-bottom:48px}
+.footer-brand p{font-size:13px;font-weight:300;color:var(--ink3);margin-top:12px;max-width:260px;line-height:1.6}
+.footer-col h4{font-family:var(--f-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink4);margin-bottom:16px}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+.footer-col a{font-size:13px;color:var(--ink3);text-decoration:none}.footer-col a:hover{color:var(--blue)}
+.footer-bottom{padding-top:24px;border-top:1px solid var(--rule);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.footer-bottom p{font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.04em}
+.compliance-pills{display:flex;gap:6px;flex-wrap:wrap}
+.cp{font-family:var(--f-mono);font-size:9px;padding:3px 8px;border:1px solid var(--rule);border-radius:3px;color:var(--ink4);letter-spacing:.06em}
+@media(max-width:900px){.article-wrap{grid-template-columns:1fr;gap:48px}.sidebar{position:static}.related-grid{grid-template-columns:1fr}.table-scroll{margin:20px 0}}
+@media(max-width:900px){.nav-links{display:none}}
+@media(max-width:540px){nav{padding:0 4%}.nav-btn{font-size:12px;padding:8px 14px}}
+</style>
+</head>
+<body>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+<nav>
+  <a href="../index.html" class="nav-logo">
+    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" style="flex-shrink:0"><rect width="32" height="32" rx="7" fill="#0d0f12"/><rect x="8" y="7" width="16" height="16" rx="2" stroke="white" stroke-width="2.5" fill="none"/><line x1="20" y1="19" x2="26" y2="25" stroke="#0057FF" stroke-width="3" stroke-linecap="round"/></svg>
+    <span style="font-family:'Epilogue',sans-serif;font-weight:800;font-size:16px;color:#0d0f12;letter-spacing:-.03em;white-space:nowrap">QLean <span style="font-weight:300;color:#5a6172">Automation</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="../index.html#products">Products</a></li>
+    <li><a href="../index.html#framework">Framework</a></li>
+    <li><a href="blog-index.html">Knowledge Base</a></li>
+    <li><a href="../index.html#pricing">Pricing</a></li>
+    <li><a href="../about.html">About</a></li>
+    <li><a href="../index.html#faq">FAQ</a></li>
+  </ul>
+  <a href="../index.html#pricing" class="nav-btn">Get the Framework →</a>
+</nav>
+
+<header class="article-hero">
+  <div class="article-hero-inner">
+    <div class="breadcrumb"><a href="../index.html">Home</a><span>/</span><a href="blog-index.html">Knowledge Base</a><span>/</span>Electronic Signatures PLC</div>
+    <div class="article-tag">⚙️ PLC Engineering</div>
+    <h1>Implementing Electronic Signatures<br><span>at PLC Level</span></h1>
+    <p class="article-intro">Electronic signatures under 21 CFR Part 11 are not a SCADA-only concern. Any GMP-significant action that requires an authorised person to formally approve it — recipe activation, critical setpoint change, batch record sign-off, sanitisation initiation — needs a compliant e-signature mechanism regardless of where in the system that action originates. Here's what compliant looks like at the PLC and HMI level, and how to validate it.</p>
+    <div class="article-meta">
+      <div class="meta-author">
+        <div class="author-avatar"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="7" r="3.5" stroke="white" stroke-width="1.5"/><path d="M2.5 16c0-3.59 2.91-6.5 6.5-6.5s6.5 2.91 6.5 6.5" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+        <div><div class="author-name">QLean Automation</div><div class="author-role">ENGINEERS WHO BUILD SYSTEMS, NOT JUST SIGN THEM</div></div>
+      </div>
+      <div class="meta-divider"></div><div class="meta-stat">7 MIN READ</div>
+      <div class="meta-divider"></div><div class="meta-stat">21 CFR PART 11 · E-SIG · GAMP 5</div>
+    </div>
+  </div>
+</header>
+
+<div class="article-wrap">
+  <article class="article-body">
+
+    <h2 id="when-esig-is-required">When an E-Signature Is Required vs When It Is Not</h2>
+    <p>The most important design decision in e-signature implementation is correctly identifying which actions require a formal electronic signature and which require only an authenticated action. These are different requirements under <a href="21-cfr-part-11.html">21 CFR Part 11</a>, and confusing them leads to either over-engineering (adding e-sig prompts to every operator interaction) or under-engineering (missing actions that genuinely require one).</p>
+    <p>An authenticated action is any system interaction that is attributed to a specific user via their logged-in session — changing a setpoint, acknowledging an alarm, starting a sequence. The audit trail records who did it, when, and what changed. This is the standard operating mode for all GxP SCADA actions. It does not require a separate signature prompt.</p>
+    <p>An electronic signature, by contrast, is required when a specific person must formally and intentionally certify or approve a record at a defined point in time — and that approval has regulatory significance. The distinction is intent: the person must actively affirm "I approve this specific record" rather than simply performing an action while logged in.</p>
+
+    <div class="callout blue">
+      <div class="callout-label">The Practical Test</div>
+      <p>Ask: <strong>"If an auditor reviewed this record, would they expect to see a named, authenticated individual who formally approved it?"</strong> If yes — batch record release, sanitisation cycle sign-off, recipe master approval, deviation closure — that is an e-signature event. If the answer is "the audit trail shows who changed it" — setpoint modification, alarm acknowledgement, mode change — that is an authenticated action, not an e-signature event. Applying e-sigs everywhere degrades their meaning and creates operator fatigue that leads to security shortcuts.</p>
+    </div>
+
+    <h2 id="part11-requirements">What Part 11 Actually Requires for E-Signatures</h2>
+    <p>21 CFR Part 11 Subpart C defines the technical requirements for electronic signatures on computer systems used in FDA-regulated environments. The requirements for non-biometric e-signatures (the type used on virtually all pharma automation systems) are specific:</p>
+    <ul class="arrow-list">
+      <li><strong>Unique identification code plus password</strong> — the combination of a unique individual user ID and a password that only that person knows. Shared accounts are prohibited for e-signature purposes. The person signing must re-enter their credentials at the point of signing, even if they are already logged into the system.</li>
+      <li><strong>Re-entry of credentials at time of signing</strong> — the signature event requires active re-authentication. Being logged in is not sufficient. The system must present a signature prompt that requires the person to enter their ID and password again.</li>
+      <li><strong>Signed manifestation</strong> — the signature must be permanently linked to the specific record being signed. It cannot be transferred, cut and pasted, or reused for a different record. The signed record must display: the printed name of the signer, the date and time of signing, and the meaning of the signature (e.g., "Approved", "Reviewed and Released", "Authorised by").</li>
+      <li><strong>Audit trail entry</strong> — each e-signature event must generate an audit trail record containing the user ID, the signature meaning, the timestamp, and a reference to the specific record or action signed.</li>
+    </ul>
+
+    <h2 id="implementation-architecture">Implementation Architecture — Where the Logic Lives</h2>
+    <p>On a modern pharma automation system, the e-signature mechanism is almost always implemented at the SCADA/HMI layer, not in the PLC programme itself. The PLC does not have a credential store, a certificate authority, or a UI capable of presenting a compliant signature prompt. What the PLC does have is the authenticated user session passed from the SCADA — a user ID token that the PLC can reference when writing audit trail records.</p>
+    <p>The practical architecture is: the SCADA presents the e-signature dialog, validates the credentials against the site Active Directory or local security server, and only then sends the authorised command to the PLC. The PLC receives the command with the authorising user ID attached, executes the action, and logs the user ID in the audit trail record. The e-signature itself lives in the SCADA layer; the audit trail evidence of the authorised action lives in both the SCADA audit trail and the PLC audit trail.</p>
+
+    <figure class="article-img">
+      <svg viewBox="0 0 720 220" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;background:#0d0f12;border-radius:8px 8px 0 0">
+        <defs>
+          <marker id="arr37" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
+            <path d="M0,0 L6,3 L0,6 Z" fill="rgba(0,87,255,0.6)"/>
+          </marker>
+        </defs>
+        <text x="360" y="18" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(255,255,255,0.2)" letter-spacing="0.12em">E-SIGNATURE FLOW — SCADA TO PLC</text>
+
+        <!-- Step 1: Operator action -->
+        <rect x="12" y="30" width="140" height="64" rx="4" fill="rgba(0,87,255,0.08)" stroke="rgba(0,87,255,0.3)" stroke-width="1.5"/>
+        <text x="82" y="52" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="#6699ff">1. OPERATOR</text>
+        <text x="82" y="68" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="11" fill="rgba(255,255,255,0.6)">Initiates GxP action</text>
+        <text x="82" y="84" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(255,255,255,0.4)">(e.g. batch release)</text>
+
+        <line x1="152" y1="62" x2="174" y2="62" stroke="rgba(0,87,255,0.5)" stroke-width="1.5" marker-end="url(#arr37)"/>
+
+        <!-- Step 2: E-sig dialog -->
+        <rect x="174" y="30" width="140" height="64" rx="4" fill="rgba(0,87,255,0.12)" stroke="rgba(0,87,255,0.5)" stroke-width="1.5"/>
+        <text x="244" y="52" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="#aabbff">2. E-SIG DIALOG</text>
+        <text x="244" y="68" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="11" fill="rgba(255,255,255,0.7)">Re-enter credentials</text>
+        <text x="244" y="84" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(255,255,255,0.4)">User ID + password</text>
+
+        <line x1="314" y1="62" x2="336" y2="62" stroke="rgba(0,87,255,0.5)" stroke-width="1.5" marker-end="url(#arr37)"/>
+
+        <!-- Step 3: AD validation -->
+        <rect x="336" y="30" width="140" height="64" rx="4" fill="rgba(0,87,255,0.08)" stroke="rgba(0,87,255,0.3)" stroke-width="1.5"/>
+        <text x="406" y="52" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="#6699ff">3. AD VALIDATION</text>
+        <text x="406" y="68" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="11" fill="rgba(255,255,255,0.6)">Credentials verified</text>
+        <text x="406" y="84" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(255,255,255,0.4)">against AD/security server</text>
+
+        <line x1="476" y1="62" x2="498" y2="62" stroke="rgba(0,87,255,0.5)" stroke-width="1.5" marker-end="url(#arr37)"/>
+
+        <!-- Step 4: SCADA audit trail -->
+        <rect x="498" y="30" width="140" height="64" rx="4" fill="rgba(0,135,90,0.12)" stroke="rgba(0,135,90,0.4)" stroke-width="1.5"/>
+        <text x="568" y="52" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="#00c97a">4. SCADA LOG</text>
+        <text x="568" y="68" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="11" fill="rgba(0,201,122,0.8)">E-sig audit trail entry</text>
+        <text x="568" y="84" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(255,255,255,0.4)">user, time, meaning, record</text>
+
+        <!-- Down arrow from step 4 to PLC command -->
+        <line x1="568" y1="94" x2="568" y2="118" stroke="rgba(0,87,255,0.4)" stroke-width="1.5" marker-end="url(#arr37)"/>
+
+        <!-- Step 5: PLC command with user ID -->
+        <rect x="336" y="118" width="364" height="50" rx="4" fill="rgba(0,87,255,0.08)" stroke="rgba(0,87,255,0.25)" stroke-width="1"/>
+        <text x="518" y="140" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(0,160,255,0.8)">5. PLC COMMAND + USER ID TOKEN</text>
+        <text x="518" y="158" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="11" fill="rgba(255,255,255,0.5)">Authorised command sent to PLC with signer ID attached. PLC logs user ID in audit trail record.</text>
+
+        <!-- Labels below -->
+        <text x="244" y="150" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(255,255,255,0.2)">SCADA LAYER</text>
+        <text x="244" y="165" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(255,255,255,0.3)">E-sig credential validation lives here</text>
+
+        <text x="360" y="195" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="11" fill="rgba(255,255,255,0.25)">The PLC does not validate credentials — it receives an authorised command and logs the attributed user ID</text>
+      </svg>
+      <figcaption>// THE E-SIGNATURE VALIDATION HAPPENS IN THE SCADA LAYER. THE PLC RECEIVES THE AUTHORISED COMMAND AND USER ID — IT DOES NOT INDEPENDENTLY RE-AUTHENTICATE. BOTH LAYERS GENERATE AUDIT TRAIL RECORDS.</figcaption>
+    </figure>
+
+    <h2 id="scada-esig-design">SCADA E-Signature Design — The Five Required Elements</h2>
+    <p>The e-signature dialog in the SCADA must implement all five elements required by Part 11 Subpart C. Missing any one of them makes the e-signature non-compliant regardless of how well the rest of the system is designed.</p>
+
+    <div class="table-scroll">
+      <table class="compare-table">
+        <thead>
+          <tr><th>Element</th><th>What It Requires</th><th>Common Gap</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Unique ID + password re-entry</td>
+            <td>Active re-entry of credentials at the point of signing, even for an already-logged-in user. The session token is not sufficient.</td>
+            <td>System accepts the current session as the signature without requiring credential re-entry</td>
+          </tr>
+          <tr>
+            <td>Signed manifestation</td>
+            <td>The signature is permanently bound to the specific record. The dialog must show what the person is signing before they enter credentials.</td>
+            <td>Generic "confirm action" dialog with no record-specific information displayed</td>
+          </tr>
+          <tr>
+            <td>Signature meaning</td>
+            <td>The record must state what the signature means: "Approved", "Reviewed", "Authorised by". Not just a name and timestamp.</td>
+            <td>Audit trail records "signed by [user]" without a defined meaning</td>
+          </tr>
+          <tr>
+            <td>Non-transferability</td>
+            <td>The signature cannot be copied to another record. The system must prevent signature reuse across different records or sessions.</td>
+            <td>Session-based signatures that can theoretically be replayed if the session token is copied</td>
+          </tr>
+          <tr>
+            <td>Audit trail record</td>
+            <td>Each e-sig event generates a record: user ID, signature meaning, timestamp, and specific record or action reference. This record is write-once and cannot be modified.</td>
+            <td>E-sig events logged but the specific record reference is missing — "signed by user X" without identifying what was signed</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2 id="plc-side-requirements">PLC-Side Requirements — What the Programme Must Do</h2>
+    <p>Even though the e-signature credential validation happens in the SCADA layer, the PLC programme has specific responsibilities that must be designed and validated:</p>
+
+    <h3>Receiving and Storing the Authorising User ID</h3>
+    <p>When the SCADA sends an e-signed command to the PLC — recipe activation, safety interlock bypass with dual authorisation, batch phase approval — it must include the authorising user ID as part of the command data, not just the command itself. The PLC receives a structured data type: command + user ID + timestamp + signature meaning code. The FB_AuditTrail call for that action logs all four elements. An audit trail entry that records "recipe activated" without the authorising user ID is incomplete under Part 11.</p>
+
+    <h3>Blocking Actions That Require E-Signature If None Is Present</h3>
+    <p>The PLC must not execute actions that are designated as requiring e-signature if the command arrives without a valid user ID token. This is the PLC-side enforcement of the requirement. If a command arrives via direct tag write (from an engineering tool bypassing the SCADA UI, for example) with no user ID, the PLC must reject it and log the attempt. The interlock logic is straightforward: the authorisation bit for e-signed actions is only set by the SCADA after successful credential validation, not by the PLC programme itself.</p>
+
+    <h3>Dual Authorisation for High-Risk Actions</h3>
+    <p>Some actions on pharma systems require two independent e-signatures — typically for safety-critical overrides, batch release, or changes to validated setpoints. The PLC data structure for these actions carries two user ID fields (initiator and approver), and both must be present and different before the action can execute. The SCADA sequencing is: initiator signs → PLC holds the action in a pending state with initiator ID stored → second person signs as approver → PLC receives approver ID, verifies it differs from initiator ID, executes action, logs both IDs in the audit trail.</p>
+
+    <div class="callout amber">
+      <div class="callout-label">The Self-Approval Gap</div>
+      <p>Dual authorisation only works if the system enforces that the initiator and approver are <strong>different individuals</strong>. A system that allows the same user to both initiate and approve a dual-authorisation action has a design nonconformance regardless of whether two signature events were captured. The PLC must explicitly compare the initiator user ID and the approver user ID and reject the approval if they are the same. This check is in the OQ acceptance criteria for any dual-authorisation function.</p>
+    </div>
+
+    <h2 id="closed-vs-open-systems">Closed Systems vs Open Systems — The Part 11 Context</h2>
+    <p>The <a href="21-cfr-part-11-open-vs-closed-systems.html">open vs closed system classification</a> under Part 11 affects how stringent the e-signature controls need to be. A closed system — one where access is controlled to authorised individuals through physical and logical means — has somewhat lighter requirements than an open system where external parties can access the electronic records.</p>
+    <p>Most pharma PLC/SCADA systems are classified as closed systems: the OT network is segregated, the workstations are in controlled areas, access requires site credentials, and the system is not accessible from the internet. In a closed system, the username + password combination for e-signatures is sufficient without additional biometric or token-based methods. The classification must be documented in the FDS and confirmed in the IQ network segregation verification.</p>
+
+    <h2 id="oq-validation">OQ Validation of E-Signatures</h2>
+    <p>The OQ must verify each of the five Part 11 elements for every e-signature event type on the system. The test cases are more specific than most first-time engineers expect:</p>
+    <ul class="checklist">
+      <li>Attempt the e-signed action while logged in — verify the system presents a re-entry credential prompt and does not proceed on session authentication alone</li>
+      <li>Enter incorrect credentials at the e-sig prompt — verify the action is blocked and the failed attempt is recorded in the audit trail with the attempting user ID</li>
+      <li>Complete a valid e-signature — verify the signed record displays: signer's printed name, date/time of signing, and signature meaning before and after signing</li>
+      <li>Verify the audit trail record contains all required fields: user ID, signature meaning, timestamp, and specific record/action reference</li>
+      <li>For dual authorisation: attempt to approve using the same user ID as the initiator — verify the system blocks the approval and logs the attempt</li>
+      <li>Verify the e-sig record cannot be modified via SQL or any other mechanism (same write-once verification as the general audit trail)</li>
+    </ul>
+
+    <div class="callout green">
+      <div class="callout-label">In the QLean Framework</div>
+      <p>The FDS template includes FUNC-SEC-004, which defines the e-signature functional requirements: unique user ID + password re-entry combination, signed manifestation permanently linked to the record, non-transferability, and audit trail entry with user ID, signature meaning, timestamp, and record reference. The OQ Section 7 (User Access Control and Security) covers access control verification including the credential re-entry requirement. The specific e-signature test cases — failed credential attempt, dual-authorisation self-approval check, audit trail completeness — are additions you build into your OQ protocol based on which actions on your system require formal e-signature, using the Section 7 structure as the base.</p>
+    </div>
+
+  </article>
+
+  <aside class="sidebar">
+    <div class="toc-card">
+      <div class="toc-label">In This Article</div>
+      <ul class="toc-list">
+        <li><a href="#when-esig-is-required" class="active">When E-Sig Is Required</a></li>
+        <li><a href="#part11-requirements">Part 11 Requirements</a></li>
+        <li><a href="#implementation-architecture">Implementation Architecture</a></li>
+        <li><a href="#scada-esig-design">SCADA E-Sig Design</a></li>
+        <li><a href="#plc-side-requirements">PLC-Side Requirements</a></li>
+        <li><a href="#closed-vs-open-systems">Closed vs Open Systems</a></li>
+        <li><a href="#oq-validation">OQ Validation</a></li>
+      </ul>
+    </div>
+    <div class="sidebar-cta">
+      <div class="sc-eyebrow">QLean Framework</div>
+      <div class="sc-title">29 production-ready GAMP 5 documents</div>
+      <div class="sc-body">Every document referenced in this article — templates, protocols, and registers — ready to adapt for your project.</div>
+      <a href="../index.html#pricing" class="sc-btn">Get the Framework — €249 →</a>
+      <div class="sc-note">// INSTANT DOWNLOAD · COMPANY-WIDE LICENCE</div>
+    </div>
+    <div class="sidebar-share">
+      <div class="share-label">Share This Article</div>
+      <div class="share-links">
+        <a href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fqleanautomation.com%2Fblog%2Felectronic-signatures-plc-level.html" target="_blank" rel="noopener" class="share-link">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          Share on LinkedIn
+        </a>
+        <a href="https://www.reddit.com/submit?url=https%3A%2F%2Fqleanautomation.com%2Fblog%2Felectronic-signatures-plc-level.html&title=Implementing+Electronic+Signatures+at+PLC+Level" target="_blank" rel="noopener" class="share-link">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/></svg>
+          Share on Reddit
+        </a>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<section class="related">
+  <div class="related-inner">
+    <div class="related-label">More Articles</div>
+    <div class="related-grid">
+      <a href="21-cfr-part-11.html" class="related-card">
+        <div class="rc-tag">📋 21 CFR Part 11</div>
+        <div class="rc-title">21 CFR Part 11: What You Actually Need</div>
+        <div class="rc-desc">E-signatures are Subpart C of Part 11. Understanding the full regulation — audit trails, access control, record integrity — gives the e-sig requirements their proper context.</div>
+        <div class="rc-footer"><div class="rc-read">8 MIN READ</div><div class="rc-arrow">→</div></div>
+      </a>
+      <a href="21-cfr-part-11-open-vs-closed-systems.html" class="related-card">
+        <div class="rc-tag">📋 21 CFR Part 11</div>
+        <div class="rc-title">Open vs Closed Systems Under Part 11</div>
+        <div class="rc-desc">The closed system classification is what allows username + password e-signatures without biometrics. The classification must be documented and verified at IQ.</div>
+        <div class="rc-footer"><div class="rc-read">6 MIN READ</div><div class="rc-arrow">→</div></div>
+      </a>
+      <a href="21-cfr-part-11-audit-trail-checklist.html" class="related-card">
+        <div class="rc-tag">📋 Audit Trail</div>
+        <div class="rc-title">Audit Trail Checklist for 21 CFR Part 11</div>
+        <div class="rc-desc">Every e-signature event must generate a write-once audit trail record. The audit trail requirements for e-sigs are a subset of the full Part 11 audit trail checklist.</div>
+        <div class="rc-footer"><div class="rc-read">6 MIN READ</div><div class="rc-arrow">→</div></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="../index.html" class="nav-logo">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none" style="flex-shrink:0"><rect width="32" height="32" rx="7" fill="#0d0f12"/><rect x="8" y="7" width="16" height="16" rx="2" stroke="white" stroke-width="2.5" fill="none"/><line x1="20" y1="19" x2="26" y2="25" stroke="#0057FF" stroke-width="3" stroke-linecap="round"/></svg>
+          <span style="font-family:'Epilogue',sans-serif;font-weight:800;font-size:16px;color:#0d0f12;letter-spacing:-.03em;white-space:nowrap">QLean <span style="font-weight:300;color:#5a6172">Automation</span></span>
+        </a>
+        <p>GMP documentation tools for system integrators and automation engineers entering pharmaceutical projects.</p>
+      </div>
+      <div class="footer-col"><h4>Products</h4><ul><li><a href="../index.html#framework">GAMP 5 Framework</a></li><li><a href="../index.html#products">Technical Masterclass</a></li></ul></div>
+      <div class="footer-col"><h4>Knowledge Base</h4><ul>
+        <li><a href="blog-index.html">All Articles</a></li>
+        <li><a href="21-cfr-part-11.html">21 CFR Part 11</a></li>
+        <li><a href="21-cfr-part-11-open-vs-closed-systems.html">Open vs Closed Systems</a></li>
+        <li><a href="21-cfr-part-11-audit-trail-checklist.html">Audit Trail Checklist</a></li>
+        <li><a href="plc-project-structure-pharma-validation.html">PLC Project Structure</a></li>
+        <li><a href="iec-61131-3-pharma-compliant-code.html">GMP-Compliant PLC Code</a></li>
+        <li><a href="functional-design-specification-guide.html">How to Write an FDS</a></li>
+      </ul></div>
+      <div class="footer-col"><h4>Company</h4><ul><li><a href="https://www.linkedin.com/company/qlean-automation" target="_blank">LinkedIn</a></li><li><a href="mailto:hello@qleanautomation.com">Contact</a></li><li><a href="../terms.html">Terms</a></li></ul></div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 QLEAN AUTOMATION · QLEANAUTOMATION.COM</p>
+      <div class="compliance-pills"><span class="cp">21 CFR PART 11</span><span class="cp">EU ANNEX 11</span><span class="cp">GAMP 5</span></div>
+    </div>
+  </div>
+</footer>
+
+<script>
+window.addEventListener('scroll',()=>{const d=document.documentElement;document.getElementById('progress').style.width=(d.scrollTop/(d.scrollHeight-d.clientHeight)*100)+'%'});
+const obs=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting){document.querySelectorAll('.toc-list a').forEach(l=>l.classList.remove('active'));const a=document.querySelector('.toc-list a[href="#'+x.target.id+'"]');if(a)a.classList.add('active')}})  ,{rootMargin:'-20% 0px -70% 0px'});
+document.querySelectorAll('[id]').forEach(s=>obs.observe(s));
+</script>
+</body>
+</html>

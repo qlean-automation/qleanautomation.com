@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-JJQ1TXZJX7"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-JJQ1TXZJX7');
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Redundancy in Pharma PLC Systems — When It's Required | QLean Automation</title>
+<meta name="description" content="CPU redundancy, PSU redundancy, network ring topology, redundant sensors — when does a pharma project actually require them? Here is how to make the decision and document it in your Validation Plan and risk assessment.">
+<link rel="canonical" href="https://qleanautomation.com/blog/plc-redundancy-pharma-validation.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@300;400;500;600;700;800;900&family=Source+Sans+3:ital,wght@0,300;0,400;0,500;1,300&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--white:#ffffff;--off:#f7f8f9;--ink:#0d0f12;--ink2:#1e2128;--ink3:#3d4456;--ink4:#9199a8;--rule:#e2e5ea;--rule2:#c8cdd6;--blue:#0057ff;--blue2:#0044cc;--blue-dim:rgba(0,87,255,0.07);--green:#00875a;--green-dim:rgba(0,135,90,0.08);--amber:#d97706;--amber-dim:rgba(217,119,6,0.08);--red:#c0392b;--red-dim:rgba(192,57,43,0.08);--f-head:'Epilogue',sans-serif;--f-body:'Source Sans 3',sans-serif;--f-mono:'Roboto Mono',monospace;--shadow-sm:0 2px 8px rgba(13,15,18,0.06),0 1px 3px rgba(13,15,18,0.04)}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}body{background:var(--white);color:var(--ink);font-family:var(--f-body);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+nav{position:fixed;top:0;left:0;right:0;z-index:200;height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 6%;background:rgba(255,255,255,0.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--rule)}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;flex-shrink:0}
+.nav-links{display:flex;align-items:center;gap:36px;list-style:none}.nav-links a{font-size:14px;font-weight:400;color:var(--ink3);text-decoration:none;transition:color .2s}.nav-links a:hover{color:var(--ink)}
+.nav-btn{font-family:var(--f-body);font-size:13px;font-weight:500;padding:9px 20px;background:var(--blue);color:white;border:none;border-radius:6px;cursor:pointer;text-decoration:none;white-space:nowrap;flex-shrink:0}.nav-btn:hover{background:var(--blue2)}
+.progress-bar{position:fixed;top:64px;left:0;right:0;height:2px;background:var(--rule);z-index:199}.progress-fill{height:100%;background:var(--blue);width:0%}
+.article-hero{padding:120px 6% 64px;background:var(--white);border-bottom:1px solid var(--rule);position:relative;overflow:hidden}
+.article-hero::before{content:'';position:absolute;top:-80px;right:-80px;width:400px;height:400px;background:radial-gradient(circle,rgba(0,87,255,0.04) 0%,transparent 70%);pointer-events:none}
+.article-hero-inner{max-width:940px;margin:0 auto;position:relative;z-index:1}
+.breadcrumb{display:flex;align-items:center;gap:8px;font-family:var(--f-mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink4);margin-bottom:24px}.breadcrumb a{color:var(--ink4);text-decoration:none}.breadcrumb a:hover{color:var(--blue)}.breadcrumb span{color:var(--rule2)}
+.article-tag{display:inline-flex;align-items:center;gap:6px;font-family:var(--f-mono);font-size:10px;font-weight:500;color:var(--blue);letter-spacing:.1em;text-transform:uppercase;margin-bottom:20px;padding:4px 10px;background:var(--blue-dim);border-radius:4px}
+.article-hero h1{font-family:var(--f-head);font-size:clamp(30px,5vw,52px);font-weight:900;line-height:1.0;letter-spacing:-.04em;color:var(--ink);margin-bottom:20px}.article-hero h1 span{color:var(--blue)}
+.article-intro{font-size:18px;font-weight:400;color:var(--ink2);line-height:1.75;margin-bottom:32px;max-width:800px}
+.article-meta{display:flex;align-items:center;gap:24px;padding-top:24px;border-top:1px solid var(--rule);flex-wrap:wrap}
+.meta-author{display:flex;align-items:center;gap:10px}.author-avatar{width:36px;height:36px;border-radius:50%;background:var(--ink);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.author-name{font-size:13px;font-weight:500;color:var(--ink)}.author-role{font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.04em}
+.meta-divider{width:1px;height:28px;background:var(--rule)}.meta-stat{font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.06em}
+.article-wrap{max-width:1300px;margin:0 auto;padding:64px 6%;display:grid;grid-template-columns:1fr 300px;gap:60px;align-items:start}
+.article-body{min-width:0}
+.article-body h2{font-family:var(--f-head);font-size:26px;font-weight:800;letter-spacing:-.03em;color:var(--ink);margin:56px 0 16px;line-height:1.2}.article-body h2:first-child{margin-top:0}
+.article-body h3{font-family:var(--f-head);font-size:18px;font-weight:700;letter-spacing:-.02em;color:var(--ink);margin:32px 0 12px}
+.article-body p{font-size:16px;font-weight:400;color:var(--ink2);line-height:1.85;margin-bottom:20px}
+.article-body strong{color:var(--ink);font-weight:600}
+.article-body a{color:var(--blue);text-decoration:none;border-bottom:1px solid rgba(0,87,255,.25)}.article-body a:hover{border-color:var(--blue)}
+.callout{padding:20px 24px;border-radius:8px;margin:32px 0;border-left:3px solid}
+.callout.blue{background:var(--blue-dim);border-color:var(--blue)}.callout.amber{background:var(--amber-dim);border-color:var(--amber)}.callout.green{background:var(--green-dim);border-color:var(--green)}.callout.red{background:var(--red-dim);border-color:var(--red)}
+.callout-label{font-family:var(--f-mono);font-size:9px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px}.callout.blue .callout-label{color:var(--blue)}.callout.amber .callout-label{color:var(--amber)}.callout.green .callout-label{color:var(--green)}.callout.red .callout-label{color:var(--red)}
+.callout p{font-size:14px;color:var(--ink2);line-height:1.7;margin:0}.callout strong{color:var(--ink)}
+.article-img{width:100%;border-radius:8px;border:1px solid #1e2535;overflow:hidden;margin:36px 0}
+.article-img figcaption{padding:10px 14px;background:var(--off);font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.04em;border-top:1px solid var(--rule)}
+.arrow-list{list-style:none;display:flex;flex-direction:column;gap:8px;margin:16px 0 24px}
+.arrow-list li{display:flex;align-items:flex-start;gap:10px;font-size:15px;color:var(--ink2);line-height:1.6}
+.arrow-list li::before{content:'\2192';color:var(--blue);flex-shrink:0;font-size:12px;margin-top:3px}
+.checklist{list-style:none;display:flex;flex-direction:column;gap:8px;margin:20px 0 28px}
+.checklist li{display:flex;align-items:flex-start;gap:10px;font-size:15px;color:var(--ink2);line-height:1.6}
+.checklist li::before{content:'';width:16px;height:16px;flex-shrink:0;margin-top:3px;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 14 14' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='7' cy='7' r='6.5' fill='none' stroke='%230057ff' stroke-width='1'/%3E%3Cpath d='M4 7l2 2 4-4' stroke='%230057ff' stroke-width='1.3' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:center;background-size:contain}
+.table-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:28px 0}
+.compare-table{width:100%;border-collapse:collapse;font-size:14px}
+.compare-table th{font-family:var(--f-mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink4);padding:10px 16px;border-bottom:2px solid var(--rule);text-align:left;background:var(--off)}
+.compare-table td{padding:12px 16px;border-bottom:1px solid var(--rule);vertical-align:top;color:var(--ink2);line-height:1.6}
+.compare-table tr:last-child td{border-bottom:none}
+.compare-table td:first-child{font-weight:600;color:var(--ink);font-family:var(--f-mono);font-size:12px}
+.sidebar{position:sticky;top:88px;display:flex;flex-direction:column;gap:16px}
+.toc-card{border:1px solid var(--rule);border-radius:8px;padding:24px;background:var(--white);box-shadow:var(--shadow-sm)}
+.toc-label{font-family:var(--f-mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);margin-bottom:16px}
+.toc-list{list-style:none;display:flex;flex-direction:column;gap:2px}
+.toc-list a{display:block;font-size:13px;color:var(--ink3);text-decoration:none;padding:6px 10px;border-radius:4px;transition:all .15s;border-left:2px solid transparent}
+.toc-list a:hover,.toc-list a.active{color:var(--blue);background:var(--blue-dim);border-left-color:var(--blue)}
+.sidebar-cta{border:1px solid var(--blue);border-radius:8px;padding:24px;background:var(--blue-dim)}
+.sc-eyebrow{font-family:var(--f-mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);margin-bottom:10px}
+.sc-title{font-family:var(--f-head);font-size:17px;font-weight:800;letter-spacing:-.02em;color:var(--ink);margin-bottom:8px;line-height:1.2}
+.sc-body{font-size:13px;color:var(--ink3);line-height:1.6;margin-bottom:16px}
+.sc-btn{display:block;text-align:center;padding:11px 16px;background:var(--blue);color:white;border-radius:6px;font-family:var(--f-body);font-size:13px;font-weight:500;text-decoration:none}.sc-btn:hover{background:var(--blue2)}
+.sc-note{font-family:var(--f-mono);font-size:9px;color:var(--ink4);text-align:center;margin-top:8px;letter-spacing:.04em}
+.sidebar-share{border:1px solid var(--rule);border-radius:8px;padding:20px 24px;background:var(--white)}
+.share-label{font-family:var(--f-mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);margin-bottom:14px}
+.share-links{display:flex;flex-direction:column;gap:8px}
+.share-link{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--ink3);text-decoration:none;padding:9px 12px;border:1px solid var(--rule);border-radius:6px;transition:border-color .2s,color .2s}.share-link:hover{border-color:var(--blue);color:var(--blue)}
+.related{padding:64px 6%;border-top:1px solid var(--rule);background:var(--off)}
+.related-inner{max-width:1100px;margin:0 auto}
+.related-label{font-family:var(--f-mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);margin-bottom:32px;display:flex;align-items:center;gap:10px}
+.related-label::before{content:'';width:20px;height:1px;background:var(--blue)}
+.related-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.related-card{padding:24px;border:1px solid var(--rule);border-radius:8px;background:var(--white);box-shadow:var(--shadow-sm);transition:border-color .2s,transform .2s;text-decoration:none;display:flex;flex-direction:column;gap:12px}.related-card:hover{border-color:var(--blue);transform:translateY(-4px)}
+.rc-tag{font-family:var(--f-mono);font-size:9px;color:var(--blue);letter-spacing:.08em;text-transform:uppercase;padding:3px 8px;background:var(--blue-dim);border-radius:3px;align-self:flex-start}
+.rc-title{font-family:var(--f-head);font-size:16px;font-weight:700;letter-spacing:-.02em;color:var(--ink);line-height:1.25}
+.rc-desc{font-size:13px;color:var(--ink3);line-height:1.6;flex:1}
+.rc-footer{display:flex;align-items:center;justify-content:space-between;padding-top:12px;border-top:1px solid var(--rule)}
+.rc-read{font-family:var(--f-mono);font-size:10px;color:var(--ink4)}.rc-arrow{font-size:14px;color:var(--blue)}
+footer{padding:56px 6% 32px;border-top:1px solid var(--rule);background:var(--white)}
+.footer-inner{max-width:1160px;margin:0 auto}
+.footer-top{display:flex;justify-content:space-between;align-items:flex-start;gap:40px;flex-wrap:wrap;margin-bottom:48px}
+.footer-brand p{font-size:13px;font-weight:300;color:var(--ink3);margin-top:12px;max-width:260px;line-height:1.6}
+.footer-col h4{font-family:var(--f-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink4);margin-bottom:16px}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+.footer-col a{font-size:13px;color:var(--ink3);text-decoration:none}.footer-col a:hover{color:var(--blue)}
+.footer-bottom{padding-top:24px;border-top:1px solid var(--rule);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.footer-bottom p{font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.04em}
+.compliance-pills{display:flex;gap:6px;flex-wrap:wrap}
+.cp{font-family:var(--f-mono);font-size:9px;padding:3px 8px;border:1px solid var(--rule);border-radius:3px;color:var(--ink4);letter-spacing:.06em}
+@media(max-width:900px){.article-wrap{grid-template-columns:1fr;gap:48px}.sidebar{position:static}.related-grid{grid-template-columns:1fr}.table-scroll{margin:20px 0}}
+@media(max-width:900px){.nav-links{display:none}}
+@media(max-width:540px){nav{padding:0 4%}.nav-btn{font-size:12px;padding:8px 14px}}
+</style>
+</head>
+<body>
+
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+
+<nav>
+  <a href="../index.html" class="nav-logo">
+    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" style="flex-shrink:0"><rect width="32" height="32" rx="7" fill="#0d0f12"/><rect x="8" y="7" width="16" height="16" rx="2" stroke="white" stroke-width="2.5" fill="none"/><line x1="20" y1="19" x2="26" y2="25" stroke="#0057FF" stroke-width="3" stroke-linecap="round"/></svg>
+    <span style="font-family:'Epilogue',sans-serif;font-weight:800;font-size:16px;color:#0d0f12;letter-spacing:-.03em;white-space:nowrap">QLean <span style="font-weight:300;color:#5a6172">Automation</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="../index.html#products">Products</a></li>
+    <li><a href="../index.html#framework">Framework</a></li>
+    <li><a href="blog-index.html">Knowledge Base</a></li>
+    <li><a href="../index.html#pricing">Pricing</a></li>
+    <li><a href="../about.html">About</a></li>
+    <li><a href="../index.html#faq">FAQ</a></li>
+  </ul>
+  <a href="../index.html#pricing" class="nav-btn">Get the Framework &#8594;</a>
+</nav>
+
+<header class="article-hero">
+  <div class="article-hero-inner">
+    <div class="breadcrumb"><a href="../index.html">Home</a><span>/</span><a href="blog-index.html">Knowledge Base</a><span>/</span>PLC Redundancy for Pharma</div>
+    <div class="article-tag">&#9881;&#65039; PLC Engineering</div>
+    <h1>Redundancy in Pharma PLC Systems<br><span>&#8212; When It&#8217;s Required</span></h1>
+    <p class="article-intro">CPU redundancy, dual power supplies, network ring topology, redundant sensors — pharma projects get over-specified on redundancy just as often as they get under-specified. Here is how to make the decision correctly, document it in your Validation Plan, and justify it through the risk assessment.</p>
+    <div class="article-meta">
+      <div class="meta-author">
+        <div class="author-avatar"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="7" r="3.5" stroke="white" stroke-width="1.5"/><path d="M2.5 16c0-3.59 2.91-6.5 6.5-6.5s6.5 2.91 6.5 6.5" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+        <div><div class="author-name">QLean Automation</div><div class="author-role">ENGINEERS WHO BUILD SYSTEMS, NOT JUST SIGN THEM</div></div>
+      </div>
+      <div class="meta-divider"></div><div class="meta-stat">7 MIN READ</div>
+      <div class="meta-divider"></div><div class="meta-stat">PLC &#183; HARDWARE DESIGN &#183; RISK</div>
+    </div>
+  </div>
+</header>
+
+<div class="article-wrap">
+  <article class="article-body">
+
+    <h2 id="the-question">The Wrong Way to Answer the Redundancy Question</h2>
+    <p>The most common way the redundancy question gets answered on pharma projects is the wrong way. Either the client asks for a redundant CPU "because it's a pharma project," the SI specifies it to avoid the conversation, or — equally bad — nobody asks the question and a non-redundant system gets installed in a critical process area that would have justified it.</p>
+    <p>Redundancy is not a pharma compliance requirement in the same way that audit trails or electronic signatures are. No regulation mandates a hot-standby PLC. What regulations do require — through GAMP 5, EU GMP Annex 11, and the general GMP principle of system reliability — is that you have understood the failure modes of your system and applied appropriate controls. Redundancy is one type of control. In some cases it is the right one. In others it is engineering overhead that adds cost, complexity, and additional validation scope without meaningfully reducing risk.</p>
+    <p>The correct approach is to let the <a href="gamp5-risk-assessment-how-to-score.html">risk assessment</a> drive the decision, and then document the outcome in the Validation Plan and Hardware Design Specification. That is the approach this article explains.</p>
+
+    <h2 id="what-redundancy-actually-means">What Redundancy Actually Means — Four Distinct Levels</h2>
+    <p>When someone says "redundant system" on a pharma project they could mean any of four different things, and each has a different cost, complexity, and validation implication. Conflating them is where scope misalignments happen.</p>
+
+    <figure class="article-img">
+      <svg viewBox="0 0 720 260" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;background:#0d0f12;border-radius:8px 8px 0 0">
+        <text x="360" y="20" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(255,255,255,0.2)" letter-spacing="0.12em">FOUR LEVELS OF REDUNDANCY &#8212; PHARMA PLC SYSTEMS</text>
+
+        <!-- Level 1: PSU -->
+        <rect x="20" y="32" width="155" height="200" rx="6" fill="rgba(0,135,90,0.07)" stroke="rgba(0,135,90,0.3)" stroke-width="1.5"/>
+        <rect x="20" y="32" width="155" height="26" rx="6" fill="rgba(0,135,90,0.2)"/>
+        <rect x="20" y="44" width="155" height="14" rx="0" fill="rgba(0,135,90,0.2)"/>
+        <text x="98" y="49" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="#00c97a">LEVEL 1 &#8212; PSU</text>
+        <text x="98" y="74" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="11" fill="rgba(255,255,255,0.55)">Dual 24VDC PSUs</text>
+        <text x="98" y="90" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="11" fill="rgba(255,255,255,0.55)">in parallel with</text>
+        <text x="98" y="106" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="11" fill="rgba(255,255,255,0.55)">redundancy module</text>
+        <text x="98" y="130" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(0,200,120,0.7)">COST: LOW</text>
+        <text x="98" y="148" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(0,200,120,0.7)">FAILOVER: AUTO</text>
+        <text x="98" y="166" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(255,255,255,0.3)">VAL. IMPACT: LOW</text>
+        <text x="98" y="200" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(255,255,255,0.35)">Recommended for</text>
+        <text x="98" y="215" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(255,255,255,0.35)">all GMP panels</text>
+
+        <!-- Level 2: Network -->
+        <rect x="190" y="32" width="155" height="200" rx="6" fill="rgba(0,87,255,0.07)" stroke="rgba(0,87,255,0.3)" stroke-width="1.5"/>
+        <rect x="190" y="32" width="155" height="26" rx="6" fill="rgba(0,87,255,0.18)"/>
+        <rect x="190" y="44" width="155" height="14" rx="0" fill="rgba(0,87,255,0.18)"/>
+        <text x="268" y="49" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="#6699ff">LEVEL 2 &#8212; NETWORK</text>
+        <text x="268" y="74" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="11" fill="rgba(255,255,255,0.55)">Ring topology</text>
+        <text x="268" y="90" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="11" fill="rgba(255,255,255,0.55)">PROFINET MRP</text>
+        <text x="268" y="106" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="11" fill="rgba(255,255,255,0.55)">self-healing ring</text>
+        <text x="268" y="130" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(100,160,255,0.7)">COST: LOW&#8211;MED</text>
+        <text x="268" y="148" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(100,160,255,0.7)">FAILOVER: AUTO</text>
+        <text x="268" y="166" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(255,255,255,0.3)">VAL. IMPACT: LOW</text>
+        <text x="268" y="200" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(255,255,255,0.35)">Recommended for</text>
+        <text x="268" y="215" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(255,255,255,0.35)">distributed I/O runs</text>
+
+        <!-- Level 3: Sensor -->
+        <rect x="360" y="32" width="155" height="200" rx="6" fill="rgba(217,119,6,0.07)" stroke="rgba(217,119,6,0.3)" stroke-width="1.5"/>
+        <rect x="360" y="32" width="155" height="26" rx="6" fill="rgba(217,119,6,0.18)"/>
+        <rect x="360" y="44" width="155" height="14" rx="0" fill="rgba(217,119,6,0.18)"/>
+        <text x="438" y="49" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(240,160,40,0.9)">LEVEL 3 &#8212; SENSOR</text>
+        <text x="438" y="74" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="11" fill="rgba(255,255,255,0.55)">Dual redundant</text>
+        <text x="438" y="90" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="11" fill="rgba(255,255,255,0.55)">field instruments</text>
+        <text x="438" y="106" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="11" fill="rgba(255,255,255,0.55)">for critical CQAs</text>
+        <text x="438" y="130" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(240,160,40,0.7)">COST: MED</text>
+        <text x="438" y="148" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(240,160,40,0.7)">FAILOVER: LOGIC</text>
+        <text x="438" y="166" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(255,255,255,0.3)">VAL. IMPACT: MED</text>
+        <text x="438" y="200" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(255,255,255,0.35)">Risk-driven for</text>
+        <text x="438" y="215" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(255,255,255,0.35)">Severity 4&#8211;5 CQAs</text>
+
+        <!-- Level 4: CPU -->
+        <rect x="530" y="32" width="170" height="200" rx="6" fill="rgba(192,57,43,0.07)" stroke="rgba(192,57,43,0.3)" stroke-width="1.5"/>
+        <rect x="530" y="32" width="170" height="26" rx="6" fill="rgba(192,57,43,0.18)"/>
+        <rect x="530" y="44" width="170" height="14" rx="0" fill="rgba(192,57,43,0.18)"/>
+        <text x="615" y="49" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(220,80,80,0.9)">LEVEL 4 &#8212; CPU</text>
+        <text x="615" y="74" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="11" fill="rgba(255,255,255,0.55)">Hot-standby CPU</text>
+        <text x="615" y="90" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="11" fill="rgba(255,255,255,0.55)">bumpless switchover</text>
+        <text x="615" y="106" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="11" fill="rgba(255,255,255,0.55)">on primary failure</text>
+        <text x="615" y="130" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(220,80,80,0.7)">COST: HIGH</text>
+        <text x="615" y="148" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(220,80,80,0.7)">FAILOVER: AUTO</text>
+        <text x="615" y="166" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(255,255,255,0.3)">VAL. IMPACT: HIGH</text>
+        <text x="615" y="200" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(255,255,255,0.35)">Justified only for</text>
+        <text x="615" y="215" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(255,255,255,0.35)">continuous processes</text>
+      </svg>
+      <figcaption>// REDUNDANCY LEVELS ARE INDEPENDENT DECISIONS. PSU REDUNDANCY IS ALMOST ALWAYS JUSTIFIED. CPU REDUNDANCY RARELY IS UNLESS THE PROCESS CANNOT TOLERATE A CONTROLLED SHUTDOWN.</figcaption>
+    </figure>
+
+    <h3>Level 1 — Power Supply Redundancy</h3>
+    <p>Dual 24VDC power supplies in parallel with a redundancy module is the lowest-cost, lowest-complexity redundancy option and the one most consistently justified across pharma projects. A single PSU failure in a non-redundant panel takes down the entire control system — including the safe-state logic, the alarm system, and the data historian connection — until the PSU is replaced. With a redundant pair, a PSU failure generates a High alarm and the system continues operating on the remaining unit. Maintenance can replace the failed unit under a controlled procedure without a process shutdown.</p>
+    <p>The validation impact is minimal: the IQ verifies both PSUs are present and the redundancy module is installed, and the OQ includes a PSU failure test. It adds two lines to the test script. This is the one form of redundancy that should be in the URS for essentially every GMP panel.</p>
+
+    <h3>Level 2 — Network Ring Topology</h3>
+    <p>For distributed I/O architectures — where remote I/O islands are connected back to the main CPU over PROFINET or similar — a ring topology with MRP (Media Redundancy Protocol) protection is cheap insurance. A linear daisy-chain topology means a single cable or switch failure breaks communication to every downstream device. A ring means the network self-heals around the fault; PROFINET MRP recovery time is typically under 200 milliseconds. The field devices stay online. The process continues. An alarm fires so maintenance knows to investigate, but the process does not see a control interruption.</p>
+    <p>The additional hardware cost is modest — one extra managed switch port and a cable run to close the ring. The validation impact is an additional OQ test case confirming ring healing behaviour on simulated cable disconnection. Again: well worth it for any distributed I/O layout.</p>
+
+    <h3>Level 3 — Sensor Redundancy</h3>
+    <p>Redundant field instruments for critical quality attributes is a risk-driven decision. The question is: what is the consequence of losing the measurement entirely versus accepting a brief data gap while the single sensor is repaired or replaced? For the highest-severity CQAs — conductivity in a purified water system, temperature in a sterile fill environment — losing the measurement means losing the ability to demonstrate product quality. A redundant sensor allows the system to continue monitoring and controlling from the backup measurement while the failed sensor is addressed under change control.</p>
+    <p>The risk assessment drives this. If the failure mode "sensor failure" scores a Severity of 5 (direct patient safety impact) and Occurrence of 3 or above, redundancy as a risk control reduces Occurrence and Detectability. The risk register should document this decision explicitly, not leave it as an implicit engineering choice.</p>
+
+    <h3>Level 4 — CPU Redundancy</h3>
+    <p>Hot-standby CPU redundancy — where a secondary CPU shadows the primary and takes over in milliseconds on primary failure — is the most expensive, most complex, and most frequently over-specified form of redundancy in pharma. The correct question is not "is this a pharma system?" but "does this process require continuous uninterrupted control such that even a 30-second controlled shutdown for CPU replacement is unacceptable?"</p>
+    <p>For most pharma utility and monitoring systems — water systems, EMS, HVAC — the answer is no. A controlled CPU failure response (fail-safe positions, alarm to operator, process held in a known safe state) is entirely acceptable. The process can wait for a controlled restart. CPU redundancy in these applications adds significant capital cost, doubles the validated scope (two CPUs means two software configurations to verify and maintain), and complicates change control for every future modification.</p>
+    <p>CPU redundancy is genuinely justified for continuous manufacturing processes where any interruption in control directly impacts in-progress product that cannot be held — live cell culture, continuous chromatography, aseptic fill lines with in-process product that cannot be paused. If your process falls into that category, the justification is clear and the cost is appropriate. If it doesn't, the risk assessment should document why it was not required, not just silently omit it.</p>
+
+    <h2 id="the-risk-assessment-link">How the Risk Assessment Drives the Decision</h2>
+    <p>Every redundancy decision should be traceable to a risk register entry. This is not bureaucratic overhead — it is how you demonstrate to QA and to auditors that the decision was made deliberately rather than by default or oversight.</p>
+    <p>The risk register entry for, say, "conductivity sensor failure" should show: Severity (product quality consequence of distributing out-of-spec water), Occurrence (frequency of sensor failure given calibration interval and instrument reliability), Detectability (how quickly the failure is detected — immediately via a Bad Quality alarm, or only on the next calibration). The initial RPN score drives the control decision: if the residual RPN without redundancy is acceptable, document it and move on. If it is not — if Severity is 5 and the residual risk without redundancy is still High — then redundancy as an engineering control is the justified response, and the risk register records that the redundant sensor reduces the Occurrence score and therefore the residual RPN to an acceptable level.</p>
+    <p>The same logic applies to every other redundancy level. Dual PSU: failure of a single PSU taking down the control system has a Severity and Occurrence; the redundant pair reduces Occurrence to near-zero and reduces Severity of the hardware failure itself to a managed alarm rather than a process shutdown. Document it. Network ring: single cable failure breaks distributed I/O communication; ring topology reduces Occurrence of process impact from that failure mode. Document it.</p>
+
+    <div class="callout amber">
+      <div class="callout-label">What Auditors Actually Ask</div>
+      <p>An inspector reviewing your hardware design will not ask "is this system redundant?" They will ask: <strong>"What happens if [component X] fails, and how did you decide whether that was acceptable?"</strong> A system with no CPU redundancy but a clear risk register entry explaining why controlled failover is acceptable is a stronger position than a redundant CPU system where nobody can explain why it was specified. The documented decision — either way — is what matters.</p>
+    </div>
+
+    <h2 id="documenting-the-decision">Where the Decision Gets Documented</h2>
+    <p>The redundancy strategy belongs in two places: the Validation Plan and the Hardware Design Specification.</p>
+    <p>In the <a href="validation-plan-what-it-must-contain.html">Validation Plan</a>, the system description section should summarise the overall redundancy strategy at an architectural level — not component by component, but the principle: which functions have redundancy, which don't, and what the consequence of failure is for each. This gives QA the overview they need before the HDS is issued.</p>
+    <p>In the HDS, the redundancy strategy table is the definitive record. It lists every component or function that has a redundancy provision, specifies what that provision is, and describes the failure consequence for a single-unit failure. The table also implicitly documents the components that do not have redundancy — anything absent from the redundancy table is non-redundant, and the HDS author should have a risk register justification to hand for any reviewer who asks.</p>
+
+    <div class="callout green">
+      <div class="callout-label">In the QLean Framework</div>
+      <p>The Hardware Design Specification (HDS-SYS-001) includes a formal Redundancy Strategy table in Section 1.2 covering all major components. The framework's worked example specifies: dual redundant 24VDC PSUs in parallel with automatic failover (single PSU failure generates High alarm, system continues on remaining unit); dual-ring PROFINET topology for field I/O with managed redundancy (single cable or switch failure heals automatically, no data loss); and server-side RAID 5 storage with dual power supply (hot-swap). The architecture note in Section 1 explicitly states that control logic executes locally in the PLC independent of SCADA availability — making SCADA server failure a High alarm rather than a process control loss. The Risk Assessment workbook (RA-SYS-001) includes "redundant sensors" as a risk control against conductivity sensor failure, with the Occurrence score reduction documented. The framework does not specify CPU redundancy — deliberately, with the architectural rationale documented in HDS Section 1.2.</p>
+    </div>
+
+    <h2 id="validation-implications">Validation Implications of Each Redundancy Level</h2>
+    <p>Redundancy adds validation scope. Before specifying it, understand what you are committing to verify:</p>
+    <ul class="arrow-list">
+      <li><strong>PSU redundancy:</strong> IQ verification that both units are installed and the redundancy module is present. OQ test case: simulate single PSU failure, confirm High alarm fires and system continues operating. One additional IQ check item, one additional OQ test case. Minimal impact.</li>
+      <li><strong>Network ring:</strong> IQ verification that the ring topology is correctly configured in managed switches. OQ test case: disconnect a ring segment, confirm network heals within acceptance criterion (typically under 500ms), confirm no I/O data loss. One network config check, one OQ test case. Low impact.</li>
+      <li><strong>Sensor redundancy:</strong> Two instruments on every GMP-critical point means twice the calibration certificates at IQ, twice the loop checks at SAT, and an additional OQ test section covering the switchover logic (what triggers switchover, is there an alarm, does the SCADA display the backup sensor value correctly). Moderate impact — plan for it in the test schedule.</li>
+      <li><strong>CPU redundancy:</strong> Significant validation impact. Two CPUs require two software baselines that must be maintained in sync. The OQ must include CPU switchover testing under load. Change control for every software modification must verify both CPUs. The hash chain verification at each change covers both units. This is not a reason to avoid CPU redundancy if it is justified — but it must be scoped correctly in the <a href="validation-plan-what-it-must-contain.html">Validation Plan</a> from the start.</li>
+    </ul>
+
+    <h2 id="the-scada-layer">The SCADA Layer Is Not the PLC</h2>
+    <p>One important distinction that gets confused on pharma projects: SCADA server failure and PLC CPU failure are not the same event and do not require the same redundancy response.</p>
+    <p>A well-designed pharma system executes all control logic in the PLC. The SCADA provides operator interface, alarm display, data historisation, and reporting. If the SCADA server fails, the PLC continues executing its logic autonomously. The process does not stop. The operator loses their visual interface and alarm display — which is a High alarm and a significant operational problem — but the system maintains its safe state and continues controlling the process.</p>
+    <p>This means SCADA server high-availability (virtualisation, server clustering, rapid restore from backup) is often a more practical and cost-effective approach than PLC CPU redundancy — because the thing most likely to fail in a complex system is the Windows server, not the PLC CPU. The RBP-SYS-001 backup and recovery procedure, with a defined Recovery Time Objective of four hours or less, is the framework's approach to SCADA server availability. A four-hour RTO for SCADA restoration is acceptable for most pharma utility systems; it would not be acceptable for a continuous manufacturing process where SCADA loss means loss of batch visibility.</p>
+    <p>Understand which components are in the control path versus the monitoring path. Design redundancy for the control path based on risk. Design availability for the monitoring path based on operational requirements and RTO.</p>
+
+  </article>
+
+  <aside class="sidebar">
+    <div class="toc-card">
+      <div class="toc-label">In This Article</div>
+      <ul class="toc-list">
+        <li><a href="#the-question" class="active">The wrong way to answer</a></li>
+        <li><a href="#what-redundancy-actually-means">Four levels of redundancy</a></li>
+        <li><a href="#the-risk-assessment-link">Risk assessment drives the decision</a></li>
+        <li><a href="#documenting-the-decision">Where the decision is documented</a></li>
+        <li><a href="#validation-implications">Validation implications</a></li>
+        <li><a href="#the-scada-layer">SCADA vs PLC — not the same</a></li>
+      </ul>
+    </div>
+    <div class="sidebar-cta">
+      <div class="sc-eyebrow">QLean Framework</div>
+      <div class="sc-title">29 production-ready GAMP 5 documents</div>
+      <div class="sc-body">HDS-SYS-001 with worked redundancy strategy table, RA-SYS-001 risk register with redundancy controls documented, and VP-SYS-001 — all included.</div>
+      <a href="../index.html#pricing" class="sc-btn">Get the Framework &#8212; &#8364;249 &#8594;</a>
+      <div class="sc-note">// INSTANT DOWNLOAD &#183; COMPANY-WIDE LICENCE</div>
+    </div>
+    <div class="sidebar-share">
+      <div class="share-label">Share This Article</div>
+      <div class="share-links">
+        <a href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fqleanautomation.com%2Fblog%2Fplc-redundancy-pharma-validation.html" target="_blank" rel="noopener" class="share-link">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          Share on LinkedIn
+        </a>
+        <a href="https://www.reddit.com/submit?url=https%3A%2F%2Fqleanautomation.com%2Fblog%2Fplc-redundancy-pharma-validation.html&title=Redundancy+in+Pharma+PLC+Systems+%E2%80%94+When+It%27s+Required" target="_blank" rel="noopener" class="share-link">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/></svg>
+          Share on Reddit
+        </a>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<section class="related">
+  <div class="related-inner">
+    <div class="related-label">More Articles</div>
+    <div class="related-grid">
+      <a href="gamp5-risk-assessment-how-to-score.html" class="related-card">
+        <div class="rc-tag">&#9888;&#65039; Risk</div>
+        <div class="rc-title">GAMP 5 Risk Assessment — How to Score It</div>
+        <div class="rc-desc">The risk register is where redundancy decisions get justified. Here is how to score S, O, D correctly and what the RPN thresholds mean in practice.</div>
+        <div class="rc-footer"><div class="rc-read">8 MIN READ</div><div class="rc-arrow">&#8594;</div></div>
+      </a>
+      <a href="validation-plan-what-it-must-contain.html" class="related-card">
+        <div class="rc-tag">&#128196; Validation Planning</div>
+        <div class="rc-title">Validation Plan — What It Must Contain</div>
+        <div class="rc-desc">The VP is where the redundancy strategy is described at architectural level. Here is the full structure of a Validation Plan that will satisfy QA review.</div>
+        <div class="rc-footer"><div class="rc-read">7 MIN READ</div><div class="rc-arrow">&#8594;</div></div>
+      </a>
+      <a href="plc-disaster-recovery-backup.html" class="related-card">
+        <div class="rc-tag">&#9881;&#65039; PLC Engineering</div>
+        <div class="rc-title">PLC Disaster Recovery — Backup, Restore and Testing</div>
+        <div class="rc-desc">Redundancy prevents failure. Backup and recovery handles it when prevention wasn&#8217;t enough. Here is what a validated recovery procedure must cover.</div>
+        <div class="rc-footer"><div class="rc-read">7 MIN READ</div><div class="rc-arrow">&#8594;</div></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="../index.html" class="nav-logo">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none" style="flex-shrink:0"><rect width="32" height="32" rx="7" fill="#0d0f12"/><rect x="8" y="7" width="16" height="16" rx="2" stroke="white" stroke-width="2.5" fill="none"/><line x1="20" y1="19" x2="26" y2="25" stroke="#0057FF" stroke-width="3" stroke-linecap="round"/></svg>
+          <span style="font-family:'Epilogue',sans-serif;font-weight:800;font-size:16px;color:#0d0f12;letter-spacing:-.03em;white-space:nowrap">QLean <span style="font-weight:300;color:#5a6172">Automation</span></span>
+        </a>
+        <p>GMP documentation tools for system integrators and automation engineers entering pharmaceutical projects.</p>
+      </div>
+      <div class="footer-col"><h4>Products</h4><ul><li><a href="../index.html#framework">GAMP 5 Framework</a></li><li><a href="../index.html#products">Technical Masterclass</a></li></ul></div>
+      <div class="footer-col"><h4>Knowledge Base</h4><ul>
+        <li><a href="blog-index.html">All Articles</a></li>
+        <li><a href="gamp5-risk-assessment-how-to-score.html">GAMP 5 Risk Assessment</a></li>
+        <li><a href="validation-plan-what-it-must-contain.html">Validation Plan</a></li>
+        <li><a href="plc-disaster-recovery-backup.html">PLC Disaster Recovery</a></li>
+        <li><a href="iq-oq-pq-guide.html">IQ OQ PQ Guide</a></li>
+        <li><a href="v-model-pharma-validation.html">V-Model Validation</a></li>
+        <li><a href="change-control-validated-system.html">Change Control</a></li>
+      </ul></div>
+      <div class="footer-col"><h4>Company</h4><ul><li><a href="https://www.linkedin.com/company/qlean-automation" target="_blank">LinkedIn</a></li><li><a href="mailto:hello@qleanautomation.com">Contact</a></li><li><a href="../terms.html">Terms</a></li></ul></div>
+    </div>
+    <div class="footer-bottom">
+      <p>&#169; 2026 QLEAN AUTOMATION &#183; QLEANAUTOMATION.COM</p>
+      <div class="compliance-pills"><span class="cp">GAMP 5</span><span class="cp">EU ANNEX 11</span><span class="cp">IEC 61511</span><span class="cp">PROFINET MRP</span></div>
+    </div>
+  </div>
+</footer>
+
+<script>
+window.addEventListener('scroll',()=>{const d=document.documentElement;document.getElementById('progress').style.width=(d.scrollTop/(d.scrollHeight-d.clientHeight)*100)+'%'});
+const obs=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting){document.querySelectorAll('.toc-list a').forEach(l=>l.classList.remove('active'));const a=document.querySelector('.toc-list a[href="#'+x.target.id+'"]');if(a)a.classList.add('active')}})  ,{rootMargin:'-20% 0px -70% 0px'});
+document.querySelectorAll('[id]').forEach(s=>obs.observe(s));
+</script>
+</body>
+</html>

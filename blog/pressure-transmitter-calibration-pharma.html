@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-JJQ1TXZJX7"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-JJQ1TXZJX7');
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pressure Transmitter Calibration on Validated Systems | QLean Automation</title>
+<meta name="description" content="Gauge, absolute, and differential pressure transmitters each have different calibration requirements in pharma. Here is what GMP demands — reference standards, multi-point verification, static pressure effects, and how differential pressure across filters connects to maintenance decisions.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@300;400;500;600;700;800;900&family=Source+Sans+3:ital,wght@0,300;0,400;0,500;1,300&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--white:#ffffff;--off:#f7f8f9;--ink:#0d0f12;--ink2:#1e2128;--ink3:#3d4456;--ink4:#9199a8;--rule:#e2e5ea;--rule2:#c8cdd6;--blue:#0057ff;--blue2:#0044cc;--blue-dim:rgba(0,87,255,0.07);--green:#00875a;--green-dim:rgba(0,135,90,0.08);--amber:#d97706;--amber-dim:rgba(217,119,6,0.08);--red:#c0392b;--red-dim:rgba(192,57,43,0.08);--f-head:'Epilogue',sans-serif;--f-body:'Source Sans 3',sans-serif;--f-mono:'Roboto Mono',monospace;--shadow-sm:0 2px 8px rgba(13,15,18,0.06),0 1px 3px rgba(13,15,18,0.04)}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}body{background:var(--white);color:var(--ink);font-family:var(--f-body);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+nav{position:fixed;top:0;left:0;right:0;z-index:200;height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 6%;background:rgba(255,255,255,0.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--rule)}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;flex-shrink:0}
+.nav-links{display:flex;align-items:center;gap:36px;list-style:none}.nav-links a{font-size:14px;font-weight:400;color:var(--ink3);text-decoration:none;transition:color .2s}.nav-links a:hover{color:var(--ink)}
+.nav-btn{font-family:var(--f-body);font-size:13px;font-weight:500;padding:9px 20px;background:var(--blue);color:white;border:none;border-radius:6px;cursor:pointer;text-decoration:none;white-space:nowrap;flex-shrink:0}.nav-btn:hover{background:var(--blue2)}
+.progress-bar{position:fixed;top:64px;left:0;right:0;height:2px;background:var(--rule);z-index:199}.progress-fill{height:100%;background:var(--blue);width:0%}
+.article-hero{padding:120px 6% 64px;background:var(--white);border-bottom:1px solid var(--rule);position:relative;overflow:hidden}
+.article-hero::before{content:'';position:absolute;top:-80px;right:-80px;width:400px;height:400px;background:radial-gradient(circle,rgba(0,87,255,0.04) 0%,transparent 70%);pointer-events:none}
+.article-hero-inner{max-width:940px;margin:0 auto;position:relative;z-index:1}
+.breadcrumb{display:flex;align-items:center;gap:8px;font-family:var(--f-mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink4);margin-bottom:24px}.breadcrumb a{color:var(--ink4);text-decoration:none}.breadcrumb a:hover{color:var(--blue)}.breadcrumb span{color:var(--rule2)}
+.article-tag{display:inline-flex;align-items:center;gap:6px;font-family:var(--f-mono);font-size:10px;font-weight:500;color:var(--blue);letter-spacing:.1em;text-transform:uppercase;margin-bottom:20px;padding:4px 10px;background:var(--blue-dim);border-radius:4px}
+.article-hero h1{font-family:var(--f-head);font-size:clamp(30px,5vw,52px);font-weight:900;line-height:1.0;letter-spacing:-.04em;color:var(--ink);margin-bottom:20px}.article-hero h1 span{color:var(--blue)}
+.article-intro{font-size:18px;font-weight:400;color:var(--ink2);line-height:1.75;margin-bottom:32px;max-width:800px}
+.article-meta{display:flex;align-items:center;gap:24px;padding-top:24px;border-top:1px solid var(--rule);flex-wrap:wrap}
+.meta-author{display:flex;align-items:center;gap:10px}.author-avatar{width:36px;height:36px;border-radius:50%;background:var(--ink);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.author-name{font-size:13px;font-weight:500;color:var(--ink)}.author-role{font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.04em}
+.meta-divider{width:1px;height:28px;background:var(--rule)}.meta-stat{font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.06em}
+.article-wrap{max-width:1300px;margin:0 auto;padding:64px 6%;display:grid;grid-template-columns:1fr 300px;gap:60px;align-items:start}
+.article-body{min-width:0}
+.article-body h2{font-family:var(--f-head);font-size:26px;font-weight:800;letter-spacing:-.03em;color:var(--ink);margin:56px 0 16px;line-height:1.2}.article-body h2:first-child{margin-top:0}
+.article-body h3{font-family:var(--f-head);font-size:18px;font-weight:700;letter-spacing:-.02em;color:var(--ink);margin:32px 0 12px}
+.article-body p{font-size:16px;font-weight:400;color:var(--ink2);line-height:1.85;margin-bottom:20px}
+.article-body strong{color:var(--ink);font-weight:600}
+.article-body a{color:var(--blue);text-decoration:none;border-bottom:1px solid rgba(0,87,255,.25)}.article-body a:hover{border-color:var(--blue)}
+.callout{padding:20px 24px;border-radius:8px;margin:32px 0;border-left:3px solid}
+.callout.blue{background:var(--blue-dim);border-color:var(--blue)}.callout.amber{background:var(--amber-dim);border-color:var(--amber)}.callout.green{background:var(--green-dim);border-color:var(--green)}.callout.red{background:var(--red-dim);border-color:var(--red)}
+.callout-label{font-family:var(--f-mono);font-size:9px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px}.callout.blue .callout-label{color:var(--blue)}.callout.amber .callout-label{color:var(--amber)}.callout.green .callout-label{color:var(--green)}.callout.red .callout-label{color:var(--red)}
+.callout p{font-size:14px;color:var(--ink2);line-height:1.7;margin:0}.callout strong{color:var(--ink)}
+.article-img{width:100%;border-radius:8px;border:1px solid #1e2535;overflow:hidden;margin:36px 0}
+.article-img figcaption{padding:10px 14px;background:var(--off);font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.04em;border-top:1px solid var(--rule)}
+.checklist{list-style:none;display:flex;flex-direction:column;gap:8px;margin:20px 0 28px}
+.checklist li{display:flex;align-items:flex-start;gap:10px;font-size:15px;color:var(--ink2);line-height:1.6}
+.checklist li::before{content:'';width:16px;height:16px;flex-shrink:0;margin-top:3px;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 14 14' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='7' cy='7' r='6.5' fill='none' stroke='%230057ff' stroke-width='1'/%3E%3Cpath d='M4 7l2 2 4-4' stroke='%230057ff' stroke-width='1.3' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:center;background-size:contain}
+.arrow-list{list-style:none;display:flex;flex-direction:column;gap:8px;margin:20px 0 28px}
+.arrow-list li{display:flex;align-items:flex-start;gap:10px;font-size:15px;color:var(--ink2);line-height:1.6}
+.arrow-list li::before{content:'\2192';color:var(--blue);flex-shrink:0;font-family:var(--f-mono);font-size:13px;margin-top:2px}
+.table-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:28px 0}
+.compare-table{width:100%;border-collapse:collapse;font-size:14px}
+.compare-table th{font-family:var(--f-mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink4);padding:10px 16px;border-bottom:2px solid var(--rule);text-align:left;background:var(--off)}
+.compare-table td{padding:12px 16px;border-bottom:1px solid var(--rule);vertical-align:top;color:var(--ink2);line-height:1.6}
+.compare-table tr:last-child td{border-bottom:none}
+.compare-table td:first-child{font-weight:600;color:var(--ink);font-family:var(--f-mono);font-size:12px}
+.sidebar{position:sticky;top:88px;display:flex;flex-direction:column;gap:16px}
+.toc-card{border:1px solid var(--rule);border-radius:8px;padding:24px;background:var(--white);box-shadow:var(--shadow-sm)}
+.toc-label{font-family:var(--f-mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);margin-bottom:16px}
+.toc-list{list-style:none;display:flex;flex-direction:column;gap:2px}
+.toc-list a{display:block;font-size:13px;color:var(--ink3);text-decoration:none;padding:6px 10px;border-radius:4px;transition:all .15s;border-left:2px solid transparent}
+.toc-list a:hover,.toc-list a.active{color:var(--blue);background:var(--blue-dim);border-left-color:var(--blue)}
+.sidebar-cta{border:1px solid var(--blue);border-radius:8px;padding:24px;background:var(--blue-dim)}
+.sc-eyebrow{font-family:var(--f-mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);margin-bottom:10px}
+.sc-title{font-family:var(--f-head);font-size:17px;font-weight:800;letter-spacing:-.02em;color:var(--ink);margin-bottom:8px;line-height:1.2}
+.sc-body{font-size:13px;color:var(--ink3);line-height:1.6;margin-bottom:16px}
+.sc-btn{display:block;text-align:center;padding:11px 16px;background:var(--blue);color:white;border-radius:6px;font-family:var(--f-body);font-size:13px;font-weight:500;text-decoration:none}.sc-btn:hover{background:var(--blue2)}
+.sc-note{font-family:var(--f-mono);font-size:9px;color:var(--ink4);text-align:center;margin-top:8px;letter-spacing:.04em}
+.sidebar-share{border:1px solid var(--rule);border-radius:8px;padding:20px 24px;background:var(--white)}
+.share-label{font-family:var(--f-mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);margin-bottom:14px}
+.share-links{display:flex;flex-direction:column;gap:8px}
+.share-link{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--ink3);text-decoration:none;padding:9px 12px;border:1px solid var(--rule);border-radius:6px;transition:border-color .2s,color .2s}.share-link:hover{border-color:var(--blue);color:var(--blue)}
+.related{padding:64px 6%;border-top:1px solid var(--rule);background:var(--off)}
+.related-inner{max-width:1100px;margin:0 auto}
+.related-label{font-family:var(--f-mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);margin-bottom:32px;display:flex;align-items:center;gap:10px}
+.related-label::before{content:'';width:20px;height:1px;background:var(--blue)}
+.related-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.related-card{padding:24px;border:1px solid var(--rule);border-radius:8px;background:var(--white);box-shadow:var(--shadow-sm);transition:border-color .2s,transform .2s;text-decoration:none;display:flex;flex-direction:column;gap:12px}.related-card:hover{border-color:var(--blue);transform:translateY(-4px)}
+.rc-tag{font-family:var(--f-mono);font-size:9px;color:var(--blue);letter-spacing:.08em;text-transform:uppercase;padding:3px 8px;background:var(--blue-dim);border-radius:3px;align-self:flex-start}
+.rc-title{font-family:var(--f-head);font-size:16px;font-weight:700;letter-spacing:-.02em;color:var(--ink);line-height:1.25}
+.rc-desc{font-size:13px;color:var(--ink3);line-height:1.6;flex:1}
+.rc-footer{display:flex;align-items:center;justify-content:space-between;padding-top:12px;border-top:1px solid var(--rule)}
+.rc-read{font-family:var(--f-mono);font-size:10px;color:var(--ink4)}.rc-arrow{font-size:14px;color:var(--blue)}
+footer{padding:56px 6% 32px;border-top:1px solid var(--rule);background:var(--white)}
+.footer-inner{max-width:1160px;margin:0 auto}
+.footer-top{display:flex;justify-content:space-between;align-items:flex-start;gap:40px;flex-wrap:wrap;margin-bottom:48px}
+.footer-brand p{font-size:13px;font-weight:300;color:var(--ink3);margin-top:12px;max-width:260px;line-height:1.6}
+.footer-col h4{font-family:var(--f-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink4);margin-bottom:16px}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+.footer-col a{font-size:13px;color:var(--ink3);text-decoration:none}.footer-col a:hover{color:var(--blue)}
+.footer-bottom{padding-top:24px;border-top:1px solid var(--rule);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.footer-bottom p{font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.04em}
+.compliance-pills{display:flex;gap:6px;flex-wrap:wrap}
+.cp{font-family:var(--f-mono);font-size:9px;padding:3px 8px;border:1px solid var(--rule);border-radius:3px;color:var(--ink4);letter-spacing:.06em}
+@media(max-width:900px){.article-wrap{grid-template-columns:1fr;gap:48px}.sidebar{position:static}.related-grid{grid-template-columns:1fr}.table-scroll{margin:20px 0}}
+@media(max-width:900px){.nav-links{display:none}}
+@media(max-width:540px){nav{padding:0 4%}.nav-btn{font-size:12px;padding:8px 14px}}
+</style>
+</head>
+<body>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+<nav>
+  <a href="../index.html" class="nav-logo">
+    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" style="flex-shrink:0"><rect width="32" height="32" rx="7" fill="#0d0f12"/><rect x="8" y="7" width="16" height="16" rx="2" stroke="white" stroke-width="2.5" fill="none"/><line x1="20" y1="19" x2="26" y2="25" stroke="#0057FF" stroke-width="3" stroke-linecap="round"/></svg>
+    <span style="font-family:'Epilogue',sans-serif;font-weight:800;font-size:16px;color:#0d0f12;letter-spacing:-.03em;white-space:nowrap">QLean <span style="font-weight:300;color:#5a6172">Automation</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="../index.html#products">Products</a></li>
+    <li><a href="../index.html#framework">Framework</a></li>
+    <li><a href="blog-index.html">Knowledge Base</a></li>
+    <li><a href="../index.html#pricing">Pricing</a></li>
+    <li><a href="../about.html">About</a></li>
+    <li><a href="../index.html#faq">FAQ</a></li>
+  </ul>
+  <a href="../index.html#pricing" class="nav-btn">Get the Framework &#8594;</a>
+</nav>
+
+<header class="article-hero">
+  <div class="article-hero-inner">
+    <div class="breadcrumb"><a href="../index.html">Home</a><span>/</span><a href="blog-index.html">Knowledge Base</a><span>/</span>Pressure Transmitter Calibration on Validated Systems</div>
+    <div class="article-tag">&#128207; Instrumentation &amp; Calibration</div>
+    <h1>Pressure Transmitter<br><span>Calibration on</span><br>Validated Systems</h1>
+    <p class="article-intro">Pressure transmitters in pharma automation are not all doing the same job. A distribution loop pressure transmitter feeds VFD speed control. A differential pressure transmitter across a filter triggers a maintenance alarm. A CIP pressure sensor verifies cleaning circuit integrity. Each has different GMP criticality, different calibration requirements, and different implications when it drifts out of tolerance. Here is what the calibration of each type actually requires in a validated system.</p>
+    <div class="article-meta">
+      <div class="meta-author">
+        <div class="author-avatar"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="7" r="3.5" stroke="white" stroke-width="1.5"/><path d="M2.5 16c0-3.59 2.91-6.5 6.5-6.5s6.5 2.91 6.5 6.5" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+        <div><div class="author-name">QLean Automation</div><div class="author-role">ENGINEERS WHO BUILD SYSTEMS, NOT JUST SIGN THEM</div></div>
+      </div>
+      <div class="meta-divider"></div><div class="meta-stat">6 MIN READ</div>
+      <div class="meta-divider"></div><div class="meta-stat">PRESSURE &#183; DIFFERENTIAL PRESSURE &#183; CALIBRATION</div>
+    </div>
+  </div>
+</header>
+
+<div class="article-wrap">
+  <article class="article-body">
+
+    <h2 id="pressure-types-in-pharma">Pressure Measurement Types in Pharma Automation</h2>
+    <p>Before getting into calibration requirements, it is worth being precise about what type of pressure measurement each instrument is making — because the calibration approach differs between them, and the GMP implications of drift differ significantly.</p>
+
+    <div class="table-scroll">
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th>Type</th>
+            <th>What It Measures</th>
+            <th>Typical Pharma Application</th>
+            <th>GMP Classification</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Gauge pressure</td>
+            <td>Pressure relative to atmosphere (barg)</td>
+            <td>Distribution loop supply/return pressure, vessel headspace, pump discharge</td>
+            <td>Critical Process Control (loop control) or Important Monitoring</td>
+          </tr>
+          <tr>
+            <td>Absolute pressure</td>
+            <td>Pressure relative to vacuum (bara)</td>
+            <td>Autoclave chamber pressure, freeze dryer, lyophiliser</td>
+            <td>Critical Primary Quality — absolute pressure directly affects sterilisation efficacy</td>
+          </tr>
+          <tr>
+            <td>Differential pressure</td>
+            <td>Pressure difference between two points (bar differential)</td>
+            <td>Filter integrity monitoring, cleanroom pressure differential, flow measurement (orifice plate)</td>
+            <td>Important Monitoring (filter) to Critical Primary Quality (cleanroom)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>The QLean Framework template system (WFI water distribution) uses E+H Cerabar S PMC71B gauge pressure transmitters (PT-001 distribution supply, PT-002 distribution return) for VFD pump speed control feedback, and E+H Deltabar M PMD55B differential pressure transmitters (PDT-001, PDT-002) for pre- and post-filter differential pressure monitoring. These represent the two most common pressure instrument types in pharmaceutical clean utility systems.</p>
+
+    <h2 id="calibration-equipment-for-pressure">Calibration Equipment for Pressure — What Counts as Traceable</h2>
+    <p>Pressure transmitter calibration requires a reference pressure source and a reference pressure standard. The reference standard is the device that provides the known pressure applied to the transmitter under test. It must itself be calibrated and traceable to a national or international metrology standard — the same traceability chain requirement that applies to all GMP calibrations, as covered in the <a href="calibration-management-pharma-iq.html">calibration management article</a>.</p>
+
+    <p>Common reference pressure standards used in field calibrations:</p>
+
+    <ul class="arrow-list">
+      <li><strong>Deadweight tester:</strong> the gold standard for gauge and absolute pressure — generates precise pressures by balancing known weights against a piston. Used in calibration laboratories; less common for field calibrations due to size and fluid management.</li>
+      <li><strong>Digital pressure calibrator (e.g. Fluke 718, Druck DPI 620):</strong> the standard field calibration tool — combined pressure source and precision reference measurement in one portable unit. Must have its own current calibration certificate traceable to national standard.</li>
+      <li><strong>Precision pressure gauge:</strong> sometimes used as a check standard alongside the transmitter; must be independently calibrated.</li>
+    </ul>
+
+    <p>For differential pressure transmitters, the calibration applies a known differential pressure using a two-port pressure source — typically a digital calibrator with a manifold. The high-side port is pressurised to a known value, the low side is vented to atmosphere, and the differential is the applied pressure. Alternatively both ports can be pressurised and the differential created by the difference between them.</p>
+
+    <h2 id="multi-point-calibration">Multi-Point Calibration — Ascending and Descending</h2>
+    <p>A single-point pressure calibration — applying one pressure and checking the output — is not adequate for GMP applications. Multi-point calibration across the full measurement range is required to characterise linearity, span error, and hysteresis.</p>
+
+    <p>The standard approach for a 5-point calibration on a 0–10 bar gauge pressure transmitter:</p>
+
+    <figure class="article-img">
+      <svg viewBox="0 0 720 240" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;background:#0d0f12;border-radius:8px 8px 0 0">
+        <text x="360" y="18" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(255,255,255,0.2)" letter-spacing="0.12em">PRESSURE TRANSMITTER — 5-POINT CALIBRATION SEQUENCE</text>
+
+        <!-- Y axis label -->
+        <text x="16" y="130" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(100,160,255,0.5)" transform="rotate(-90,16,130)" letter-spacing="0.06em">OUTPUT (mA)</text>
+
+        <!-- X axis label -->
+        <text x="400" y="228" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(100,160,255,0.5)" letter-spacing="0.06em">APPLIED PRESSURE (bar)</text>
+
+        <!-- Grid -->
+        <line x1="60" y1="30" x2="60" y2="195" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+        <line x1="60" y1="195" x2="680" y2="195" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+
+        <!-- Y axis ticks -->
+        <line x1="56" y1="195" x2="64" y2="195" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+        <text x="50" y="199" text-anchor="end" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(100,160,255,0.5)">4</text>
+        <line x1="56" y1="155" x2="64" y2="155" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+        <text x="50" y="159" text-anchor="end" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(100,160,255,0.4)">8</text>
+        <line x1="56" y1="115" x2="64" y2="115" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+        <text x="50" y="119" text-anchor="end" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(100,160,255,0.4)">12</text>
+        <line x1="56" y1="75" x2="64" y2="75" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+        <text x="50" y="79" text-anchor="end" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(100,160,255,0.4)">16</text>
+        <line x1="56" y1="35" x2="64" y2="35" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+        <text x="50" y="39" text-anchor="end" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(100,160,255,0.5)">20</text>
+
+        <!-- Ideal line -->
+        <line x1="60" y1="195" x2="680" y2="35" stroke="rgba(0,87,255,0.2)" stroke-width="1" stroke-dasharray="4,3"/>
+
+        <!-- Ascending points (blue) -->
+        <circle cx="60" cy="195" r="5" fill="#0057ff" opacity="0.9"/>
+        <circle cx="215" cy="155" r="5" fill="#0057ff" opacity="0.9"/>
+        <circle cx="370" cy="115" r="5" fill="#0057ff" opacity="0.9"/>
+        <circle cx="525" cy="77" r="5" fill="#0057ff" opacity="0.9"/>
+        <circle cx="680" cy="36" r="5" fill="#0057ff" opacity="0.9"/>
+
+        <!-- Ascending line -->
+        <polyline points="60,195 215,157 370,117 525,80 680,40" fill="none" stroke="#0057ff" stroke-width="1.5" opacity="0.7"/>
+
+        <!-- Descending points (amber) - slight hysteresis offset -->
+        <circle cx="680" cy="36" r="4" fill="#d97706" opacity="0.9"/>
+        <circle cx="525" cy="74" r="4" fill="#d97706" opacity="0.9"/>
+        <circle cx="370" cy="112" r="4" fill="#d97706" opacity="0.9"/>
+        <circle cx="215" cy="151" r="4" fill="#d97706" opacity="0.9"/>
+        <circle cx="60" cy="193" r="4" fill="#d97706" opacity="0.9"/>
+
+        <!-- Descending line -->
+        <polyline points="680,36 525,74 370,112 215,151 60,193" fill="none" stroke="#d97706" stroke-width="1.5" opacity="0.7" stroke-dasharray="5,2"/>
+
+        <!-- X axis pressure labels -->
+        <text x="60" y="210" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(100,160,255,0.5)">0</text>
+        <text x="215" y="210" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(100,160,255,0.5)">2.5</text>
+        <text x="370" y="210" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(100,160,255,0.5)">5.0</text>
+        <text x="525" y="210" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(100,160,255,0.5)">7.5</text>
+        <text x="680" y="210" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(100,160,255,0.5)">10.0</text>
+
+        <!-- Legend -->
+        <line x1="80" y1="50" x2="110" y2="50" stroke="#0057ff" stroke-width="1.5"/>
+        <circle cx="95" cy="50" r="4" fill="#0057ff"/>
+        <text x="116" y="54" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(180,200,230,0.7)">Ascending sweep</text>
+        <line x1="80" y1="66" x2="110" y2="66" stroke="#d97706" stroke-width="1.5" stroke-dasharray="5,2"/>
+        <circle cx="95" cy="66" r="4" fill="#d97706"/>
+        <text x="116" y="70" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(180,200,230,0.7)">Descending sweep (hysteresis check)</text>
+      </svg>
+      <figcaption>5-POINT ASCENDING AND DESCENDING CALIBRATION — HYSTERESIS IS THE DIFFERENCE BETWEEN ASCENDING AND DESCENDING READINGS AT EACH POINT</figcaption>
+    </figure>
+
+    <p>The ascending sweep checks linearity and span error. The descending sweep checks hysteresis — the difference between the reading at a given pressure when pressure is increasing versus decreasing. Both must be within the specified tolerance band. For a ±0.1% FS transmitter on a 0–10 bar range, the tolerance band is ±0.01 bar. If any point on either sweep falls outside this band, the transmitter fails calibration and must be adjusted and re-tested before it can return to GMP service.</p>
+
+    <h2 id="differential-pressure-gmp-implications">Differential Pressure — The GMP Implications of Filter ΔP</h2>
+    <p>Differential pressure transmitters in pharmaceutical water systems most commonly monitor filter differential pressure (ΔP). The GMP significance of these measurements is different from process control pressure: they are maintenance indicators, not process control variables. A rising ΔP across a filter element indicates progressive loading — the filter is approaching end-of-life and needs replacement before it bypasses or bursts.</p>
+    <p>If the ΔP transmitter is reading incorrectly — showing a lower ΔP than the actual — the filter maintenance alarm triggers late or not at all. The filter continues to operate past its replacement threshold. Depending on the filter type and application, this could mean contamination of the product stream or downstream processes.</p>
+
+    <div class="callout amber">
+      <div class="callout-label">Low-Reading ΔP — The Dangerous Failure Mode</div>
+      <p>An OOT finding where a ΔP transmitter reads <em>lower</em> than actual is more dangerous than one reading higher. A high reading triggers an early filter change — expensive but safe. A low reading means a clogged filter operates undetected past its alarm threshold. <strong>When assessing impact for a ΔP OOT finding, always consider which direction the drift went</strong> and whether any maintenance decision was made — or not made — based on the affected readings.</p>
+    </div>
+
+    <h2 id="static-pressure-effect">Static Pressure Effect on Differential Transmitters</h2>
+    <p>A practical issue that catches people on pharma projects: differential pressure transmitters installed on high-pressure systems are subject to static pressure effect — the influence of the line pressure on the differential measurement accuracy. A transmitter specified as ±0.1% FS at zero static pressure may have a significantly larger error at operating line pressure if the static pressure effect is not accounted for.</p>
+    <p>The calibration of a differential pressure transmitter should ideally be performed at operating line pressure, or the static pressure effect should be characterised and added to the uncertainty budget. For filter ΔP applications where the line pressure is consistent (e.g. a WFI distribution loop running at 3–5 bar), this is straightforward. For applications with varying line pressure, the static pressure effect needs more careful attention.</p>
+    <p>The calibration certificate for a differential pressure transmitter should state the static pressure at which the calibration was performed. If the certificate states "calibrated at atmospheric static pressure" and the transmitter operates at 4 bar line pressure, the as-found accuracy in service may differ from the certificate values.</p>
+
+    <h2 id="pressure-calibration-in-iq">Pressure Calibration Verification in IQ</h2>
+    <p>The IQ pressure calibration verification follows the same pattern as other instruments — but with some pressure-specific practical considerations that affect how the walk-down is conducted.</p>
+
+    <ul class="checklist">
+      <li><strong>System isolation:</strong> the process must be isolated and depressurised before connecting calibration equipment to the transmitter impulse connections. This requires coordination with the site team and a formal permit-to-work for pressurised systems. Plan this before IQ execution day.</li>
+      <li><strong>Certificate reference vs. installed tag:</strong> pressure transmitters are frequently factory-calibrated to a standard range (e.g. 0–10 bar) and then ranged in the transmitter configuration for the actual application span (e.g. 0–6 bar). The certificate range and the configured span must both be checked against the HDS. A transmitter calibrated 0–10 bar but configured 0–16 bar in the transmitter electronics is reading incorrectly regardless of what the certificate says.</li>
+      <li><strong>Zero and span in the PLC:</strong> the analogue input module must be configured with the correct 4 mA and 20 mA engineering unit values. IQ should verify that the PLC I/O module configuration matches the transmitter range — not just that the transmitter is calibrated correctly in isolation.</li>
+      <li><strong>Differential transmitter impulse line orientation:</strong> the high-side and low-side impulse connections must be connected correctly. Reversed connections give a reading that is negative or inverted — which may not be immediately obvious if the display shows absolute value. Verify the connections match the P&ID and the HDS installation notes.</li>
+    </ul>
+
+    <h2 id="framework-pressure-instruments">Framework Pressure Instruments — Specific Requirements</h2>
+    <p>In the QLean Framework template system, the pressure instruments specified in HDS Section 4.3 are:</p>
+
+    <ul class="arrow-list">
+      <li><strong>PT-001 and PT-002 (E+H Cerabar S PMC71B):</strong> gauge pressure, 0–10 bar range, 6-month calibration interval, ±0.1% FS accuracy specification. These feed the VFD speed control loop for the distribution pump — a Critical Process Control classification. IQ certificate verification and a loop accuracy check against a reference pressure at two to three points in the operating range (typically 2, 4, and 6 bar) is appropriate.</li>
+      <li><strong>PDT-001 and PDT-002 (E+H Deltabar M PMD55B):</strong> differential pressure, 0–1 bar differential range, 12-month calibration interval, filter maintenance alarm trigger — Important Monitoring classification. IQ verifies the certificate and checks the HDS-specified alarm threshold is correctly configured in the PLC. The OQ test verifies the ΔP alarm triggers at the correct threshold.</li>
+    </ul>
+
+    <div class="callout green">
+      <div class="callout-label">In the QLean Framework</div>
+      <p>The HDS (HDS-SYS-001) Section 4.3 specifies the pressure and differential pressure instruments with model numbers, ranges, and calibration intervals. The IQ protocol (IQ-SYS-001) Section 7 includes rows for PT-001, PT-002, PDT-001, and PDT-002 in the instrument calibration verification table. The Control Philosophy (CP-SYS-001) Section 8.1 classifies PT-001 and PT-002 as Critical Process Control (6-month interval) and PDT-001 and PDT-002 as Important Monitoring (12-month interval). <strong>The calibration interval and classification decisions are already made and documented consistently across all three template documents.</strong></p>
+    </div>
+
+    <h2 id="pressure-oot-impact">Pressure OOT Impact Assessment — What to Consider</h2>
+    <p>When a distribution loop pressure transmitter (PT-001 or PT-002) is found out of tolerance, the impact assessment must consider what process decisions were made using that measurement. In a WFI distribution system, the distribution pressure controls the pump VFD speed to maintain a target loop pressure. If the pressure transmitter was reading high, the VFD was running slower than intended — actual loop pressure was lower than the setpoint. The impact question is whether the actual loop pressure ever dropped below the minimum required to prevent stagnation or maintain required flow velocities at all points of use.</p>
+    <p>This is not always easy to assess retrospectively, which is why pressure transmitter calibration intervals must be set conservatively for Critical Process Control instruments and why having redundant pressure measurement (PT-001 and PT-002 on supply and return) provides some ability to cross-check readings and detect large discrepancies during operations rather than waiting for the next calibration cycle.</p>
+    <p>For the full out-of-tolerance procedure applicable to all instrument types, see the article on <a href="calibration-management-pharma-iq.html">calibration management for pharma automation</a> and the dedicated article on <a href="field-instrumentation-iq-documentation.html">field instrumentation IQ documentation</a>.</p>
+
+  </article>
+
+  <aside class="sidebar">
+    <div class="toc-card">
+      <div class="toc-label">On This Page</div>
+      <ul class="toc-list">
+        <li><a href="#pressure-types-in-pharma">Pressure Types in Pharma</a></li>
+        <li><a href="#calibration-equipment-for-pressure">Calibration Equipment</a></li>
+        <li><a href="#multi-point-calibration">Multi-Point Calibration</a></li>
+        <li><a href="#differential-pressure-gmp-implications">Differential Pressure ΔP</a></li>
+        <li><a href="#static-pressure-effect">Static Pressure Effect</a></li>
+        <li><a href="#pressure-calibration-in-iq">Calibration Verification in IQ</a></li>
+        <li><a href="#framework-pressure-instruments">Framework Instruments</a></li>
+        <li><a href="#pressure-oot-impact">OOT Impact Assessment</a></li>
+      </ul>
+    </div>
+
+    <div class="sidebar-cta">
+      <div class="sc-eyebrow">QLean Framework</div>
+      <div class="sc-title">29 production-ready GAMP 5 documents</div>
+      <p class="sc-body">HDS with pressure instrument specifications, IQ protocol with calibration verification table, and Control Philosophy with classification and interval decisions — all cross-referenced and consistent.</p>
+      <a href="../index.html#pricing" class="sc-btn">Get the Framework &#8594;</a>
+      <div class="sc-note">COMPANY-WIDE LICENCE &#183; NO PER-SEAT FEES</div>
+    </div>
+
+    <div class="sidebar-share">
+      <div class="share-label">Share This Article</div>
+      <div class="share-links">
+        <a href="https://www.linkedin.com/sharing/share-offsite/?url=https://qleanautomation.com/blog/pressure-transmitter-calibration-pharma.html" target="_blank" rel="noopener" class="share-link">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          Share on LinkedIn
+        </a>
+        <a href="https://reddit.com/submit?url=https://qleanautomation.com/blog/pressure-transmitter-calibration-pharma.html&title=Pressure%20Transmitter%20Calibration%20on%20Validated%20Systems" target="_blank" rel="noopener" class="share-link">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/></svg>
+          Share on Reddit
+        </a>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<section class="related">
+  <div class="related-inner">
+    <div class="related-label">Continue Reading</div>
+    <div class="related-grid">
+      <a href="calibration-management-pharma-iq.html" class="related-card">
+        <span class="rc-tag">&#128207; Instrumentation</span>
+        <div class="rc-title">Calibration Management for Pharma Automation</div>
+        <div class="rc-desc">Certificate traceability, OOT procedures, calibration intervals, and how the calibration register anchors the IQ evidence package for all instrument types.</div>
+        <div class="rc-footer"><span class="rc-read">7 MIN READ</span><span class="rc-arrow">&#8594;</span></div>
+      </a>
+      <a href="field-instrumentation-iq-documentation.html" class="related-card">
+        <span class="rc-tag">&#128207; Instrumentation</span>
+        <div class="rc-title">How to Document Field Instrumentation for a Pharma IQ</div>
+        <div class="rc-desc">The four IQ verification steps for every field instrument — nameplate, installation, calibration certificate, and I/O channel continuity — and the register that ties them together.</div>
+        <div class="rc-footer"><span class="rc-read">7 MIN READ</span><span class="rc-arrow">&#8594;</span></div>
+      </a>
+      <a href="calibration-intervals-oot-procedures.html" class="related-card">
+        <span class="rc-tag">&#128207; Instrumentation</span>
+        <div class="rc-title">Calibration Intervals and Out-of-Tolerance Procedures</div>
+        <div class="rc-desc">How to set and review calibration intervals using as-found drift data, and the full six-step OOT response procedure when a pressure transmitter fails calibration.</div>
+        <div class="rc-footer"><span class="rc-read">7 MIN READ</span><span class="rc-arrow">&#8594;</span></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="../index.html" class="nav-logo" style="text-decoration:none">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="7" fill="#0d0f12"/><rect x="8" y="7" width="16" height="16" rx="2" stroke="white" stroke-width="2.5" fill="none"/><line x1="20" y1="19" x2="26" y2="25" stroke="#0057FF" stroke-width="3" stroke-linecap="round"/></svg>
+          <span style="font-family:'Epilogue',sans-serif;font-weight:800;font-size:16px;color:#0d0f12;letter-spacing:-.03em">QLean <span style="font-weight:300;color:#5a6172">Automation</span></span>
+        </a>
+        <p>GMP validation documentation tools for automation engineers and system integrators.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Products</h4>
+        <ul>
+          <li><a href="../index.html#products">GAMP 5 Framework Pack</a></li>
+          <li><a href="../index.html#products">Technical Ebook</a></li>
+          <li><a href="../index.html#pricing">Pricing</a></li>
+          <li><a href="../index.html#faq">FAQ</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Knowledge Base</h4>
+        <ul>
+          <li><a href="blog-index.html">All Articles</a></li>
+          <li><a href="cluster-instrumentation.html">Instrumentation &amp; Calibration</a></li>
+          <li><a href="calibration-management-pharma-iq.html">Calibration Management</a></li>
+          <li><a href="field-instrumentation-iq-documentation.html">Field Instrumentation IQ</a></li>
+          <li><a href="temperature-sensor-calibration-gmp.html">Temperature Sensor Calibration</a></li>
+          <li><a href="calibration-intervals-oot-procedures.html">Calibration Intervals</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="../index.html#framework">Framework</a></li>
+          <li><a href="../terms.html">Terms of Service</a></li>
+          <li><a href="../privacy.html">Privacy Policy</a></li>
+          <li><a href="mailto:hello@qleanautomation.com">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 QLean Automation. All rights reserved.</p>
+      <div class="compliance-pills">
+        <span class="cp">GAMP 5</span>
+        <span class="cp">EU GMP ANNEX 11</span>
+        <span class="cp">21 CFR PART 11</span>
+        <span class="cp">ISO/IEC 17025</span>
+        <span class="cp">GXP</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+window.addEventListener('scroll',function(){
+  var s=document.getElementById('progress');
+  var h=document.documentElement;
+  var p=(h.scrollTop||document.body.scrollTop)/(h.scrollHeight-h.clientHeight)*100;
+  s.style.width=p+'%';
+});
+var tl=document.querySelectorAll('.toc-list a');
+window.addEventListener('scroll',function(){
+  var headings=document.querySelectorAll('.article-body h2[id]');
+  var scrollY=window.scrollY+120;
+  var current='';
+  headings.forEach(function(h){if(h.offsetTop<=scrollY)current=h.id;});
+  tl.forEach(function(a){
+    a.classList.remove('active');
+    if(a.getAttribute('href')==='#'+current)a.classList.add('active');
+  });
+});
+</script>
+</body>
+</html>

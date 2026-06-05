@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-JJQ1TXZJX7"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-JJQ1TXZJX7');
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cybersecurity Incident Response for Pharma OT Systems | QLean Automation</title>
+<meta name="description" content="When a cybersecurity incident hits a GMP-regulated OT system, the response is not just an IT problem. Validated system status, GMP records, batch data integrity, and regulatory notification obligations all come into play. Here is how to respond correctly.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@300;400;500;600;700;800;900&family=Source+Sans+3:ital,wght@0,300;0,400;0,500;1,300&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--white:#ffffff;--off:#f7f8f9;--ink:#0d0f12;--ink2:#1e2128;--ink3:#3d4456;--ink4:#9199a8;--rule:#e2e5ea;--rule2:#c8cdd6;--blue:#0057ff;--blue2:#0044cc;--blue-dim:rgba(0,87,255,0.07);--green:#00875a;--green-dim:rgba(0,135,90,0.08);--amber:#d97706;--amber-dim:rgba(217,119,6,0.08);--red:#c0392b;--red-dim:rgba(192,57,43,0.08);--f-head:'Epilogue',sans-serif;--f-body:'Source Sans 3',sans-serif;--f-mono:'Roboto Mono',monospace;--shadow-sm:0 2px 8px rgba(13,15,18,0.06),0 1px 3px rgba(13,15,18,0.04)}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}body{background:var(--white);color:var(--ink);font-family:var(--f-body);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+nav{position:fixed;top:0;left:0;right:0;z-index:200;height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 6%;background:rgba(255,255,255,0.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--rule)}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;flex-shrink:0}
+.nav-links{display:flex;align-items:center;gap:36px;list-style:none}.nav-links a{font-size:14px;font-weight:400;color:var(--ink3);text-decoration:none;transition:color .2s}.nav-links a:hover{color:var(--ink)}
+.nav-btn{font-family:var(--f-body);font-size:13px;font-weight:500;padding:9px 20px;background:var(--blue);color:white;border:none;border-radius:6px;cursor:pointer;text-decoration:none;white-space:nowrap;flex-shrink:0}.nav-btn:hover{background:var(--blue2)}
+.progress-bar{position:fixed;top:64px;left:0;right:0;height:2px;background:var(--rule);z-index:199}.progress-fill{height:100%;background:var(--blue);width:0%}
+.article-hero{padding:120px 6% 64px;background:var(--white);border-bottom:1px solid var(--rule);position:relative;overflow:hidden}
+.article-hero::before{content:'';position:absolute;top:-80px;right:-80px;width:400px;height:400px;background:radial-gradient(circle,rgba(0,87,255,0.04) 0%,transparent 70%);pointer-events:none}
+.article-hero-inner{max-width:940px;margin:0 auto;position:relative;z-index:1}
+.breadcrumb{display:flex;align-items:center;gap:8px;font-family:var(--f-mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink4);margin-bottom:24px}.breadcrumb a{color:var(--ink4);text-decoration:none}.breadcrumb a:hover{color:var(--blue)}.breadcrumb span{color:var(--rule2)}
+.article-tag{display:inline-flex;align-items:center;gap:6px;font-family:var(--f-mono);font-size:10px;font-weight:500;color:var(--blue);letter-spacing:.1em;text-transform:uppercase;margin-bottom:20px;padding:4px 10px;background:var(--blue-dim);border-radius:4px}
+.article-hero h1{font-family:var(--f-head);font-size:clamp(30px,5vw,52px);font-weight:900;line-height:1.0;letter-spacing:-.04em;color:var(--ink);margin-bottom:20px}.article-hero h1 span{color:var(--blue)}
+.article-intro{font-size:18px;font-weight:400;color:var(--ink2);line-height:1.75;margin-bottom:32px;max-width:800px}
+.article-meta{display:flex;align-items:center;gap:24px;padding-top:24px;border-top:1px solid var(--rule);flex-wrap:wrap}
+.meta-author{display:flex;align-items:center;gap:10px}.author-avatar{width:36px;height:36px;border-radius:50%;background:var(--ink);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.author-name{font-size:13px;font-weight:500;color:var(--ink)}.author-role{font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.04em}
+.meta-divider{width:1px;height:28px;background:var(--rule)}.meta-stat{font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.06em}
+.article-wrap{max-width:1300px;margin:0 auto;padding:64px 6%;display:grid;grid-template-columns:1fr 300px;gap:60px;align-items:start}
+.article-body{min-width:0}
+.article-body h2{font-family:var(--f-head);font-size:26px;font-weight:800;letter-spacing:-.03em;color:var(--ink);margin:56px 0 16px;line-height:1.2}.article-body h2:first-child{margin-top:0}
+.article-body h3{font-family:var(--f-head);font-size:18px;font-weight:700;letter-spacing:-.02em;color:var(--ink);margin:32px 0 12px}
+.article-body p{font-size:16px;font-weight:400;color:var(--ink2);line-height:1.85;margin-bottom:20px}
+.article-body strong{color:var(--ink);font-weight:600}
+.article-body a{color:var(--blue);text-decoration:none;border-bottom:1px solid rgba(0,87,255,.25)}.article-body a:hover{border-color:var(--blue)}
+.callout{padding:20px 24px;border-radius:8px;margin:32px 0;border-left:3px solid}
+.callout.blue{background:var(--blue-dim);border-color:var(--blue)}.callout.amber{background:var(--amber-dim);border-color:var(--amber)}.callout.green{background:var(--green-dim);border-color:var(--green)}.callout.red{background:var(--red-dim);border-color:var(--red)}
+.callout-label{font-family:var(--f-mono);font-size:9px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px}.callout.blue .callout-label{color:var(--blue)}.callout.amber .callout-label{color:var(--amber)}.callout.green .callout-label{color:var(--green)}.callout.red .callout-label{color:var(--red)}
+.callout p{font-size:14px;color:var(--ink2);line-height:1.7;margin:0}.callout strong{color:var(--ink)}
+.article-img{width:100%;border-radius:8px;border:1px solid #1e2535;overflow:hidden;margin:36px 0}
+.article-img figcaption{padding:10px 14px;background:var(--off);font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.04em;border-top:1px solid var(--rule)}
+.phase-block{border-left:3px solid var(--blue);padding:20px 24px;margin:20px 0;background:var(--white);border-radius:0 8px 8px 0;box-shadow:var(--shadow-sm)}
+.phase-block.red{border-color:var(--red)}.phase-block.amber{border-color:var(--amber)}.phase-block.green{border-color:var(--green)}
+.phase-label{font-family:var(--f-mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;margin-bottom:6px}
+.phase-block .phase-label{color:var(--blue)}.phase-block.red .phase-label{color:var(--red)}.phase-block.amber .phase-label{color:var(--amber)}.phase-block.green .phase-label{color:var(--green)}
+.phase-title{font-family:var(--f-head);font-size:17px;font-weight:700;color:var(--ink);margin-bottom:10px}
+.phase-body{font-size:14px;color:var(--ink2);line-height:1.7}
+.arrow-list{list-style:none;display:flex;flex-direction:column;gap:8px;margin:16px 0 20px}
+.arrow-list li{display:flex;align-items:flex-start;gap:10px;font-size:14px;color:var(--ink2);line-height:1.6}
+.arrow-list li::before{content:'\2192';color:var(--blue);flex-shrink:0;font-family:var(--f-mono);font-size:13px;margin-top:1px}
+.table-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:28px 0}
+.compare-table{width:100%;border-collapse:collapse;font-size:14px}
+.compare-table th{font-family:var(--f-mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink4);padding:10px 16px;border-bottom:2px solid var(--rule);text-align:left;background:var(--off)}
+.compare-table td{padding:12px 16px;border-bottom:1px solid var(--rule);vertical-align:top;color:var(--ink2);line-height:1.6}
+.compare-table tr:last-child td{border-bottom:none}
+.compare-table td:first-child{font-weight:600;color:var(--ink);font-family:var(--f-mono);font-size:12px}
+.sidebar{position:sticky;top:88px;display:flex;flex-direction:column;gap:16px}
+.toc-card{border:1px solid var(--rule);border-radius:8px;padding:24px;background:var(--white);box-shadow:var(--shadow-sm)}
+.toc-label{font-family:var(--f-mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);margin-bottom:16px}
+.toc-list{list-style:none;display:flex;flex-direction:column;gap:2px}
+.toc-list a{display:block;font-size:13px;color:var(--ink3);text-decoration:none;padding:6px 10px;border-radius:4px;transition:all .15s;border-left:2px solid transparent}
+.toc-list a:hover,.toc-list a.active{color:var(--blue);background:var(--blue-dim);border-left-color:var(--blue)}
+.sidebar-cta{border:1px solid var(--blue);border-radius:8px;padding:24px;background:var(--blue-dim)}
+.sc-eyebrow{font-family:var(--f-mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);margin-bottom:10px}
+.sc-title{font-family:var(--f-head);font-size:17px;font-weight:800;letter-spacing:-.02em;color:var(--ink);margin-bottom:8px;line-height:1.2}
+.sc-body{font-size:13px;color:var(--ink3);line-height:1.6;margin-bottom:16px}
+.sc-btn{display:block;text-align:center;padding:11px 16px;background:var(--blue);color:white;border-radius:6px;font-family:var(--f-body);font-size:13px;font-weight:500;text-decoration:none}.sc-btn:hover{background:var(--blue2)}
+.sc-note{font-family:var(--f-mono);font-size:9px;color:var(--ink4);text-align:center;margin-top:8px;letter-spacing:.04em}
+.sidebar-share{border:1px solid var(--rule);border-radius:8px;padding:20px 24px;background:var(--white)}
+.share-label{font-family:var(--f-mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);margin-bottom:14px}
+.share-links{display:flex;flex-direction:column;gap:8px}
+.share-link{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--ink3);text-decoration:none;padding:9px 12px;border:1px solid var(--rule);border-radius:6px;transition:border-color .2s,color .2s}.share-link:hover{border-color:var(--blue);color:var(--blue)}
+.related{padding:64px 6%;border-top:1px solid var(--rule);background:var(--off)}
+.related-inner{max-width:1100px;margin:0 auto}
+.related-label{font-family:var(--f-mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);margin-bottom:32px;display:flex;align-items:center;gap:10px}
+.related-label::before{content:'';width:20px;height:1px;background:var(--blue)}
+.related-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.related-card{padding:24px;border:1px solid var(--rule);border-radius:8px;background:var(--white);box-shadow:var(--shadow-sm);transition:border-color .2s,transform .2s;text-decoration:none;display:flex;flex-direction:column;gap:12px}.related-card:hover{border-color:var(--blue);transform:translateY(-4px)}
+.rc-tag{font-family:var(--f-mono);font-size:9px;color:var(--blue);letter-spacing:.08em;text-transform:uppercase;padding:3px 8px;background:var(--blue-dim);border-radius:3px;align-self:flex-start}
+.rc-title{font-family:var(--f-head);font-size:16px;font-weight:700;letter-spacing:-.02em;color:var(--ink);line-height:1.25}
+.rc-desc{font-size:13px;color:var(--ink3);line-height:1.6;flex:1}
+.rc-footer{display:flex;align-items:center;justify-content:space-between;padding-top:12px;border-top:1px solid var(--rule)}
+.rc-read{font-family:var(--f-mono);font-size:10px;color:var(--ink4)}.rc-arrow{font-size:14px;color:var(--blue)}
+footer{padding:56px 6% 32px;border-top:1px solid var(--rule);background:var(--white)}
+.footer-inner{max-width:1160px;margin:0 auto}
+.footer-top{display:flex;justify-content:space-between;align-items:flex-start;gap:40px;flex-wrap:wrap;margin-bottom:48px}
+.footer-brand p{font-size:13px;font-weight:300;color:var(--ink3);margin-top:12px;max-width:260px;line-height:1.6}
+.footer-col h4{font-family:var(--f-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink4);margin-bottom:16px}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+.footer-col a{font-size:13px;color:var(--ink3);text-decoration:none}.footer-col a:hover{color:var(--blue)}
+.footer-bottom{padding-top:24px;border-top:1px solid var(--rule);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.footer-bottom p{font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.04em}
+.compliance-pills{display:flex;gap:6px;flex-wrap:wrap}
+.cp{font-family:var(--f-mono);font-size:9px;padding:3px 8px;border:1px solid var(--rule);border-radius:3px;color:var(--ink4);letter-spacing:.06em}
+@media(max-width:900px){.article-wrap{grid-template-columns:1fr;gap:48px}.sidebar{position:static}.related-grid{grid-template-columns:1fr}.table-scroll{margin:20px 0}}
+@media(max-width:900px){.nav-links{display:none}}
+@media(max-width:540px){nav{padding:0 4%}.nav-btn{font-size:12px;padding:8px 14px}}
+</style>
+</head>
+<body>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+<nav>
+  <a href="../index.html" class="nav-logo">
+    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" style="flex-shrink:0"><rect width="32" height="32" rx="7" fill="#0d0f12"/><rect x="8" y="7" width="16" height="16" rx="2" stroke="white" stroke-width="2.5" fill="none"/><line x1="20" y1="19" x2="26" y2="25" stroke="#0057FF" stroke-width="3" stroke-linecap="round"/></svg>
+    <span style="font-family:'Epilogue',sans-serif;font-weight:800;font-size:16px;color:#0d0f12;letter-spacing:-.03em;white-space:nowrap">QLean <span style="font-weight:300;color:#5a6172">Automation</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="../index.html#products">Products</a></li>
+    <li><a href="../index.html#framework">Framework</a></li>
+    <li><a href="blog-index.html">Knowledge Base</a></li>
+    <li><a href="../index.html#pricing">Pricing</a></li>
+    <li><a href="../about.html">About</a></li>
+    <li><a href="../index.html#faq">FAQ</a></li>
+  </ul>
+  <a href="../index.html#pricing" class="nav-btn">Get the Framework &#8594;</a>
+</nav>
+
+<header class="article-hero">
+  <div class="article-hero-inner">
+    <div class="breadcrumb"><a href="../index.html">Home</a><span>/</span><a href="blog-index.html">Knowledge Base</a><span>/</span>Cybersecurity Incident Response</div>
+    <div class="article-tag">&#9729; Emerging Topics</div>
+    <h1>Cybersecurity Incident<br><span>Response</span> for<br>Pharma OT Systems</h1>
+    <p class="article-intro">When a cybersecurity incident hits a GMP-regulated OT system, the response is not just an IT problem. Validated system status, GMP records integrity, in-progress batch data, and regulatory notification obligations all come into play simultaneously. The organisations that respond well are those that planned the response before the incident — not during it.</p>
+    <div class="article-meta">
+      <div class="meta-author">
+        <div class="author-avatar"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="7" r="3.5" stroke="white" stroke-width="1.5"/><path d="M2.5 16c0-3.59 2.91-6.5 6.5-6.5s6.5 2.91 6.5 6.5" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+        <div><div class="author-name">QLean Automation</div><div class="author-role">ENGINEERS WHO BUILD SYSTEMS, NOT JUST SIGN THEM</div></div>
+      </div>
+      <div class="meta-divider"></div><div class="meta-stat">7 MIN READ</div>
+      <div class="meta-divider"></div><div class="meta-stat">EMERGING TOPICS &#183; CYBERSECURITY &#183; OT &#183; GMP</div>
+    </div>
+  </div>
+</header>
+
+<div class="article-wrap">
+  <article class="article-body">
+
+    <h2 id="why-ot-incidents-are-different">Why OT Cybersecurity Incidents Are Different in Pharma</h2>
+    <p>An IT cybersecurity incident in a pharmaceutical company — a phishing attack on a corporate email account, malware on a business laptop — follows a well-established response playbook: isolate, investigate, remediate, recover. The GMP implications are typically limited unless the incident reaches systems that store or process GMP records.</p>
+    <p>An OT incident is different in three ways. First, the systems that are affected are physical — a compromised PLC can affect running process equipment, ongoing batch manufacturing, and in-process product. Second, the systems are validated — any modification to a validated system, including one forced by an attacker or made during incident response, must be formally managed through change control. Third, the records on those systems are GMP records — if ransomware encrypts a SCADA historian or an attacker modifies audit trail entries, the data integrity of regulated records is directly compromised, which triggers specific regulatory considerations.</p>
+    <p>Annex 11 §12 requires that appropriate measures are taken to prevent unauthorised access to computerised systems and that any security incident affecting GMP-critical systems is documented and investigated. The Recovery and Backup Procedure (RBP) in the QLean framework exists precisely to define what "recovery" means for a validated system — not just a restored system, but a verified, re-qualified system whose GMP status is confirmed before production resumes.</p>
+
+    <figure class="article-img">
+      <svg viewBox="0 0 720 270" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;background:#0d0f12;border-radius:8px 8px 0 0">
+        <text x="360" y="18" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="9" fill="rgba(255,255,255,0.2)" letter-spacing="0.12em">PHARMA OT INCIDENT RESPONSE — FIVE PHASE SEQUENCE</text>
+
+        <defs>
+          <marker id="arrp" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+            <path d="M0,1 L5,3 L0,5" fill="none" stroke="rgba(100,160,255,0.5)" stroke-width="1.2"/>
+          </marker>
+        </defs>
+
+        <!-- Phase boxes -->
+        <rect x="20" y="38" width="118" height="160" rx="5" fill="rgba(192,57,43,0.1)" stroke="rgba(192,57,43,0.5)" stroke-width="1.5"/>
+        <text x="79" y="60" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(200,80,80,0.7)" letter-spacing="0.08em">PHASE 1</text>
+        <text x="79" y="78" text-anchor="middle" font-family="Epilogue,sans-serif" font-weight="800" font-size="12" fill="white">DETECT</text>
+        <text x="79" y="92" text-anchor="middle" font-family="Epilogue,sans-serif" font-weight="800" font-size="12" fill="white">&amp; CONTAIN</text>
+        <text x="79" y="115" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7.5" fill="rgba(255,255,255,0.3)">Isolate affected</text>
+        <text x="79" y="127" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7.5" fill="rgba(255,255,255,0.3)">systems. Halt</text>
+        <text x="79" y="139" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7.5" fill="rgba(255,255,255,0.3)">production if</text>
+        <text x="79" y="151" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7.5" fill="rgba(255,255,255,0.3)">data integrity</text>
+        <text x="79" y="163" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7.5" fill="rgba(255,255,255,0.3)">at risk.</text>
+
+        <line x1="138" y1="118" x2="158" y2="118" stroke="rgba(100,160,255,0.4)" stroke-width="1.5" marker-end="url(#arrp)"/>
+
+        <rect x="158" y="38" width="118" height="160" rx="5" fill="rgba(217,119,6,0.1)" stroke="rgba(217,119,6,0.45)" stroke-width="1.5"/>
+        <text x="217" y="60" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(220,140,40,0.7)" letter-spacing="0.08em">PHASE 2</text>
+        <text x="217" y="78" text-anchor="middle" font-family="Epilogue,sans-serif" font-weight="800" font-size="12" fill="white">ASSESS</text>
+        <text x="217" y="92" text-anchor="middle" font-family="Epilogue,sans-serif" font-weight="800" font-size="12" fill="white">GMP IMPACT</text>
+        <text x="217" y="115" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7.5" fill="rgba(255,255,255,0.3)">Validated state</text>
+        <text x="217" y="127" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7.5" fill="rgba(255,255,255,0.3)">affected? Batch</text>
+        <text x="217" y="139" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7.5" fill="rgba(255,255,255,0.3)">data intact?</text>
+        <text x="217" y="151" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7.5" fill="rgba(255,255,255,0.3)">Records</text>
+        <text x="217" y="163" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7.5" fill="rgba(255,255,255,0.3)">compromised?</text>
+
+        <line x1="276" y1="118" x2="296" y2="118" stroke="rgba(100,160,255,0.4)" stroke-width="1.5" marker-end="url(#arrp)"/>
+
+        <rect x="296" y="38" width="118" height="160" rx="5" fill="rgba(0,87,255,0.09)" stroke="rgba(0,87,255,0.4)" stroke-width="1.5"/>
+        <text x="355" y="60" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(100,160,255,0.6)" letter-spacing="0.08em">PHASE 3</text>
+        <text x="355" y="78" text-anchor="middle" font-family="Epilogue,sans-serif" font-weight="800" font-size="12" fill="white">ERADICATE</text>
+        <text x="355" y="92" text-anchor="middle" font-family="Epilogue,sans-serif" font-weight="800" font-size="12" fill="white">&amp; REMEDIATE</text>
+        <text x="355" y="115" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7.5" fill="rgba(255,255,255,0.3)">Remove threat.</text>
+        <text x="355" y="127" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7.5" fill="rgba(255,255,255,0.3)">Restore from</text>
+        <text x="355" y="139" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7.5" fill="rgba(255,255,255,0.3)">validated backup.</text>
+        <text x="355" y="151" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7.5" fill="rgba(255,255,255,0.3)">Raise CCR for</text>
+        <text x="355" y="163" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7.5" fill="rgba(255,255,255,0.3)">all changes.</text>
+
+        <line x1="414" y1="118" x2="434" y2="118" stroke="rgba(100,160,255,0.4)" stroke-width="1.5" marker-end="url(#arrp)"/>
+
+        <rect x="434" y="38" width="118" height="160" rx="5" fill="rgba(0,87,255,0.09)" stroke="rgba(0,87,255,0.4)" stroke-width="1.5"/>
+        <text x="493" y="60" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(100,160,255,0.6)" letter-spacing="0.08em">PHASE 4</text>
+        <text x="493" y="78" text-anchor="middle" font-family="Epilogue,sans-serif" font-weight="800" font-size="12" fill="white">REQUALIFY</text>
+        <text x="493" y="92" text-anchor="middle" font-family="Epilogue,sans-serif" font-weight="800" font-size="12" fill="white">&amp; RETURN</text>
+        <text x="493" y="115" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7.5" fill="rgba(255,255,255,0.3)">Verify restored</text>
+        <text x="493" y="127" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7.5" fill="rgba(255,255,255,0.3)">baseline. Execute</text>
+        <text x="493" y="139" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7.5" fill="rgba(255,255,255,0.3)">post-restore IQ.</text>
+        <text x="493" y="151" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7.5" fill="rgba(255,255,255,0.3)">QA sign-off</text>
+        <text x="493" y="163" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7.5" fill="rgba(255,255,255,0.3)">before restart.</text>
+
+        <line x1="552" y1="118" x2="572" y2="118" stroke="rgba(100,160,255,0.4)" stroke-width="1.5" marker-end="url(#arrp)"/>
+
+        <rect x="572" y="38" width="128" height="160" rx="5" fill="rgba(0,135,90,0.09)" stroke="rgba(0,135,90,0.4)" stroke-width="1.5"/>
+        <text x="636" y="60" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(0,175,100,0.6)" letter-spacing="0.08em">PHASE 5</text>
+        <text x="636" y="78" text-anchor="middle" font-family="Epilogue,sans-serif" font-weight="800" font-size="12" fill="white">REPORT</text>
+        <text x="636" y="92" text-anchor="middle" font-family="Epilogue,sans-serif" font-weight="800" font-size="12" fill="white">&amp; LEARN</text>
+        <text x="636" y="115" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7.5" fill="rgba(255,255,255,0.3)">Incident report.</text>
+        <text x="636" y="127" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7.5" fill="rgba(255,255,255,0.3)">Regulatory</text>
+        <text x="636" y="139" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7.5" fill="rgba(255,255,255,0.3)">notification if</text>
+        <text x="636" y="151" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7.5" fill="rgba(255,255,255,0.3)">required. CAPA</text>
+        <text x="636" y="163" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="7.5" fill="rgba(255,255,255,0.3)">and root cause.</text>
+
+        <text x="360" y="232" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(255,255,255,0.2)">Batch data integrity assessment runs in parallel with Phases 1&#8211;3</text>
+        <text x="360" y="249" text-anchor="middle" font-family="Roboto Mono,monospace" font-size="8" fill="rgba(255,255,255,0.2)">Production does not restart until QA confirms validated state is restored (Phase 4)</text>
+      </svg>
+      <figcaption>FIGURE 1 — The five-phase OT incident response sequence for GMP-regulated systems. The critical difference from a standard IT incident response is Phase 4: the system must be formally requalified before production resumes, not just restored.</figcaption>
+    </figure>
+
+    <h2 id="phase-1-detect-contain">Phase 1 — Detect and Contain</h2>
+    <p>The first decision in any OT cybersecurity incident is containment: isolating the affected systems from the rest of the OT network and, where necessary, from the process equipment they control. In a GMP manufacturing environment, this decision has immediate production consequences. Isolating a running SCADA system may mean the operator loses visibility of a live batch. Taking a PLC offline may interrupt a critical process step.</p>
+    <p>The containment decision must therefore be risk-balanced: the risk of continuing to run with a compromised system versus the risk of interrupting the process. This is not a decision that can be made well under pressure by people who have not thought about it before. The Recovery and Backup Procedure must include a pre-agreed escalation and containment decision tree that identifies, for each system, the acceptable conditions under which it may be isolated during an active incident.</p>
+
+    <div class="phase-block red">
+      <div class="phase-label">Immediate Actions — Phase 1</div>
+      <div class="phase-title">Containment Without Losing Evidence</div>
+      <div class="phase-body">
+        <ul class="arrow-list">
+          <li>Disconnect the affected system from the OT network — do not shut it down unless necessary. A live system preserves forensic evidence that a cold restart destroys.</li>
+          <li>Preserve a memory snapshot and system logs before any remediation activity begins.</li>
+          <li>Notify QA and production management immediately — this is a GMP event, not just an IT event.</li>
+          <li>Assess any in-progress batches: is their process data still being recorded? Is the data integrity of records already written intact?</li>
+          <li>Do not reboot, reinstall, or apply patches until Phase 2 assessment is complete.</li>
+        </ul>
+      </div>
+    </div>
+
+    <h2 id="phase-2-gmp-impact">Phase 2 — Assess the GMP Impact</h2>
+    <p>Before any remediation begins, the GMP impact of the incident must be assessed. This assessment covers three distinct questions. First: is the validated state of the affected system compromised? If an attacker has modified PLC application code, SCADA configuration, or any other element of the validated baseline, the system is no longer in its validated state — regardless of whether it appears to be functioning normally.</p>
+    <p>Second: has the integrity of GMP records been affected? If the SCADA historian has been encrypted, deleted, or modified, batch records and electronic signatures may be compromised. If the audit trail has been tampered with, the chain of evidence for regulatory purposes is broken. These are not IT problems — they are GMP data integrity events that must be formally investigated and reported.</p>
+    <p>Third: what is the status of in-progress manufacturing? Batches that were running during the incident may need to be placed on hold pending an investigation into whether their process records are complete and accurate. A batch whose process data cannot be verified is a batch whose disposition is uncertain — and an uncertain batch disposition is a QA decision, not an IT decision.</p>
+
+    <div class="callout amber">
+      <div class="callout-label">The Validated State Question</div>
+      <p>After any cybersecurity incident affecting a validated OT system, the default assumption must be that the validated state is compromised until proven otherwise. <strong>You cannot return a validated system to production after a cybersecurity incident on the basis that it "seems to be working normally." You must formally verify that the system configuration matches the validated baseline — and document that verification.</strong></p>
+    </div>
+
+    <h2 id="phase-3-eradicate">Phase 3 — Eradicate the Threat and Restore</h2>
+    <p>Eradication in an OT context is more constrained than in an IT context because of the validated system status requirement. You cannot simply wipe and rebuild a validated PLC or SCADA system using a standard IT rebuild process. The restored system must match the validated baseline — which means restoring from the validated backup image, not from a generic operating system installer.</p>
+    <p>The QLean RBP-SYS-001 Recovery and Backup Procedure defines a 15-step disaster recovery process that covers: identifying the last known good backup, verifying its integrity (SHA-256 hash verification against the stored hash record), restoring in the defined sequence, and executing a post-restore verification checklist before the system is reconnected to the OT network. This procedure was designed for hardware failure scenarios but applies identically to cybersecurity incident recovery — the difference is that in a cyber incident, the cause of the failure is adversarial rather than mechanical.</p>
+    <p>Every change made during incident response — patch applications, configuration modifications, software reinstallations — must be documented as a CCR even in a crisis. This is not bureaucracy. An undocumented change to a validated system made during incident response is indistinguishable from an undocumented change made for any other reason, and it will be flagged as a gap if a regulatory inspector reviews the change control log post-incident.</p>
+
+    <div class="phase-block amber">
+      <div class="phase-label">Restoration Requirements — Phase 3</div>
+      <div class="phase-title">Validated Backup Recovery</div>
+      <div class="phase-body">
+        <ul class="arrow-list">
+          <li>Restore only from the validated backup image — verify hash before restore.</li>
+          <li>Restore in the documented sequence: OS layer first, then application, then configuration, then historian data.</li>
+          <li>Document every action taken during restore as part of the incident record — this becomes the CCR evidence package.</li>
+          <li>Do not reconnect to the OT network until post-restore verification is complete.</li>
+          <li>If no validated backup exists or the backup integrity cannot be verified, the system must be requalified from scratch — not assumed to be in its validated state.</li>
+        </ul>
+      </div>
+    </div>
+
+    <h2 id="phase-4-requalify">Phase 4 — Requalify Before Returning to Production</h2>
+    <p>This is the phase that differentiates pharma OT incident response from standard IT incident response. In an IT environment, a restored system that passes functional tests can typically return to service. In a GMP environment, a restored system must be verified against the validated baseline before production resumes.</p>
+    <p>The post-restore verification is essentially a compressed IQ — a check that the restored system's software versions, configuration parameters, and hardware inventory match the documented validated baseline. This does not require full re-execution of the OQ and PQ (unless the risk assessment from Phase 2 determined that the validated state was materially affected). It does require a signed, documented verification that the system matches its validated baseline.</p>
+    <p>QA must formally approve the return to production. The approval should reference the incident record number, the CCRs raised during remediation, the post-restore verification evidence, and the batch disposition decisions for any batches affected during the incident. Only when QA signs off is the system formally returned to validated status and production permitted to resume.</p>
+
+    <h2 id="phase-5-report">Phase 5 — Report, Notify, and Learn</h2>
+    <p>The final phase covers the documentation and notification obligations that follow an OT cybersecurity incident. The internal incident report must describe the timeline of events, the systems and records affected, the GMP impact assessment outcome, the remediation actions taken, and the batch disposition decisions. This report is a GMP record — it must be retained in accordance with your record retention policy and may be requested by regulatory inspectors.</p>
+    <p>Regulatory notification obligations depend on the nature and extent of the incident. A cybersecurity incident that affected GMP records integrity, caused a data integrity event, or resulted in product being released based on potentially compromised data may trigger notification obligations under EU GMP and FDA regulations. These obligations should be pre-defined in the incident response procedure — not assessed on the fly during a crisis when the legal and regulatory context is not at the front of anyone's mind.</p>
+    <p>The CAPA arising from the incident should address root cause in the technical controls (how the attacker gained access), in the procedural controls (why detection was delayed, what response gaps were identified), and in the GMP controls (what changes are needed to prevent a recurrence from compromising validated system status or GMP records in the future). A cybersecurity incident with no CAPA is an incident that is likely to recur.</p>
+
+    <div class="callout blue">
+      <div class="callout-label">In the QLean Framework</div>
+      <p>RBP-SYS-001 (Recovery and Backup Procedure) and SOP-ADMIN-SYS-001 (System Administration) together form the operational backbone of OT incident response for validated systems. The RBP defines the 15-step restore sequence with hash verification and post-restore checklist. SOP-ADMIN-SYS-001 defines the remote access controls, patch management procedures, and USB media controls that are the primary preventive layer against OT incidents.</p>
+    </div>
+
+    <h2 id="what-to-build-before-the-incident">What to Build Before the Incident Happens</h2>
+    <p>Every element of an effective OT incident response depends on preparation that must happen before the incident. The validated backup must exist and its integrity must be verified on a defined schedule. The post-restore verification checklist must be written before you need to execute it under pressure. The containment decision tree for each system must be agreed with QA and production management in advance. The notification escalation chain must be defined and tested. The CCR template for emergency changes must be pre-approved so that documenting response actions does not become a bottleneck during recovery.</p>
+    <p>Organisations that test their OT incident response through tabletop exercises — walking through a ransomware scenario with the actual people who would respond, against the actual documented procedures — discover their gaps in a low-stakes environment. Those that discover their gaps during an actual incident discover them at the worst possible time.</p>
+
+    <div class="table-scroll">
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th>Incident Scenario</th>
+            <th>GMP-Specific Action</th>
+            <th>Document Required</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Ransomware encrypts SCADA historian</td><td>Treat all batch records written since last verified backup as potentially compromised — QA batch disposition review</td><td>Incident record; CCR; batch disposition report</td></tr>
+          <tr><td>Unauthorised PLC code modification detected</td><td>System not in validated state — production halt; post-restore IQ before restart</td><td>CCR; post-restore IQ checklist; QA approval</td></tr>
+          <tr><td>Audit trail tampered with</td><td>Data integrity event — formal investigation; may trigger regulatory notification</td><td>Deviation; CAPA; incident report; potential regulatory notification</td></tr>
+          <tr><td>Remote access session without authorisation</td><td>Assess what was accessed and whether any validated configuration was changed</td><td>Incident record; remote access log review; CCR if changes found</td></tr>
+          <tr><td>USB malware on SCADA workstation</td><td>Isolate workstation; verify no spread to PLC; restore from validated image</td><td>CCR; post-restore verification; SOP-ADMIN review</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+  </article>
+
+  <aside class="sidebar">
+    <div class="toc-card">
+      <div class="toc-label">In This Article</div>
+      <ul class="toc-list">
+        <li><a href="#why-ot-incidents-are-different">Why OT Incidents Are Different</a></li>
+        <li><a href="#phase-1-detect-contain">Phase 1 — Detect &amp; Contain</a></li>
+        <li><a href="#phase-2-gmp-impact">Phase 2 — GMP Impact Assessment</a></li>
+        <li><a href="#phase-3-eradicate">Phase 3 — Eradicate &amp; Restore</a></li>
+        <li><a href="#phase-4-requalify">Phase 4 — Requalify</a></li>
+        <li><a href="#phase-5-report">Phase 5 — Report &amp; Learn</a></li>
+        <li><a href="#what-to-build-before-the-incident">Preparation Before the Incident</a></li>
+      </ul>
+    </div>
+
+    <div class="sidebar-cta">
+      <div class="sc-eyebrow">QLean Framework</div>
+      <div class="sc-title">29 production-ready GAMP 5 documents</div>
+      <p class="sc-body">RBP-SYS-001 Recovery and Backup Procedure and SOP-ADMIN-SYS-001 — the two documents that form your OT incident response backbone.</p>
+      <a href="../index.html#pricing" class="sc-btn">Get the Framework &#8594; &#8364;249</a>
+      <div class="sc-note">INSTANT DOWNLOAD &middot; COMPANY-WIDE LICENCE</div>
+    </div>
+
+    <div class="sidebar-share">
+      <div class="share-label">Share This Article</div>
+      <div class="share-links">
+        <a href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fqleanautomation.com%2Fblog%2Fcybersecurity-incident-response-pharma-ot.html" class="share-link" target="_blank" rel="noopener">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+          Share on LinkedIn
+        </a>
+        <a href="https://www.reddit.com/submit?url=https%3A%2F%2Fqleanautomation.com%2Fblog%2Fcybersecurity-incident-response-pharma-ot.html&title=Cybersecurity%20Incident%20Response%20for%20Pharma%20OT%20Systems" class="share-link" target="_blank" rel="noopener">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/></svg>
+          Share on Reddit
+        </a>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<section class="related">
+  <div class="related-inner">
+    <div class="related-label">Continue Reading</div>
+    <div class="related-grid">
+      <a href="cybersecurity-pharma-ot-iec62443.html" class="related-card">
+        <span class="rc-tag">&#128225; OT Networks</span>
+        <div class="rc-title">OT Cybersecurity for Pharma — IEC 62443</div>
+        <div class="rc-desc">The preventive architecture that reduces OT incident likelihood — zone and conduit model, defence in depth, and how to document it in the HDS.</div>
+        <div class="rc-footer"><span class="rc-read">8 MIN READ</span><span class="rc-arrow">&#8594;</span></div>
+      </a>
+      <a href="ot-patch-management-validated-systems.html" class="related-card">
+        <span class="rc-tag">&#128225; OT Networks</span>
+        <div class="rc-title">OT Patch Management for Validated Systems</div>
+        <div class="rc-desc">How to manage security patches on validated PLC and SCADA systems without voiding the validated state — the procedure that makes both IT and QA happy.</div>
+        <div class="rc-footer"><span class="rc-read">6 MIN READ</span><span class="rc-arrow">&#8594;</span></div>
+      </a>
+      <a href="change-control-validated-system.html" class="related-card">
+        <span class="rc-tag">&#128203; Project Management</span>
+        <div class="rc-title">Change Control in a Validated System</div>
+        <div class="rc-desc">Every remediation action during an OT incident must be documented as a CCR — here is the change control process that makes incident recovery auditable.</div>
+        <div class="rc-footer"><span class="rc-read">6 MIN READ</span><span class="rc-arrow">&#8594;</span></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="../index.html" class="nav-logo" style="text-decoration:none">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="7" fill="#0d0f12"/><rect x="8" y="7" width="16" height="16" rx="2" stroke="white" stroke-width="2.5" fill="none"/><line x1="20" y1="19" x2="26" y2="25" stroke="#0057FF" stroke-width="3" stroke-linecap="round"/></svg>
+          <span style="font-family:'Epilogue',sans-serif;font-weight:800;font-size:16px;color:#0d0f12;letter-spacing:-.03em">QLean <span style="font-weight:300;color:#5a6172">Automation</span></span>
+        </a>
+        <p>GMP validation documentation tools for automation engineers and system integrators.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Products</h4>
+        <ul>
+          <li><a href="../index.html#products">GAMP 5 Framework Pack</a></li>
+          <li><a href="../index.html#products">Technical Ebook</a></li>
+          <li><a href="../index.html#pricing">Pricing</a></li>
+          <li><a href="../index.html#faq">FAQ</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Knowledge Base</h4>
+        <ul>
+          <li><a href="blog-index.html">All Articles</a></li>
+          <li><a href="cluster-emerging.html">Emerging Topics</a></li>
+          <li><a href="cybersecurity-pharma-ot-iec62443.html">OT Cybersecurity</a></li>
+          <li><a href="ot-patch-management-validated-systems.html">OT Patch Management</a></li>
+          <li><a href="change-control-validated-system.html">Change Control</a></li>
+          <li><a href="vpn-remote-access-validated-systems.html">VPN Remote Access</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="../index.html#framework">Framework</a></li>
+          <li><a href="../terms.html">Terms of Service</a></li>
+          <li><a href="../privacy.html">Privacy Policy</a></li>
+          <li><a href="mailto:hello@qleanautomation.com">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 QLean Automation. All rights reserved.</p>
+      <div class="compliance-pills">
+        <span class="cp">GAMP 5</span>
+        <span class="cp">EU GMP ANNEX 11</span>
+        <span class="cp">IEC 62443</span>
+        <span class="cp">GXP</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+window.addEventListener('scroll',function(){
+  var s=document.getElementById('progress');
+  var h=document.documentElement;
+  var p=(h.scrollTop||document.body.scrollTop)/(h.scrollHeight-h.clientHeight)*100;
+  s.style.width=p+'%';
+});
+var tl=document.querySelectorAll('.toc-list a');
+window.addEventListener('scroll',function(){
+  var headings=document.querySelectorAll('.article-body h2[id]');
+  var scrollY=window.scrollY+120;
+  var current='';
+  headings.forEach(function(h){if(h.offsetTop<=scrollY)current=h.id;});
+  tl.forEach(function(a){
+    a.classList.remove('active');
+    if(a.getAttribute('href')==='#'+current)a.classList.add('active');
+  });
+});
+</script>
+</body>
+</html>

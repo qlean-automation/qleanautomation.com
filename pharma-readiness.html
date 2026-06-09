@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-JJQ1TXZJX7"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-JJQ1TXZJX7');
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SI Pharma Readiness Assessment | QLean Automation</title>
+<meta name="description" content="Find out if your system integrator is ready to take on pharmaceutical automation projects. 42-question assessment across 6 capability domains.">
+<link rel="canonical" href="https://qleanautomation.com/pharma-readiness.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@300;400;500;600;700;800;900&family=Source+Sans+3:ital,wght@0,300;0,400;0,500;1,300&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--white:#ffffff;--off:#f7f8f9;--off2:#f0f2f4;--ink:#0d0f12;--ink2:#1e2128;--ink3:#3d4456;--ink4:#9199a8;--rule:#e2e5ea;--rule2:#c8cdd6;--blue:#0057ff;--blue2:#0044cc;--blue-dim:rgba(0,87,255,0.07);--blue-glow:rgba(0,87,255,0.15);--green:#00875a;--green-dim:rgba(0,135,90,0.08);--green-mid:rgba(0,135,90,0.18);--amber:#d97706;--amber-dim:rgba(217,119,6,0.08);--amber-mid:rgba(217,119,6,0.18);--red:#dc2626;--red-dim:rgba(220,38,38,0.07);--red-mid:rgba(220,38,38,0.18);--f-head:'Epilogue',sans-serif;--f-body:'Source Sans 3',sans-serif;--f-mono:'Roboto Mono',monospace;--shadow-sm:0 2px 8px rgba(13,15,18,0.06),0 1px 3px rgba(13,15,18,0.04);--shadow-md:0 4px 16px rgba(13,15,18,0.08),0 2px 6px rgba(13,15,18,0.05);--shadow-lg:0 8px 32px rgba(13,15,18,0.10),0 3px 10px rgba(13,15,18,0.06)}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--white);color:var(--ink);font-family:var(--f-body);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+nav{position:fixed;top:0;left:0;right:0;z-index:200;height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 6%;background:rgba(255,255,255,0.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--rule);transition:border-color .3s;gap:16px}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;flex-shrink:0}
+.nav-links{display:flex;align-items:center;gap:4px;list-style:none;flex:1;justify-content:center}
+.nav-links>li{position:relative}
+.nav-links>li>a,.nav-links>li>button{font-family:var(--f-body);font-size:14px;font-weight:400;color:var(--ink3);text-decoration:none;transition:color .2s;letter-spacing:.01em;background:none;border:none;cursor:pointer;padding:8px 12px;display:flex;align-items:center;gap:5px;white-space:nowrap}
+.nav-links>li>a:hover,.nav-links>li>button:hover{color:var(--ink)}
+.nav-chevron{width:12px;height:12px;transition:transform .2s;opacity:.5}
+.nav-links>li.open>button .nav-chevron{transform:rotate(180deg)}
+.nav-dropdown{display:none;position:absolute;top:calc(100% + 8px);left:0;background:white;border:1px solid var(--rule);border-radius:10px;box-shadow:0 8px 32px rgba(13,15,18,0.10),0 3px 10px rgba(13,15,18,0.06);min-width:220px;padding:6px;z-index:300;list-style:none}
+.nav-links>li.open .nav-dropdown{display:block}
+.nav-dropdown li a{display:flex;flex-direction:column;padding:10px 14px;border-radius:7px;text-decoration:none;transition:background .15s}
+.nav-dropdown li a:hover{background:var(--off)}
+.nav-dd-label{font-size:13px;font-weight:500;color:var(--ink);line-height:1.3}
+.nav-dd-sub{font-size:11px;color:var(--ink4);margin-top:2px;font-family:monospace;letter-spacing:.02em}
+.nav-right{display:flex;align-items:center;gap:12px;position:relative;z-index:201}
+.nav-btn{font-family:var(--f-body);font-size:13px;font-weight:500;padding:9px 20px;background:var(--blue);color:white;border:none;border-radius:6px;cursor:pointer;text-decoration:none;letter-spacing:.01em;transition:background .2s,transform .15s;white-space:nowrap;flex-shrink:0}
+.nav-btn:hover{background:var(--blue2);transform:translateY(-1px)}
+.menu-toggle{display:none;background:none;border:none;cursor:pointer;padding:6px;color:var(--ink);z-index:210;flex-shrink:0}
+.menu-toggle svg{width:22px;height:22px;display:block}
+.menu-toggle .icon-close{display:none}
+.menu-toggle.open .icon-hamburger{display:none}
+.menu-toggle.open .icon-close{display:block}
+.nav-mobile-sub{display:none;flex-direction:column;background:var(--off);border-top:1px solid var(--off2)}
+.nav-mobile-sub.open{display:flex}
+.nav-mobile-sub a{padding:11px 6% 11px 10% !important;font-size:14px !important;color:var(--ink3) !important;border-bottom:1px solid var(--off2)}
+.nav-mobile-sub a span{display:block;font-size:11px;color:var(--ink4);font-family:monospace;margin-top:1px}
+.nav-mobile-cta-li{display:none}
+@media(max-width:960px){
+  .nav-btn{display:none}
+  .menu-toggle{display:flex}
+  nav .nav-links{display:none;position:absolute;top:64px;left:0;right:0;background:white;flex-direction:column;align-items:stretch;gap:0;border-bottom:1px solid var(--rule);box-shadow:0 4px 16px rgba(13,15,18,0.08);padding:8px 0 16px;z-index:199;flex:none;justify-content:flex-start}
+  nav .nav-links.open{display:flex}
+  nav .nav-links>li{width:100%}
+  nav .nav-links>li>a,nav .nav-links>li>button{display:flex;justify-content:space-between;align-items:center;padding:13px 6%;font-size:15px;color:var(--ink2);border-bottom:1px solid var(--off2);width:100%;text-align:left}
+  .nav-dropdown{display:none !important}
+  .nav-mobile-cta-li{display:block;padding:8px 6% 0}
+  nav .nav-links>li.nav-mobile-cta-li>a{display:block;padding:13px;background:var(--blue);color:white !important;text-align:center;border-radius:6px;font-weight:500;font-size:14px;text-decoration:none;border-bottom:none !important;transition:background .2s;justify-content:center}
+  nav .nav-links>li.nav-mobile-cta-li>a:hover{background:var(--blue2) !important}
+}
+.hero{padding:120px 6% 72px;background:var(--off);border-bottom:1px solid var(--rule);position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-80px;right:-80px;width:400px;height:400px;background:radial-gradient(circle,rgba(0,87,255,0.05) 0%,transparent 70%);pointer-events:none}
+.hero-inner{max-width:900px;margin:0 auto;text-align:center;position:relative;z-index:1}
+.eyebrow{display:inline-flex;align-items:center;gap:10px;font-family:var(--f-mono);font-size:11px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--blue);margin-bottom:20px}
+.eyebrow::before{content:'';width:24px;height:1.5px;background:var(--blue);flex-shrink:0}
+.hero h1{font-family:var(--f-head);font-size:clamp(32px,4.5vw,58px);font-weight:900;line-height:1.05;letter-spacing:-.03em;margin-bottom:20px}
+.hero h1 span{color:var(--blue)}
+.hero-sub{font-size:17px;color:var(--ink2);line-height:1.75;max-width:600px;margin:0 auto 32px}
+.hero-meta{display:flex;align-items:center;justify-content:center;gap:28px;flex-wrap:wrap}
+.meta-pill{display:flex;align-items:center;gap:7px;font-family:var(--f-mono);font-size:11px;color:var(--ink4);letter-spacing:.05em}
+.progress-wrap{background:var(--white);border-bottom:1px solid var(--rule);padding:16px 6% 18px;position:sticky;top:64px;z-index:100;display:none;box-shadow:0 4px 12px rgba(13,15,18,0.06)}
+.progress-inner{max-width:720px;margin:0 auto}
+.progress-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.progress-label{font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.08em;text-transform:uppercase}
+.progress-count{font-family:var(--f-mono);font-size:10px;color:var(--blue);letter-spacing:.06em}
+.progress-bar{height:3px;background:var(--off2);border-radius:2px}
+.progress-fill{height:3px;background:var(--blue);border-radius:2px;transition:width .4s ease;width:0%}
+.assessment{max-width:900px;margin:0 auto;padding:52px 6% 100px}
+.start-screen{padding:48px 0;text-align:center}
+.start-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:36px;max-width:500px;margin-left:auto;margin-right:auto}
+.start-card{padding:20px 14px;border:1px solid var(--rule);border-radius:10px;text-align:center;background:var(--white)}
+.start-icon{font-size:22px;margin-bottom:10px}
+.start-card-title{font-family:var(--f-head);font-size:13px;font-weight:700;margin-bottom:5px}
+.start-card-body{font-size:12px;color:var(--ink4);line-height:1.5}
+.btn-primary{font-family:var(--f-body);font-size:15px;font-weight:600;padding:14px 36px;background:var(--blue);color:white;border:none;border-radius:8px;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:8px}
+.btn-primary:hover{background:var(--blue2);transform:translateY(-1px);box-shadow:0 8px 24px var(--blue-glow)}
+.profile-section{display:none;padding:36px 0}
+.profile-section.active{display:block}
+.profile-heading{font-family:var(--f-head);font-size:22px;font-weight:800;letter-spacing:-.03em;margin-bottom:6px}
+.profile-sub{font-size:13px;color:var(--ink4);margin-bottom:28px;font-family:var(--f-mono);letter-spacing:.04em;text-transform:uppercase}
+.pq-card{background:var(--off);border:1px solid var(--rule);border-radius:10px;padding:22px;margin-bottom:12px}
+.pq-text{font-size:15px;font-weight:600;color:var(--ink);margin-bottom:14px;font-family:var(--f-head);letter-spacing:-.01em;line-height:1.4}
+.pq-options{display:flex;flex-wrap:wrap;gap:8px}
+.pq-opt{padding:9px 16px;border:1px solid var(--rule2);border-radius:6px;cursor:pointer;font-size:13px;color:var(--ink3);background:var(--white);transition:all .15s}
+.pq-opt:hover{border-color:var(--blue);color:var(--blue)}
+.pq-opt.selected{border-color:var(--blue);background:var(--blue);color:white}
+.phase-intro{display:none;padding:36px 0 4px}.btn-begin-domain{margin-top:8px}
+.phase-intro.active{display:block}
+.phase-num{font-family:var(--f-mono);font-size:10px;color:var(--blue);letter-spacing:.12em;text-transform:uppercase;margin-bottom:10px}
+.phase-title{font-family:var(--f-head);font-size:26px;font-weight:800;letter-spacing:-.03em;color:var(--ink);margin-bottom:8px}
+.phase-desc{font-size:15px;color:var(--ink3);line-height:1.65;margin-bottom:28px;padding-bottom:28px;border-bottom:1px solid var(--rule)}
+.q-card{background:var(--white);border:1px solid var(--rule);border-radius:10px;padding:26px;margin-bottom:16px;display:none;box-shadow:var(--shadow-sm);transition:border-color .2s}
+.q-card.active{display:block;animation:fadeUp .25s ease}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.q-card.answered{border-color:rgba(0,87,255,.25)}
+.q-num{font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.1em;text-transform:uppercase;margin-bottom:10px}
+.q-text{font-family:var(--f-head);font-size:16px;font-weight:700;letter-spacing:-.02em;line-height:1.4;color:var(--ink);margin-bottom:18px}
+.q-options{display:flex;flex-direction:column;gap:8px}
+.q-option{display:flex;align-items:flex-start;gap:12px;padding:13px 15px;border:1px solid var(--rule);border-radius:8px;cursor:pointer;transition:all .15s}
+.q-option:hover{border-color:var(--blue);background:var(--blue-dim)}
+.q-option.selected{border-color:var(--blue);background:var(--blue-dim)}
+.opt-radio{width:18px;height:18px;border-radius:50%;border:2px solid var(--rule2);flex-shrink:0;margin-top:1px;display:flex;align-items:center;justify-content:center;transition:all .15s}
+.q-option.selected .opt-radio{border-color:var(--blue);background:var(--blue)}
+.q-option.selected .opt-radio::after{content:'';width:6px;height:6px;border-radius:50%;background:white;display:block}
+.opt-text{font-size:14px;color:var(--ink2);line-height:1.5}
+.q-option.selected .opt-text{color:var(--ink)}
+.q-nav{display:flex;align-items:center;justify-content:space-between;margin-top:24px;padding-top:20px;border-top:1px solid var(--rule)}
+.btn-back{font-family:var(--f-body);font-size:14px;font-weight:400;padding:10px 18px;background:transparent;color:var(--ink3);border:1px solid var(--rule);border-radius:6px;cursor:pointer;transition:all .2s}
+.btn-back:hover{border-color:var(--ink3);color:var(--ink)}
+.btn-next{font-family:var(--f-body);font-size:14px;font-weight:500;padding:10px 22px;background:var(--blue);color:white;border:none;border-radius:6px;cursor:pointer;transition:all .2s}
+.btn-next:hover:not(:disabled){background:var(--blue2);transform:translateY(-1px)}
+.btn-next:disabled{background:var(--off2);color:var(--ink4);cursor:not-allowed}
+.prof-nav{display:flex;justify-content:flex-end;margin-top:24px;padding-top:20px;border-top:1px solid var(--rule)}
+.email-gate{display:none;padding:40px 0}
+.email-gate.active{display:block;animation:fadeUp .3s ease}
+.gate-card{background:var(--ink);border-radius:14px;padding:44px;text-align:center;position:relative;overflow:hidden}
+.gate-card::before{content:'';position:absolute;top:-60px;right:-60px;width:200px;height:200px;background:radial-gradient(circle,rgba(0,87,255,0.25) 0%,transparent 70%);pointer-events:none}
+.gate-eyebrow{font-family:var(--f-mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:14px}
+.gate-title{font-family:var(--f-head);font-size:30px;font-weight:900;letter-spacing:-.04em;color:white;margin-bottom:10px;line-height:1.1}
+.gate-sub{font-size:15px;color:rgba(255,255,255,.45);line-height:1.7;margin-bottom:28px;max-width:380px;margin-left:auto;margin-right:auto}
+.score-preview{display:flex;gap:8px;justify-content:center;margin-bottom:28px;flex-wrap:wrap}
+.sp-item{padding:8px 14px;border-radius:6px;display:flex;align-items:center;gap:7px}
+.sp-item.green{background:rgba(0,135,90,0.2)}.sp-item.amber{background:rgba(217,119,6,0.2)}.sp-item.red{background:rgba(220,38,38,0.2)}
+.sp-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.sp-item.green .sp-dot{background:#22c55e}.sp-item.amber .sp-dot{background:#f59e0b}.sp-item.red .sp-dot{background:#ef4444}
+.sp-text{font-family:var(--f-mono);font-size:10px;color:rgba(255,255,255,.65);letter-spacing:.05em}
+.gate-form{display:flex;flex-direction:column;gap:10px;max-width:380px;margin:0 auto}
+.gate-input{font-family:var(--f-body);font-size:15px;padding:13px 16px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-radius:8px;color:white;outline:none;transition:border-color .2s;width:100%}
+.gate-input::placeholder{color:rgba(255,255,255,.2)}
+.gate-input:focus{border-color:rgba(0,87,255,.6)}
+.gate-submit{font-family:var(--f-body);font-size:15px;font-weight:600;padding:14px;background:var(--blue);color:white;border:none;border-radius:8px;cursor:pointer;transition:all .2s}
+.gate-submit:hover{background:var(--blue2);transform:translateY(-1px);box-shadow:0 8px 24px rgba(0,87,255,.35)}
+.gate-note{font-size:11px;color:rgba(255,255,255,.18);line-height:1.5}
+.gate-error{font-size:13px;color:#f87171;display:none;text-align:center}
+.confirmation{display:none;padding:60px 0 80px}
+.confirmation.active{display:block;animation:fadeUp .3s ease}
+.conf-card{background:var(--white);border:1px solid var(--rule);border-radius:14px;padding:56px 48px;text-align:center;max-width:560px;margin:0 auto;box-shadow:var(--shadow-md)}
+.conf-icon{width:56px;height:56px;background:var(--green-dim);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 24px}
+.conf-icon svg{color:var(--green)}
+.conf-title{font-family:var(--f-head);font-size:28px;font-weight:900;letter-spacing:-.04em;color:var(--ink);margin-bottom:10px;line-height:1.1}
+.conf-sub{font-size:16px;color:var(--ink3);line-height:1.75;margin-bottom:6px}
+.conf-email{font-family:var(--f-mono);font-size:13px;color:var(--blue);margin-bottom:28px;letter-spacing:.02em}
+.conf-hint{font-size:13px;color:var(--ink4);margin-bottom:32px;padding:14px 18px;background:var(--off);border-radius:8px;line-height:1.6}
+.conf-divider{height:1px;background:var(--rule);margin:32px 0}
+.conf-while{font-family:var(--f-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink4);margin-bottom:16px}
+.conf-links{display:flex;flex-direction:column;gap:8px}
+.conf-link{display:flex;align-items:center;gap:10px;padding:12px 16px;border:1px solid var(--rule);border-radius:8px;text-decoration:none;color:var(--ink2);font-size:14px;transition:border-color .2s,background .2s}
+.conf-link:hover{border-color:var(--blue);background:var(--blue-dim);color:var(--ink)}
+.conf-link-arrow{color:var(--blue);font-size:12px;margin-left:auto}
+@media(max-width:600px){.conf-card{padding:36px 24px}}
+.loading-overlay{display:none;position:fixed;inset:0;background:rgba(255,255,255,.92);z-index:500;align-items:center;justify-content:center;flex-direction:column;gap:14px}
+.loading-overlay.active{display:flex}
+.spinner{width:30px;height:30px;border:3px solid var(--rule);border-top-color:var(--blue);border-radius:50%;animation:spin .7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loading-text{font-family:var(--f-mono);font-size:11px;color:var(--ink4);letter-spacing:.1em;text-transform:uppercase}
+@media(max-width:600px){.domain-grid{grid-template-columns:1fr}.start-grid{grid-template-columns:1fr}.gate-card{padding:28px 20px}}
+/* ── NAV ── */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 6%;background:rgba(255,255,255,0.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--rule);transition:border-color .3s;gap:16px}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;flex-shrink:0}
+.nav-links{display:flex;align-items:center;gap:4px;list-style:none;flex:1;justify-content:center}
+.nav-links>li{position:relative}
+.nav-links>li>a,.nav-links>li>button{font-family:var(--f-body);font-size:14px;font-weight:400;color:var(--ink3);text-decoration:none;transition:color .2s;letter-spacing:.01em;background:none;border:none;cursor:pointer;padding:8px 12px;display:flex;align-items:center;gap:5px;white-space:nowrap}
+.nav-links>li>a:hover,.nav-links>li>button:hover{color:var(--ink)}
+.nav-chevron{width:12px;height:12px;transition:transform .2s;opacity:.5}
+.nav-links>li.open>button .nav-chevron{transform:rotate(180deg)}
+.nav-dropdown{display:none;position:absolute;top:calc(100% + 8px);left:0;background:white;border:1px solid var(--rule);border-radius:10px;box-shadow:0 8px 32px rgba(13,15,18,0.10),0 3px 10px rgba(13,15,18,0.06);min-width:220px;padding:6px;z-index:300;list-style:none}
+.nav-links>li.open .nav-dropdown{display:block}
+.nav-dropdown li a{display:flex;flex-direction:column;padding:10px 14px;border-radius:7px;text-decoration:none;transition:background .15s}
+.nav-dropdown li a:hover{background:var(--off)}
+.nav-dd-label{font-size:13px;font-weight:500;color:var(--ink);line-height:1.3}
+.nav-dd-sub{font-size:11px;color:var(--ink4);margin-top:2px;font-family:var(--f-mono);letter-spacing:.02em}
+.nav-right{display:flex;align-items:center;gap:12px;position:relative;z-index:201}
+.nav-btn{font-family:var(--f-body);font-size:13px;font-weight:500;padding:9px 20px;background:var(--blue);color:white;border:none;border-radius:6px;cursor:pointer;text-decoration:none;letter-spacing:.01em;transition:background .2s,transform .15s;white-space:nowrap;flex-shrink:0}
+.nav-btn:hover{background:var(--blue2);transform:translateY(-1px)}
+.menu-toggle{display:none;background:none;border:none;cursor:pointer;padding:6px;color:var(--ink);z-index:210;flex-shrink:0}
+.menu-toggle svg{width:22px;height:22px;display:block}
+.menu-toggle .icon-close{display:none}
+.menu-toggle.open .icon-hamburger{display:none}
+.menu-toggle.open .icon-close{display:block}
+.nav-mobile-sub{display:none;flex-direction:column;background:var(--off);border-top:1px solid var(--off2)}
+.nav-mobile-sub.open{display:flex}
+.nav-mobile-sub a{padding:11px 6% 11px 10% !important;font-size:14px !important;color:var(--ink3) !important;border-bottom:1px solid var(--off2)}
+.nav-mobile-sub a:last-child{border-bottom:none}
+.nav-mobile-sub a span{display:block;font-size:11px;color:var(--ink4);font-family:var(--f-mono);margin-top:1px}
+.nav-mobile-cta-li{display:none}
+@media(max-width:960px){
+  .nav-btn{display:none}
+  .menu-toggle{display:flex}
+  nav .nav-links{display:none;position:absolute;top:64px;left:0;right:0;background:white;flex-direction:column;align-items:stretch;gap:0;border-bottom:1px solid var(--rule);box-shadow:0 4px 16px rgba(13,15,18,0.08);padding:8px 0 16px;z-index:199;flex:none;justify-content:flex-start}
+  nav .nav-links.open{display:flex}
+  nav .nav-links>li{width:100%}
+  nav .nav-links>li>a,nav .nav-links>li>button{display:flex;justify-content:space-between;align-items:center;padding:13px 6%;font-size:15px;color:var(--ink2);border-bottom:1px solid var(--off2);width:100%;text-align:left}
+  .nav-dropdown{display:none !important}
+  .nav-mobile-cta-li{display:block;padding:8px 6% 0}
+  nav .nav-links>li.nav-mobile-cta-li>a{display:block;padding:13px;background:var(--blue);color:white !important;text-align:center;border-radius:6px;font-weight:500;font-size:14px;text-decoration:none;border-bottom:none !important;transition:background .2s;justify-content:center}
+  nav .nav-links>li.nav-mobile-cta-li>a:hover{background:var(--blue2) !important}
+}
+</style>
+<!-- MailerLite Universal -->
+<script>(function(w,d,e,u,f,l,n){w[f]=w[f]||function(){(w[f].q=w[f].q||[]).push(arguments);},l=d.createElement(e),l.async=1,l.src=u,n=d.getElementsByTagName(e)[0],n.parentNode.insertBefore(l,n);})(window,document,'script','https://assets.mailerlite.com/js/universal.js','ml');ml('account','2349274');</script>
+<!-- End MailerLite Universal -->
+</head>
+<body>
+
+<nav id="nav">
+  <a href="index.html" class="nav-logo">
+    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0">
+      <rect x="0" y="0" width="32" height="32" rx="7" fill="#0d0f12"/>
+      <rect x="8" y="7" width="16" height="16" rx="2" stroke="white" stroke-width="2.5" fill="none"/>
+      <line x1="20" y1="19" x2="26" y2="25" stroke="#0057FF" stroke-width="3" stroke-linecap="round"/>
+    </svg>
+    <span style="font-family:'Epilogue',sans-serif;font-weight:800;font-size:16px;color:#0d0f12;letter-spacing:-.03em;white-space:nowrap">QLean <span style="font-weight:300;color:#5a6172">Automation</span></span>
+  </a>
+  <ul class="nav-links" id="navLinks">
+
+    <!-- Products dropdown -->
+    <li id="navProducts">
+      <button onclick="toggleNav('navProducts')" aria-expanded="false">
+        Products
+        <svg class="nav-chevron" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 4 6 8 10 4"/></svg>
+      </button>
+      <ul class="nav-dropdown">
+        <li><a href="index.html#pricing">
+          <span class="nav-dd-label">GAMP 5 Full Framework</span>
+          <span class="nav-dd-sub">29 templates + masterclass · €249</span>
+        </a></li>
+        <li><a href="index.html#pricing">
+          <span class="nav-dd-label">Validation Templates</span>
+          <span class="nav-dd-sub">29 production-ready documents · €229</span>
+        </a></li>
+        <li><a href="index.html#pricing">
+          <span class="nav-dd-label">Technical Masterclass</span>
+          <span class="nav-dd-sub">GAMP 5 ebook for engineers · €39</span>
+        </a></li>
+      </ul>
+      <div class="nav-mobile-sub" id="subProducts">
+        <a href="index.html#pricing">GAMP 5 Full Framework <span>29 templates + masterclass · €249</span></a>
+        <a href="index.html#pricing">Validation Templates <span>29 documents · €229</span></a>
+        <a href="index.html#pricing">Technical Masterclass <span>Ebook · €39</span></a>
+      </div>
+    </li>
+
+    <!-- Start Free dropdown -->
+    <li id="navFree">
+      <button onclick="toggleNav('navFree')" aria-expanded="false">
+        Start Free
+        <svg class="nav-chevron" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 4 6 8 10 4"/></svg>
+      </button>
+      <ul class="nav-dropdown">
+        <li><a href="pharma-readiness.html">
+          <span class="nav-dd-label">SI Readiness Check</span>
+          <span class="nav-dd-sub">42 questions · results by email · free</span>
+        </a></li>
+        <li><a href="index.html#free-download">
+          <span class="nav-dd-label">Free Sample</span>
+          <span class="nav-dd-sub">GAMP 5 matrix + URS template · free</span>
+        </a></li>
+      </ul>
+      <div class="nav-mobile-sub" id="subFree">
+        <a href="pharma-readiness.html">SI Readiness Check <span>42 questions · free</span></a>
+        <a href="index.html#free-download">Free Sample <span>GAMP 5 matrix + URS template</span></a>
+      </div>
+    </li>
+
+    <li><a href="blog/blog-index.html">Knowledge Base</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="index.html#faq">FAQ</a></li>
+
+    <!-- Mobile only CTA -->
+    <li class="nav-mobile-cta-li"><a href="index.html#pricing">Get the Framework →</a></li>
+  </ul>
+  <div class="nav-right">
+    <a href="index.html#pricing" class="nav-btn">Get the Framework →</a>
+    <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+      <svg class="icon-hamburger" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
+      <svg class="icon-close" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+    </button>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-inner">
+    <div class="eyebrow">Free Assessment</div>
+    <h1>Is your SI <span>pharma ready?</span></h1>
+    <p class="hero-sub">42 questions across 6 capability domains. Find out where your gaps are — before a pharma client does.</p>
+    <div class="hero-meta">
+      <span class="meta-pill">⏱ 15 minutes</span>
+      <span class="meta-pill">✓ 42 questions</span>
+      <span class="meta-pill">◈ 6 domains</span>
+      <span class="meta-pill">◎ Free — no credit card</span>
+    </div>
+  </div>
+</section>
+
+<div class="progress-wrap" id="progressWrap">
+  <div class="progress-inner">
+    <div class="progress-top">
+      <span class="progress-label" id="progressLabel">Profile</span>
+      <span class="progress-count" id="progressCount">0 / 45</span>
+    </div>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+  </div>
+</div>
+
+<div class="loading-overlay" id="loadingOverlay">
+  <div class="spinner"></div>
+  <div class="loading-text">Analysing responses...</div>
+</div>
+
+<div class="assessment" id="assessmentWrap">
+
+  <div class="start-screen" id="startScreen">
+    <div class="start-grid">
+      <div class="start-card"><div class="start-icon">📊</div><div class="start-card-title">Domain Scores</div><div class="start-card-body">Red/Amber/Green across 6 capability areas</div></div>
+      <div class="start-card"><div class="start-icon">🎯</div><div class="start-card-title">Gap Analysis</div><div class="start-card-body">Articles matched to your specific weak areas</div></div>
+      <div class="start-card"><div class="start-icon">📋</div><div class="start-card-title">Readiness Tier</div><div class="start-card-body">Your overall pharma readiness rating</div></div>
+    </div>
+    <button class="btn-primary" onclick="startAssessment()">Start Assessment →</button>
+    <div style="margin-top:14px;font-size:12px;color:var(--ink4)">Takes ~15 minutes. Save your results via email at the end.</div>
+  </div>
+
+  <div class="profile-section" id="profileSection">
+    <div class="profile-heading">A few context questions</div>
+    <div class="profile-sub">Not scored — helps us personalise your results</div>
+    <div class="pq-card">
+      <div class="pq-text">P1. How many engineers does your company have working on automation projects?</div>
+      <div class="pq-options" id="pq1">
+        <div class="pq-opt" onclick="selectProfile('pq1','1-5',this)">1–5</div>
+        <div class="pq-opt" onclick="selectProfile('pq1','6-20',this)">6–20</div>
+        <div class="pq-opt" onclick="selectProfile('pq1','21-50',this)">21–50</div>
+        <div class="pq-opt" onclick="selectProfile('pq1','50plus',this)">50+</div>
+      </div>
+    </div>
+    <div class="pq-card">
+      <div class="pq-text">P2. How many of those have delivered at least one GMP-regulated automation project end-to-end?</div>
+      <div class="pq-options" id="pq2">
+        <div class="pq-opt" onclick="selectProfile('pq2','zero',this)">None yet — this would be our first</div>
+        <div class="pq-opt" onclick="selectProfile('pq2','one_to_three',this)">1–3 engineers</div>
+        <div class="pq-opt" onclick="selectProfile('pq2','four_plus',this)">4 or more engineers</div>
+      </div>
+    </div>
+    <div class="pq-card">
+      <div class="pq-text">P3. What best describes your company's current position with pharma?</div>
+      <div class="pq-options" id="pq3">
+        <div class="pq-opt" onclick="selectProfile('pq3','never',this)">We've never worked on a pharma project</div>
+        <div class="pq-opt" onclick="selectProfile('pq3','occasional',this)">One or two projects, no repeatable process</div>
+        <div class="pq-opt" onclick="selectProfile('pq3','growing',this)">We work in pharma occasionally, want to formalise</div>
+        <div class="pq-opt" onclick="selectProfile('pq3','established',this)">Pharma is a growing part of our business</div>
+      </div>
+    </div>
+    <div class="prof-nav">
+      <button class="btn-next" id="profileNextBtn" onclick="startDomains()" disabled>Begin Assessment →</button>
+    </div>
+  </div>
+
+  <div id="domainsWrap"></div>
+
+  <div class="email-gate" id="emailGate">
+    <div class="gate-card">
+      <div class="gate-eyebrow">Assessment Complete</div>
+      <div class="gate-title">Your results are ready</div>
+      <div class="gate-sub">Enter your email to unlock your full gap report — domain scores, curated articles, and your readiness tier.</div>
+      <div class="score-preview" id="scorePreview"></div>
+      <div class="gate-form">
+        <!-- Honeypot — bots fill this, humans don't -->
+        <input type="text" name="ml_hp" id="ml_hp" style="display:none!important" tabindex="-1" autocomplete="off">
+        <input class="gate-input" type="email" id="emailInput" placeholder="your@company.com" autocomplete="email">
+        <div class="gate-error" id="gateError">Please enter a valid email address.</div>
+        <button class="gate-submit" onclick="submitEmail()">Send My Results →</button>
+        <div class="gate-note">No spam. Results email + occasional insights for SIs entering pharma. Unsubscribe anytime.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="confirmation" id="confirmationSection">
+    <div class="conf-card">
+      <div class="conf-icon">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+      <div class="conf-title">Results on their way</div>
+      <p class="conf-sub">Your full gap report has been sent to</p>
+      <div class="conf-email" id="confEmail"></div>
+      <div class="conf-hint">
+        &#9993; Check your inbox — the email includes your readiness tier, all 6 domain scores, and curated articles matched to your gaps.<br><br>
+        Not arrived in 5 minutes? Check your spam folder.
+      </div>
+      <div class="conf-divider"></div>
+      <div class="conf-while">While you wait</div>
+      <div class="conf-links">
+        <a href="blog/blog-index.html" class="conf-link">
+          Browse the Knowledge Base — 100+ free articles
+          <span class="conf-link-arrow">→</span>
+        </a>
+        <a href="index.html#pricing" class="conf-link">
+          View the GAMP 5 Framework — from €249
+          <span class="conf-link-arrow">→</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+const DOMAINS=[
+  {id:'regulatory',name:'Regulatory Awareness',desc:'Does your team understand the rules governing computerised systems in pharma?'},
+  {id:'documentation',name:'Documentation Capability',desc:'Can you produce the document set a pharma project requires?'},
+  {id:'validation',name:'Validation Methodology',desc:'Do you understand and apply the V-model validation lifecycle?'},
+  {id:'engineering',name:'Engineering Practices',desc:'Are your technical standards GMP-defensible?'},
+  {id:'quality',name:'Quality & Change Control',desc:'Can you operate within a pharma Quality Management System?'},
+  {id:'team',name:'Team & Project Readiness',desc:'Is your organisation set up to deliver and win pharma projects?'}
+];
+
+const QS=[
+  {d:0,t:'How familiar is your team with GAMP 5 (Good Automated Manufacturing Practice)?',o:['We understand the 2022 2nd Edition — risk-based approach, software categories, lifecycle requirements','We\'ve heard of it and have a general idea but haven\'t applied it on a real project','We know the name but haven\'t studied it in any depth']},
+  {d:0,t:'When a pharma client mentions EU GMP Annex 11 or 21 CFR Part 11, how does your team respond?',o:['We know both regulations and understand what they require from a computerised system design perspective','We know one of them reasonably well but not both','We\'d need to research what they require before responding']},
+  {d:0,t:'Do you know what software category (GAMP 5) your typical PLC/SCADA system falls into, and what that means for your validation scope?',o:['Yes — we can classify a system and explain why the category determines the document set','We have a rough idea but wouldn\'t be confident explaining it to a client\'s QA team','No — we haven\'t worked through the categorisation logic yet']},
+  {d:0,t:'Have you ever read or worked with a pharma client\'s Quality Management System (QMS) requirements?',o:['Yes — we\'ve reviewed client SOPs, worked under their change control, and understood what QA sign-off means','We\'ve been told requirements exist but haven\'t engaged with them directly','No — this would be new territory for us']},
+  {d:0,t:'Do you understand the difference between CSV (Computer System Validation) and CSA (Computer Software Assurance)?',o:['Yes — we know CSA is the newer FDA-aligned approach and understand when each applies','We\'ve seen the terms but couldn\'t explain the difference clearly','No — we haven\'t encountered this distinction']},
+  {d:0,t:'Are you aware of ALCOA+ principles and how they apply to electronic records in a GMP system?',o:['Yes — we design audit trails and electronic records with ALCOA+ in mind','We know ALCOA+ exists but haven\'t applied it deliberately in system design','No — this is new to us']},
+  {d:0,t:'Does your team know what a pharma client\'s QA team will look for during a system audit?',o:['Yes — we\'ve been through audits or been briefed in detail on what QA reviewers examine','We have a general idea but haven\'t faced a real audit situation','No — we wouldn\'t know what to prepare']},
+  {d:1,t:'Does your company have a controlled template for a Validation Plan (VP)?',o:['Yes — a complete, GAMP 5-aligned VP template we can deploy on a new project immediately','We have something we\'ve used before but it\'s not formally controlled or regulatory-aligned','No — we\'d build one from scratch or rely on the client to provide it']},
+  {d:1,t:'Can you produce a User Requirements Specification (URS) that a pharma client\'s QA team would accept?',o:['Yes — we have a structured URS template with requirements written in a testable, traceable format','We\'ve written URS documents before but they may not meet pharma QA expectations','No — we\'d need guidance on structure and content']},
+  {d:1,t:'Do you have IQ, OQ, and PQ protocol templates ready to use?',o:['Yes — complete templates with test case structure, acceptance criteria format, and evidence sections','We have partial templates or have adapted generic ones in the past','No — we\'d need to build these or request them from the client']},
+  {d:1,t:'Can you produce a Traceability Matrix linking requirements through design to test evidence?',o:['Yes — we have a working traceability matrix format and know how to populate it across the lifecycle','We understand the concept but haven\'t built a fully linked matrix on a real project','No — this would be new to us']},
+  {d:1,t:'Does your team know what a Functional Design Specification (FDS) looks like in a pharma context vs a standard automation project?',o:['Yes — we understand the additional content required (audit trail design, access control, e-signature logic) and document it accordingly','We produce FDS documents but haven\'t adapted them for GMP requirements','No — our FDS format is standard industrial, not pharma-specific']},
+  {d:1,t:'Do you have document control in place — version numbering, review/approval workflow, controlled distribution?',o:['Yes — we operate a document control system with formal revision history and approval records','We have informal version control but not a formal document management process','No — documents are managed ad hoc per project']},
+  {d:1,t:'Have you produced a Validation Summary Report (VSR) closing out a validation lifecycle?',o:['Yes — we\'ve written VSRs reviewed and approved by a client\'s QA team','We know what it should contain but haven\'t produced one that went through formal QA review','No — we\'ve never produced a VSR']},
+  {d:2,t:'Can your team explain the V-model and map your project deliverables onto it?',o:['Yes — we can map URS → FDS/HDS/SDS → IQ/OQ/PQ and explain the left-right traceability','We know the V-model conceptually but haven\'t applied it formally on a project','No — we\'re not familiar with how the V-model applies to our work']},
+  {d:2,t:'Do you conduct Factory Acceptance Tests (FAT) in a way that generates GMP-acceptable evidence?',o:['Yes — our FATs produce signed test records with pass/fail evidence that satisfy pharma QA','We run FATs but the records are informal and not structured for regulatory review','No — our FAT process isn\'t documented at the level pharma clients require']},
+  {d:2,t:'How do you handle deviations discovered during testing?',o:['We log deviations formally, investigate root cause, and document resolution before closing the test phase','We fix issues during testing but don\'t always document them in a structured deviation record','We resolve issues as they come up without formal deviation tracking']},
+  {d:2,t:'Do you understand risk-based validation — applying more documentation effort to higher-risk functions?',o:['Yes — we perform risk assessments (e.g. FMEA) and use them to justify our test scope','We intuitively apply more attention to critical functions but don\'t document a formal risk rationale','No — we apply the same effort to all functions regardless of risk']},
+  {d:2,t:'Can you define the validation scope for a new project — what gets validated, what doesn\'t, and why?',o:['Yes — we can write a Validation Plan with a justified scope that a QA team would accept','We can make a reasonable attempt but would struggle to defend scope decisions under QA scrutiny','No — we wouldn\'t know where to start with scoping a validation project']},
+  {d:2,t:'Does your team understand the difference between IQ, OQ, and PQ — and what belongs in each phase?',o:['Yes — we can assign test cases correctly and explain the rationale to a client','We have a general understanding but sometimes blur the lines between phases','No — we\'d need to study this before running a qualification project']},
+  {d:2,t:'Have you been involved in a Site Acceptance Test (SAT) on a pharma project?',o:['Yes — we\'ve run or contributed to SATs with formal test records reviewed by QA','We\'ve been on-site during commissioning but not under a formal SAT protocol','No — SAT is new territory for us']},
+  {d:3,t:'Do your PLC programs follow a structured, documented coding standard?',o:['Yes — we have a coding standard covering naming, structure, commenting, and version control','We have informal conventions that most engineers follow but nothing formally documented','No — coding approach varies by engineer and project']},
+  {d:3,t:'How do you manage PLC/SCADA software versions across a project lifecycle?',o:['We use version control (e.g. Git or equivalent) with tagged releases tied to validation events','We keep backup copies but don\'t use formal version control with change tracking','We manage versions informally — typically "latest file on the server"']},
+  {d:3,t:'Does your SCADA/HMI design address audit trail requirements for GMP systems?',o:['Yes — we design audit trails capturing who changed what, when, and from what value, stored in a tamper-evident format','We enable basic logging but haven\'t designed audit trails specifically to meet 21 CFR Part 11 or Annex 11','No — audit trail design hasn\'t been part of our scope on previous projects']},
+  {d:3,t:'Do your systems implement role-based access control with individual user accounts?',o:['Yes — every system we deliver has individual named accounts, role-based permissions, and no shared logins','We implement access control but sometimes use shared accounts or generic logins for convenience','No — access control at this level hasn\'t been a requirement on our projects to date']},
+  {d:3,t:'Can you produce network architecture documentation for a pharma OT environment?',o:['Yes — we produce formal network documentation and understand OT/IT segregation requirements in GMP environments','We can produce basic network diagrams but haven\'t documented to pharma cybersecurity standards','No — network documentation isn\'t typically part of our deliverable set']},
+  {d:3,t:'Do you have a backup and recovery procedure for the systems you deliver?',o:['Yes — we produce a formal backup and recovery procedure tested and documented as part of the project','We configure backups but don\'t always produce a formal documented procedure','No — backup configuration is typically left to the client\'s IT team']},
+  {d:3,t:'How do you handle instrument calibration records for instrumentation within your automation scope?',o:['We maintain calibration records and understand how calibration status affects system qualification','We coordinate calibration with the client but don\'t manage the records ourselves','Calibration is outside our scope — we leave it entirely to the client']},
+  {d:4,t:'Does your company have a formal change control process for validated systems?',o:['Yes — we have a change control procedure covering impact assessment, approval, implementation, and re-validation','We manage changes but through informal approval — no documented change control process','No — changes are implemented based on client instruction without formal documentation']},
+  {d:4,t:'Have you ever raised or responded to a deviation or non-conformance on a pharma project?',o:['Yes — we\'ve raised formal deviations, investigated root cause, and closed them with QA approval','We\'ve dealt with issues informally but not through a formal deviation management process','No — deviation management is new to us']},
+  {d:4,t:'Do you understand what a periodic review of a validated system involves?',o:['Yes — we know the triggers, scope, and output of a periodic review and could support one','We know it\'s a regulatory requirement but haven\'t been involved in running one','No — this is new territory for us']},
+  {d:4,t:'Can your team support a supplier assessment process?',o:['Yes — we\'ve completed supplier questionnaires or assessed subcontractors under a GAMP 5 supplier assessment framework','We\'ve answered client questions about our processes but haven\'t been through a formal supplier assessment','No — we haven\'t encountered formal supplier qualification before']},
+  {d:4,t:'Do you have a training record system for engineers who work on GMP projects?',o:['Yes — we maintain training records showing which engineers are qualified for which roles on validated systems','We track training informally but don\'t maintain records in a format QA would accept','No — training records aren\'t something we currently manage']},
+  {d:4,t:'Does your company have SOPs covering how you operate and maintain validated systems post-handover?',o:['Yes — we produce or have access to SOPs for system operation, administration, and change management','We provide user manuals but not GMP-style SOPs','No — post-handover documentation isn\'t typically part of our scope']},
+  {d:4,t:'Have you ever supported a pharma client through a regulatory inspection related to a system you delivered?',o:['Yes — we\'ve been present or on-call during an inspection and understand what inspectors examine','No — but we understand what an inspection involves and what would be reviewed','No — and we haven\'t had visibility of what a regulatory inspection looks like in practice']},
+  {d:5,t:'Does your company have anyone with hands-on pharma validation experience?',o:['Yes — at least one engineer with multiple pharma validation projects delivered end-to-end','We have someone who has worked adjacent to validation (e.g. commissioning on a pharma site) but not led it','No — pharma validation experience would be new to everyone on our team']},
+  {d:5,t:'How do you typically structure a project proposal for a pharma client?',o:['We include a validation scope, document deliverable list, and compliance references in our proposals','We propose engineering scope confidently but struggle to articulate the validation deliverables','We haven\'t yet pitched to a pharma client or aren\'t sure what they expect in a proposal']},
+  {d:5,t:'Do you have a realistic view of the additional project time validation documentation adds to a pharma project?',o:['Yes — we factor 20–40% additional effort for documentation and qualification into our pharma estimates','We know it adds time but haven\'t quantified it confidently in a proposal','No — we\'re not sure how to estimate the documentation overhead']},
+  {d:5,t:'Have you had a conversation with a pharma client\'s QA team about what they expect from a system integrator?',o:['Yes — we\'ve engaged directly with QA stakeholders and understand their expectations','We\'ve had brief conversations but haven\'t gone deep on their requirements','No — our contact has always been through engineering or procurement, not QA']},
+  {d:5,t:'If you won a pharma project tomorrow, how confident are you that your team could deliver a compliant validation package?',o:['Confident — we have the knowledge, templates, and process to deliver','Cautiously confident — we\'d get there but would need to build or buy some capability first','Not confident — we\'d need significant preparation before we could deliver compliantly']},
+  {d:5,t:'Does your company have a clear go-to-market position for pharma automation?',o:['Yes — we have a defined offering, understand our differentiators, and actively pursue pharma clients','We\'re interested in pharma but haven\'t formalised our approach or positioning yet','No — pharma is on the radar but we haven\'t taken concrete steps toward it']},
+  {d:5,t:'Have you reviewed what certifications, insurances, or quality accreditations pharma clients typically require from their SIs?',o:['Yes — we know what\'s typically required (ISO 9001, specific insurances, audit rights) and are prepared','We have general business accreditations but haven\'t checked pharma-specific requirements','No — we\'d need to find out what\'s required before pursuing pharma clients seriously']}
+];
+
+const ARTICLES={
+  regulatory:[
+    {t:'What is GMP — for automation engineers',u:'/blog/what-is-gmp-automation-engineers.html'},
+    {t:'GAMP 5 Software Categories explained',u:'/blog/gamp5-categories.html'},
+    {t:'21 CFR Part 11 — the essentials',u:'/blog/21-cfr-part-11.html'},
+    {t:'Annex 11 vs 21 CFR Part 11',u:'/blog/eu-gmp-annex-11-vs-21-cfr-part-11.html'},
+    {t:'CSV vs CSA — which applies to your project?',u:'/blog/csv-vs-csa-pharma-validation.html'},
+    {t:'GAMP 5 2nd Edition — what changed',u:'/blog/gamp5-2nd-edition-changes.html'}
+  ],
+  documentation:[
+    {t:'What a validation document pack must contain',u:'/blog/validation-documentation-pack-what-it-contains.html'},
+    {t:'How to write a URS for PLC/SCADA systems',u:'/blog/how-to-write-urs-plc-scada.html'},
+    {t:'IQ, OQ, PQ — the complete guide',u:'/blog/iq-oq-pq-guide.html'},
+    {t:'URS vs FDS — understanding the difference',u:'/blog/urs-vs-fds-pharma-difference.html'},
+    {t:'What a Validation Plan must contain',u:'/blog/validation-plan-what-it-must-contain.html'},
+    {t:'Traceability Matrix — how to build one',u:'/blog/traceability-matrix-guide.html'}
+  ],
+  validation:[
+    {t:'The V-model in pharma validation',u:'/blog/v-model-pharma-validation.html'},
+    {t:'GAMP 5 validation lifecycle overview',u:'/blog/gamp5-validation-lifecycle-overview.html'},
+    {t:'GAMP 5 risk assessment — how to score',u:'/blog/gamp5-risk-assessment-how-to-score.html'},
+    {t:'How to write an OQ protocol',u:'/blog/how-to-write-oq-protocol.html'},
+    {t:'Pharma FAT guide',u:'/blog/pharma-fat-guide.html'},
+    {t:'Deviation management in pharma validation',u:'/blog/deviation-management-pharma-validation.html'}
+  ],
+  engineering:[
+    {t:'Audit trail implementation in SCADA',u:'/blog/audit-trail-implementation-scada.html'},
+    {t:'PLC version control for validated systems',u:'/blog/plc-version-control-validated-systems.html'},
+    {t:'SCADA user management and 21 CFR Part 11',u:'/blog/scada-user-management-part11.html'},
+    {t:'PLC naming conventions for pharma',u:'/blog/plc-naming-conventions-pharma.html'},
+    {t:'21 CFR Part 11 audit trail checklist',u:'/blog/21-cfr-part-11-audit-trail-checklist.html'},
+    {t:'Electronic signatures at PLC level',u:'/blog/electronic-signatures-plc-level.html'}
+  ],
+  quality:[
+    {t:'Change control for validated systems',u:'/blog/change-control-validated-system.html'},
+    {t:'Deviation management — pharma validation',u:'/blog/deviation-management-pharma-validation.html'},
+    {t:'GAMP 5 periodic review guide',u:'/blog/gamp5-periodic-review-guide.html'},
+    {t:'Supplier assessment under GAMP 5',u:'/blog/supplier-assessment-gamp5.html'},
+    {t:'QA audit — the SI perspective',u:'/blog/qa-audit-system-integrator.html'},
+    {t:'PLC change management after go-live',u:'/blog/plc-change-after-golive.html'}
+  ],
+  team:[
+    {t:'How an SI qualifies to work on pharma projects',u:'/blog/system-integrator-gmp-qualification.html'},
+    {t:'Common mistakes on your first pharma project',u:'/blog/first-pharma-project-mistakes.html'},
+    {t:'Realistic validation project timelines',u:'/blog/validation-project-timeline-realistic.html'},
+    {t:'Pricing a pharma validation project',u:'/blog/pricing-pharma-validation-project.html'},
+    {t:'Delivering validation docs to a pharma client',u:'/blog/delivering-validation-docs-pharma-client.html'},
+    {t:'Onboarding engineers to a pharma project',u:'/blog/onboarding-engineer-pharma-project.html'}
+  ]
+};
+
+let state={profile:{pq1:null,pq2:null,pq3:null},answers:new Array(42).fill(null),globalQ:0,domainScores:[],tier:null};
+
+function startAssessment(){
+  document.getElementById('startScreen').style.display='none';
+  document.getElementById('profileSection').classList.add('active');
+  document.getElementById('progressWrap').style.display='block';
+  // Collapse hero once assessment starts — keeps questions in viewport on all screens
+  const hero=document.querySelector('.hero');
+  if(hero) hero.style.display='none';
+  updateProgress();
+}
+
+function selectProfile(id,val,el){
+  state.profile[id]=val;
+  document.querySelectorAll('#'+id+' .pq-opt').forEach(o=>o.classList.remove('selected'));
+  el.classList.add('selected');
+  checkProfile();
+}
+
+function checkProfile(){
+  document.getElementById('profileNextBtn').disabled=!(state.profile.pq1&&state.profile.pq2&&state.profile.pq3);
+}
+
+function startDomains(){
+  document.getElementById('profileSection').classList.remove('active');
+  buildDomains();
+  revealDomainIntro(0);
+  updateProgress();
+}
+
+function buildDomains(){
+  const wrap=document.getElementById('domainsWrap');
+  wrap.innerHTML='';
+  DOMAINS.forEach((dom,di)=>{
+    const intro=document.createElement('div');
+    intro.className='phase-intro';
+    intro.id='di_'+di;
+    intro.innerHTML='<div class="phase-num">Domain '+(di+1)+' of '+DOMAINS.length+'</div><div class="phase-title">'+dom.name+'</div><div class="phase-desc">'+dom.desc+'</div>';
+    wrap.appendChild(intro);
+    const domQs=QS.filter(q=>q.d===di);
+    domQs.forEach((q,qi)=>{
+      const gIdx=getGIdx(di,qi);
+      const card=document.createElement('div');
+      card.className='q-card';
+      card.id='qc_'+gIdx;
+      const opts=q.o.map((opt,oi)=>'<div class="q-option" id="qo_'+gIdx+'_'+oi+'" onclick="pickAnswer('+gIdx+','+oi+',this)"><div class="opt-radio"></div><div class="opt-text">'+opt+'</div></div>').join('');
+      const isLast=gIdx===41;
+      card.innerHTML='<div class="q-num">Q'+(gIdx+1)+' / 42 &mdash; '+dom.name+'</div><div class="q-text">'+q.t+'</div><div class="q-options">'+opts+'</div><div class="q-nav"><button class="btn-back" onclick="goBack('+gIdx+')">'+(gIdx===0?'&#8592; Back to Profile':'&#8592; Back')+'</button><button class="btn-next" id="qn_'+gIdx+'" onclick="goNext('+gIdx+')" disabled>'+(isLast?'See My Results &rarr;':'Next &rarr;')+'</button></div>';
+      wrap.appendChild(card);
+    });
+  });
+}
+
+function getGIdx(di,qi){return DOMAINS.slice(0,di).reduce((a,_,i)=>a+QS.filter(x=>x.d===i).length,0)+qi;}
+
+function revealDomainIntro(di){
+  hide();
+  const intro=document.getElementById('di_'+di);
+  intro.classList.add('active');
+  // Add a "Begin this domain" button so users read the intro before questions start
+  if(!intro.querySelector('.btn-begin-domain')){
+    const firstQ=getGIdx(di,0);
+    const btn=document.createElement('button');
+    btn.className='btn-next btn-begin-domain';
+    btn.textContent='Begin →';
+    btn.onclick=function(){showQ(firstQ);};
+    intro.appendChild(btn);
+  }
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function showQ(gIdx){
+  hide();
+  const card=document.getElementById('qc_'+gIdx);
+  if(!card)return;
+  card.classList.add('active');
+  if(state.answers[gIdx]!==null)card.classList.add('answered');
+  state.globalQ=gIdx;
+  updateProgress();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function hide(){
+  document.querySelectorAll('.phase-intro,.q-card').forEach(el=>el.classList.remove('active'));
+}
+
+function pickAnswer(gIdx,optIdx,el){
+  state.answers[gIdx]=optIdx;
+  document.querySelectorAll('#qc_'+gIdx+' .q-option').forEach(o=>o.classList.remove('selected'));
+  el.classList.add('selected');
+  document.getElementById('qn_'+gIdx).disabled=false;
+  document.getElementById('qc_'+gIdx).classList.add('answered');
+}
+
+function goNext(gIdx){
+  if(gIdx===41){showGate();return;}
+  const curD=QS[gIdx].d,nextD=QS[gIdx+1].d;
+  if(nextD!==curD){
+    revealDomainIntro(nextD);
+  } else {showQ(gIdx+1);}
+}
+
+function goBack(gIdx){
+  if(gIdx===0){hide();document.getElementById('profileSection').classList.add('active');updateProgress();return;}
+  showQ(gIdx-1);
+}
+
+function updateProgress(){
+  const answered=state.answers.filter(a=>a!==null).length;
+  const profDone=(state.profile.pq1?1:0)+(state.profile.pq2?1:0)+(state.profile.pq3?1:0);
+  const done=profDone+answered;
+  document.getElementById('progressFill').style.width=Math.round((done/45)*100)+'%';
+  document.getElementById('progressCount').textContent=done+' / 45';
+  const di=state.globalQ<42?QS[state.globalQ]?.d:5;
+  document.getElementById('progressLabel').textContent=di!=null?'Domain '+(di+1)+' — '+DOMAINS[di].name:'Complete';
+}
+
+function computeScores(){
+  state.domainScores=DOMAINS.map((dom,di)=>{
+    const domQs=QS.filter(q=>q.d===di);
+    const start=getGIdx(di,0);
+    let total=0;
+    domQs.forEach((_,qi)=>{const a=state.answers[start+qi];if(a===0)total+=2;else if(a===1)total+=1;});
+    const max=domQs.length*2,pct=total/max;
+    return{id:dom.id,name:dom.name,score:total,max,pct,status:pct>=0.71?'green':pct>=0.36?'amber':'red'};
+  });
+  const reds=state.domainScores.filter(d=>d.status==='red').length;
+  const greens=state.domainScores.filter(d=>d.status==='green').length;
+  const tot=state.domainScores.reduce((a,d)=>a+d.score,0);
+  const max=state.domainScores.reduce((a,d)=>a+d.max,0);
+  const pct=tot/max;
+  if(pct>=0.80&&reds===0)state.tier='ready';
+  else if(pct>=0.60&&reds<=1)state.tier='gaps';
+  else if(pct>=0.36)state.tier='partial';
+  else state.tier='not-ready';
+}
+
+function showGate(){
+  computeScores();
+  hide();
+  document.getElementById('emailGate').classList.add('active');
+  document.getElementById('progressFill').style.width='95%';
+  document.getElementById('progressCount').textContent='44 / 45';
+  document.getElementById('progressLabel').textContent='Almost done';
+  const prev=document.getElementById('scorePreview');
+  prev.innerHTML=state.domainScores.map(d=>'<div class="sp-item '+d.status+'"><div class="sp-dot"></div><div class="sp-text">'+d.name.split(' ')[0].toUpperCase()+'</div></div>').join('');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function submitEmail(){
+  const email=document.getElementById('emailInput').value.trim();
+  const err=document.getElementById('gateError');
+  // Honeypot — if filled, silently pass through without subscribing
+  if(document.getElementById('ml_hp').value){showConfirmation(email);return;}
+  if(!email||!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){err.style.display='block';return;}
+  err.style.display='none';
+  document.getElementById('loadingOverlay').classList.add('active');
+  document.getElementById('progressFill').style.width='100%';
+  document.getElementById('progressCount').textContent='45 / 45';
+
+  const sorted=[...state.domainScores].sort((a,b)=>a.pct-b.pct);
+
+  fetch('https://qlean-subscribe.hidden-cloud-1b31.workers.dev/subscribe',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({
+      email,
+      tier:state.tier,
+      scores:{
+        regulatory:state.domainScores[0]?.status||'',
+        documentation:state.domainScores[1]?.status||'',
+        validation:state.domainScores[2]?.status||'',
+        engineering:state.domainScores[3]?.status||'',
+        quality:state.domainScores[4]?.status||'',
+        team:state.domainScores[5]?.status||'',
+        weakest:[sorted[0]?.id||'',sorted[1]?.id||'']
+      },
+      profile:{
+        pq1:state.profile.pq1||'',
+        pq2:state.profile.pq2||'',
+        pq3:state.profile.pq3||''
+      }
+    })
+  })
+  .then(()=>showConfirmation(email))
+  .catch(()=>showConfirmation(email));
+}
+
+function showConfirmation(email){
+  document.getElementById('loadingOverlay').classList.remove('active');
+  document.getElementById('emailGate').classList.remove('active');
+  document.getElementById('confirmationSection').classList.add('active');
+  document.getElementById('confEmail').textContent=email;
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// Desktop dropdown toggle
+function toggleNav(id){
+  const li=document.getElementById(id);
+  const isMobile=window.innerWidth<=960;
+  if(isMobile){
+    const sub=li.querySelector('.nav-mobile-sub');
+    if(!sub) return;
+    const isOpen=sub.classList.contains('open');
+    document.querySelectorAll('.nav-mobile-sub').forEach(s=>s.classList.remove('open'));
+    if(!isOpen) sub.classList.add('open');
+  } else {
+    const isOpen=li.classList.contains('open');
+    document.querySelectorAll('.nav-links>li').forEach(l=>l.classList.remove('open'));
+    if(!isOpen) li.classList.add('open');
+  }
+}
+document.addEventListener('click',e=>{
+  if(!e.target.closest('#navLinks')){
+    document.querySelectorAll('.nav-links>li').forEach(l=>l.classList.remove('open'));
+  }
+});
+
+// Mobile hamburger
+const menuToggle=document.getElementById('menuToggle');
+const navLinks=document.getElementById('navLinks');
+if(menuToggle&&navLinks){
+  menuToggle.addEventListener('click',()=>{
+    const isOpen=navLinks.classList.toggle('open');
+    menuToggle.classList.toggle('open',isOpen);
+    if(!isOpen) document.querySelectorAll('.nav-mobile-sub').forEach(s=>s.classList.remove('open'));
+  });
+  document.querySelectorAll('#navLinks a').forEach(link=>{
+    link.addEventListener('click',()=>{
+      navLinks.classList.remove('open');
+      menuToggle.classList.remove('open');
+      document.querySelectorAll('.nav-mobile-sub').forEach(s=>s.classList.remove('open'));
+    });
+  });
+}
+
+// Nav border on scroll
+window.addEventListener('scroll',()=>{
+  document.getElementById('nav').style.borderBottomColor=scrollY>20?'#d0d5de':'var(--rule)';
+},{passive:true});
+</script>
+
+</body>
+</html>

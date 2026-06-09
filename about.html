@@ -1,11 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-JJQ1TXZJX7"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-JJQ1TXZJX7');
+</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>About QLean Automation | Built by Field Engineers, For Field Engineers</title>
 <meta name="description" content="QLean Automation was founded by control systems engineers with over a decade of hands-on experience in GMP pharmaceutical environments. Learn about our open toolkit philosophy and free knowledge base.">
-    <link rel="canonical" href="https://qleanautomation.com/about.html">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@300;400;500;600;700;800;900&family=Source+Sans+3:ital,wght@0,300;0,400;0,500;1,300&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
@@ -39,13 +47,21 @@ html{scroll-behavior:smooth;font-size:16px}
 body{background:var(--white);color:var(--ink);font-family:var(--f-body);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
 
 /* ── NAV ── */
-nav{position:fixed;top:0;left:0;right:0;z-index:200;height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 6%;background:rgba(255,255,255,0.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--rule);transition:border-color .3s}
+nav{position:fixed;top:0;left:0;right:0;z-index:200;height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 6%;background:rgba(255,255,255,0.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--rule);transition:border-color .3s;gap:16px}
 .nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;flex-shrink:0}
-.nav-links{display:flex;align-items:center;gap:28px;list-style:none}
-.nav-links a{font-size:14px;font-weight:400;color:var(--ink3);text-decoration:none;transition:color .2s;letter-spacing:.01em}
-.nav-links a:hover,.nav-links a.active{color:var(--ink)}
-.nav-links a.active{font-weight:500}
-.nav-right{display:flex;align-items:center;gap:12px}
+.nav-links{display:flex;align-items:center;gap:4px;list-style:none;flex:1;justify-content:center}
+.nav-links>li{position:relative}
+.nav-links>li>a,.nav-links>li>button{font-family:var(--f-body);font-size:14px;font-weight:400;color:var(--ink3);text-decoration:none;transition:color .2s;letter-spacing:.01em;background:none;border:none;cursor:pointer;padding:8px 12px;display:flex;align-items:center;gap:5px;white-space:nowrap}
+.nav-links>li>a:hover,.nav-links>li>button:hover{color:var(--ink)}
+.nav-chevron{width:12px;height:12px;transition:transform .2s;opacity:.5}
+.nav-links>li.open>button .nav-chevron{transform:rotate(180deg)}
+.nav-dropdown{display:none;position:absolute;top:calc(100% + 8px);left:0;background:white;border:1px solid var(--rule);border-radius:10px;box-shadow:0 8px 32px rgba(13,15,18,0.10),0 3px 10px rgba(13,15,18,0.06);min-width:220px;padding:6px;z-index:300;list-style:none}
+.nav-links>li.open .nav-dropdown{display:block}
+.nav-dropdown li a{display:flex;flex-direction:column;padding:10px 14px;border-radius:7px;text-decoration:none;transition:background .15s}
+.nav-dropdown li a:hover{background:var(--off)}
+.nav-dd-label{font-size:13px;font-weight:500;color:var(--ink);line-height:1.3}
+.nav-dd-sub{font-size:11px;color:var(--ink4);margin-top:2px;font-family:monospace;letter-spacing:.02em}
+.nav-right{display:flex;align-items:center;gap:12px;position:relative;z-index:201}
 .nav-btn{font-family:var(--f-body);font-size:13px;font-weight:500;padding:9px 20px;background:var(--blue);color:white;border:none;border-radius:6px;cursor:pointer;text-decoration:none;letter-spacing:.01em;transition:background .2s,transform .15s;white-space:nowrap;flex-shrink:0}
 .nav-btn:hover{background:var(--blue2);transform:translateY(-1px)}
 .menu-toggle{display:none;background:none;border:none;cursor:pointer;padding:6px;color:var(--ink);z-index:210;flex-shrink:0}
@@ -53,6 +69,12 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;height:64px;display:flex;ali
 .menu-toggle .icon-close{display:none}
 .menu-toggle.open .icon-hamburger{display:none}
 .menu-toggle.open .icon-close{display:block}
+.nav-mobile-sub{display:none;flex-direction:column;background:var(--off);border-top:1px solid var(--off2)}
+.nav-mobile-sub.open{display:flex}
+.nav-mobile-sub a{padding:11px 6% 11px 10% !important;font-size:14px !important;color:var(--ink3) !important;border-bottom:1px solid var(--off2)}
+.nav-mobile-sub a span{display:block;font-size:11px;color:var(--ink4);font-family:monospace;margin-top:1px}
+.nav-mobile-cta-li{display:none}
+
 
 /* ── PAGE HERO ── */
 .page-hero{padding:140px 6% 80px;background:var(--off);border-bottom:1px solid var(--rule);position:relative;overflow:hidden;text-align:center}
@@ -170,15 +192,17 @@ footer{padding:56px 6% 32px;border-top:1px solid var(--rule);background:var(--wh
   .story-grid{grid-template-columns:1fr}
   .pillars-grid{grid-template-columns:1fr}
   .kb-strip{grid-template-columns:1fr}
+  /* Mobile nav */
   .nav-btn{display:none}
   .menu-toggle{display:flex}
-  nav .nav-links{display:none;position:absolute;top:64px;left:0;right:0;background:white;flex-direction:column;align-items:stretch;gap:0;border-bottom:1px solid var(--rule);box-shadow:var(--shadow-md);padding:8px 0 16px;z-index:199}
+  nav .nav-links{display:none;position:absolute;top:64px;left:0;right:0;background:white;flex-direction:column;align-items:stretch;gap:0;border-bottom:1px solid var(--rule);box-shadow:0 4px 16px rgba(13,15,18,0.08);padding:8px 0 16px;z-index:199;flex:none;justify-content:flex-start}
   nav .nav-links.open{display:flex}
-  nav .nav-links li{width:100%}
-  nav .nav-links a{display:block;padding:13px 6%;font-size:15px;color:var(--ink2);border-bottom:1px solid var(--off2)}
-  nav .nav-links li:last-child a{border-bottom:none}
-  .nav-mobile-cta{display:block !important;margin:12px 6% 0;padding:13px;background:var(--blue);color:white !important;text-align:center;border-radius:6px;font-weight:500;font-size:14px;text-decoration:none;border-bottom:none !important;transition:background .2s}
-  .nav-mobile-cta:hover{background:var(--blue2) !important}
+  nav .nav-links>li{width:100%}
+  nav .nav-links>li>a,nav .nav-links>li>button{display:flex;justify-content:space-between;align-items:center;padding:13px 6%;font-size:15px;color:var(--ink2);border-bottom:1px solid var(--off2);width:100%;text-align:left}
+  .nav-dropdown{display:none !important}
+  .nav-mobile-cta-li{display:block;padding:8px 6% 0}
+  nav .nav-links>li.nav-mobile-cta-li>a{display:block;padding:13px;background:var(--blue);color:white !important;text-align:center;border-radius:6px;font-weight:500;font-size:14px;text-decoration:none;border-bottom:none !important;transition:background .2s;justify-content:center}
+  nav .nav-links>li.nav-mobile-cta-li>a:hover{background:var(--blue2) !important}
 }
 @media(max-width:540px){nav{padding:0 4%};.page-hero{padding-top:110px}}
 </style>
@@ -196,13 +220,38 @@ footer{padding:56px 6% 32px;border-top:1px solid var(--rule);background:var(--wh
     <span style="font-family:'Epilogue',sans-serif;font-weight:800;font-size:16px;color:#0d0f12;letter-spacing:-.03em;white-space:nowrap">QLean <span style="font-weight:300;color:#5a6172">Automation</span></span>
   </a>
   <ul class="nav-links" id="navLinks">
-    <li><a href="index.html#products">Products</a></li>
-    <li><a href="index.html#framework">Framework</a></li>
+    <li id="navProducts">
+      <button onclick="toggleNav('navProducts')" aria-expanded="false">Products
+        <svg class="nav-chevron" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 4 6 8 10 4"/></svg>
+      </button>
+      <ul class="nav-dropdown">
+        <li><a href="index.html#pricing"><span class="nav-dd-label">GAMP 5 Full Framework</span><span class="nav-dd-sub">29 templates + masterclass · €249</span></a></li>
+        <li><a href="index.html#pricing"><span class="nav-dd-label">Validation Templates</span><span class="nav-dd-sub">29 production-ready documents · €229</span></a></li>
+        <li><a href="index.html#pricing"><span class="nav-dd-label">Technical Masterclass</span><span class="nav-dd-sub">GAMP 5 ebook for engineers · €39</span></a></li>
+      </ul>
+      <div class="nav-mobile-sub" id="subProducts">
+        <a href="index.html#pricing">GAMP 5 Full Framework <span>29 templates + masterclass · €249</span></a>
+        <a href="index.html#pricing">Validation Templates <span>29 documents · €229</span></a>
+        <a href="index.html#pricing">Technical Masterclass <span>Ebook · €39</span></a>
+      </div>
+    </li>
+    <li id="navFree">
+      <button onclick="toggleNav('navFree')" aria-expanded="false">Start Free
+        <svg class="nav-chevron" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 4 6 8 10 4"/></svg>
+      </button>
+      <ul class="nav-dropdown">
+        <li><a href="pharma-readiness.html"><span class="nav-dd-label">SI Readiness Check</span><span class="nav-dd-sub">42 questions · results by email · free</span></a></li>
+        <li><a href="index.html#free-download"><span class="nav-dd-label">Free Sample</span><span class="nav-dd-sub">GAMP 5 matrix + URS template · free</span></a></li>
+      </ul>
+      <div class="nav-mobile-sub" id="subFree">
+        <a href="pharma-readiness.html">SI Readiness Check <span>42 questions · free</span></a>
+        <a href="index.html#free-download">Free Sample <span>GAMP 5 matrix + URS template</span></a>
+      </div>
+    </li>
     <li><a href="blog/blog-index.html">Knowledge Base</a></li>
-    <li><a href="index.html#pricing">Pricing</a></li>
     <li><a href="about.html" class="active">About</a></li>
     <li><a href="index.html#faq">FAQ</a></li>
-    <li><a href="index.html#pricing" class="nav-mobile-cta" style="display:none">Get the Framework →</a></li>
+    <li class="nav-mobile-cta-li"><a href="index.html#pricing" class="nav-mobile-cta">Get the Framework →</a></li>
   </ul>
   <div class="nav-right">
     <a href="index.html#pricing" class="nav-btn">Get the Framework →</a>
@@ -422,18 +471,41 @@ footer{padding:56px 6% 32px;border-top:1px solid var(--rule);background:var(--wh
 </footer>
 
 <script>
-// Mobile menu toggle
+// Desktop dropdown toggle
+function toggleNav(id){
+  const li=document.getElementById(id);
+  const isMobile=window.innerWidth<=960;
+  if(isMobile){
+    const sub=li.querySelector('.nav-mobile-sub');
+    if(!sub) return;
+    const isOpen=sub.classList.contains('open');
+    document.querySelectorAll('.nav-mobile-sub').forEach(s=>s.classList.remove('open'));
+    if(!isOpen) sub.classList.add('open');
+  } else {
+    const isOpen=li.classList.contains('open');
+    document.querySelectorAll('.nav-links>li').forEach(l=>l.classList.remove('open'));
+    if(!isOpen) li.classList.add('open');
+  }
+}
+document.addEventListener('click',e=>{
+  if(!e.target.closest('#navLinks')){
+    document.querySelectorAll('.nav-links>li').forEach(l=>l.classList.remove('open'));
+  }
+});
+// Mobile hamburger
 const menuToggle = document.getElementById('menuToggle');
 const navLinks = document.getElementById('navLinks');
 if(menuToggle && navLinks){
   menuToggle.addEventListener('click', () => {
     const isOpen = navLinks.classList.toggle('open');
     menuToggle.classList.toggle('open', isOpen);
+    if(!isOpen) document.querySelectorAll('.nav-mobile-sub').forEach(s=>s.classList.remove('open'));
   });
   document.querySelectorAll('#navLinks a').forEach(link => {
     link.addEventListener('click', () => {
       navLinks.classList.remove('open');
       menuToggle.classList.remove('open');
+      document.querySelectorAll('.nav-mobile-sub').forEach(s=>s.classList.remove('open'));
     });
   });
 }

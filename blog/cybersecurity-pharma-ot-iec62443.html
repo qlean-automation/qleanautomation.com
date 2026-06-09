@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-JJQ1TXZJX7"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-JJQ1TXZJX7');
+</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Cybersecurity in Pharma OT — IEC 62443 and GAMP 5 | QLean Automation</title>
@@ -11,10 +20,7 @@
 <style>
 :root{--white:#ffffff;--off:#f7f8f9;--ink:#0d0f12;--ink2:#1e2128;--ink3:#3d4456;--ink4:#9199a8;--rule:#e2e5ea;--rule2:#c8cdd6;--blue:#0057ff;--blue2:#0044cc;--blue-dim:rgba(0,87,255,0.07);--green:#00875a;--green-dim:rgba(0,135,90,0.08);--amber:#d97706;--amber-dim:rgba(217,119,6,0.08);--red:#c0392b;--red-dim:rgba(192,57,43,0.08);--f-head:'Epilogue',sans-serif;--f-body:'Source Sans 3',sans-serif;--f-mono:'Roboto Mono',monospace;--shadow-sm:0 2px 8px rgba(13,15,18,0.06),0 1px 3px rgba(13,15,18,0.04)}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}body{background:var(--white);color:var(--ink);font-family:var(--f-body);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
-nav{position:fixed;top:0;left:0;right:0;z-index:200;height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 6%;background:rgba(255,255,255,0.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--rule)}
-.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;flex-shrink:0}
-.nav-links{display:flex;align-items:center;gap:36px;list-style:none}.nav-links a{font-size:14px;font-weight:400;color:var(--ink3);text-decoration:none;transition:color .2s}.nav-links a:hover{color:var(--ink)}
-.nav-btn{font-family:var(--f-body);font-size:13px;font-weight:500;padding:9px 20px;background:var(--blue);color:white;border:none;border-radius:6px;cursor:pointer;text-decoration:none;white-space:nowrap;flex-shrink:0}.nav-btn:hover{background:var(--blue2)}
+
 .progress-bar{position:fixed;top:64px;left:0;right:0;height:2px;background:var(--rule);z-index:199}.progress-fill{height:100%;background:var(--blue);width:0%}
 .article-hero{padding:120px 6% 64px;background:var(--white);border-bottom:1px solid var(--rule);position:relative;overflow:hidden}
 .article-hero::before{content:'';position:absolute;top:-80px;right:-80px;width:400px;height:400px;background:radial-gradient(circle,rgba(0,87,255,0.04) 0%,transparent 70%);pointer-events:none}
@@ -93,24 +99,125 @@ footer{padding:56px 6% 32px;border-top:1px solid var(--rule);background:var(--wh
 @media(max-width:900px){.article-wrap{grid-template-columns:1fr;gap:48px}.sidebar{position:static}.related-grid{grid-template-columns:1fr}.table-scroll{margin:20px 0}}
 @media(max-width:900px){.nav-links{display:none}}
 @media(max-width:540px){nav{padding:0 4%}.nav-btn{font-size:12px;padding:8px 14px}}
+/* ── NAV ── */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 6%;background:rgba(255,255,255,0.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--rule);transition:border-color .3s;gap:16px}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;flex-shrink:0}
+.nav-links{display:flex;align-items:center;gap:4px;list-style:none;flex:1;justify-content:center}
+.nav-links>li{position:relative}
+.nav-links>li>a,.nav-links>li>button{font-family:var(--f-body);font-size:14px;font-weight:400;color:var(--ink3);text-decoration:none;transition:color .2s;letter-spacing:.01em;background:none;border:none;cursor:pointer;padding:8px 12px;display:flex;align-items:center;gap:5px;white-space:nowrap}
+.nav-links>li>a:hover,.nav-links>li>button:hover{color:var(--ink)}
+.nav-chevron{width:12px;height:12px;transition:transform .2s;opacity:.5}
+.nav-links>li.open>button .nav-chevron{transform:rotate(180deg)}
+.nav-dropdown{display:none;position:absolute;top:calc(100% + 8px);left:0;background:white;border:1px solid var(--rule);border-radius:10px;box-shadow:0 8px 32px rgba(13,15,18,0.10),0 3px 10px rgba(13,15,18,0.06);min-width:220px;padding:6px;z-index:300;list-style:none}
+.nav-links>li.open .nav-dropdown{display:block}
+.nav-dropdown li a{display:flex;flex-direction:column;padding:10px 14px;border-radius:7px;text-decoration:none;transition:background .15s}
+.nav-dropdown li a:hover{background:var(--off)}
+.nav-dd-label{font-size:13px;font-weight:500;color:var(--ink);line-height:1.3}
+.nav-dd-sub{font-size:11px;color:var(--ink4);margin-top:2px;font-family:var(--f-mono);letter-spacing:.02em}
+.nav-right{display:flex;align-items:center;gap:12px;position:relative;z-index:201}
+.nav-btn{font-family:var(--f-body);font-size:13px;font-weight:500;padding:9px 20px;background:var(--blue);color:white;border:none;border-radius:6px;cursor:pointer;text-decoration:none;letter-spacing:.01em;transition:background .2s,transform .15s;white-space:nowrap;flex-shrink:0}
+.nav-btn:hover{background:var(--blue2);transform:translateY(-1px)}
+.menu-toggle{display:none;background:none;border:none;cursor:pointer;padding:6px;color:var(--ink);z-index:210;flex-shrink:0}
+.menu-toggle svg{width:22px;height:22px;display:block}
+.menu-toggle .icon-close{display:none}
+.menu-toggle.open .icon-hamburger{display:none}
+.menu-toggle.open .icon-close{display:block}
+.nav-mobile-sub{display:none;flex-direction:column;background:var(--off);border-top:1px solid var(--off2)}
+.nav-mobile-sub.open{display:flex}
+.nav-mobile-sub a{padding:11px 6% 11px 10% !important;font-size:14px !important;color:var(--ink3) !important;border-bottom:1px solid var(--off2)}
+.nav-mobile-sub a:last-child{border-bottom:none}
+.nav-mobile-sub a span{display:block;font-size:11px;color:var(--ink4);font-family:var(--f-mono);margin-top:1px}
+.nav-mobile-cta-li{display:none}
+@media(max-width:960px){
+  .nav-btn{display:none}
+  .menu-toggle{display:flex}
+  nav .nav-links{display:none;position:absolute;top:64px;left:0;right:0;background:white;flex-direction:column;align-items:stretch;gap:0;border-bottom:1px solid var(--rule);box-shadow:0 4px 16px rgba(13,15,18,0.08);padding:8px 0 16px;z-index:199;flex:none;justify-content:flex-start}
+  nav .nav-links.open{display:flex}
+  nav .nav-links>li{width:100%}
+  nav .nav-links>li>a,nav .nav-links>li>button{display:flex;justify-content:space-between;align-items:center;padding:13px 6%;font-size:15px;color:var(--ink2);border-bottom:1px solid var(--off2);width:100%;text-align:left}
+  .nav-dropdown{display:none !important}
+  .nav-mobile-cta-li{display:block;padding:8px 6% 0}
+  nav .nav-links>li.nav-mobile-cta-li>a{display:block;padding:13px;background:var(--blue);color:white !important;text-align:center;border-radius:6px;font-weight:500;font-size:14px;text-decoration:none;border-bottom:none !important;transition:background .2s;justify-content:center}
+  nav .nav-links>li.nav-mobile-cta-li>a:hover{background:var(--blue2) !important}
+}
 </style>
 </head>
 <body>
 <div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
-<nav>
+<nav id="nav">
   <a href="../index.html" class="nav-logo">
-    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" style="flex-shrink:0"><rect width="32" height="32" rx="7" fill="#0d0f12"/><rect x="8" y="7" width="16" height="16" rx="2" stroke="white" stroke-width="2.5" fill="none"/><line x1="20" y1="19" x2="26" y2="25" stroke="#0057FF" stroke-width="3" stroke-linecap="round"/></svg>
+    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0">
+      <rect x="0" y="0" width="32" height="32" rx="7" fill="#0d0f12"/>
+      <rect x="8" y="7" width="16" height="16" rx="2" stroke="white" stroke-width="2.5" fill="none"/>
+      <line x1="20" y1="19" x2="26" y2="25" stroke="#0057FF" stroke-width="3" stroke-linecap="round"/>
+    </svg>
     <span style="font-family:'Epilogue',sans-serif;font-weight:800;font-size:16px;color:#0d0f12;letter-spacing:-.03em;white-space:nowrap">QLean <span style="font-weight:300;color:#5a6172">Automation</span></span>
   </a>
-  <ul class="nav-links">
-    <li><a href="../index.html#products">Products</a></li>
-    <li><a href="../index.html#framework">Framework</a></li>
+  <ul class="nav-links" id="navLinks">
+
+    <!-- Products dropdown -->
+    <li id="navProducts">
+      <button onclick="toggleNav('navProducts')" aria-expanded="false">
+        Products
+        <svg class="nav-chevron" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 4 6 8 10 4"/></svg>
+      </button>
+      <ul class="nav-dropdown">
+        <li><a href="../index.html#pricing">
+          <span class="nav-dd-label">GAMP 5 Full Framework</span>
+          <span class="nav-dd-sub">29 templates + masterclass · €249</span>
+        </a></li>
+        <li><a href="../index.html#pricing">
+          <span class="nav-dd-label">Validation Templates</span>
+          <span class="nav-dd-sub">29 production-ready documents · €229</span>
+        </a></li>
+        <li><a href="../index.html#pricing">
+          <span class="nav-dd-label">Technical Masterclass</span>
+          <span class="nav-dd-sub">GAMP 5 ebook for engineers · €39</span>
+        </a></li>
+      </ul>
+      <div class="nav-mobile-sub" id="subProducts">
+        <a href="../index.html#pricing">GAMP 5 Full Framework <span>29 templates + masterclass · €249</span></a>
+        <a href="../index.html#pricing">Validation Templates <span>29 documents · €229</span></a>
+        <a href="../index.html#pricing">Technical Masterclass <span>Ebook · €39</span></a>
+      </div>
+    </li>
+
+    <!-- Start Free dropdown -->
+    <li id="navFree">
+      <button onclick="toggleNav('navFree')" aria-expanded="false">
+        Start Free
+        <svg class="nav-chevron" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 4 6 8 10 4"/></svg>
+      </button>
+      <ul class="nav-dropdown">
+        <li><a href="../pharma-readiness.html">
+          <span class="nav-dd-label">SI Readiness Check</span>
+          <span class="nav-dd-sub">42 questions · results by email · free</span>
+        </a></li>
+        <li><a href="../index.html#free-download">
+          <span class="nav-dd-label">Free Sample</span>
+          <span class="nav-dd-sub">GAMP 5 matrix + URS template · free</span>
+        </a></li>
+      </ul>
+      <div class="nav-mobile-sub" id="subFree">
+        <a href="../pharma-readiness.html">SI Readiness Check <span>42 questions · free</span></a>
+        <a href="../index.html#free-download">Free Sample <span>GAMP 5 matrix + URS template</span></a>
+      </div>
+    </li>
+
     <li><a href="blog-index.html">Knowledge Base</a></li>
-    <li><a href="../index.html#pricing">Pricing</a></li>
     <li><a href="../about.html">About</a></li>
     <li><a href="../index.html#faq">FAQ</a></li>
+
+    <!-- Mobile only CTA -->
+    <li class="nav-mobile-cta-li"><a href="../index.html#pricing">Get the Framework →</a></li>
   </ul>
-  <a href="../index.html#pricing" class="nav-btn">Get the Framework &#8594;</a>
+  <div class="nav-right">
+    <a href="../index.html#pricing" class="nav-btn">Get the Framework →</a>
+    <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+      <svg class="icon-hamburger" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
+      <svg class="icon-close" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+    </button>
+  </div>
 </nav>
 
 <header class="article-hero">
@@ -435,7 +542,7 @@ footer{padding:56px 6% 32px;border-top:1px solid var(--rule);background:var(--wh
       </div>
     </div>
     <div class="footer-bottom">
-      <p>&copy; 2025 QLean Automation. All rights reserved.</p>
+      <p>&copy; 2026 QLean Automation. All rights reserved.</p>
       <div class="compliance-pills">
         <span class="cp">GAMP 5</span>
         <span class="cp">EU GMP ANNEX 11</span>
@@ -465,6 +572,50 @@ window.addEventListener('scroll',function(){
     if(a.getAttribute('href')==='#'+current)a.classList.add('active');
   });
 });
+</script>
+<script>
+// Nav dropdown & mobile menu
+function toggleNav(id){
+  var li=document.getElementById(id);
+  var isMobile=window.innerWidth<=960;
+  if(isMobile){
+    var sub=li.querySelector('.nav-mobile-sub');
+    if(!sub)return;
+    var isOpen=sub.classList.contains('open');
+    document.querySelectorAll('.nav-mobile-sub').forEach(function(s){s.classList.remove('open');});
+    if(!isOpen)sub.classList.add('open');
+  }else{
+    var isOpen=li.classList.contains('open');
+    document.querySelectorAll('.nav-links>li').forEach(function(l){l.classList.remove('open');});
+    if(!isOpen)li.classList.add('open');
+  }
+}
+document.addEventListener('click',function(e){
+  if(!e.target.closest('#navLinks'))
+    document.querySelectorAll('.nav-links>li').forEach(function(l){l.classList.remove('open');});
+});
+(function(){
+  var mt=document.getElementById('menuToggle');
+  var nl=document.getElementById('navLinks');
+  if(mt&&nl){
+    mt.addEventListener('click',function(){
+      var isOpen=nl.classList.toggle('open');
+      mt.classList.toggle('open',isOpen);
+      if(!isOpen)document.querySelectorAll('.nav-mobile-sub').forEach(function(s){s.classList.remove('open');});
+    });
+    nl.querySelectorAll('a').forEach(function(link){
+      link.addEventListener('click',function(){
+        nl.classList.remove('open');
+        mt.classList.remove('open');
+        document.querySelectorAll('.nav-mobile-sub').forEach(function(s){s.classList.remove('open');});
+      });
+    });
+  }
+})();
+window.addEventListener('scroll',function(){
+  var nav=document.getElementById('nav');
+  if(nav)nav.style.borderBottomColor=window.scrollY>20?'#d0d5de':'var(--rule)';
+},{passive:true});
 </script>
 </body>
 </html>

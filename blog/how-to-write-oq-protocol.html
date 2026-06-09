@@ -1,19 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-JJQ1TXZJX7"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-JJQ1TXZJX7');
-</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>How to Write an OQ Protocol for a PLC/SCADA System | QLean Automation</title>
 <meta name="description" content="The complete guide to writing a GMP-compliant OQ protocol for a PLC/SCADA system — test case structure, the three test types, boundary testing, FAT leveraging, witness requirements, and the phase gate criteria.">
+    <link rel="canonical" href="https://qleanautomation.com/blog/how-to-write-oq-protocol.html">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@300;400;500;600;700;800;900&family=Source+Sans+3:ital,wght@0,300;0,400;0,500;1,300&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
@@ -437,7 +429,7 @@ footer{padding:56px 6% 32px;border-top:1px solid var(--rule);background:var(--wh
     </figure>
 
     <h2 id="what-oq-must-cover">What the OQ Must Cover</h2>
-    <p>The OQ-SYS-001 template organises test cases across 15 sections. Every PLC/SCADA OQ must address all of these — the depth of coverage in each area is driven by the risk assessment, but no area can be omitted entirely for a GMP system:</p>
+    <p>The OQ-SYS-001 template organises test cases across 12 functional areas. Every PLC/SCADA OQ must address all of these — the depth of coverage in each area is driven by the risk assessment, but no area can be omitted entirely for a GMP system:</p>
 
     <div class="table-scroll">
     <table class="std-table">
@@ -549,7 +541,7 @@ footer{padding:56px 6% 32px;border-top:1px solid var(--rule);background:var(--wh
 
     <div class="callout green">
       <div class="callout-label">In the QLean Framework</div>
-      <p>OQ-SYS-001 is a complete, pre-structured OQ protocol for a GMP PLC/SCADA system — 15 sections, 80+ test cases, all three test types (normal, boundary, negative), QA witness flags, FAT/SAT reference columns, and the 10-criterion phase gate confirmation table. Every test case includes the boundary testing sequence (below setpoint → at setpoint → within hysteresis → below hysteresis) for every alarm function. The audit trail SQL challenge test and the NTP disconnect test are included as written, executable steps.</p>
+      <p>OQ-SYS-001 is a complete, pre-structured OQ protocol for a GMP PLC/SCADA system — 12 functional sections, 80+ test cases, all three test types (normal, boundary, negative), QA witness flags, FAT/SAT reference columns, and the 10-criterion phase gate confirmation table. Every test case includes the boundary testing sequence (below setpoint → at setpoint → within hysteresis → below hysteresis) for every alarm function. The audit trail SQL challenge test and the NTP disconnect test are included as written, executable steps.</p>
     </div>
 
   </article>
@@ -569,7 +561,7 @@ footer{padding:56px 6% 32px;border-top:1px solid var(--rule);background:var(--wh
     <div class="sidebar-cta">
       <div class="sc-eyebrow">QLean Framework</div>
       <div class="sc-title">OQ-SYS-001 — 80+ test cases ready</div>
-      <div class="sc-body">Complete OQ protocol with all 15 sections, boundary testing sequences, adversarial negative tests, and the 10-criterion phase gate table.</div>
+      <div class="sc-body">Complete OQ protocol with all 12 functional areas, boundary testing sequences, adversarial negative tests, and the 10-criterion phase gate table.</div>
       <a href="../index.html#pricing" class="sc-btn">Get the Framework — €249 →</a>
       <div class="sc-note">// INSTANT DOWNLOAD · COMPANY-WIDE LICENCE</div>
     </div>

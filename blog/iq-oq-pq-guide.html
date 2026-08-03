@@ -233,6 +233,23 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;height:64px;display:flex;ali
   nav .nav-links>li.nav-mobile-cta-li>a{display:block;padding:13px;background:var(--blue);color:white !important;text-align:center;border-radius:6px;font-weight:500;font-size:14px;text-decoration:none;border-bottom:none !important;transition:background .2s;justify-content:center}
   nav .nav-links>li.nav-mobile-cta-li>a:hover{background:var(--blue2) !important}
 }
+
+/* ── comparison table (added: page previously had no tabular content) ── */
+.cmp-wrap{margin:28px 0 32px;overflow-x:auto;border:1px solid var(--rule);border-radius:8px}
+.cmp{width:100%;border-collapse:collapse;font-size:14px;min-width:620px}
+.cmp caption{text-align:left;font-family:var(--f-mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink4);padding:12px 16px;background:var(--off);border-bottom:1px solid var(--rule)}
+.cmp th,.cmp td{padding:11px 14px;text-align:left;vertical-align:top;border-bottom:1px solid var(--rule);line-height:1.55}
+.cmp thead th{font-family:var(--f-mono);font-size:10px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--blue);background:var(--off);white-space:nowrap}
+.cmp tbody th{font-weight:600;color:var(--ink);width:132px;font-size:13px}
+.cmp td{color:var(--ink2)}
+.cmp tbody tr:last-child th,.cmp tbody tr:last-child td{border-bottom:none}
+.cmp tbody tr:hover td,.cmp tbody tr:hover th{background:var(--off)}
+
+/* ── FAQ (plain markup — FAQ rich results were retired 2026-05-07) ── */
+.faq-list{margin:24px 0 8px;border-top:1px solid var(--rule)}
+.faq-list dt{font-family:var(--f-head);font-size:16px;font-weight:700;letter-spacing:-.02em;color:var(--ink);margin:0;padding:22px 0 8px}
+.faq-list dd{margin:0 0 22px;padding-bottom:22px;border-bottom:1px solid var(--rule);font-size:15px;color:var(--ink2);line-height:1.8}
+.faq-list dd:last-child{border-bottom:none}
 </style>
 </head>
 <body>
@@ -469,7 +486,55 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;height:64px;display:flex;ali
       <figcaption>// THE COMPLETE GAMP 5 DOCUMENT CHAIN — EACH PHASE GATES THE NEXT. NO VSR WITHOUT CLOSED IQ/OQ/PQ.</figcaption>
     </figure>
 
-    <h2 id="iq-detail">IQ — Installation Qualification in Detail</h2>
+    <div class="cmp-wrap">
+<table class="cmp">
+<caption>IQ vs OQ vs PQ — at a glance</caption>
+<thead>
+<tr><th scope="col"></th><th scope="col">IQ</th><th scope="col">OQ</th><th scope="col">PQ</th></tr>
+</thead>
+<tbody>
+<tr><th scope="row">Question it answers</th>
+<td>Was it installed as designed?</td>
+<td>Does it operate as specified?</td>
+<td>Does it perform consistently in production?</td></tr>
+<tr><th scope="row">When it runs</th>
+<td>After physical installation, before power-up testing</td>
+<td>After IQ is approved</td>
+<td>After OQ is approved, on the live process</td></tr>
+<tr><th scope="row">Conditions</th>
+<td>Static — nothing running</td>
+<td>Full functional range, including limits and failure modes</td>
+<td>Real production conditions, actual product or process fluids</td></tr>
+<tr><th scope="row">What you verify</th>
+<td>Hardware, firmware and software versions, I/O wiring, network, utilities, calibration certificates</td>
+<td>Alarms, interlocks, permissives, sequences, access control, audit trail, edge cases</td>
+<td>Stability over repeated batches or runs, historian completeness, control performance</td></tr>
+<tr><th scope="row">Traces back to</th>
+<td>HDS and SDS</td>
+<td>FDS and URS</td>
+<td>URS and process requirements</td></tr>
+<tr><th scope="row">Who usually leads</th>
+<td>You, the integrator</td>
+<td>You, with QA witnessing critical tests</td>
+<td>Process engineering or the client, with you supporting</td></tr>
+<tr><th scope="row">Typical failure</th>
+<td>As-built does not match the design documents</td>
+<td>Untested failure modes, or tests with no measurable acceptance criteria</td>
+<td>Scope creep into proving product quality, which belongs to process validation</td></tr>
+</tbody>
+</table>
+</div>
+
+<h2 id="dq">Where DQ Fits</h2>
+<p>You will see this written both ways: <strong>IQ/OQ/PQ</strong> and <strong>DQ/IQ/OQ/PQ</strong>. The extra letter is Design Qualification, and its job is to document that the proposed design actually satisfies the user requirements <em>before</em> anyone builds or installs anything.</p>
+<p>In automation work, DQ rarely arrives as a standalone protocol. It is usually satisfied by the formal review and approval of your design specifications — the FDS, SDS and HDS signed off against the URS. That review <em>is</em> the design qualification. If your client asks where your DQ is and you have approved design specs with a traceability matrix linking them to requirements, you already have the answer.</p>
+<div class="callout blue">
+<div class="callout-label">Worth knowing</div>
+<p>Some clients issue a combined <strong>IOQ</strong> protocol, merging Installation and Operational Qualification into one document. This is common on smaller systems where installation checks and functional testing happen in the same visit. It is acceptable, but the evidence requirements do not shrink — QA still expects to see both the as-built verification and the full functional test record, just bound together. Combining the paperwork does not combine the testing.</p>
+</div>
+<p>The sequence matters more than the labelling. Each phase depends on the one before it being approved, which is why compressing the schedule tends to fail in a specific way — see <a href="validation-project-timeline-realistic.html">how long a validation project realistically takes</a> for what that looks like on a real programme.</p>
+
+<h2 id="iq-detail">IQ — Installation Qualification in Detail</h2>
     <p>The IQ is the first thing you execute on site, typically after Factory Acceptance Testing (FAT) is complete and the system has been physically delivered and installed. Its purpose is simple: <strong>confirm that what was designed is what was installed.</strong></p>
     <p>For a typical PLC/SCADA system, your IQ protocol will cover:</p>
 
@@ -577,7 +642,17 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;height:64px;display:flex;ali
       <p>Successful PQ execution, reviewed and signed by QA, leads directly to the <strong>Validation Summary Report (VSR)</strong> — the document that formally declares the system validated and fit for GMP use. Without a closed VSR, the system cannot be used in production.</p>
     </div>
 
-    <h2 id="documents">The Documents You Need</h2>
+    <h2 id="vs-process-validation">Qualification vs Process Validation</h2>
+<p>This is the distinction that causes the most confusion, and getting it wrong is what turns a PQ protocol into an unfinishable document.</p>
+<p><strong>IQ/OQ/PQ qualifies the system.</strong> It proves your PLC, SCADA, instrumentation and network were installed correctly, function as specified, and hold up under production conditions. <strong>Process validation proves the manufacturing process</strong> consistently produces product meeting its predetermined quality attributes. They are two different exercises with two different owners.</p>
+<p>PQ is where they meet, which is why the boundary blurs there. Under the FDA's process validation framework you will also encounter <strong>PPQ</strong> — Process Performance Qualification — which sits inside process validation, not inside system qualification. PPQ is normally owned by process engineering and QA. It is not your deliverable, even when it runs on the system you built.</p>
+<div class="callout amber">
+<div class="callout-label">Scope trap</div>
+<p>If your PQ protocol contains acceptance criteria about <strong>product</strong> quality — assay, potency, yield, sterility — the scope has drifted into process validation. Your PQ should be scoped to <strong>system</strong> performance: control stability across repeated runs, historian and audit-trail completeness, alarm behaviour under real load, and recovery from realistic upsets. Then reference the process validation protocol rather than absorbing it. Engineers who miss this end up owning acceptance criteria they have no means of influencing.</p>
+</div>
+<p>The practical test: if a failed acceptance criterion would be fixed by changing your code, your configuration or your hardware, it belongs in PQ. If it would be fixed by changing the recipe, the raw materials or the process parameters, it belongs in process validation. Anything genuinely ambiguous should be recorded as a deviation and dispositioned rather than argued about in the field — the <a href="deviation-management-pharma-validation.html">deviation management process</a> exists precisely for that.</p>
+
+<h2 id="documents">The Documents You Need</h2>
     <p>Each qualification phase requires a <strong>protocol</strong> (the plan, written and approved before execution) and a completed version of that protocol with all test results, signatures, and any deviation references. Neither the IQ, OQ, nor PQ can be closed without QA sign-off.</p>
 
     <div class="article-divider"></div>
@@ -688,7 +763,33 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;height:64px;display:flex;ali
       <li><strong>Validation Summary Report</strong> → summarises all phases, closes the lifecycle</li>
     </ul>
 
-    <h2 id="summary">What This Means for You</h2>
+    <h2 id="faq">Common Questions</h2>
+<dl class="faq-list">
+
+<dt>What does IQ OQ PQ stand for?</dt>
+<dd>Installation Qualification, Operational Qualification and Performance Qualification. They are the three documented testing phases that prove a system was installed as designed, operates as specified, and performs consistently in production.</dd>
+
+<dt>What is the difference between OQ and PQ?</dt>
+<dd>OQ tests the system across its full functional range in a controlled way, including limits and failure modes, usually without real product. PQ tests it under actual production conditions with real product or process fluids, over enough repetition to demonstrate consistency. OQ asks whether it <em>can</em> work; PQ asks whether it <em>does</em>, reliably.</dd>
+
+<dt>Do I need a separate DQ document?</dt>
+<dd>Usually not. In automation projects, Design Qualification is normally satisfied by formal review and approval of the FDS, SDS and HDS against the URS, evidenced through the traceability matrix. Some clients require a standalone DQ protocol — ask during the validation planning stage rather than discovering it at handover.</dd>
+
+<dt>Can IQ and OQ be combined?</dt>
+<dd>Yes, as a combined IOQ protocol, and it is common on smaller systems. The document merges but the testing does not — QA still expects complete as-built verification and complete functional test evidence.</dd>
+
+<dt>Is IQ OQ PQ the same as process validation?</dt>
+<dd>No. IQ/OQ/PQ qualifies the system; process validation proves the manufacturing process. PQ is where they touch, and PPQ belongs to process validation rather than to system qualification. Keeping product-quality acceptance criteria out of your PQ is the practical consequence.</dd>
+
+<dt>Who signs the protocols?</dt>
+<dd>Typically the author, an engineering reviewer, and the client's QA representative, with QA approval required before execution and again after. The specific signature matrix is defined in the Validation Plan, so agree it before writing a single protocol.</dd>
+
+<dt>What happens after PQ is approved?</dt>
+<dd>The Validation Summary Report closes the exercise out — it consolidates results across all three phases, dispositions every deviation, and states whether the system is released for GMP use. See <a href="validation-summary-report-guide.html">what a Validation Summary Report must contain</a>.</dd>
+
+</dl>
+
+<h2 id="summary">What This Means for You</h2>
     <p>As the automation engineer delivering the system, you will typically author the IQ and OQ protocols — or at minimum, provide the technical content that a validation specialist formats into the final documents. The PQ is usually led by the client's process team, with your support.</p>
     <p>The most important thing to internalise early: <strong>in a GMP project, the document is the product.</strong> A perfectly engineered system with poor documentation will fail a regulatory inspection. A well-documented system with minor technical imperfections — properly raised as deviations, with impact assessments and corrective actions — will pass.</p>
     <p>That's not bureaucracy for its own sake. It's the mechanism by which a regulator can trust that a system is safe to use in the manufacture of medicines.</p>
@@ -708,11 +809,14 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;height:64px;display:flex;ali
       <ul class="toc-list">
         <li><a href="#what-is" class="active">What is IQ OQ PQ?</a></li>
         <li><a href="#three-phases">The Three Phases</a></li>
-        <li><a href="#iq-detail">IQ in Detail</a></li>
+        <li><a href="#dq">Where DQ Fits</a>
+<a href="#iq-detail">IQ in Detail</a></li>
         <li><a href="#oq-detail">OQ in Detail</a></li>
         <li><a href="#pq-detail">PQ in Detail</a></li>
-        <li><a href="#documents">The Documents You Need</a></li>
-        <li><a href="#summary">What This Means for You</a></li>
+        <li><a href="#vs-process-validation">Qualification vs Process Validation</a>
+<a href="#documents">The Documents You Need</a></li>
+        <li><a href="#faq">Common Questions</a>
+<a href="#summary">What This Means for You</a></li>
       </ul>
     </div>
 
